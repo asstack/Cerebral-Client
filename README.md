@@ -1,6 +1,7 @@
 ## Initial Setting
 
 brew install node
+
 npm install
 
 
