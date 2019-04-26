@@ -1,7 +1,26 @@
-## Initial Setting
+## Initial Setting and dependencies
 
 brew install node
+
 npm install
+
+npm install --save redux
+
+npm install --save react-redux
+
+npm install --save-dev redux-devtools
+
+npm install --save redux-token-auth
+
+npm install --save redux-thunk
+
+npm install --save react-router
+
+npm install --save react-router-dom
+
+//if using atom
+
+apm install react
 
 
 ## Available Scripts

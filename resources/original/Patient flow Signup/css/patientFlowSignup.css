@@ -1,0 +1,778 @@
+
+@font-face {
+                          font-family: "ProximaNova-Bold";
+                          src: url('../fonts/.139.otf') format("opentype");
+                        }
+                        @font-face {
+                          font-family: "ProximaNova-Regular";
+                          src: url('../fonts/.175.otf') format("opentype");
+                        }
+                        
+.patientflowsignup {
+  width               : 100%;
+  min-width           : 1440px;
+  height              : 100vh;
+  min-height          : 1853px;
+  position            : relative;
+  overflow            : hidden;
+  margin              : 0px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color    : rgba(255, 255, 255, 1.0);
+}
+a {
+  text-decoration     : none;
+}
+div {
+  -webkit-text-size-adjust: none;
+}
+.anima-full-width-a {
+  width               : 100%;
+}
+.anima-full-height-a {
+  height              : 100%;
+}
+div {
+  -webkit-text-size-adjust: none;
+}
+.patientflowsignup .label1 {
+  background-color    : rgba(255,255,255,0.0);
+  top                 : 27px;
+  height              : auto;
+  width               : auto;
+  position            : absolute;
+  margin              : 0;
+  left                : 22px;
+  -ms-transform       : rotate(0deg); /* IE 9 */
+  -webkit-transform   : rotate(0deg); /* Chrome, Safari, Opera */
+  transform           : rotate(0deg);
+  font-family         : "ProximaNova-Bold", Helvetica, Arial, serif;
+  font-size           : 48.0px;
+  color               : rgba(37, 0, 68, 1.0);
+  text-align          : left;
+  letter-spacing      : -0.69px;
+  line-height         : 58.0px;
+}
+.patientflowsignup .progressbar {
+  background-color    : rgba(255,255,255,0.0);
+  top                 : 110px;
+  height              : 10px;
+  width               : 1436px;
+  position            : absolute;
+  margin              : 0;
+  left                : 0px;
+  -ms-transform       : rotate(0deg); /* IE 9 */
+  -webkit-transform   : rotate(0deg); /* Chrome, Safari, Opera */
+  transform           : rotate(0deg);
+}
+.patientflowsignup .progressbar .progressbaractive {
+  background-color    : rgba(255,255,255,0.0);
+  top                 : 0px;
+  height              : 10px;
+  width               : 288px;
+  position            : absolute;
+  margin              : 0;
+  left                : 0px;
+  -ms-transform       : rotate(0deg); /* IE 9 */
+  -webkit-transform   : rotate(0deg); /* Chrome, Safari, Opera */
+  transform           : rotate(0deg);
+}
+.patientflowsignup .progressbar .progressbaractive .rectangle {
+  background-color    : rgba(37, 0, 68, 1.0);
+  top                 : 0px;
+  height              : 10px;
+  width               : 288px;
+  position            : relative;
+  margin              : 0;
+  left                : 0px;
+  -ms-transform       : rotate(0deg); /* IE 9 */
+  -webkit-transform   : rotate(0deg); /* Chrome, Safari, Opera */
+  transform           : rotate(0deg);
+}
+.patientflowsignup .progressbar .progressbarinactive {
+  background-color    : rgba(255,255,255,0.0);
+  top                 : 0px;
+  height              : 10px;
+  width               : 288px;
+  position            : absolute;
+  margin              : 0;
+  left                : 288px;
+  -ms-transform       : rotate(0deg); /* IE 9 */
+  -webkit-transform   : rotate(0deg); /* Chrome, Safari, Opera */
+  transform           : rotate(0deg);
+}
+.patientflowsignup .progressbar .progressbarinactive .rectanglecopy {
+  background-color    : rgba(239, 241, 250, 1.0);
+  top                 : 0px;
+  height              : 10px;
+  box-sizing          : border-box;
+  width               : 288px;
+  position            : relative;
+  margin              : 0;
+  left                : 0px;
+  border-style        : solid;
+  border-width        : 1px;
+  border-color        : rgba(255, 255, 255, 1.0);
+  -ms-transform       : rotate(0deg); /* IE 9 */
+  -webkit-transform   : rotate(0deg); /* Chrome, Safari, Opera */
+  transform           : rotate(0deg);
+}
+.patientflowsignup .progressbar .progressbarinactivecopy {
+  background-color    : rgba(255,255,255,0.0);
+  top                 : 0px;
+  height              : 10px;
+  width               : 288px;
+  position            : absolute;
+  margin              : 0;
+  left                : 576px;
+  -ms-transform       : rotate(0deg); /* IE 9 */
+  -webkit-transform   : rotate(0deg); /* Chrome, Safari, Opera */
+  transform           : rotate(0deg);
+}
+.patientflowsignup .progressbar .progressbarinactivecopy .rectanglecopy {
+  background-color    : rgba(239, 241, 250, 1.0);
+  top                 : 0px;
+  height              : 10px;
+  box-sizing          : border-box;
+  width               : 288px;
+  position            : relative;
+  margin              : 0;
+  left                : 0px;
+  border-style        : solid;
+  border-width        : 1px;
+  border-color        : rgba(255, 255, 255, 1.0);
+  -ms-transform       : rotate(0deg); /* IE 9 */
+  -webkit-transform   : rotate(0deg); /* Chrome, Safari, Opera */
+  transform           : rotate(0deg);
+}
+.patientflowsignup .progressbar .progressbarinactivecopy2 {
+  background-color    : rgba(255,255,255,0.0);
+  top                 : 0px;
+  height              : 10px;
+  width               : 288px;
+  position            : absolute;
+  margin              : 0;
+  left                : 864px;
+  -ms-transform       : rotate(0deg); /* IE 9 */
+  -webkit-transform   : rotate(0deg); /* Chrome, Safari, Opera */
+  transform           : rotate(0deg);
+}
+.patientflowsignup .progressbar .progressbarinactivecopy2 .rectanglecopy {
+  background-color    : rgba(239, 241, 250, 1.0);
+  top                 : 0px;
+  height              : 10px;
+  box-sizing          : border-box;
+  width               : 288px;
+  position            : relative;
+  margin              : 0;
+  left                : 0px;
+  border-style        : solid;
+  border-width        : 1px;
+  border-color        : rgba(255, 255, 255, 1.0);
+  -ms-transform       : rotate(0deg); /* IE 9 */
+  -webkit-transform   : rotate(0deg); /* Chrome, Safari, Opera */
+  transform           : rotate(0deg);
+}
+.patientflowsignup .progressbar .progressbarinactivecopy3 {
+  background-color    : rgba(255,255,255,0.0);
+  top                 : 0px;
+  height              : 10px;
+  width               : 288px;
+  position            : absolute;
+  margin              : 0;
+  left                : 1148px;
+  -ms-transform       : rotate(0deg); /* IE 9 */
+  -webkit-transform   : rotate(0deg); /* Chrome, Safari, Opera */
+  transform           : rotate(0deg);
+}
+.patientflowsignup .progressbar .progressbarinactivecopy3 .rectanglecopy {
+  background-color    : rgba(239, 241, 250, 1.0);
+  top                 : 0px;
+  height              : 10px;
+  box-sizing          : border-box;
+  width               : 288px;
+  position            : relative;
+  margin              : 0;
+  left                : 0px;
+  border-style        : solid;
+  border-width        : 1px;
+  border-color        : rgba(255, 255, 255, 1.0);
+  -ms-transform       : rotate(0deg); /* IE 9 */
+  -webkit-transform   : rotate(0deg); /* Chrome, Safari, Opera */
+  transform           : rotate(0deg);
+}
+.patientflowsignup .ialreadyhaveanac {
+  background-color    : rgba(255,255,255,0.0);
+  top                 : 978px;
+  height              : auto;
+  width               : auto;
+  position            : absolute;
+  margin              : 0;
+  left                : 585px;
+  -ms-transform       : rotate(0deg); /* IE 9 */
+  -webkit-transform   : rotate(0deg); /* Chrome, Safari, Opera */
+  transform           : rotate(0deg);
+  font-family         : "ProximaNova-Bold", Helvetica, Arial, serif;
+  font-size           : 24.0px;
+  color               : rgba(36, 0, 68, 1.0);
+  text-align          : left;
+  letter-spacing      : -0.34px;
+  line-height         : 35.0px;
+}
+.patientflowsignup .iconsenttotelehea {
+  background-color    : rgba(255,255,255,0.0);
+  top                 : 800px;
+  height              : auto;
+  width               : 695px;
+  position            : absolute;
+  margin              : 0;
+  left                : 395px;
+  -ms-transform       : rotate(0deg); /* IE 9 */
+  -webkit-transform   : rotate(0deg); /* Chrome, Safari, Opera */
+  transform           : rotate(0deg);
+  font-family         : "ProximaNova-Regular", Helvetica, Arial, serif;
+  font-size           : 18.0px;
+  color               : rgba(68, 68, 68, 1.0);
+  text-align          : left;
+  letter-spacing      : -0.26px;
+  line-height         : 30.0px;
+}
+.patientflowsignup .iconsenttotelehea .span1 {
+  
+}
+.patientflowsignup .iconsenttotelehea .span2 {
+  letter-spacing      : -0.19px;
+  text-decoration     : underline;
+}
+.patientflowsignup .iconsenttotelehea .span3 {
+  letter-spacing      : -0.19px;
+}
+.patientflowsignup .iconsenttotelehea .span4 {
+  letter-spacing      : -0.19px;
+  text-decoration     : underline;
+}
+.patientflowsignup .iconsenttotelehea .span5 {
+  letter-spacing      : -0.19px;
+}
+.patientflowsignup .checkbox {
+  background-color    : rgba(255,255,255,0.0);
+  top                 : 800px;
+  height              : 30px;
+  width               : 30px;
+  position            : absolute;
+  margin              : 0;
+  left                : 350px;
+  -ms-transform       : rotate(0deg); /* IE 9 */
+  -webkit-transform   : rotate(0deg); /* Chrome, Safari, Opera */
+  transform           : rotate(0deg);
+}
+.patientflowsignup .checkbox .rectangle {
+  background-color    : rgba(255,255,255,0.0);
+  top                 : 0px;
+  height              : 30px;
+  box-sizing          : border-box;
+  width               : 30px;
+  position            : relative;
+  margin              : 0;
+  left                : 0px;
+  border-radius       : 4px;
+  border-style        : solid;
+  border-width        : 2px;
+  border-color        : rgba(37, 0, 68, 1.0);
+  -ms-transform       : rotate(0deg); /* IE 9 */
+  -webkit-transform   : rotate(0deg); /* Chrome, Safari, Opera */
+  transform           : rotate(0deg);
+}
+.patientflowsignup .buttonprimary {
+  background-color    : rgba(255,255,255,0.0);
+  top                 : 910px;
+  height              : 60px;
+  width               : 740px;
+  position            : absolute;
+  margin              : 0;
+  left                : 350px;
+  -ms-transform       : rotate(0deg); /* IE 9 */
+  -webkit-transform   : rotate(0deg); /* Chrome, Safari, Opera */
+  transform           : rotate(0deg);
+}
+.patientflowsignup .buttonprimary .rectanglecopy7 {
+  background-color    : rgba(37, 0, 68, 1.0);
+  top                 : 0px;
+  height              : 60px;
+  box-sizing          : border-box;
+  width               : 740px;
+  position            : relative;
+  margin              : 0;
+  left                : 0px;
+  border-radius       : 30px;
+  border-style        : solid;
+  border-width        : 2px;
+  border-color        : rgba(37, 0, 68, 1.0);
+  -ms-transform       : rotate(0deg); /* IE 9 */
+  -webkit-transform   : rotate(0deg); /* Chrome, Safari, Opera */
+  transform           : rotate(0deg);
+}
+.patientflowsignup .getstartedwithonl {
+  background-color    : rgba(255,255,255,0.0);
+  top                 : 923px;
+  height              : auto;
+  width               : auto;
+  position            : absolute;
+  margin              : 0;
+  left                : 577px;
+  -ms-transform       : rotate(0deg); /* IE 9 */
+  -webkit-transform   : rotate(0deg); /* Chrome, Safari, Opera */
+  transform           : rotate(0deg);
+  font-family         : "ProximaNova-Bold", Helvetica, Arial, serif;
+  font-size           : 24.0px;
+  color               : rgba(255, 255, 255, 1.0);
+  text-align          : left;
+  letter-spacing      : -0.43px;
+  line-height         : 35.0px;
+}
+.patientflowsignup .checkmark {
+  background-color    : rgba(255,255,255,0.0);
+  top                 : 803px;
+  height              : 25px;
+  width               : 23px;
+  position            : absolute;
+  margin              : 0;
+  left                : 354px;
+  -ms-transform       : rotate(0deg); /* IE 9 */
+  -webkit-transform   : rotate(0deg); /* Chrome, Safari, Opera */
+  transform           : rotate(0deg);
+}
+.patientflowsignup .checkmark .fill3 {
+  background-color    : rgba(255,255,255,0.0);
+  top                 : 0px;
+  height              : 25px;
+  width               : 23px;
+  position            : absolute;
+  margin              : 0;
+  left                : 0px;
+  -ms-transform       : rotate(0deg); /* IE 9 */
+  -webkit-transform   : rotate(0deg); /* Chrome, Safari, Opera */
+  transform           : rotate(0deg);
+}
+.patientflowsignup .formfields {
+  background-color    : rgba(255,255,255,0.0);
+  top                 : 459px;
+  height              : 291px;
+  width               : 740px;
+  position            : absolute;
+  margin              : 0;
+  left                : 350px;
+  -ms-transform       : rotate(0deg); /* IE 9 */
+  -webkit-transform   : rotate(0deg); /* Chrome, Safari, Opera */
+  transform           : rotate(0deg);
+}
+.patientflowsignup .formfields .fieldbox {
+  background-color    : rgba(255,255,255,0.0);
+  top                 : 0px;
+  height              : 60px;
+  width               : 740px;
+  position            : absolute;
+  margin              : 0;
+  left                : 0px;
+  -ms-transform       : rotate(0deg); /* IE 9 */
+  -webkit-transform   : rotate(0deg); /* Chrome, Safari, Opera */
+  transform           : rotate(0deg);
+}
+.patientflowsignup .formfields .fieldbox .rectangle {
+  background-color    : rgba(255,255,255,0.0);
+  top                 : 0px;
+  height              : 60px;
+  box-sizing          : border-box;
+  width               : 740px;
+  position            : relative;
+  margin              : 0;
+  left                : 0px;
+  border-radius       : 2px;
+  border-style        : solid;
+  border-width        : 2px;
+  border-color        : rgba(37, 0, 68, 1.0);
+  -ms-transform       : rotate(0deg); /* IE 9 */
+  -webkit-transform   : rotate(0deg); /* Chrome, Safari, Opera */
+  transform           : rotate(0deg);
+}
+.patientflowsignup .formfields .fieldboxcopy {
+  background-color    : rgba(255,255,255,0.0);
+  top                 : 77px;
+  height              : 60px;
+  width               : 740px;
+  position            : absolute;
+  margin              : 0;
+  left                : 0px;
+  -ms-transform       : rotate(0deg); /* IE 9 */
+  -webkit-transform   : rotate(0deg); /* Chrome, Safari, Opera */
+  transform           : rotate(0deg);
+}
+.patientflowsignup .formfields .fieldboxcopy .rectangle {
+  background-color    : rgba(255,255,255,0.0);
+  top                 : 0px;
+  height              : 60px;
+  box-sizing          : border-box;
+  width               : 740px;
+  position            : relative;
+  margin              : 0;
+  left                : 0px;
+  border-radius       : 2px;
+  border-style        : solid;
+  border-width        : 2px;
+  border-color        : rgba(37, 0, 68, 1.0);
+  -ms-transform       : rotate(0deg); /* IE 9 */
+  -webkit-transform   : rotate(0deg); /* Chrome, Safari, Opera */
+  transform           : rotate(0deg);
+}
+.patientflowsignup .formfields .fieldboxcopy2 {
+  background-color    : rgba(255,255,255,0.0);
+  top                 : 154px;
+  height              : 60px;
+  width               : 740px;
+  position            : absolute;
+  margin              : 0;
+  left                : 0px;
+  -ms-transform       : rotate(0deg); /* IE 9 */
+  -webkit-transform   : rotate(0deg); /* Chrome, Safari, Opera */
+  transform           : rotate(0deg);
+}
+.patientflowsignup .formfields .fieldboxcopy2 .rectangle {
+  background-color    : rgba(255,255,255,0.0);
+  top                 : 0px;
+  height              : 60px;
+  box-sizing          : border-box;
+  width               : 740px;
+  position            : relative;
+  margin              : 0;
+  left                : 0px;
+  border-radius       : 2px;
+  border-style        : solid;
+  border-width        : 2px;
+  border-color        : rgba(37, 0, 68, 1.0);
+  -ms-transform       : rotate(0deg); /* IE 9 */
+  -webkit-transform   : rotate(0deg); /* Chrome, Safari, Opera */
+  transform           : rotate(0deg);
+}
+.patientflowsignup .formfields .fieldboxcopy3 {
+  background-color    : rgba(255,255,255,0.0);
+  top                 : 231px;
+  height              : 60px;
+  width               : 740px;
+  position            : absolute;
+  margin              : 0;
+  left                : 0px;
+  -ms-transform       : rotate(0deg); /* IE 9 */
+  -webkit-transform   : rotate(0deg); /* Chrome, Safari, Opera */
+  transform           : rotate(0deg);
+}
+.patientflowsignup .formfields .fieldboxcopy3 .rectangle {
+  background-color    : rgba(255,255,255,0.0);
+  top                 : 0px;
+  height              : 60px;
+  box-sizing          : border-box;
+  width               : 740px;
+  position            : relative;
+  margin              : 0;
+  left                : 0px;
+  border-radius       : 2px;
+  border-style        : solid;
+  border-width        : 2px;
+  border-color        : rgba(37, 0, 68, 1.0);
+  -ms-transform       : rotate(0deg); /* IE 9 */
+  -webkit-transform   : rotate(0deg); /* Chrome, Safari, Opera */
+  transform           : rotate(0deg);
+}
+.patientflowsignup .formfields .emailaddress {
+  background-color    : rgba(255,255,255,0.0);
+  top                 : 19px;
+  height              : auto;
+  width               : auto;
+  position            : absolute;
+  margin              : 0;
+  left                : 48px;
+  -ms-transform       : rotate(0deg); /* IE 9 */
+  -webkit-transform   : rotate(0deg); /* Chrome, Safari, Opera */
+  transform           : rotate(0deg);
+  font-family         : "ProximaNova-Bold", Helvetica, Arial, serif;
+  font-size           : 18.0px;
+  color               : rgba(37, 0, 68, 1.0);
+  text-align          : left;
+  letter-spacing      : -0.43px;
+  line-height         : 22.0px;
+}
+.patientflowsignup .formfields .fullname {
+  background-color    : rgba(255,255,255,0.0);
+  top                 : 96px;
+  height              : auto;
+  width               : auto;
+  position            : absolute;
+  margin              : 0;
+  left                : 48px;
+  -ms-transform       : rotate(0deg); /* IE 9 */
+  -webkit-transform   : rotate(0deg); /* Chrome, Safari, Opera */
+  transform           : rotate(0deg);
+  font-family         : "ProximaNova-Bold", Helvetica, Arial, serif;
+  font-size           : 18.0px;
+  color               : rgba(37, 0, 68, 1.0);
+  text-align          : left;
+  letter-spacing      : -0.43px;
+  line-height         : 22.0px;
+}
+.patientflowsignup .formfields .createpassword {
+  background-color    : rgba(255,255,255,0.0);
+  top                 : 173px;
+  height              : auto;
+  width               : auto;
+  position            : absolute;
+  margin              : 0;
+  left                : 48px;
+  -ms-transform       : rotate(0deg); /* IE 9 */
+  -webkit-transform   : rotate(0deg); /* Chrome, Safari, Opera */
+  transform           : rotate(0deg);
+  font-family         : "ProximaNova-Bold", Helvetica, Arial, serif;
+  font-size           : 18.0px;
+  color               : rgba(37, 0, 68, 1.0);
+  text-align          : left;
+  letter-spacing      : -0.43px;
+  line-height         : 22.0px;
+}
+.patientflowsignup .formfields .informationmustma {
+  background-color    : rgba(255,255,255,0.0);
+  top                 : 96px;
+  height              : auto;
+  width               : auto;
+  position            : absolute;
+  margin              : 0;
+  left                : 137px;
+  -ms-transform       : rotate(0deg); /* IE 9 */
+  -webkit-transform   : rotate(0deg); /* Chrome, Safari, Opera */
+  transform           : rotate(0deg);
+  font-family         : "ProximaNova-Bold", Helvetica, Arial, serif;
+  font-size           : 18.0px;
+  color               : rgba(37, 0, 68, 1.0);
+  text-align          : left;
+  letter-spacing      : -0.43px;
+  line-height         : 22.0px;
+}
+.patientflowsignup .formfields .retypepassword {
+  background-color    : rgba(255,255,255,0.0);
+  top                 : 250px;
+  height              : auto;
+  width               : auto;
+  position            : absolute;
+  margin              : 0;
+  left                : 48px;
+  -ms-transform       : rotate(0deg); /* IE 9 */
+  -webkit-transform   : rotate(0deg); /* Chrome, Safari, Opera */
+  transform           : rotate(0deg);
+  font-family         : "ProximaNova-Bold", Helvetica, Arial, serif;
+  font-size           : 18.0px;
+  color               : rgba(37, 0, 68, 1.0);
+  text-align          : left;
+  letter-spacing      : -0.43px;
+  line-height         : 22.0px;
+}
+.patientflowsignup .completeyourprofil {
+  background-color    : rgba(255,255,255,0.0);
+  top                 : 257px;
+  height              : auto;
+  width               : 742px;
+  position            : absolute;
+  margin              : 0;
+  left                : 350px;
+  -ms-transform       : rotate(0deg); /* IE 9 */
+  -webkit-transform   : rotate(0deg); /* Chrome, Safari, Opera */
+  transform           : rotate(0deg);
+  font-family         : "ProximaNova-Bold", Helvetica, Arial, serif;
+  font-size           : 48.0px;
+  color               : rgba(36, 0, 68, 1.0);
+  text-align          : left;
+  line-height         : 55.0px;
+}
+.patientflowsignup .question1of9 {
+  background-color    : rgba(255,255,255,0.0);
+  top                 : 170px;
+  height              : auto;
+  width               : auto;
+  position            : absolute;
+  margin              : 0;
+  left                : 350px;
+  -ms-transform       : rotate(0deg); /* IE 9 */
+  -webkit-transform   : rotate(0deg); /* Chrome, Safari, Opera */
+  transform           : rotate(0deg);
+  font-family         : "ProximaNova-Bold", Helvetica, Arial, serif;
+  font-size           : 20.0px;
+  color               : rgba(36, 0, 68, 1.0);
+  text-align          : left;
+  letter-spacing      : -0.43px;
+  line-height         : 37.0px;
+}
+.patientflowsignup .patientprofile {
+  background-color    : rgba(255,255,255,0.0);
+  top                 : 82px;
+  height              : auto;
+  width               : auto;
+  position            : absolute;
+  margin              : 0;
+  left                : 96px;
+  -ms-transform       : rotate(0deg); /* IE 9 */
+  -webkit-transform   : rotate(0deg); /* Chrome, Safari, Opera */
+  transform           : rotate(0deg);
+  font-family         : "ProximaNova-Bold", Helvetica, Arial, serif;
+  font-size           : 16.0px;
+  color               : rgba(37, 0, 68, 1.0);
+  text-align          : left;
+  letter-spacing      : -0.43px;
+  line-height         : 20.0px;
+}
+.patientflowsignup .mentalhealthassess {
+  background-color    : rgba(255,255,255,0.0);
+  top                 : 82px;
+  height              : auto;
+  width               : auto;
+  position            : absolute;
+  margin              : 0;
+  left                : 340px;
+  -ms-transform       : rotate(0deg); /* IE 9 */
+  -webkit-transform   : rotate(0deg); /* Chrome, Safari, Opera */
+  transform           : rotate(0deg);
+  font-family         : "ProximaNova-Bold", Helvetica, Arial, serif;
+  font-size           : 16.0px;
+  color               : rgba(239, 241, 250, 1.0);
+  text-align          : left;
+  letter-spacing      : -0.43px;
+  line-height         : 20.0px;
+}
+.patientflowsignup .treatmentinformatio {
+  background-color    : rgba(255,255,255,0.0);
+  top                 : 82px;
+  height              : auto;
+  width               : auto;
+  position            : absolute;
+  margin              : 0;
+  left                : 643px;
+  -ms-transform       : rotate(0deg); /* IE 9 */
+  -webkit-transform   : rotate(0deg); /* Chrome, Safari, Opera */
+  transform           : rotate(0deg);
+  font-family         : "ProximaNova-Bold", Helvetica, Arial, serif;
+  font-size           : 16.0px;
+  color               : rgba(239, 241, 250, 1.0);
+  text-align          : left;
+  letter-spacing      : -0.43px;
+  line-height         : 20.0px;
+}
+.patientflowsignup .identityverificatio {
+  background-color    : rgba(255,255,255,0.0);
+  top                 : 82px;
+  height              : auto;
+  width               : auto;
+  position            : absolute;
+  margin              : 0;
+  left                : 942px;
+  -ms-transform       : rotate(0deg); /* IE 9 */
+  -webkit-transform   : rotate(0deg); /* Chrome, Safari, Opera */
+  transform           : rotate(0deg);
+  font-family         : "ProximaNova-Bold", Helvetica, Arial, serif;
+  font-size           : 16.0px;
+  color               : rgba(239, 241, 250, 1.0);
+  text-align          : left;
+  letter-spacing      : -0.43px;
+  line-height         : 20.0px;
+}
+.patientflowsignup .shippingandpayment {
+  background-color    : rgba(255,255,255,0.0);
+  top                 : 82px;
+  height              : auto;
+  width               : auto;
+  position            : absolute;
+  margin              : 0;
+  left                : 1215px;
+  -ms-transform       : rotate(0deg); /* IE 9 */
+  -webkit-transform   : rotate(0deg); /* Chrome, Safari, Opera */
+  transform           : rotate(0deg);
+  font-family         : "ProximaNova-Bold", Helvetica, Arial, serif;
+  font-size           : 16.0px;
+  color               : rgba(239, 241, 250, 1.0);
+  text-align          : left;
+  letter-spacing      : -0.43px;
+  line-height         : 20.0px;
+}
+/* .anima-animate-appear prefix for appear animations */
+.anima-animate-appear {
+  opacity             : 0;
+  display             : block;
+  -webkit-animation   : anima-reveal 0.3s ease-in-out 1 normal forwards;
+  -moz-animation      : anima-reveal 0.3s ease-in 1 normal forwards;
+  -o-animation        : anima-reveal 0.3s ease-in-out 1 normal forwards;
+  animation           : anima-reveal 0.3s ease-in-out 1 normal forwards;
+}
+.anima-animate-disappear {
+  opacity             : 1;
+  display             : block;
+  -webkit-animation   : anima-reveal 0.3s ease-in-out 1 reverse forwards;
+  -moz-animation      : anima-reveal 0.3s ease-in 1 normal forwards;
+  -o-animation        : anima-reveal 0.3s ease-in-out 1 reverse forwards;
+  animation           : anima-reveal 0.3s ease-in-out 1 reverse forwards;
+}
+.anima-animate-nodelay {
+  -webkit-animation-delay: 0;
+  -moz-animation-delay: 0;
+  -o-animation-delay  : 0;
+  animation-delay     : 0;
+}
+@-webkit-keyframes anima-reveal {
+  0%
+   
+  {
+      opacity: 0;
+    }
+  
+    
+  100%
+   
+  {
+      opacity: 1;
+    }
+}
+@-moz-keyframes anima-reveal {
+  0%
+   
+  {
+      opacity: 0;
+    }
+  
+    
+  100%
+   
+  {
+      opacity: 1;
+    }
+}
+@-o-keyframes anima-reveal {
+  0%
+   
+  {
+      opacity: 0;
+    }
+  
+    
+  100%
+   
+  {
+      opacity: 1;
+    }
+}
+@keyframes anima-reveal {
+  0%
+   
+  {
+      opacity: 0;
+    }
+  
+    
+  100%
+   
+  {
+      opacity: 1;
+    }
+}

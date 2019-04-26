@@ -1,26 +1,40 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, {Component} from 'react';
+import { combineReducers } from 'redux'
+import { reduxTokenAuthReducer } from 'redux-token-auth'
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+
+class App extends Component{
+
+  constructor(){
+    super()
+    this.state = {
+      email:'',
+      name:'',
+      pwd:''
+    }
+  }
+
+  registerUser = function(e){
+    //call api and pass this.state
+    var temp = e.currentTarget.elements
+    console.log("log: ", temp.item(0).value)
+    e.preventDefault()
+  }
+
+  render(){
+    return (
+      <div className="App">
+        <form onSubmit={this.registerUser} method='POST'>
+          <lable>email</lable>
+          <input type="email" name="email" />
+          <lable>name</lable>
+          <input type="text" name="uname" />
+          <lable>pwd</lable>
+          <input type="password" name="pwd" />
+          <input type="submit" value="button"/>
+        </form>
+      </div>
+    );
+  }
 }
-
 export default App;
