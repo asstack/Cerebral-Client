@@ -10,7 +10,7 @@ import configureStore from './store/configureStore'
 const store = configureStore
 verifyCredentials(store)
 
-render(
+render(  
   <Provider store={store}>
     <App />
   </Provider>,
