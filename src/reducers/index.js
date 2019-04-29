@@ -1,6 +1,6 @@
 import {combineReducers} from 'redux'
 import { reduxTokenAuthReducer } from 'redux-token-auth'
-
+import merge from 'merge'
 
 const initialState = {
   reduxTokenAuth: {
@@ -16,19 +16,18 @@ const initialState = {
   state: null,
   questions:{}
 }
-/*
+
 //define app state, question date, token..
-const appState = (state = initialStateState, action) => {
+const appState = (state = initialState, action) => {
   if(action.response && action.response.appState){
     return merge({}, state, action.response.appState)
   }
   return state
-}*/
+}
 
 const rootReducer = combineReducers({
   reduxTokenAuth: reduxTokenAuthReducer,
-
-  //appState
+  appState
 })
 
 export default rootReducer
