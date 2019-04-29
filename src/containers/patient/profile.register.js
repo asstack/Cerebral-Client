@@ -24,8 +24,8 @@ class Register extends Component {
 
       var header = {'Content-Type': 'application/json'}
 
-      axios.post("http://localhost:3000/api/users" ,
-      {first_name:first_name, last_name:last_name, email:email, password:password, password_confirmation: password_confirm}, header)
+      axios.post("http://localhost:3000/api/users",
+        {first_name:first_name, last_name:last_name, email:email, password:password, password_confirmation: password_confirm}, header)
         .then(function(resp){
           console.log("resp", resp)
         }).catch(function(err){
