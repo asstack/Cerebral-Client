@@ -14,7 +14,6 @@ class App extends Component{
   render(){
     return (
       <Router>
-        <div>please access to /patient in url for patient page</div>
         <div className="App">
           <Route path="/:patient" component={Patient}/>
         </div>

@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
-import { Route } from 'react-router-dom'
+import { Route, withRouter } from 'react-router-dom'
+import { connect } from 'react-redux'
 import Register from './profile.register'
 import SignIn from './profile.sign_in'
 
@@ -13,6 +14,8 @@ class PatientProfile extends Component{
 
   componentDidMount(){
     //TODO: 1. check app states [patient/profile, patient/assessment, ...]
+    const {all_state, login_info, appState, step} = this.props
+    console.log("app state: ", all_state)
   }
 
   //Todo: update dynamic bounding by state
@@ -31,5 +34,12 @@ class PatientProfile extends Component{
     );
   }
 }
+//TODO: elaborate to save memory
+const mapStateToProps = (state) => ({
+    all_state : state,
+    login_info : state.currentUser,
+    appState: state.state,
+    step : state.step
+})
 
-export default PatientProfile
+export default withRouter(connect(mapStateToProps,{}) (PatientProfile))

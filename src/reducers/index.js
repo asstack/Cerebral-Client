@@ -18,7 +18,7 @@ const initialState = {
     },
 
   // App state and data, temp setting for default as 'patient/profile'
-  state: 'patient/profile',
+  state: 'patient/profile/register',
   step: 0,
   questions:{},
   answers:{}
@@ -54,8 +54,11 @@ const patient_reducer = (state = initialState, action) => {
         step : state.step-1
       }
     case actionTypes.SET_USER:
+      console.log("set user: ", action.user_attr)
       return{
         ...state,
+        state:'patient/profile/questions',
+        step: 1,
         currrent_user: {
           ...state.current_user,
           user_type: 'patient',

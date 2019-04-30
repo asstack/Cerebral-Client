@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { Route } from 'react-router-dom'
+import { Route, withRouter } from 'react-router-dom'
 import PatientProfile from './profile'
 
 class Patient extends Component{
@@ -24,5 +24,4 @@ class Patient extends Component{
     );
   }
 }
-
-export default Patient
+export default withRouter(Patient)
