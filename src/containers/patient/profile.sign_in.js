@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import { connect } from 'react-redux'
-import { sign_in } from '../../actions/patient_action'
+import { sign_in } from '../../actions/user_auth_action'
 import axios from 'axios'
 
 

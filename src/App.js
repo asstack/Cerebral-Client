@@ -15,7 +15,7 @@ class App extends Component{
     return (
       <Router>
         <div className="App">
-          <Route path="/:patient" component={Patient}/>
+          <Route path="/patient" component={Patient}/>
         </div>
       </Router>
     );

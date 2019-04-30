@@ -1,78 +1,74 @@
 import {combineReducers} from 'redux'
-import * as actionTypes from '../actions/patient_action'
+import * as user_auth_types from '../actions/user_auth_action'
+import * as patient_action_types from '../actions/patient_action'
+
 import merge from 'merge'
 
-const initialState = {
+const init_global_state = {
 
-  currentUser: {
-      user_type: null,
-      isLoading: false,
-      isSignedIn: false,
-      attributes: {
-        id: null,
-        uid: null,
-        email: null,
-        first_name: null,
-        last_name: null
-      },
+  current_user: {
+    user_type: null,
+    is_loading: false,
+    is_signedIn: false,
+    attributes: {
+      id: null,
+      uid: null,
+      email: null,
+      first_name: null,
+      last_name: null
     },
-
-  // App state and data, temp setting for default as 'patient/profile'
-  state: 'patient/profile/register',
-  step: 0,
-  questions:{},
-  answers:{}
+  },
+  state: 'patient',
 }
 
-//define app state, question date, token..
-const appState = (state = initialState, action) => {
-  if(action.response && action.response.appState){
-    return merge({}, state, action.response.appState)
-  }
-  return state
+const init_patient_state = {
+  step:0,
+  patient_state: 'profile/register',
+  questions: '',
+  answers: ''
 }
 
+//global state storage, it will have user account information and current global state
+const global_reducer = (state = init_global_state, action) => {
 
-//TODO: use in ../actions
-const NEXT_STEP = 'patient/NEXT_STEP'
-const PREV_STEP = 'patient/PREV_STEP'
-const SET_ANSWER = 'patient/SET_ANSWER'
-const SUBMIT_ANSWERS = 'patient/SUBMIT_ANSWERS'
-const SET_QUESTION_ID = 'patient/SET_QUESTION_ID'
-const SET_USER = 'patient/SET_USER'
-//TODO: move independent file ex) patient_reducer.js
-const patient_reducer = (state = initialState, action) => {
   switch(action.type){
-    case actionTypes.NEXT_STEP:
+    case user_auth_types.SET_USER:
+      return{
+        ...state,
+        global_state:'patient',
+        currrent_user: {
+          ...state.current_user,
+          user_type: 'patient',
+          is_loading: true,
+          is_signedIn: true,
+          attributes : action.user_attr
+        }
+      }
+    default:
+      return state
+  }
+}
+
+
+//TODO: move independent file ex) patient_reducer.js
+const patient_reducer = (state = init_patient_state, action) => {
+  switch(action.type){
+    case patient_action_types.NEXT_STEP:
       return{
         ...state,
         step : state.step+1
       }
-    case actionTypes.PREV_STEP:
+    case patient_action_types.PREV_STEP:
       return{
         ...state,
         step : state.step-1
       }
-    case actionTypes.SET_USER:
-      console.log("set user: ", action.user_attr)
-      return{
-        ...state,
-        state:'patient/profile/questions',
-        step: 1,
-        currrent_user: {
-          ...state.current_user,
-          user_type: 'patient',
-          isLoading: true,
-          isSignedIn: true,
-          attributes : action.user_attr
-        }
-      }
-    case actionTypes.SET_ANSWER:
+    case patient_action_types.SET_ANSWER:
       return{}
     //TODO: implement after api done
-    case actionTypes.SUBMIT_ANSWERS:
+    case patient_action_types.SUBMIT_ANSWERS:
       return{}
-    case actionTypes.SET_QUESTION_ID:
+    case patient_action_types.SET_QUESTION_ID:
       return{}
     default:
       return state
@@ -81,7 +77,7 @@ const patient_reducer = (state = initialState, action) => {
 
 const rootReducer = combineReducers({
   patient_reducer,
-  appState
+  global_reducer
 })
 
 export default rootReducer

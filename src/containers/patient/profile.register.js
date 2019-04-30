@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import { registerUser } from '../../actions'
+import { register_user } from '../../actions/user_auth_action'
 import { connect } from 'react-redux'
 import axios from 'axios'
 
@@ -19,7 +19,7 @@ class Register extends Component {
 
     register_handler = (e) => {
       e.preventDefault()
-      
+
       const {first_name, last_name, email, password, password_confirm} = this.state
 
       var header = {'Content-Type': 'application/json'}
@@ -31,9 +31,7 @@ class Register extends Component {
         }).catch(function(err){
           console.log("err", err)
         })
-
     }
-
 
     update_email = (e) => {
       const em = e.target.value

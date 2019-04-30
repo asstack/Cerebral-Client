@@ -19,7 +19,7 @@ class Patient extends Component{
   render(){
     return(
       <div>
-        <Route path = "/:patient/:profile" component={PatientProfile}/>
+        <Route path = "/patient/profile" component={PatientProfile}/>
       </div>
     );
   }
