@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
 import { register_user } from '../../actions/user_auth_action'
+import { move_patient_sign_in } from '../../actions/patient_action'
 import { connect } from 'react-redux'
 import axios from 'axios'
 
@@ -33,6 +34,11 @@ class Register extends Component {
         })
     }
 
+    state_change_handler = e => {
+      const {move_patient_sign_in}=this.props
+      move_patient_sign_in()
+    }
+
     update_email = (e) => {
       const em = e.target.value
       this.setState({email:em})
@@ -58,25 +64,28 @@ class Register extends Component {
       this.setState({password_confirm:pwd_confirm})
     }
 
+
     render(){
       return (
-        <div className="App">
+        <div className="patient_register">
           <form onSubmit={this.register_handler.bind(this)} method='POST'>
-            <lable>email</lable>
+            <label>email</label>
             <input type="email" name="email" onChange={this.update_email.bind(this)} />
-            <lable>first name</lable>
+            <label>first name</label>
             <input type="text" name="first_name" onChange={this.update_firstname.bind(this)}  />
-            <lable>last name</lable>
+            <label>last name</label>
             <input type="text" name="last_name" onChange={this.update_lastname.bind(this)}  />
-            <lable>password</lable>
+            <label>password</label>
             <input type="password" name="pwd" onChange={this.update_password.bind(this)}  />
-            <lable>password (confirm)</lable>
+            <label>password (confirm)</label>
             <input type="password" name="pwd_confirm" onChange={this.update_password_confirm.bind(this)}  />
             <input type="submit" value="button"/>
           </form>
+
+          <input type="button" value="sign in" onClick={this.state_change_handler.bind(this)}/>
         </div>
       );
     }
 }
 
-export default Register
+export default connect(null,{move_patient_sign_in}) (Register)

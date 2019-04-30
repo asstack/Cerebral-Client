@@ -36,7 +36,7 @@ const global_reducer = (state = init_global_state, action) => {
       return{
         ...state,
         global_state:'patient',
-        currrent_user: {
+        current_user: {
           ...state.current_user,
           user_type: 'patient',
           is_loading: true,
@@ -63,8 +63,12 @@ const patient_reducer = (state = init_patient_state, action) => {
         ...state,
         step : state.step-1
       }
-    case patient_action_types.SET_ANSWER:
-      return{}
+    case patient_action_types.SET_STATE:
+      return{
+        ...state,
+        step : action.new_step,
+        patient_state : action.new_state
+      }
     //TODO: implement after api done
     case patient_action_types.SUBMIT_ANSWERS:
       return{}

@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import { connect } from 'react-redux'
 import { sign_in } from '../../actions/user_auth_action'
+import { set_profile_question } from '../../actions/patient_action'
 import axios from 'axios'
 
 
@@ -19,10 +20,8 @@ class SignIn extends Component {
     sign_in_handler = (e) => {
       e.preventDefault()
 
-      const {login_info} = this.props
-      console.log("check login_info: ", login_info)
       const {email, password} = this.state
-      const {sign_in} = this.props
+      const {sign_in, set_profile_question, login_info} = this.props
 
       var header = {'Content-Type': 'application/json'}
       if(email && password){
@@ -34,8 +33,9 @@ class SignIn extends Component {
                                       first_name:resp.data.data.first_name,
                                       last_name:resp.data.data.last_name
                                     }}
-            console.log("resp", resp)
+            //TODO: NEVER use the dispatches like here. will move to action with err handling
             sign_in(attr)
+            set_profile_question()
           }).catch(function(err){
             console.log("err", err)
           })
@@ -52,9 +52,8 @@ class SignIn extends Component {
     }
 
     render(){
-
       return (
-        <div className="App">
+        <div className="patient_signin">
           <form onSubmit={this.sign_in_handler.bind(this)} method='POST'>
             <label>email</label>
             <input type="email" name="email" onChange={this.update_email.bind(this)} />
@@ -66,8 +65,9 @@ class SignIn extends Component {
       );
     }
 }
+
 const mapStateToProps = (state) => ({
     login_info : state.currentUser
 })
 
-export default connect(mapStateToProps, {sign_in},)(SignIn)
+export default connect(mapStateToProps, {sign_in,set_profile_question},)(SignIn)
