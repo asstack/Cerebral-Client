@@ -1,5 +1,4 @@
 import React, {Component} from 'react'
-import { signInUser } from '../../actions'
 import { connect } from 'react-redux'
 import axios from 'axios'
 
@@ -15,27 +14,21 @@ class SignIn extends Component {
       }
     }
 
+
     sign_in_handler = (e) => {
       e.preventDefault()
-      const { signInUser } = this.props
       const {email, password} = this.state
       console.log("log: ", this.state, "email: ", email)
 
       var header = {'Content-Type': 'application/json'}
-      /*
+
       axios.post("http://localhost:3000/api/auth/sign_in" ,{email:email, password:password}, header)
         .then(function(resp){
           console.log("resp", resp)
         }).catch(function(err){
           console.log("err", err)
         })
-      */
-      signInUser({ email, password })
-        .then(function(resp){
-          console.log("resp", resp)
-        }).catch(function(err){
-          console.log("err", err)
-        })
+
     }
 
     update_email = (e) => {
@@ -62,7 +55,4 @@ class SignIn extends Component {
     }
 }
 
-export default connect(
-  null,
-  {signInUser},
-)(SignIn)
+export default SignIn

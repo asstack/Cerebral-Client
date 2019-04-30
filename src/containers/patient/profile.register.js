@@ -19,7 +19,7 @@ class Register extends Component {
 
     register_handler = (e) => {
       e.preventDefault()
-      const { registerUser } = this.props
+      
       const {first_name, last_name, email, password, password_confirm} = this.state
 
       var header = {'Content-Type': 'application/json'}
@@ -27,18 +27,11 @@ class Register extends Component {
       axios.post("http://localhost:3000/api/users",
         {first_name:first_name, last_name:last_name, email:email, password:password, password_confirmation: password_confirm}, header)
         .then(function(resp){
-          console.log("resp", resp)
+          console.log("resp", resp.data)
         }).catch(function(err){
           console.log("err", err)
         })
-        /*
-      registerUser({ first_name, last_name, email, password, password_confirm })
-        .then(function(resp){
-          console.log("resp", resp)
-        }).catch(function(err){
-          console.log("err", err)
-        })
-        */
+
     }
 
 
@@ -88,7 +81,4 @@ class Register extends Component {
     }
 }
 
-export default connect(
-  null,
-  {registerUser},
-)(Register)
+export default Register

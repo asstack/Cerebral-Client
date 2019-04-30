@@ -1,27 +1,13 @@
-import { generateAuthActions } from 'redux-token-auth'
 
+function change_app_state(state){
 
-//may change based on the api
-const config = {
-  authUrl: 'http://localhost:3000/api/auth',
-  userAttributes: {
-    data: 'data',
-  },
-  userRegistrationAttributes: {
-    firstName: 'first_name'
-  },
+  //call dispatch
+  //if okay than go NEXT_STEP
+  //else error page
+  //return {response: true, response.appState: {state: state}}
 }
 
-const {
-  registerUser,
-  signInUser,
-  signOutUser,
-  verifyCredentials,
-} = generateAuthActions(config)
 
 export{
-  registerUser,
-  signInUser,
-  signOutUser,
-  verifyCredentials,
+  change_app_state
 }

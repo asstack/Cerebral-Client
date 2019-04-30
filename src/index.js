@@ -2,15 +2,13 @@ import React from 'react';
 import {render} from 'react-dom';
 import {Provider} from 'react-redux'
 import App from './App';
-import * as serviceWorker from './serviceWorker';
-import {verifyCredentials} from './actions'
-import configureStore from './store/configureStore'
+import * as serviceWorker from './serviceWorker'
+import configure_store from './store/configure_store'
 //import {BrowserRouter as Router} from 'react-router-dom';
 
-const store = configureStore
-verifyCredentials(store)
+const store = configure_store
 
-render(  
+render(
   <Provider store={store}>
     <App />
   </Provider>,
