@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
-import { register_user } from '../../actions/user_auth_action'
-import { move_patient_sign_in } from '../../actions/patient_action'
+import { register_user, sign_in } from '../../actions/user_auth_action'
+import { move_patient_sign_in, set_profile_question } from '../../actions/patient_action'
 import { connect } from 'react-redux'
 import axios from 'axios'
 
@@ -22,13 +22,22 @@ class Register extends Component {
       e.preventDefault()
 
       const {first_name, last_name, email, password, password_confirm} = this.state
-
+      const {sign_in, set_profile_question}=this.props
       var header = {'Content-Type': 'application/json'}
 
       axios.post("http://localhost:3000/api/users",
         {first_name:first_name, last_name:last_name, email:email, password:password, password_confirmation: password_confirm}, header)
         .then(function(resp){
-          console.log("resp", resp.data)
+          var attr = {attributes: { id: resp.data.id,
+                                    uid:resp.data.uid,
+                                    email:resp.data.email,
+                                    first_name:resp.data.first_name,
+                                    last_name:resp.data.last_name
+                                  }}
+          //TODO: NEVER use the dispatches like here. will move to action with err handling
+          sign_in(attr)
+          set_profile_question()
+
         }).catch(function(err){
           console.log("err", err)
         })
@@ -88,4 +97,4 @@ class Register extends Component {
     }
 }
 
-export default connect(null,{move_patient_sign_in}) (Register)
+export default connect(null,{sign_in, move_patient_sign_in, set_profile_question}) (Register)
