@@ -37,7 +37,7 @@ const global_reducer = (state = init_global_state, action) => {
     case user_auth_types.SET_USER:
       return{
         ...state,
-        app_state:'init',
+        app_state:'patient',
         current_user: {
           ...state.current_user,
           user_type: 'patient',

@@ -22,6 +22,7 @@ class PatientProfile extends Component{
 
   componentDidUpdate(){
     const {patient_state} = this.props
+
     if(patient_state!=this.state.prv_state){
       this.setState({prv_state: patient_state})
       //window.history.pushState('', '', "/patient/"+patient_state);
@@ -46,6 +47,7 @@ class PatientProfile extends Component{
   render(){
     return(
       <div>
+
         <h1>question {this.props.step + 1} of 9</h1>
         <Route path={"/patient/" + this.props.patient_state} component={this.target_component(this.props.patient_state)}/>
       </div>

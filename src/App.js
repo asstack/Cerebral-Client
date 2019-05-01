@@ -20,6 +20,7 @@ class App extends Component{
     const {app_state} = this.props
     this.props.history.push(this.mapStateToPath(app_state))
   }
+
   componentDidUpdate(){
     const {app_state} = this.props
     console.log("app page", app_state)
@@ -28,6 +29,7 @@ class App extends Component{
       this.props.history.push(this.mapStateToPath(app_state))
     }
   }
+
   target_component = state => {
     switch(state) {
       case 'patient':
