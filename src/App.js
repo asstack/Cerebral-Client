@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { BrowserRouter as Router, Route, withRouter } from "react-router-dom"
+import {Route, withRouter } from "react-router-dom"
 import {connect} from 'react-redux'
 import Patient from './containers/patient'
 import MainPage from './containers'
@@ -10,19 +10,30 @@ class App extends Component{
   //Routing : [/, patinet, therapist]
   constructor(props){
     super(props)
+    this.state = {
+      prv_state:this.props.app_state
+    }
   }
 
   //[patient/]
   componentDidMount(){
-
+    const {app_state} = this.props
+    this.props.history.push(this.mapStateToPath(app_state))
   }
-
+  componentDidUpdate(){
+    const {app_state} = this.props
+    console.log("app page", app_state)
+    if(app_state!=this.state.prv_state){
+      this.setState({prv_state:app_state})
+      this.props.history.push(this.mapStateToPath(app_state))
+    }
+  }
   target_component = state => {
     switch(state) {
       case 'patient':
         return Patient
       default:
-        return Patient;
+        return MainPage;
     }
   }
 
@@ -31,25 +42,22 @@ class App extends Component{
       case 'patient':
         return "/patient"
       default:
-        return "";
+        return "/";
     }
   }
 
   render(){
     return (
-      <Router>
-        <div className="App">
-          <Route path={this.mapStateToPath(this.props.app_state)} component={this.target_component(this.props.app_state)}/>
-        </div>
-      </Router>
+      <div className="App">
+        <Route path={this.mapStateToPath(this.props.app_state)} component={this.target_component(this.props.app_state)}/>
+      </div>
     );
   }
 }
 
-
 const mapStateToProps = (state) => {
   const {global_reducer: {app_state}} = state
-  return state
+  return {app_state: app_state}
 }
 
 export default withRouter(connect(mapStateToProps,{}) (App))

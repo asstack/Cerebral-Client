@@ -13,6 +13,7 @@ class Patient extends Component{
     //TODO: 1. check app states [patient/profile, patient/assessment, ...]
     //if no user info and pages that need user info, redirect to login page
 
+    this.props.history.push('/patient/profile')
   }
 
   //Todo: update dynamic bounding by state

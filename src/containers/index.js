@@ -1,4 +1,6 @@
 import React, {Component} from 'react'
+import {connect} from 'react-redux'
+import {update_app_state} from '../actions'
 
 class MainPage extends Component{
 
@@ -6,14 +8,21 @@ class MainPage extends Component{
     super(props)
   }
 
+  app_state_update_handler = e => {
+    const {update_app_state}=this.props
+    update_app_state('patient')
+  }
+
   render(){
     return(
       <div>
         <h1> main page </h1>
-        <input type='button' value='Get start'/>
+        <input type='button' value='Get start' onClick={this.app_state_update_handler.bind(this)}/>
       </div>
     )
   }
 }
 
-export default MainPage
+
+
+export default connect(null, {update_app_state}) (MainPage)

@@ -1,4 +1,5 @@
 import {combineReducers} from 'redux'
+import * as app_types from '../actions'
 import * as user_auth_types from '../actions/user_auth_action'
 import * as patient_action_types from '../actions/patient_action'
 
@@ -18,7 +19,7 @@ const init_global_state = {
       last_name: null
     },
   },
-  app_state: '',
+  app_state: 'init',
 }
 
 const init_patient_state = {
@@ -45,6 +46,11 @@ const global_reducer = (state = init_global_state, action) => {
           attributes : action.user_attr
         }
       }
+      case app_types.SET_APP_STATE:
+        return{
+          ...state,
+          app_state:action.new_app_state
+        }
     default:
       return state
   }

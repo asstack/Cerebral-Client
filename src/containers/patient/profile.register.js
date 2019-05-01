@@ -43,7 +43,7 @@ class Register extends Component {
         })
     }
 
-    state_change_handler = e => {
+    state_update_handler = e => {
       const {move_patient_sign_in}=this.props
       move_patient_sign_in()
     }
@@ -91,7 +91,7 @@ class Register extends Component {
             <input type="submit" value="button"/>
           </form>
 
-          <input type="button" value="sign in" onClick={this.state_change_handler.bind(this)}/>
+          <input type="button" value="sign in" onClick={this.state_update_handler.bind(this)}/>
         </div>
       );
     }
