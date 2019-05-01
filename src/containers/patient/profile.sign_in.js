@@ -27,6 +27,7 @@ class SignIn extends Component {
       if(email && password){
         axios.post("http://localhost:3000/api/auth/sign_in" ,{email:email, password:password}, header)
           .then(function(resp){
+            console.info(resp)
             var attr = {attributes: { id: resp.data.data.id,
                                       uid:resp.data.data.uid,
                                       email:resp.data.data.email,

@@ -18,11 +18,12 @@ const init_global_state = {
       last_name: null
     },
   },
-  state: 'patient',
+  app_state: '',
 }
 
 const init_patient_state = {
   step:0,
+  patient_type: '',
   patient_state: 'profile/register',
   questions: '',
   answers: ''
@@ -35,7 +36,7 @@ const global_reducer = (state = init_global_state, action) => {
     case user_auth_types.SET_USER:
       return{
         ...state,
-        global_state:'patient',
+        app_state:'init',
         current_user: {
           ...state.current_user,
           user_type: 'patient',

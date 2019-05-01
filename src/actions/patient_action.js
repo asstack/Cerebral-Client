@@ -21,7 +21,7 @@ const set_state_with_step = (state, step_step) => ({
 })
 
 export const set_profile_question = () => (dispatch, getState) => {
-  return dispatch(set_state_with_step('profile/questions', 1))
+  return dispatch(set_state_with_step('profile/screening', 1))
 }
 
 export const move_patient_sign_in = () => (dispatch, getState) => {

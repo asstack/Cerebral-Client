@@ -1,9 +1,9 @@
-import React, {Component} from 'react';
+import React, {Component} from 'react'
 import { Route, withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 import Register from './profile.register'
 import SignIn from './profile.sign_in'
-import QuestionsComponent from './profile.questions'
+import QuestionsComponent from './profile.screening'
 
 class PatientProfile extends Component{
   //in here, will call componentDidMount and route for [profile, assessment, treatment, verification and shipping]
@@ -16,7 +16,7 @@ class PatientProfile extends Component{
   }
 
   componentDidMount(){
-    const {global_state, current_user, patient_state, step} = this.props
+    const {app_state, current_user, patient_state, step} = this.props
     this.props.history.push("/patient/"+patient_state)
   }
 
@@ -30,11 +30,11 @@ class PatientProfile extends Component{
   }
 
 
-  mount_component = target_state => {
+  target_component = target_state => {
     switch(target_state) {
       case 'profile/sign_in':
         return SignIn
-      case 'profile/questions':
+      case 'profile/screening':
         return QuestionsComponent
       default:
         return Register
@@ -47,7 +47,7 @@ class PatientProfile extends Component{
     return(
       <div>
         <h1>question {this.props.step + 1} of 9</h1>
-        <Route path={"/patient/" + this.props.patient_state} component={this.mount_component(this.props.patient_state)}/>
+        <Route path={"/patient/" + this.props.patient_state} component={this.target_component(this.props.patient_state)}/>
       </div>
     );
   }
@@ -56,12 +56,12 @@ class PatientProfile extends Component{
 const mapStateToProps = (state) => {
 
   const {
-    global_reducer: {global_state, current_user},
+    global_reducer: {app_state, current_user},
     patient_reducer: {patient_state, step}
   } = state
 
   return {
-    global_state: global_state,
+    app_state: app_state,
     current_user: current_user,
     patient_state: patient_state,
     step:step
