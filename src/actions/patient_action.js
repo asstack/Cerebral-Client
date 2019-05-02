@@ -1,5 +1,4 @@
-export const NEXT_STEP = 'profile/NEXT_STEP'
-export const PREV_STEP = 'profile/PREV_STEP'
+export const SET_STEP = 'profile/SET_STEP'
 export const SET_ANSWER = 'profile/SET_ANSWER'
 export const SUBMIT_ANSWERS = 'profile/SUBMIT_ANSWERS'
 export const SET_QUESTION_ID = 'profile/SET_QUESTION_ID'
@@ -10,9 +9,9 @@ export const SET_PATIENT_QUESTIONS = 'profile/SET_PATIENT_QUESTIONS'
 
 
 //TODO: implement middleware for handling api call
-const set_step = page_number => ({
-  type:NEXT_STEP,
-  page:page_number
+const set_step = step_num => ({
+  type:SET_STEP,
+  step:step_num
 })
 
 const set_state_with_step = (state, new_step) => ({
@@ -44,9 +43,8 @@ export const move_patient_sign_up = (state) => (dispatch, getState) => {
   return dispatch(set_state_with_step('profile/sign_up', 0))
 }
 
-export const move_next_step = () => (dispatch, getState) => {
-  var page_number=1
-  return dispatch(set_step(page_number))
+export const move_next_step = (step_num) => (dispatch, getState) => {
+  return dispatch(set_step(step_num+1))
 }
 
 export const update_patient_questions = (questions , bank_type)=> (dispatch, getState) => {

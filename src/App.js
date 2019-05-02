@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {Route, withRouter } from "react-router-dom"
 import {connect} from 'react-redux'
 import Patient from './containers/patient'
+import PatientInit from './containers/patient/patient_init'
 import MainPage from './containers'
 
 class App extends Component{
@@ -32,6 +33,8 @@ class App extends Component{
     switch(state) {
       case 'patient':
         return Patient
+      case 'patient/initial_step':
+        return PatientInit
       default:
         return MainPage;
     }
@@ -41,6 +44,8 @@ class App extends Component{
     switch(state) {
       case 'patient':
         return "/patient"
+      case 'patient/initial_step':
+        return "/patient/initial_step"
       default:
         return "/";
     }

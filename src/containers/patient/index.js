@@ -38,6 +38,7 @@ class Patient extends Component{
         </div>
       </div>
     );
+
   }
 }
 export default withRouter(Patient)

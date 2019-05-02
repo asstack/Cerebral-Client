@@ -26,9 +26,13 @@ const init_patient_state = {
   step:0,
   patient_type: '',
   patient_state: 'profile/register',
+  question_bank_type: '',
   questions: '',
   branch_questions: '',
-  answers: ''
+  branch_option:'',
+  branch_step:'',
+  answers: '',
+  is_complete: false,
 }
 
 //global state storage, it will have user account information and current global state
@@ -61,15 +65,10 @@ const global_reducer = (state = init_global_state, action) => {
 //TODO: move independent file ex) patient_reducer.js
 const patient_reducer = (state = init_patient_state, action) => {
   switch(action.type){
-    case patient_action_types.NEXT_STEP:
+    case patient_action_types.SET_STEP:
       return{
         ...state,
-        step : state.step+1
-      }
-    case patient_action_types.PREV_STEP:
-      return{
-        ...state,
-        step : state.step-1
+        step : action.step
       }
     case patient_action_types.SET_STATE:
       return{
@@ -80,12 +79,13 @@ const patient_reducer = (state = init_patient_state, action) => {
     case patient_action_types.SET_PATIENT_QUESTIONS:
       return{
         ...state,
-        question:action.questions
+        question_bank_type : action.bank_type,
+        questions : action.questinos
       }
     case patient_action_types.SET_BRANCH_QUESTIONS:
       return{
         ...state,
-        questions:action.questions
+        questions : action.questions
       }
     //TODO: implement after api done
     case patient_action_types.SUBMIT_ANSWERS:
