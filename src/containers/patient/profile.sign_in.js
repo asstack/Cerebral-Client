@@ -26,7 +26,7 @@ class SignIn extends Component {
 
       var header = {'Content-Type': 'application/json'}
       if(email && password){
-        axios.post("http://localhost:3000/api/auth/sign_in" ,{email:email, password:password}, header)
+        axios.post("/api/auth/sign_in" ,{email:email, password:password}, header)
           .then(function(resp){
             console.info(resp)
             var attr = {attributes: { id: resp.data.data.id,

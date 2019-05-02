@@ -16,7 +16,7 @@ class QuestionsComponent extends Component {
       //api call to get questions
       var header = {'Content-Type': 'application/json'}
       const {update_patient_questions} = this.props
-      axios.get("http://localhost:3000/api/question_banks/0/questions")
+      axios.get("/api/question_banks/0/questions")
         .then(function(resp){
           update_patient_questions(resp.data,0)
           console.log("resp: ", resp)
