@@ -25,7 +25,7 @@ class Register extends Component {
       const {sign_in, set_profile_question}=this.props
       var header = {'Content-Type': 'application/json'}
       if(first_name && last_name && email && (password && password_confirm)){
-        axios.post("http://localhost:3000/api/users",
+        axios.post("/api/users",
           {first_name:first_name, last_name:last_name, email:email, password:password, password_confirmation: password_confirm}, header)
           .then(function(resp){
             var attr = {attributes: { id: resp.data.id,

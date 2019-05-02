@@ -13,7 +13,7 @@ class QuestionsComponent extends Component {
     componentDidMount(){
       //api call to get questions
       var header = {'Content-Type': 'application/json'}
-      axios.get("http://localhost:3000/api/question_banks/0/questions")
+      axios.get("/api/question_banks/0/questions")
         .then(function(resp){
           console.log("resp: ", resp)
         }).catch(function(err){
