@@ -40,6 +40,10 @@ export const move_patient_sign_in = () => (dispatch, getState) => {
   return dispatch(set_state_with_step('profile/sign_in', 0))
 }
 
+export const move_patient_sign_up = (state) => (dispatch, getState) => {
+  return dispatch(set_state_with_step('profile/sign_up', 0))
+}
+
 export const move_next_step = () => (dispatch, getState) => {
   var page_number=1
   return dispatch(set_step(page_number))

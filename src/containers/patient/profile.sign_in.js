@@ -1,8 +1,9 @@
 import React, {Component} from 'react'
 import { connect } from 'react-redux'
-import { sign_in } from '../../actions/user_auth_action'
-import { set_profile_question } from '../../actions/patient_action'
 import axios from 'axios'
+import { sign_in } from '../../actions/user_auth_action'
+import { move_patient_sign_up, set_profile_question } from '../../actions/patient_action'
+import * as components from '../../components/question_components'
 
 
 class SignIn extends Component {
@@ -52,16 +53,18 @@ class SignIn extends Component {
       this.setState({password:pwd})
     }
 
+    state_update_handler = e => {
+      const {move_patient_sign_up}=this.props
+      move_patient_sign_up()
+    }
+
     render(){
       return (
         <div className="patient_signin">
-          <form onSubmit={this.sign_in_handler.bind(this)} method='POST'>
-            <label>email</label>
-            <input type="email" name="email" onChange={this.update_email.bind(this)} />
-            <label>pwd</label>
-            <input type="password" name="pwd" onChange={this.update_password.bind(this)}  />
-            <input type="submit" value="button"/>
-          </form>
+          {components.input_type_1(this.update_email.bind(this), "Email Address")}
+          {components.input_password_type_1(this.update_password.bind(this), "Password")}
+          {components.confirm_button_type_1(this.sign_in_handler.bind(this), "Get started with online visit")}
+          {components.text_button_type_1(this.state_update_handler.bind(this), "I don't have an account.")}
         </div>
       );
     }
@@ -71,4 +74,4 @@ const mapStateToProps = (state) => ({
     login_info : state.currentUser
 })
 
-export default connect(mapStateToProps, {sign_in,set_profile_question},)(SignIn)
+export default connect(mapStateToProps, {sign_in,set_profile_question, move_patient_sign_up},)(SignIn)
