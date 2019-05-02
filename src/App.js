@@ -14,7 +14,6 @@ class App extends Component{
       prv_state:this.props.app_state
     }
   }
-
   //[patient/]
   componentDidMount(){
     const {app_state} = this.props
@@ -23,7 +22,6 @@ class App extends Component{
 
   componentDidUpdate(){
     const {app_state} = this.props
-    console.log("app page", app_state)
     if(app_state!=this.state.prv_state){
       this.setState({prv_state:app_state})
       this.props.history.push(this.mapStateToPath(app_state))

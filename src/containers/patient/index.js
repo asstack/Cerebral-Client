@@ -19,8 +19,23 @@ class Patient extends Component{
   //Todo: update dynamic bounding by state
   render(){
     return(
-      <div>
-        <Route path = "/patient/profile" component={PatientProfile}/>
+      <div className="d-flex flex-column">
+        <div className="d-flex flex-row">
+          <div className="p-2"><div className="btn-arrow"><a className="link-type1" href="">&lt;</a></div></div>
+        </div>
+        <div className="d-flex justify-content-center flex-row">
+          <div className="col d-flex justify-content-center p-2 solid-border-bottom text-small">Patient Profile</div>
+          <div className="col d-flex justify-content-center p-2 solid-border-bottom__unselected text-small__unselected">Mental Health Assessment</div>
+          <div className="col d-flex justify-content-center p-2 solid-border-bottom__unselected text-small__unselected">Treatment Information</div>
+          <div className="col d-flex justify-content-center p-2 solid-border-bottom__unselected text-small__unselected">Identity Verification</div>
+          <div className="col d-flex justify-content-center p-2 solid-border-bottom__unselected text-small__unselected">Shipping and Payment</div>
+        </div>
+        <div className="d-flex flex-column question-container">
+          <div className="d-flex justify-content-left text-middle">QUESTION 1 OF 9</div>
+          <div className="questions-container">
+            <Route path="/patient/profile" component={PatientProfile}/>
+          </div>
+        </div>
       </div>
     );
   }

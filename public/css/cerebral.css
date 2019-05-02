@@ -1,0 +1,93 @@
+
+body {
+  font-family: "ProximaNova-Bold", Helvetica, Arial, serif;
+}
+
+.input-type1::placeholder  {
+  color: rgba(37, 0, 68, 1.0);
+
+}
+.input-type1 {
+  height: 60px;
+  border-radius: 2px;
+  border-style: solid;
+  border-width: 2px;
+  border-color: rgba(37, 0, 68, 1.0);
+}
+
+.checkbox-type1{
+  width: 30px;
+  height: 30px;
+  margin: 3px;
+  border-radius: 4px;
+  border-style: solid;
+  border-width: 2px;
+  border-color: rgba(37, 0, 68, 1.0);
+}
+
+.btn-arrow {
+  font-size: 48.0px;
+  color: rgba(37, 0, 68, 1.0);
+}
+
+.btn-confirm {
+    background-color: rgba(37, 0, 68, 1.0);
+    height: 60px;
+    width: 740px;
+    border-radius: 30px;
+    border-style: solid;
+    border-width: 2px;
+    border-color: rgba(37, 0, 68, 1.0);
+}
+
+.text-btn {
+  font-size: 24.0px;
+  color: rgba(255, 255, 255, 1.0);
+  font-family: "ProximaNova-Bold", Helvetica, Arial, serif;
+}
+
+
+.text-btn2 {
+  font-family: "ProximaNova-Bold", Helvetica, Arial, serif;
+  font-size: 24.0px;
+  color: rgba(36, 0, 68, 1.0);
+}
+
+.text-small {
+  font-size: 16.0px;
+  color: rgba(37, 0, 68, 1.0);
+}
+
+.text-small__unselected{
+  font-size: 16.0px;
+  color: #9998D6;
+}
+
+.text-middle {
+  font-size: 20.0px;
+  color: rgba(37, 0, 68, 1.0);
+}
+
+.text-big {
+  font-size: 48.0px;
+  line-height: 1.2;
+  color: rgba(37, 0, 68, 1.0);
+}
+
+.link-type1 {
+  color: rgba(37, 0, 68, 1.0);
+}
+
+.solid-border-bottom {
+  border-bottom: 10px solid rgba(37, 0, 68, 1.0);
+}
+
+.solid-border-bottom__unselected {
+  border-bottom: 10px solid #9998D6;
+}
+
+.question-container {
+  padding-top:80px;
+  width : 742px;
+  align-self: center;
+}

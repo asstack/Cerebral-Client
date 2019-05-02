@@ -27,6 +27,7 @@ const init_patient_state = {
   patient_type: '',
   patient_state: 'profile/register',
   questions: '',
+  branch_questions: '',
   answers: ''
 }
 
@@ -75,6 +76,16 @@ const patient_reducer = (state = init_patient_state, action) => {
         ...state,
         step : action.new_step,
         patient_state : action.new_state
+      }
+    case patient_action_types.SET_PATIENT_QUESTIONS:
+      return{
+        ...state,
+        question:action.questions
+      }
+    case patient_action_types.SET_BRANCH_QUESTIONS:
+      return{
+        ...state,
+        questions:action.questions
       }
     //TODO: implement after api done
     case patient_action_types.SUBMIT_ANSWERS:

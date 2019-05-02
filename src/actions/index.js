@@ -6,7 +6,6 @@ const set_app_state = state => ({
   new_app_state:state,
 })
 
-
 export const update_app_state = state => (dispatch, getState) => {
   return dispatch(set_app_state(state))
 }

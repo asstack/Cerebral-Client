@@ -30,7 +30,6 @@ class PatientProfile extends Component{
     }
   }
 
-
   target_component = target_state => {
     switch(target_state) {
       case 'profile/sign_in':
@@ -47,13 +46,12 @@ class PatientProfile extends Component{
   render(){
     return(
       <div>
-
-        <h1>question {this.props.step + 1} of 9</h1>
         <Route path={"/patient/" + this.props.patient_state} component={this.target_component(this.props.patient_state)}/>
       </div>
     );
   }
 }
+
 //TODO: elaborate to save memory
 const mapStateToProps = (state) => {
 
