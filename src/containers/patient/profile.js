@@ -30,6 +30,7 @@ class PatientProfile extends Component{
     }
   }
 
+
   target_component = target_state => {
     switch(target_state) {
       case 'profile/sign_in':
