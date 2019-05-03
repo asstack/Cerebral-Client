@@ -21,22 +21,13 @@ class PatientInit extends Component{
   componentDidMount(){
     var header = {'Content-Type': 'application/json'}
     const {update_patient_questions} = this.props
-    axios.get("http://localhost:3000/api/question_banks/0/questions")
+    axios.get("/api/question_banks/0/questions")
       .then(function(resp){
         update_patient_questions(resp.data, 0)
         console.log("resp: ", resp)
       }).catch(function(err){
         console.log("err", err)
       })
-
-
-      axios.get("http://localhost:3000/api/question_banks")
-        .then(function(resp){
-          update_patient_questions(resp.data, 0)
-          console.log("banktype checking: ", resp)
-        }).catch(function(err){
-          console.log("err", err)
-        })
   }
 
   componentDidUpdate(){
