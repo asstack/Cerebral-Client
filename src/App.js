@@ -55,7 +55,7 @@ class App extends Component{
     return (
       <div className="App">
         <Route path={this.mapStateToPath(this.props.app_state)} component={this.target_component(this.props.app_state)}/>
-      </div>
+    </div>
     );
   }
 }
