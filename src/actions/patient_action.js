@@ -23,6 +23,7 @@ const set_state_with_step = (state, new_step) => ({
 const set_patient_questions = (questions,type) => ({
   type:SET_PATIENT_QUESTIONS,
   questinos:questions,
+  total_step:questions.length,
   bank_type:type
 })
 

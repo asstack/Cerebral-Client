@@ -23,6 +23,7 @@ const init_global_state = {
 
 const init_patient_state = {
   step:0,
+  total_step:1,
   patient_type: '',
   patient_state: 'profile/register',
   question_bank_type: '',
@@ -79,7 +80,8 @@ const patient_reducer = (state = init_patient_state, action) => {
       return{
         ...state,
         question_bank_type : action.bank_type,
-        questions : action.questinos
+        questions : action.questinos,
+        total_step : action.total_step
       }
     case patient_action_types.SET_BRANCH_QUESTIONS:
       return{

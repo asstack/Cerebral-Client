@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import { Route, withRouter } from 'react-router-dom'
+import { connect } from 'react-redux'
 import PatientProfile from './profile'
 
 class Patient extends Component{
@@ -16,7 +17,8 @@ class Patient extends Component{
     this.props.history.push('/patient/profile')
   }
 
-  //Todo: update dynamic bounding by state
+  //TODO: update dynamic bounding by state
+  //TODO: add redux state for size of questions
   render(){
     return(
       <div className="d-flex flex-column">
@@ -31,7 +33,7 @@ class Patient extends Component{
           <div className="col d-flex justify-content-center p-2 solid-border-bottom__unselected text-small__unselected">Shipping and Payment</div>
         </div>
         <div className="d-flex flex-column question-container">
-          <div className="d-flex justify-content-left text-middle">QUESTION 1 OF 9</div>
+          <div className="d-flex justify-content-left text-middle">QUESTION {this.props.question_step+1} OF {this.props.total_step}</div>
           <div className="questions-container">
             <Route path="/patient/profile" component={PatientProfile}/>
           </div>
@@ -41,4 +43,16 @@ class Patient extends Component{
 
   }
 }
-export default withRouter(Patient)
+
+
+const mapStateToProps = state => {
+  const{
+    patient_reducer: {patient_state, step, total_step}
+  } = state
+  return {
+    question_step:step,
+    total_step:total_step
+  }
+}
+
+export default withRouter(connect(mapStateToProps, {}) (Patient))
