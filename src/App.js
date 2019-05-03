@@ -23,7 +23,7 @@ class App extends Component{
 
   componentDidUpdate(){
     const {app_state} = this.props
-    if(app_state!=this.state.prv_state){
+    if(app_state!==this.state.prv_state){
       this.setState({prv_state:app_state})
       this.props.history.push(this.mapStateToPath(app_state))
     }

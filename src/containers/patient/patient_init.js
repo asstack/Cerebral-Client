@@ -5,6 +5,7 @@ import { connect } from 'react-redux'
 import { update_patient_questions, move_next_step } from '../../actions/patient_action'
 import * as components from '../../components/question_components/components'
 import {selector} from '../../components/question_types/selector'
+import CreateProfile from '../../components/question_types/create_profile'
 
 
 class PatientInit extends Component{
@@ -17,7 +18,6 @@ class PatientInit extends Component{
       title: ''
     }
   }
-
   componentDidMount(){
     var header = {'Content-Type': 'application/json'}
     const {update_patient_questions} = this.props
@@ -51,13 +51,46 @@ class PatientInit extends Component{
     move_next_step(this.props.question_step)
   }
 
+  create_profile_handler = (e) => {
+    e.preventDefault()
+    const {first_name, last_name, email, password, password_confirm} = this.state
+    const {sign_in, set_profile_question}=this.props
+    var header = {'Content-Type': 'application/json'}
+    if(first_name && last_name && email && (password && password_confirm)){
+      axios.post("/api/users",
+        {first_name:first_name, last_name:last_name, email:email, password:password, password_confirmation: password_confirm}, header)
+        .then(function(resp){
+          var attr = {attributes: { id: resp.data.id,
+                                    uid:resp.data.uid,
+                                    email:resp.data.email,
+                                    first_name:resp.data.first_name,
+                                    last_name:resp.data.last_name
+                                  }}
+          //TODO: NEVER use the dispatches like here. will move to action with err handling
+          sign_in(attr)
+        }).catch(function(err){
+          console.log("err", err)
+        })
+    }
+  }
+
+  display_title = (questions, step) =>{
+    if(questions[step]){
+      return questions[step].title
+    }
+  }
+
   map_type_to_component = (questions, step) => {
-
+//<Route path="/greeting/:name" render={(props) => <Greeting text="Hello, " {...props} />} />
     if(!questions[step]) {return <div> loading </div>}
-
     switch(questions[step].question_type) {
       case 'selector':
         return selector(this.set_selector_handler.bind(this), questions[step])
+      case 'create_profile':
+        return <Route path='' render={(props) =>
+            <CreateProfile
+              next_step_handler = {this.next_step_handler}
+              create_profile_handler={this.create_profile_handler} />} />
       case 'bank_selector':
         return selector(this.set_bank_selector_handler.bind(this), questions[step])
       default:
@@ -74,11 +107,6 @@ class PatientInit extends Component{
     }
   }
 
-  display_title = (questions, step) =>{
-    if(questions[step]){
-      return questions[step].title
-    }
-  }
   //Todo: update dynamic bounding by state
   //state global: patient local: profile/register profile/sign_in profile/questions
   render(){

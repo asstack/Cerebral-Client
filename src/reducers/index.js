@@ -3,7 +3,6 @@ import * as app_types from '../actions'
 import * as user_auth_types from '../actions/user_auth_action'
 import * as patient_action_types from '../actions/patient_action'
 
-import merge from 'merge'
 
 const init_global_state = {
 
