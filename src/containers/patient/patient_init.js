@@ -61,7 +61,16 @@ class PatientInit extends Component{
       case 'bank_selector':
         return selector(this.set_bank_selector_handler.bind(this), questions[step])
       default:
-        return <input type="button" onClick={this.next_step_handler.bind(this)} value="Next"/>
+        return( 
+          <div>
+          <div className='d-flex flex-row justify-content-center'>
+            <img src='https://cdn.pixabay.com/photo/2017/06/16/07/26/under-construction-2408060__340.png'/>
+            </div>
+          <div className='d-flex flex-row justify-content-center'>
+            <input type="button" onClick={this.next_step_handler.bind(this)} value="Next"/>
+          </div>
+        </div>
+        )
     }
   }
 
