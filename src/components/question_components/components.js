@@ -44,6 +44,7 @@ export const text_button_type_1 = (event_handler, description) => {
   )
 }
 
+
 export const text_big_type_1 = text => {
   return(
     <div className="d-flex justify-content-center text-big">
@@ -52,18 +53,10 @@ export const text_big_type_1 = text => {
   )
 }
 
-const display_selector_items = (event_handler, options) => {
-  return options.map((item, index) => (
+
+export const btn_selector = (event_handler, item)=>{
+  return(
     <div className="p-2 ">
       <input className ="col btn-selector" onClick={event_handler} type="button" value={item}/>
-    </div>
-  ))
-}
-
-export const question_selector = (event_handler, question) =>{
-    return (
-      <div className="d-flex flex-row justify-content-center">
-        {display_selector_items(event_handler, question.options)}
-      </div>
-    )
+    </div>)
 }

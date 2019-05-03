@@ -3,9 +3,9 @@ import { Route, withRouter } from 'react-router-dom'
 import axios from 'axios'
 import { connect } from 'react-redux'
 import { update_patient_questions, move_next_step } from '../../actions/patient_action'
-import * as components from '../../components/question_components'
+import * as components from '../../components/question_components/components'
+import {selector} from '../../components/question_types/selector'
 
-//patient/initial_step
 
 class PatientInit extends Component{
   //in here, will call componentDidMount and route for [profile, assessment, treatment, verification and shipping]
@@ -57,13 +57,12 @@ class PatientInit extends Component{
 
     switch(questions[step].question_type) {
       case 'selector':
-        return components.question_selector(this.set_selector_handler.bind(this), questions[step])
+        return selector(this.set_selector_handler.bind(this), questions[step])
       case 'bank_selector':
-        return components.question_selector(this.set_bank_selector_handler.bind(this), questions[step])
+        return selector(this.set_bank_selector_handler.bind(this), questions[step])
       default:
         return <input type="button" onClick={this.next_step_handler.bind(this)} value="Next"/>
     }
-
   }
 
   display_title = (questions, step) =>{

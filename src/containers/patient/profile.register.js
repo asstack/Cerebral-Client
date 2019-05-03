@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import { register_user, sign_in } from '../../actions/user_auth_action'
 import { move_patient_sign_in, set_profile_question } from '../../actions/patient_action'
 import { connect } from 'react-redux'
-import * as components from '../../components/question_components'
+import * as components from '../../components/question_components/components'
 import axios from 'axios'
 
 
