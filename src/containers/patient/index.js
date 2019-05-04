@@ -13,8 +13,15 @@ class Patient extends Component{
   componentDidMount(){
     //TODO: 1. check app states [patient/profile, patient/assessment, ...]
     //if no user info and pages that need user info, redirect to login page
-
     this.props.history.push('/patient/profile')
+  }
+
+  map_type_to_style_class = (state, target) => {
+    if(state.split('/')[0] === target){
+      return "col d-flex justify-content-center p-2 solid-border-bottom text-small";
+    }else{
+      return "col d-flex justify-content-center p-2 solid-border-bottom__unselected text-small__unselected";
+    }
   }
 
   //TODO: update dynamic bounding by state
@@ -26,11 +33,11 @@ class Patient extends Component{
           <div className="p-2"><div className="btn-arrow"><a className="link-type1" href="">&lt;</a></div></div>
         </div>
         <div className="d-flex justify-content-center flex-row">
-          <div className="col d-flex justify-content-center p-2 solid-border-bottom text-small">Patient Profile</div>
-          <div className="col d-flex justify-content-center p-2 solid-border-bottom__unselected text-small__unselected">Mental Health Assessment</div>
-          <div className="col d-flex justify-content-center p-2 solid-border-bottom__unselected text-small__unselected">Treatment Information</div>
-          <div className="col d-flex justify-content-center p-2 solid-border-bottom__unselected text-small__unselected">Identity Verification</div>
-          <div className="col d-flex justify-content-center p-2 solid-border-bottom__unselected text-small__unselected">Shipping and Payment</div>
+          <div className={this.map_type_to_style_class(this.props.patient_state, "profile")}>Patient Profile</div>
+          <div className={this.map_type_to_style_class(this.props.patient_state, "assessment")}>Mental Health Assessment</div>
+          <div className={this.map_type_to_style_class(this.props.patient_state, "treatment")}>Treatment Information</div>
+          <div className={this.map_type_to_style_class(this.props.patient_state, "identity")}>Identity Verification</div>
+          <div className={this.map_type_to_style_class(this.props.patient_state, "shipping")}>Shipping and Payment</div>
         </div>
         <div className="d-flex flex-column question-container">
           <div className="d-flex justify-content-left text-middle">QUESTION {this.props.question_step+1} OF {this.props.total_step}</div>
@@ -47,9 +54,12 @@ class Patient extends Component{
 
 const mapStateToProps = state => {
   const{
+    global_reducer: {app_state},
     patient_reducer: {patient_state, step, total_step}
   } = state
   return {
+    app_state:app_state,
+    patient_state:patient_state,
     question_step:step,
     total_step:total_step
   }
