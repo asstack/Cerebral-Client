@@ -3,6 +3,26 @@ body {
   font-family: "ProximaNova-Bold", Helvetica, Arial, serif;
 }
 
+.video_cam_holder {
+	height: 400px;
+}
+
+.dropzone {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    border-width: 2px;
+    border-radius: 2px;
+    border-color: #eeeeee;
+    border-style: dashed;
+    background-color: #fafafa;
+    color: #bdbdbd;
+    outline: none;
+    transition: border .24s ease-in-out;
+}
+
 .input-type1::placeholder  {
   color: rgba(37, 0, 68, 1.0);
 
