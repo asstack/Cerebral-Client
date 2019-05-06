@@ -28,6 +28,9 @@ class QuestionsComponent extends Component {
         })
     }
 
+    // TODO: next_step_handler is identical in patient_init.js and
+    // profile.screening.js; they don't need to be in both
+
     next_step_handler=(e)=>{
       const {move_next_step} = this.props
       move_next_step(this.props.question_step)
@@ -53,8 +56,8 @@ class QuestionsComponent extends Component {
           case 'create_profile':
             return <Route path='' render={(props) =>
                 <CreateProfile
-                  next_step_handler = {this.next_step_handler}
-                  create_profile_handler={this.create_profile_handler} />} />
+                next_step_action = {this.props.register_user}
+                 />} />
           case 'bank_selector':
             return selector(this.set_bank_selector_handler.bind(this), questions[step])
           default:

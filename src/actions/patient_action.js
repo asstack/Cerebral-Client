@@ -14,6 +14,9 @@ const set_step = step_num => ({
   step:step_num
 })
 
+// https://redux.js.org/basics/actions#actions
+// https://redux.js.org/basics/actions#action-creators
+
 const set_state_with_step = (state, new_step) => ({
   type:SET_STATE,
   new_state:state,

@@ -11,7 +11,9 @@ const selector_items = (event_handler, options) => {
 export const selector = (event_handler, question) =>{
     return (
       <div className="d-flex flex-row justify-content-center">
-        {selector_items(event_handler, question.options)}
+        {
+          selector_items(event_handler, question.options)
+        }
       </div>
     )
 }

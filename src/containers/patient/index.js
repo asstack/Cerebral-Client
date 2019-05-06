@@ -26,6 +26,7 @@ class Patient extends Component{
 
   //TODO: update dynamic bounding by state
   //TODO: add redux state for size of questions
+  // uses https://reacttraining.com/react-router/web/api/Route
   render(){
     return(
       <div className="d-flex flex-column">
@@ -65,4 +66,5 @@ const mapStateToProps = state => {
   }
 }
 
+// https://react-redux.js.org/introduction/basic-tutorial#connecting-the-components
 export default withRouter(connect(mapStateToProps, {}) (Patient))

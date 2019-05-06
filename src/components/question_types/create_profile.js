@@ -18,8 +18,9 @@ class CreateProfile extends Component {
     }
 
     update_handler = e => {
-      const {move_patient_sign_in}=this.props
-      move_patient_sign_in()
+
+      const {next_step_action}=this.props
+      next_step_action(this.state)
     }
 
     update_email = (e) => {
@@ -56,7 +57,7 @@ class CreateProfile extends Component {
           {components.input_password_type_1(this.update_password.bind(this), "Create Password")}
           {components.input_password_type_1(this.update_password_confirm.bind(this), "Retype Password")}
           {components.checkbox_type_1(null, 'I already have an account I consent to Telehealth, terms and privacy policy. All information is strictly confidential and is used to help our professionals provide the best care for you.')}
-          {components.confirm_button_type_1(this.props.next_step_handler, "Sign up for Cerebral Updates")}
+          {components.confirm_button_type_1(this.update_handler.bind(this), "Sign up for Cerebral Updates")}
         </div>
       );
     }
