@@ -2,7 +2,8 @@ import React, {Component} from 'react';
 import { Route, withRouter } from 'react-router-dom'
 import axios from 'axios'
 import { connect } from 'react-redux'
-import { update_patient_questions, move_next_step } from '../../actions/patient_action'
+import { update_app_state } from '../../actions/'
+import { update_patient_questions, move_next_step, update_bank_type} from '../../actions/patient_action'
 import * as components from '../../components/question_components/components'
 import {selector} from '../../components/question_types/selector'
 import CreateProfile from '../../components/question_types/create_profile'
@@ -30,7 +31,12 @@ class PatientInit extends Component{
       })
   }
 
+	//TODO: move checking part to action and middleware
   componentDidUpdate(){
+		if(this.props.is_complete){
+			const {update_app_state} = this.props
+			update_app_state("patient")		
+		}
     console.log("chk did update:", this.props.question_step)
   }
 
@@ -47,7 +53,8 @@ class PatientInit extends Component{
 
   set_bank_selector_handler=(e)=>{
     console.log("set value check: ", e.target.value)
-    const {move_next_step} = this.props
+    const {move_next_step, update_bank_type} = this.props
+		update_bank_type(e.target.value)
     move_next_step(this.props.question_step)
   }
 
@@ -72,7 +79,7 @@ class PatientInit extends Component{
           console.log("err", err)
         })
     }
-  }
+	}
 
   display_title = (questions, step) =>{
     if(questions[step]){
@@ -133,7 +140,7 @@ class PatientInit extends Component{
 const mapStateToProps = (state) => {
   const{
     global_reducer: {app_state, current_user},
-    patient_reducer: {patient_state, step, question_bank_type, questions, branch_questions, branch_step, branch_option}
+    patient_reducer: {patient_state, step, question_bank_type, questions, branch_questions, branch_step, branch_option, is_complete}
   } = state
 
   return {
@@ -143,8 +150,9 @@ const mapStateToProps = (state) => {
     questions: questions,
     branch_questions: branch_questions,
     branch_step: branch_step,
-    branch_option: branch_option
+    branch_option: branch_option,
+		is_complete: is_complete
   }
 }
 
-export default withRouter(connect(mapStateToProps,{update_patient_questions, move_next_step}) (PatientInit))
+export default withRouter(connect(mapStateToProps,{update_app_state, update_patient_questions, move_next_step, update_bank_type}) (PatientInit))

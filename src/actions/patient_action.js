@@ -5,13 +5,15 @@ export const SET_QUESTION_ID = 'profile/SET_QUESTION_ID'
 export const SET_STATE = 'profile/SET_STATE'
 export const SET_BRANCH_QUESTIONS = 'profile/SET_BRANCH_QUESTIONS'
 export const SET_PATIENT_QUESTIONS = 'profile/SET_PATIENT_QUESTIONS'
+export const SET_BANK_TYPE = 'profile/SET_BANK_TYPE'
 //step 2..9
 
 
 //TODO: implement middleware for handling api call
-const set_step = step_num => ({
+const set_step = (step_num, is_complete) => ({
   type:SET_STEP,
-  step:step_num
+	step:step_num,
+	is_complete:is_complete
 })
 
 const set_state_with_step = (state, new_step) => ({
@@ -32,6 +34,11 @@ const set_branch_questions = (questions,type) => ({
   questions:questions
 })
 
+const set_bank_type = btype => ({
+	type:SET_BANK_TYPE,
+	bank_type: btype
+})
+
 export const set_profile_question = () => (dispatch, getState) => {
   return dispatch(set_state_with_step('profile/screening', 1))
 }
@@ -45,7 +52,10 @@ export const move_patient_sign_up = (state) => (dispatch, getState) => {
 }
 
 export const move_next_step = (step_num) => (dispatch, getState) => {
-  return dispatch(set_step(step_num+1))
+	var is_complete = false
+	if(step_num+1 === getState().patient_reducer.questions.length)
+		is_complete=true
+  return dispatch(set_step(step_num+1, is_complete))
 }
 
 export const update_patient_questions = (questions , bank_type)=> (dispatch, getState) => {
@@ -54,5 +64,8 @@ export const update_patient_questions = (questions , bank_type)=> (dispatch, get
 
 export const update_branch_questions = questions => (dispatch, getState) => {
   return dispatch(set_branch_questions(questions))
+}
 
+export const update_bank_type = bank_type => (dispatch, getState) => {
+	return dispatch(set_bank_type(bank_type))
 }

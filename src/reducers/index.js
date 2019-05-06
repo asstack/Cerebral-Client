@@ -33,6 +33,7 @@ const init_patient_state = {
   branch_step:'',
   answers: '',
   is_complete: false,
+	is_valied_state: false
 }
 
 //global state storage, it will have user account information and current global state
@@ -68,7 +69,8 @@ const patient_reducer = (state = init_patient_state, action) => {
     case patient_action_types.SET_STEP:
       return{
         ...state,
-        step : action.step
+        step : action.step,
+				is_complete: action.is_complete
       }
     case patient_action_types.SET_STATE:
       return{
@@ -79,6 +81,7 @@ const patient_reducer = (state = init_patient_state, action) => {
     case patient_action_types.SET_PATIENT_QUESTIONS:
       return{
         ...state,
+				step:0,
         question_bank_type : action.bank_type,
         questions : action.questinos,
         total_step : action.total_step
@@ -88,6 +91,11 @@ const patient_reducer = (state = init_patient_state, action) => {
         ...state,
         questions : action.questions
       }
+		case patient_action_types.SET_BANK_TYPE:
+			return{
+				...state,
+				question_bank_type : action.bank_type
+			}
     //TODO: implement after api done
     case patient_action_types.SUBMIT_ANSWERS:
       return{}
