@@ -1,9 +1,10 @@
 import axios from 'axios'
 
 export const SET_STEP = 'profile/SET_STEP'
-export const SET_ANSWER = 'profile/SET_ANSWER'
-export const SUBMIT_ANSWERS = 'profile/SUBMIT_ANSWERS'
-export const SET_QUESTION_ID = 'profile/SET_QUESTION_ID'
+// these constants will not be used because answers will not be stored locally
+// export const SET_ANSWER = 'profile/SET_ANSWER'
+// export const SUBMIT_ANSWERS = 'profile/SUBMIT_ANSWERS'
+// export const SET_QUESTION_ID = 'profile/SET_QUESTION_ID'
 export const SET_STATE = 'profile/SET_STATE'
 export const SET_BRANCH_QUESTIONS = 'profile/SET_BRANCH_QUESTIONS'
 export const SET_PATIENT_QUESTIONS = 'profile/SET_PATIENT_QUESTIONS'
@@ -56,7 +57,7 @@ export const move_next_step = (step_num) => (dispatch, getState) => {
 export const update_patient_questions = (bank_id)=> (dispatch, getState) => {
   
   var header = {'Content-Type': 'application/json'}
-    axios.get("/api/question_banks/0/questions")
+    axios.get(`/api/question_banks/${bank_id}/questions`)
       .then(function(resp){
         console.log("resp: ", resp)
         return dispatch(set_patient_questions(resp.data, bank_id))
