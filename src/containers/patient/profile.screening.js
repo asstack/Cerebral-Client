@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import { Route, withRouter } from 'react-router-dom'
-import axios from 'axios'
 import { connect } from 'react-redux'
 import { update_patient_questions, move_next_step } from '../../actions/patient_action'
 import * as components from '../../components/question_components/components'
@@ -17,15 +16,8 @@ class QuestionsComponent extends Component {
 
     componentDidMount(){
       //api call to get questions
-      var header = {'Content-Type': 'application/json'}
       const {update_patient_questions} = this.props
-      axios.get("/api/question_banks/3/questions")
-        .then(function(resp){
-          update_patient_questions(resp.data,0)
-          console.log("resp: ", resp)
-        }).catch(function(err){
-          console.log("err", err)
-        })
+      update_patient_questions(0)
     }
 
     // TODO: next_step_handler is identical in patient_init.js and

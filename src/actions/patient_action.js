@@ -1,3 +1,5 @@
+import axios from 'axios'
+
 export const SET_STEP = 'profile/SET_STEP'
 export const SET_ANSWER = 'profile/SET_ANSWER'
 export const SUBMIT_ANSWERS = 'profile/SUBMIT_ANSWERS'
@@ -51,8 +53,16 @@ export const move_next_step = (step_num) => (dispatch, getState) => {
   return dispatch(set_step(step_num+1))
 }
 
-export const update_patient_questions = (questions , bank_type)=> (dispatch, getState) => {
-  return dispatch(set_patient_questions(questions, bank_type))
+export const update_patient_questions = (bank_id)=> (dispatch, getState) => {
+  
+  var header = {'Content-Type': 'application/json'}
+    axios.get("/api/question_banks/0/questions")
+      .then(function(resp){
+        console.log("resp: ", resp)
+        return dispatch(set_patient_questions(resp.data, bank_id))
+      }).catch(function(err){
+        console.log("err", err)
+      })
 }
 
 export const update_branch_questions = questions => (dispatch, getState) => {
