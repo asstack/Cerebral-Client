@@ -8,14 +8,20 @@ export const SET_STEP = 'patient/SET_STEP'
 export const SET_STATE = 'patient/SET_STATE'
 export const SET_BRANCH_QUESTIONS = 'patient/SET_BRANCH_QUESTIONS'
 export const SET_PATIENT_QUESTIONS = 'patient/SET_PATIENT_QUESTIONS'
+export const SET_BANK_TYPE = 'patient/SET_BANK_TYPE'
+export const REMOVE_PATIENT_QUESTIONS = 'patient/REMOVE_PATIENT_QUESTIONS'
+
 //step 2..9
 
 export const SET_PATIENT = 'patient/SET_PATIENT'
 export const SET_VISIT = 'patient/SET_VISIT'
 
-const set_step = step_num => ({
+
+//TODO: implement middleware for handling api call
+const set_step = (step_num, is_complete) => ({
   type:SET_STEP,
-  step:step_num
+	step:step_num,
+	is_complete:is_complete
 })
 
 // https://redux.js.org/basics/actions#actions
@@ -39,6 +45,7 @@ const set_branch_questions = (questions,type) => ({
   questions:questions
 })
 
+
 const set_patient = (patient_object) => ({
   type:SET_PATIENT,
   patient_object: patient_object
@@ -47,6 +54,14 @@ const set_patient = (patient_object) => ({
 const set_visit = (visit_object) => ({
   type:SET_VISIT,
   visit_object:visit_object
+
+const set_bank_type = btype => ({
+	type:SET_BANK_TYPE,
+	bank_type: btype
+})
+
+const remove_patient_questions = () => ({
+	type:REMOVE_PATIENT_QUESTIONS
 })
 
 export const set_profile_question = () => (dispatch, getState) => {
@@ -62,7 +77,10 @@ export const move_patient_sign_up = (state) => (dispatch, getState) => {
 }
 
 export const move_next_step = (step_num) => (dispatch, getState) => {
-  return dispatch(set_step(step_num+1))
+	var is_complete = false
+	if(step_num+1 === getState().patient_reducer.questions.length)
+		is_complete=true
+  return dispatch(set_step(step_num+1, is_complete))
 }
 
 export const update_patient_questions = (bank_id)=> (dispatch, getState) => {
@@ -77,9 +95,14 @@ export const update_patient_questions = (bank_id)=> (dispatch, getState) => {
       })
 }
 
+export const delete_patient_questions = () => (dispatch, getState) => {
+	return dispatch(remove_patient_questions())
+}
+
 export const update_branch_questions = questions => (dispatch, getState) => {
   return dispatch(set_branch_questions(questions))
 }
+
 
 export const create_patient_from_user = () => (dispatch, getState) => {
   
@@ -114,6 +137,9 @@ export const create_visit = (patient) => (dispatch, getState) => {
       console.log("create_visit resp: ", resp)
       return dispatch(set_patient_questions(resp.data, bank_id))
     })
+
+export const update_bank_type = bank_type => (dispatch, getState) => {
+	return dispatch(set_bank_type(bank_type))
 }
 
 export const answer_current_question = (answer) => (dispatch, getState) => {

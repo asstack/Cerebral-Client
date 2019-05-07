@@ -76,13 +76,17 @@ class QuestionsComponent extends Component {
     }
 
     display_title = (questions, step) =>{
-      if(questions[step]){
+      if(questions && questions[step]){
         return questions[step].title
       }
     }
 
     render(){
+			if(!this.props.questions){
+				return (<div>"loading"</div>)
+			}
       return (
+				
         <div className="patinet_questions">
           <p> {this.display_title(this.props.questions, this.props.question_step)} </p>
           {this.map_type_to_component(this.props.questions, this.props.question_step)}

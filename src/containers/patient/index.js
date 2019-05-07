@@ -2,6 +2,8 @@ import React, {Component} from 'react';
 import { Route, withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 import PatientProfile from './profile'
+import {delete_patient_questions} from '../../actions/patient_action'
+
 
 class Patient extends Component{
   //in here, will call componentDidMount and route for [profile, assessment, treatment, verification and shipping]
@@ -13,8 +15,18 @@ class Patient extends Component{
   componentDidMount(){
     //TODO: 1. check app states [patient/profile, patient/assessment, ...]
     //if no user info and pages that need user info, redirect to login page
-    this.props.history.push('/patient/profile')
+		//clear question data
+		const {delete_patient_questions} = this.props
+		delete_patient_questions()
+    this.props.history.push('/patient/profile')	
   }
+
+	//TODO: I am not sure it is right way
+	componentDidUpdate(){	
+		if(this.props.location.pathname==="/patient"){
+			this.props.history.push('/patient/profile')
+		}
+	}
 
   map_type_to_style_class = (state, target) => {
     if(state.split('/')[0] === target){
@@ -43,7 +55,7 @@ class Patient extends Component{
         <div className="d-flex flex-column question-container">
           <div className="d-flex justify-content-left text-middle">QUESTION {this.props.question_step+1} OF {this.props.total_step}</div>
           <div className="questions-container">
-            <Route path="/patient/profile" component={PatientProfile}/>
+          	<Route path="/patient/profile" component={PatientProfile}/>
           </div>
         </div>
       </div>
@@ -56,15 +68,18 @@ class Patient extends Component{
 const mapStateToProps = state => {
   const{
     global_reducer: {app_state},
-    patient_reducer: {patient_state, step, total_step}
+    patient_reducer: {patient_state, step, total_step, questions}
   } = state
   return {
     app_state:app_state,
     patient_state:patient_state,
+		questions:questions,
     question_step:step,
     total_step:total_step
   }
 }
 
+
 // https://react-redux.js.org/introduction/basic-tutorial#connecting-the-components
-export default withRouter(connect(mapStateToProps, {}) (Patient))
+export default withRouter(connect(mapStateToProps, {delete_patient_questions}) (Patient))
+

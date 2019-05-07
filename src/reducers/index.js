@@ -36,10 +36,10 @@ const init_patient_state = {
   branch_step:'',
   answers: '',
   is_complete: false,
-
   // contains a copy of patient/visit information from the database
   patient_object: null,
   visit_object: null
+	is_valied_state: false
 }
 
 //global state storage, it will have user account information and current global state
@@ -79,7 +79,8 @@ const patient_reducer = (state = init_patient_state, action) => {
     case patient_action_types.SET_STEP:
       return{
         ...state,
-        step : action.step
+        step : action.step,
+				is_complete: action.is_complete
       }
 
     case patient_action_types.SET_PATIENT:
@@ -107,6 +108,7 @@ const patient_reducer = (state = init_patient_state, action) => {
     case patient_action_types.SET_PATIENT_QUESTIONS:
       return{
         ...state,
+				step:0,
         question_bank_type : action.bank_type,
         questions : action.questinos,
         total_step : action.total_step
@@ -116,6 +118,18 @@ const patient_reducer = (state = init_patient_state, action) => {
         ...state,
         questions : action.questions
       }
+		case patient_action_types.SET_BANK_TYPE:
+			return{
+				...state,
+				question_bank_type : action.bank_type
+			}
+		case patient_action_types.REMOVE_PATIENT_QUESTIONS:
+			return{
+				...state,
+				questions: null,
+				total_step:1,
+				step: 0
+			}
     // see notes in patient_actions
     // case patient_action_types.SUBMIT_ANSWERS:
       // return{}
