@@ -28,9 +28,10 @@ export const sign_in = user_info => (dispatch, getState) =>  {
                                     token: resp.headers['access-token'],
                                     client: resp.headers.client
                                   }}
-          
                                   
-          return dispatch(set_user(attr))
+          dispatch(set_user(attr))
+
+          console.log("sign_in", attr)
           
         }).catch(function(err){
           console.log("err", err)
@@ -57,7 +58,7 @@ export const register_user = user_info => (dispatch, getState)=>{
 
           // TODO: we may not want to chain register with sign-in during the pilot when a User
           // is not in Californa and therefore cannot be a Patient
-          return dispatch(sign_in(user_info))
+          dispatch(sign_in(user_info))
 
         }).catch(function(err){
           console.log("err", err)

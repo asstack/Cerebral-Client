@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import { Route, withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
-import { update_patient_questions, move_next_step,  } from '../../actions/patient_action'
+import { update_patient_questions, move_next_step, create_patient_from_user } from '../../actions/patient_action'
 import { sign_in, register_user} from '../../actions/user_auth_action'
 // import * as components from '../../components/question_components/components'
 import {selector} from '../../components/question_types/selector'
@@ -50,6 +50,14 @@ class PatientInit extends Component{
     }
   }
 
+  did_create_patient = (state) =>{
+    this.props.register_user(state)
+
+    // TODO: create_patient_from_user needs the user to exist but register_user returns immediately
+    this.props.create_patient_from_user()
+    this.props.move_next_step(this.props.question_step)
+  }
+
   map_type_to_component = (questions, step) => {
     if(!questions[step]) {return <div> loading </div>}
     switch(questions[step].question_type) {
@@ -58,7 +66,7 @@ class PatientInit extends Component{
       case 'create_profile':
         return <Route path='' render={(props) =>
             <CreateProfile
-              next_step_action = {this.props.register_user}
+              next_step_action = {this.did_create_patient.bind(this)}
             />} />
       case 'bank_selector':
         return selector(this.set_bank_selector_handler.bind(this), questions[step])
@@ -117,4 +125,4 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default withRouter(connect(mapStateToProps,{update_patient_questions, move_next_step, sign_in, register_user}) (PatientInit))
+export default withRouter(connect(mapStateToProps,{update_patient_questions, create_patient_from_user, move_next_step, sign_in, register_user}) (PatientInit))

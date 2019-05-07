@@ -36,6 +36,10 @@ const init_patient_state = {
   branch_step:'',
   answers: '',
   is_complete: false,
+
+  // contains a copy of patient/visit information from the database
+  patient_object: null,
+  visit_object: null
 }
 
 //global state storage, it will have user account information and current global state
@@ -77,6 +81,23 @@ const patient_reducer = (state = init_patient_state, action) => {
         ...state,
         step : action.step
       }
+
+    case patient_action_types.SET_PATIENT:
+      return{
+        ...state,
+        patient_state : {
+          patient_object: action.patient_object
+        }
+      }
+
+    case patient_action_types.SET_VISIT:
+      return{
+        ...state,
+        patient_state : {
+          visit_object: action.visit_object
+        }
+      }
+    
     case patient_action_types.SET_STATE:
       return{
         ...state,
@@ -95,11 +116,11 @@ const patient_reducer = (state = init_patient_state, action) => {
         ...state,
         questions : action.questions
       }
-    //TODO: implement after api done
-    case patient_action_types.SUBMIT_ANSWERS:
-      return{}
-    case patient_action_types.SET_QUESTION_ID:
-      return{}
+    // see notes in patient_actions
+    // case patient_action_types.SUBMIT_ANSWERS:
+      // return{}
+    // case patient_action_types.SET_QUESTION_ID:
+      // return{}
     default:
       return state
   }

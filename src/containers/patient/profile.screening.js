@@ -40,15 +40,24 @@ class QuestionsComponent extends Component {
       move_next_step(this.props.question_step)
     }
 
+    did_create_patient = (state) =>{
+      this.props.register_user(state)
+      this.props.move_next_step(this.props.question_step)
+    }
+
+    did_create_patient
+
     map_type_to_component = (questions, step) => {
+
       if(!questions[step]) {return <div> loading </div>}
+
         switch(questions[step].question_type) {
           case 'selector':
             return selector(this.set_selector_handler.bind(this), questions[step])
           case 'create_profile':
             return <Route path='' render={(props) =>
                 <CreateProfile
-                next_step_action = {this.props.register_user}
+                next_step_action = {this.did_create_patient.bind(this)}
                  />} />
           case 'bank_selector':
             return selector(this.set_bank_selector_handler.bind(this), questions[step])
