@@ -19,9 +19,9 @@ class QuestionsComponent extends Component {
       //api call to get questions
       var header = {'Content-Type': 'application/json'}
       const {update_patient_questions} = this.props
-      axios.get("/api/question_banks/3/questions")
+      axios.get("/api/question_banks/0/questions")
         .then(function(resp){
-          update_patient_questions(resp.data,0)
+          update_patient_questions(resp.data, 0)
           console.log("resp: ", resp)
         }).catch(function(err){
           console.log("err", err)
@@ -72,13 +72,17 @@ class QuestionsComponent extends Component {
     }
 
     display_title = (questions, step) =>{
-      if(questions[step]){
+      if(questions && questions[step]){
         return questions[step].title
       }
     }
 
     render(){
+			if(!this.props.questions){
+				return (<div>"loading"</div>)
+			}
       return (
+				
         <div className="patinet_questions">
           <p> {this.display_title(this.props.questions, this.props.question_step)} </p>
           {this.map_type_to_component(this.props.questions, this.props.question_step)}
