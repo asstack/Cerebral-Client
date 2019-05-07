@@ -3,8 +3,7 @@ import { register_user, sign_in } from '../../actions/user_auth_action'
 import { move_patient_sign_in, set_profile_question } from '../../actions/patient_action'
 import { connect } from 'react-redux'
 import * as components from '../../components/question_components/components'
-import axios from 'axios'
-
+import { Route, withRouter } from 'react-router-dom'
 
 class Register extends Component {
 
@@ -19,28 +18,8 @@ class Register extends Component {
       }
     }
 
-	register_handler = (e) => {
-		e.preventDefault()
- 		const {first_name, last_name, email, password, password_confirm} = this.state
-    const {sign_in, set_profile_question}=this.props
-    var header = {'Content-Type': 'application/json'}
-    if(first_name && last_name && email && (password === password_confirm)){
-			axios.post("/api/users", {first_name:first_name, last_name:last_name, email:email, password:password, password_confirmation: password_confirm}, header)
-				.then(function(resp){
-					var attr = {attributes: { id: resp.data.id,
-   		     		                      uid:resp.data.uid,
-                                    email:resp.data.email,
-                                    first_name:resp.data.first_name,
-                                    last_name:resp.data.last_name
-                                  }}
-            //TODO: NEVER use the dispatches like here. will move to action with err handling
-            sign_in(attr)
-            set_profile_question()
-
-        }).catch(function(err){
-          console.log("err", err)
-        })
-      }
+    register_handler = e => {
+      this.props.register_user(this.state)
     }
 
     state_update_handler = e => {
@@ -90,4 +69,21 @@ class Register extends Component {
     }
 }
 
-export default connect(null,{sign_in, move_patient_sign_in, set_profile_question}) (Register)
+const mapStateToProps = (state) => {
+  const{
+    global_reducer: {app_state, current_user},
+    patient_reducer: {patient_state, step, question_bank_type, questions, branch_questions, branch_step, branch_option}
+  } = state
+
+  return {
+    patient_state: patient_state,
+    question_step: step,
+    question_bank_type: question_bank_type,
+    questions: questions,
+    branch_questions: branch_questions,
+    branch_step: branch_step,
+    branch_option: branch_option
+  }
+}
+
+export default withRouter(connect(mapStateToProps,{sign_in, move_patient_sign_in, set_profile_question, register_user}) (Register))

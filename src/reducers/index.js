@@ -4,6 +4,7 @@ import * as user_auth_types from '../actions/user_auth_action'
 import * as patient_action_types from '../actions/patient_action'
 
 
+// https://redux.js.org/basics/reducers#designing-the-state-shape
 const init_global_state = {
 
   current_user: {
@@ -15,7 +16,9 @@ const init_global_state = {
       uid: null,
       email: null,
       first_name: null,
-      last_name: null
+      last_name: null,
+      token: null,
+      client: null
     },
   },
   app_state: 'init',
@@ -33,16 +36,23 @@ const init_patient_state = {
   branch_step:'',
   answers: '',
   is_complete: false,
+  // contains a copy of patient/visit information from the database
+  patient_object: null,
+  visit_object: null
 	is_valied_state: false
 }
 
 //global state storage, it will have user account information and current global state
+// https://redux.js.org/basics/reducers#handling-actions
 const global_reducer = (state = init_global_state, action) => {
 
   switch(action.type){
     case user_auth_types.SET_USER:
-      return{
+      return {
+        // https://redux.js.org/recipes/using-object-spread-operator
         ...state,
+        // TODO: don't assume that user is patient... they may be a therapist
+        // probably don't want to change app_state here at all
         app_state:'patient',
         current_user: {
           ...state.current_user,
@@ -72,6 +82,23 @@ const patient_reducer = (state = init_patient_state, action) => {
         step : action.step,
 				is_complete: action.is_complete
       }
+
+    case patient_action_types.SET_PATIENT:
+      return{
+        ...state,
+        patient_state : {
+          patient_object: action.patient_object
+        }
+      }
+
+    case patient_action_types.SET_VISIT:
+      return{
+        ...state,
+        patient_state : {
+          visit_object: action.visit_object
+        }
+      }
+    
     case patient_action_types.SET_STATE:
       return{
         ...state,
@@ -103,11 +130,11 @@ const patient_reducer = (state = init_patient_state, action) => {
 				total_step:1,
 				step: 0
 			}
-    //TODO: implement after api done
-    case patient_action_types.SUBMIT_ANSWERS:
-      return{}
-    case patient_action_types.SET_QUESTION_ID:
-      return{}
+    // see notes in patient_actions
+    // case patient_action_types.SUBMIT_ANSWERS:
+      // return{}
+    // case patient_action_types.SET_QUESTION_ID:
+      // return{}
     default:
       return state
   }
