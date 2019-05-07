@@ -16,8 +16,12 @@ class QuestionsComponent extends Component {
 
     componentDidMount(){
       //api call to get questions
-      const {update_patient_questions} = this.props
-      update_patient_questions(0)
+      const {update_patient_questions, question_bank_id} = this.props
+			if(!question_bank_id || question_bank_id==0){
+				//redirect to inital screening page
+			}else{	
+				update_patient_questions(question_bank_id)
+			}
     }
 
     // TODO: next_step_handler is identical in patient_init.js and
@@ -29,13 +33,11 @@ class QuestionsComponent extends Component {
     }
 
     set_selector_handler=(e)=>{
-      console.log("set value check: ", e.target.value)
       const {move_next_step} = this.props
       move_next_step(this.props.question_step)
     }
 
     set_bank_selector_handler=(e)=>{
-      console.log("set value check: ", e.target.value)
       const {move_next_step} = this.props
       move_next_step(this.props.question_step)
     }

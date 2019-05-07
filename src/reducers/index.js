@@ -33,6 +33,7 @@ const init_patient_state = {
   question_bank_id: '',
   questions: '',
 
+	branch_ids: [],
   branch_questions: '',
   branch_option:'',
   branch_step:'',

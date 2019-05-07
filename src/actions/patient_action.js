@@ -84,7 +84,7 @@ export const move_next_step = (step_num) => (dispatch, getState) => {
   return dispatch(set_step(step_num+1, is_complete))
 }
 
-export const update_patient_questions = (bank_id)=> (dispatch, getState) => {
+export const update_patient_questions = (bank_id) => (dispatch, getState) => {
   
   var header = {'Content-Type': 'application/json'}
     axios.get(`/api/question_banks/${bank_id}/questions`)
