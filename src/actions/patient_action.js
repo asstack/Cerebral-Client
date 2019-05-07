@@ -104,8 +104,8 @@ export const update_branch_questions = questions => (dispatch, getState) => {
   return dispatch(set_branch_questions(questions))
 }
 
-const  get_user_attr = (getState) => {
-  return  getState().global_reducer.current_user.attributes
+const  get_user_attr = (state) => {
+  return  state.global_reducer.current_user.attributes
 }
 
 const make_headers = (user_attr) => {
@@ -123,8 +123,8 @@ export const create_patient_from_user = () => (dispatch, getState) => {
   return axios.post(`/api/patients`, body, make_headers(user_attr))
     .then(function(resp){
       // TODO: update global store with patient information
-      console.log("create_patient resp: ", resp)
-      dispatch(set_patient(resp))
+      console.log("create_patient_from_user resp: ", resp)
+      dispatch(set_patient(resp.data))
     })
 }
 
@@ -144,7 +144,7 @@ export const create_visit = () => (dispatch, getState) => {
     })
   }
 
-export const update_bank_type = bank_id => (dispatch, getState) => {
+export const update_bank_id = bank_id => (dispatch, getState) => {
 	return dispatch(set_bank_id(bank_id))
 }
 

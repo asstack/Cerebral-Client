@@ -29,11 +29,14 @@ const init_patient_state = {
   total_step:1,
   patient_type: '',
   patient_state: 'profile/register',
+
   question_bank_id: '',
   questions: '',
+
   branch_questions: '',
   branch_option:'',
   branch_step:'',
+  
   // NOTE: answers are never stored locally
   // answers: '',
   is_complete: false,
@@ -87,17 +90,13 @@ const patient_reducer = (state = init_patient_state, action) => {
     case patient_action_types.SET_PATIENT:
       return{
         ...state,
-        patient_state : {
-          patient_object: action.patient_object
-        }
+        patient_object: action.patient_object
       }
 
     case patient_action_types.SET_VISIT:
       return{
         ...state,
-        patient_state : {
-          visit_object: action.visit_object
-        }
+        visit_object: action.visit_object
       }
     
     case patient_action_types.SET_STATE:
