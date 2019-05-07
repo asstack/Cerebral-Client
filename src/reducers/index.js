@@ -39,7 +39,7 @@ const init_patient_state = {
   // contains a copy of patient/visit information from the database
   patient_object: null,
   visit_object: null,
-	is_valied_state: false
+	is_valid_state: false
 }
 
 //global state storage, it will have user account information and current global state
