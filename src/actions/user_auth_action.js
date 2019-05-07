@@ -20,14 +20,14 @@ export const sign_in = user_info => (dispatch, getState) =>  {
 
       return axios.post("/api/auth/sign_in" ,{email:email, password:password}, header).then(function(resp){
           console.info(resp)
-          var attr = {attributes: { id: resp.data.data.id,
-                                    uid:resp.data.data.uid,
-                                    email:resp.data.data.email,
-                                    first_name:resp.data.data.first_name,
-                                    last_name:resp.data.data.last_name,
-                                    token: resp.headers['access-token'],
-                                    client: resp.headers.client
-                                  }}
+          var attr = { id: resp.data.data.id,
+                          uid:resp.data.data.uid,
+                          email:resp.data.data.email,
+                          first_name:resp.data.data.first_name,
+                          last_name:resp.data.data.last_name,
+                          token: resp.headers['access-token'],
+                          client: resp.headers.client
+                        }
                                   
           dispatch(set_user(attr))
 
@@ -49,12 +49,12 @@ export const register_user = user_info => (dispatch, getState)=>{
       return axios.post("/api/users",
         {first_name:first_name, last_name:last_name, email:email, password:password, password_confirmation: password_confirm}, header)
         .then(function(resp){
-          var attr = {attributes: { id: resp.data.id,
-                                    uid:resp.data.uid,
-                                    email:resp.data.email,
-                                    first_name:resp.data.first_name,
-                                    last_name:resp.data.last_name
-                                  }}
+          var attr = { id: resp.data.id,
+                        uid:resp.data.uid,
+                        email:resp.data.email,
+                        first_name:resp.data.first_name,
+                        last_name:resp.data.last_name
+                      }
 
           dispatch(set_user(attr))
 

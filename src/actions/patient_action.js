@@ -83,9 +83,15 @@ export const update_branch_questions = questions => (dispatch, getState) => {
 
 export const create_patient_from_user = () => (dispatch, getState) => {
   
-  // TODO: set auth information from store
-  var header = {'Content-Type': 'application/json'}
-  var body = {user_id: 1}
+  var user_attr = getState().global_reducer.current_user.attributes
+
+  var header = {'Content-Type': 'application/json', 
+    'access-token': user_attr.token, 
+    'client': user_attr.client, 
+    'uid':user_attr.uid}
+
+  var body = {user_id: user_attr.id}
+
 
   return axios.post(`/api/patients`, body, header)
     .then(function(resp){
