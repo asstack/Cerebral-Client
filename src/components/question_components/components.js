@@ -4,7 +4,8 @@ import React, {Component} from 'react'
 export const input_type_1 = (event_handler, text) => {
   return(
     <div className="d-flex justify-content-center p-2">
-      <input className="col input-type1" onChange={event_handler} placeholder={text}/>
+			<input className="col input-type1" onChange={event_handler} defaultValue=""
+				type="text" placeholder={text}/>
     </div>
   )
 }
@@ -12,7 +13,7 @@ export const input_type_1 = (event_handler, text) => {
 export const input_password_type_1 = (event_handler, text) => {
   return(
     <div className="d-flex justify-content-center p-2">
-			<input className="col input-type1" type="password" value="" 
+			<input className="col input-type1" type="password" defaultValue="" 
 				onChange={event_handler} placeholder={text}/>
     </div>
   )
