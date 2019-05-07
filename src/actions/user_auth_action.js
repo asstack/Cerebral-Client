@@ -17,8 +17,8 @@ export const sign_in = user_info => (dispatch, getState) =>  {
   // sign in API call here
   var header = {'Content-Type': 'application/json'}
     if(email && password){
-      axios.post("/api/auth/sign_in" ,{email:email, password:password}, header)
-        .then(function(resp){
+
+      return axios.post("/api/auth/sign_in" ,{email:email, password:password}, header).then(function(resp){
           console.info(resp)
           var attr = {attributes: { id: resp.data.data.id,
                                     uid:resp.data.data.uid,
@@ -32,10 +32,10 @@ export const sign_in = user_info => (dispatch, getState) =>  {
           dispatch(set_user(attr))
 
           console.log("sign_in", attr)
-          
-        }).catch(function(err){
-          console.log("err", err)
         })
+    }
+    else {
+      return Promise.resolve()
     }
 }
 
@@ -46,7 +46,7 @@ export const register_user = user_info => (dispatch, getState)=>{
   // register API call here
   var header = {'Content-Type': 'application/json'}
     if(first_name && last_name && email && (password && password_confirm)){
-      axios.post("/api/users",
+      return axios.post("/api/users",
         {first_name:first_name, last_name:last_name, email:email, password:password, password_confirmation: password_confirm}, header)
         .then(function(resp){
           var attr = {attributes: { id: resp.data.id,
@@ -56,12 +56,11 @@ export const register_user = user_info => (dispatch, getState)=>{
                                     last_name:resp.data.last_name
                                   }}
 
-          // TODO: we may not want to chain register with sign-in during the pilot when a User
-          // is not in Californa and therefore cannot be a Patient
-          dispatch(sign_in(user_info))
+          dispatch(set_user(attr))
 
-        }).catch(function(err){
-          console.log("err", err)
         })
+    }
+    else {
+      return Promise.resolve()
     }
 }

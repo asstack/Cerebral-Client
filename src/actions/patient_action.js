@@ -87,13 +87,11 @@ export const create_patient_from_user = () => (dispatch, getState) => {
   var header = {'Content-Type': 'application/json'}
   var body = {user_id: 1}
 
-  axios.post(`/api/patients`, body, header)
+  return axios.post(`/api/patients`, body, header)
     .then(function(resp){
       // TODO: update global store with patient information
       console.log("create_patient resp: ", resp)
       dispatch(set_patient(resp))
-    }).catch(function(err){
-      console.log("create_patient err", err)
     })
 }
 
@@ -104,13 +102,11 @@ export const create_visit = (patient) => (dispatch, getState) => {
 
   var bank_id = null; // TODO!!!
 
-  axios.post(`/api/patients/${patient.id}/visits`, body, header)
+  return axios.post(`/api/patients/${patient.id}/visits`, body, header)
     .then(function(resp){
       // TODO: update global store with visit information
       console.log("create_visit resp: ", resp)
       return dispatch(set_patient_questions(resp.data, bank_id))
-    }).catch(function(err){
-      console.log("create_visit err", err)
     })
 }
 
@@ -125,11 +121,9 @@ export const answer_current_question = (answer) => (dispatch, getState) => {
 
   var body = {vis: patient.id}
 
-  axios.get(`/api/patients/${patient.id}/visits/${visit.id}`, body, header)
+  return axios.get(`/api/patients/${patient.id}/visits/${visit.id}`, body, header)
     .then(function(resp){
       console.log("answer_current_question esp: ", resp)
       return dispatch(set_patient_questions(resp.data, bank_id))
-    }).catch(function(err){
-      console.log("answer_current_question err", err)
     })
 }

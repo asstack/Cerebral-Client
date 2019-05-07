@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import { Route, withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { update_patient_questions, move_next_step, create_patient_from_user } from '../../actions/patient_action'
-import { sign_in, register_user} from '../../actions/user_auth_action'
+import { register_user, sign_in} from '../../actions/user_auth_action'
 // import * as components from '../../components/question_components/components'
 import {selector} from '../../components/question_types/selector'
 import CreateProfile from '../../components/question_types/create_profile'
@@ -52,9 +52,9 @@ class PatientInit extends Component{
 
   did_create_patient = (state) =>{
     this.props.register_user(state)
+      .then(() => {return this.props.sign_in(state)})
+        .then(() => {return this.props.create_patient_from_user()})
 
-    // TODO: create_patient_from_user needs the user to exist but register_user returns immediately
-    this.props.create_patient_from_user()
     this.props.move_next_step(this.props.question_step)
   }
 
@@ -125,4 +125,4 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default withRouter(connect(mapStateToProps,{update_patient_questions, create_patient_from_user, move_next_step, sign_in, register_user}) (PatientInit))
+export default withRouter(connect(mapStateToProps,{update_patient_questions, register_user, sign_in, move_next_step, create_patient_from_user}) (PatientInit))
