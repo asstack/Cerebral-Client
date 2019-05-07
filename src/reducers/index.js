@@ -38,7 +38,7 @@ const init_patient_state = {
   is_complete: false,
   // contains a copy of patient/visit information from the database
   patient_object: null,
-  visit_object: null
+  visit_object: null,
 	is_valied_state: false
 }
 

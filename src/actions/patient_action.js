@@ -54,6 +54,7 @@ const set_patient = (patient_object) => ({
 const set_visit = (visit_object) => ({
   type:SET_VISIT,
   visit_object:visit_object
+})
 
 const set_bank_type = btype => ({
 	type:SET_BANK_TYPE,
@@ -137,6 +138,7 @@ export const create_visit = (patient) => (dispatch, getState) => {
       console.log("create_visit resp: ", resp)
       return dispatch(set_patient_questions(resp.data, bank_id))
     })
+}
 
 export const update_bank_type = bank_type => (dispatch, getState) => {
 	return dispatch(set_bank_type(bank_type))
