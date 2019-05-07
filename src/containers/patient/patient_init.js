@@ -2,13 +2,16 @@ import React, {Component} from 'react';
 import { Route, withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 
-import { update_patient_questions, move_next_step, create_patient_from_user,update_bank_type } from '../../actions/patient_action'
+import { update_patient_questions, move_next_step, create_patient_from_user,create_visit,update_bank_type } from '../../actions/patient_action'
 import { register_user, sign_in} from '../../actions/user_auth_action'
 // import * as components from '../../components/question_components/components'
 import { update_app_state } from '../../actions/'
 
 import {selector} from '../../components/question_types/selector'
+import {date} from '../../components/question_types/date'
+import {height_weight} from '../../components/question_types/height_weight'
 import CreateProfile from '../../components/question_types/create_profile'
+import Phone from '../../components/question_types/phone'
 
 class PatientInit extends Component{
   //in here, will call componentDidMount and route for profile, assessment, treatment, verification and shipping]
@@ -58,12 +61,14 @@ class PatientInit extends Component{
     }
   }
 
-  did_create_patient = (state) =>{
+	//TODO: next step hanlder should be replaced to proper event handlers
+  did_create_patient = (state) => {
+
     this.props.register_user(state)
       .then(() => {return this.props.sign_in(state)})
         .then(() => {return this.props.create_patient_from_user()})
-
-    this.props.move_next_step(this.props.question_step)
+          .then(() => {return this.props.create_visit()})
+            .then(() => {return this.props.move_next_step(this.props.question_step)})
   }
 
   map_type_to_component = (questions, step) => {
@@ -78,6 +83,16 @@ class PatientInit extends Component{
             />} />
       case 'bank_selector':
         return selector(this.set_bank_selector_handler.bind(this), questions[step])
+			case 'phone':
+				return <Route path='' render={(props) => 
+						<Phone 
+							skip_btn_handler = {null}
+							confirm_btn_handler = {this.next_step_handler}		
+						/>} />
+			case 'date':
+				return date(this.next_step_handler)
+			case 'height_weight':
+				return height_weight(this.next_step_handler)
       default:
         return(
           <div>
@@ -134,4 +149,5 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default withRouter(connect(mapStateToProps,{update_app_state, update_patient_questions, register_user, sign_in, move_next_step, create_patient_from_user, update_bank_type}) (PatientInit))
+export default withRouter(connect(mapStateToProps,{update_app_state, update_patient_questions, 
+  register_user, sign_in, move_next_step, create_patient_from_user, create_visit, update_bank_type}) (PatientInit))

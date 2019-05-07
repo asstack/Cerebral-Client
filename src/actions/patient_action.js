@@ -128,7 +128,7 @@ export const create_patient_from_user = () => (dispatch, getState) => {
     })
 }
 
-export const create_visit = (patient) => (dispatch, getState) => {
+export const create_visit = () => (dispatch, getState) => {
   
   var user_attr = get_user_attr(getState())
 
