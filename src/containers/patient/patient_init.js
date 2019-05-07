@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import { Route, withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 
-import { update_patient_questions, move_next_step, create_patient_from_user,create_visit,update_bank_type } from '../../actions/patient_action'
+import { update_patient_questions, move_next_step, create_patient_from_user,create_visit,update_bank_id,answer_current_question } from '../../actions/patient_action'
 import { register_user, sign_in} from '../../actions/user_auth_action'
 // import * as components from '../../components/question_components/components'
 import { update_app_state } from '../../actions/'
@@ -44,14 +44,15 @@ class PatientInit extends Component{
 
   set_selector_handler=(e)=>{
     console.log("set value check: ", e.target.value)
+    answer_current_question(e.target.value)
     const {move_next_step} = this.props
     move_next_step(this.props.question_step)
   }
 
   set_bank_selector_handler=(e)=>{
     console.log("set value check: ", e.target.value)
-    const {move_next_step, update_bank_type} = this.props
-		update_bank_type(e.target.value)
+    const {move_next_step, update_bank_id} = this.props
+		update_bank_id(e.target.value)
     move_next_step(this.props.question_step)
   }
 
@@ -66,8 +67,8 @@ class PatientInit extends Component{
 
     this.props.register_user(state)
       .then(() => {return this.props.sign_in(state)})
-        .then(() => {return this.props.create_patient_from_user()})
-          .then(() => {return this.props.create_visit()})
+        .then(() => { return this.props.create_patient_from_user() })
+          .then( () => {return this.props.create_visit()} )
             .then(() => {return this.props.move_next_step(this.props.question_step)})
   }
 
@@ -150,4 +151,4 @@ const mapStateToProps = (state) => {
 }
 
 export default withRouter(connect(mapStateToProps,{update_app_state, update_patient_questions, 
-  register_user, sign_in, move_next_step, create_patient_from_user, create_visit, update_bank_type}) (PatientInit))
+  register_user, sign_in, move_next_step, create_patient_from_user, create_visit, update_bank_id,answer_current_question}) (PatientInit))
