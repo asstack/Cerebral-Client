@@ -6,6 +6,7 @@ export const SET_STATE = 'profile/SET_STATE'
 export const SET_BRANCH_QUESTIONS = 'profile/SET_BRANCH_QUESTIONS'
 export const SET_PATIENT_QUESTIONS = 'profile/SET_PATIENT_QUESTIONS'
 export const SET_BANK_TYPE = 'profile/SET_BANK_TYPE'
+export const REMOVE_PATIENT_QUESTIONS = 'profile/REMOVE_PATIENT_QUESTIONS'
 //step 2..9
 
 
@@ -39,6 +40,10 @@ const set_bank_type = btype => ({
 	bank_type: btype
 })
 
+const remove_patient_questions = () => ({
+	type:REMOVE_PATIENT_QUESTIONS
+})
+
 export const set_profile_question = () => (dispatch, getState) => {
   return dispatch(set_state_with_step('profile/screening', 1))
 }
@@ -60,6 +65,10 @@ export const move_next_step = (step_num) => (dispatch, getState) => {
 
 export const update_patient_questions = (questions , bank_type)=> (dispatch, getState) => {
   return dispatch(set_patient_questions(questions, bank_type))
+}
+
+export const delete_patient_questions = () => (dispatch, getState) => {
+	return dispatch(remove_patient_questions())
 }
 
 export const update_branch_questions = questions => (dispatch, getState) => {

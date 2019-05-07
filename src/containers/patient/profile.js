@@ -25,7 +25,6 @@ class PatientProfile extends Component{
 
     if(patient_state!=this.state.prv_state){
       this.setState({prv_state: patient_state})
-      //window.history.pushState('', '', "/patient/"+patient_state);
       this.props.history.push("/patient/"+patient_state)
     }
   }

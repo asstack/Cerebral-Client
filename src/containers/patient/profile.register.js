@@ -19,28 +19,27 @@ class Register extends Component {
       }
     }
 
-    register_handler = (e) => {
-      e.preventDefault()
-      const {first_name, last_name, email, password, password_confirm} = this.state
-      const {sign_in, set_profile_question}=this.props
-      var header = {'Content-Type': 'application/json'}
-      if(first_name && last_name && email && (password && password_confirm)){
-        axios.post("/api/users",
-          {first_name:first_name, last_name:last_name, email:email, password:password, password_confirmation: password_confirm}, header)
-          .then(function(resp){
-            var attr = {attributes: { id: resp.data.id,
-                                      uid:resp.data.uid,
-                                      email:resp.data.email,
-                                      first_name:resp.data.first_name,
-                                      last_name:resp.data.last_name
-                                    }}
+	register_handler = (e) => {
+		e.preventDefault()
+ 		const {first_name, last_name, email, password, password_confirm} = this.state
+    const {sign_in, set_profile_question}=this.props
+    var header = {'Content-Type': 'application/json'}
+    if(first_name && last_name && email && (password === password_confirm)){
+			axios.post("/api/users", {first_name:first_name, last_name:last_name, email:email, password:password, password_confirmation: password_confirm}, header)
+				.then(function(resp){
+					var attr = {attributes: { id: resp.data.id,
+   		     		                      uid:resp.data.uid,
+                                    email:resp.data.email,
+                                    first_name:resp.data.first_name,
+                                    last_name:resp.data.last_name
+                                  }}
             //TODO: NEVER use the dispatches like here. will move to action with err handling
             sign_in(attr)
             set_profile_question()
 
-          }).catch(function(err){
-            console.log("err", err)
-          })
+        }).catch(function(err){
+          console.log("err", err)
+        })
       }
     }
 

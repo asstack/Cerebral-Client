@@ -96,6 +96,13 @@ const patient_reducer = (state = init_patient_state, action) => {
 				...state,
 				question_bank_type : action.bank_type
 			}
+		case patient_action_types.REMOVE_PATIENT_QUESTIONS:
+			return{
+				...state,
+				questions: null,
+				total_step:1,
+				step: 0
+			}
     //TODO: implement after api done
     case patient_action_types.SUBMIT_ANSWERS:
       return{}
