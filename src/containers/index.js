@@ -1,6 +1,8 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {update_app_state} from '../actions'
+import { move_patient_sign_in, set_profile_question } from '../actions/patient_action'
+
 
 class MainPage extends Component{
 
@@ -18,12 +20,18 @@ class MainPage extends Component{
     update_app_state('patient')
   }
 
+  app_state_signin_handler = e => {
+    this.props.update_app_state('patient')
+    this.props.move_patient_sign_in()
+  }
+
   render(){
     return(
       <div>
         <h1> main page </h1>
-        <input type='button' value='Get start' onClick={this.app_state_update_handler.bind(this)}/>
-        <input type='button' value='Patient register page' onClick={this.app_state_register_handler.bind(this)}/>
+        <input type='button' value='Get Started' onClick={this.app_state_update_handler.bind(this)}/>
+        <input type='button' value='Register' onClick={this.app_state_register_handler.bind(this)}/>
+        <input type='button' value='Sign In' onClick={this.app_state_signin_handler.bind(this)}/>
       </div>
     )
   }
@@ -31,4 +39,4 @@ class MainPage extends Component{
 
 
 
-export default connect(null, {update_app_state}) (MainPage)
+export default connect(null, {update_app_state, move_patient_sign_in}) (MainPage)

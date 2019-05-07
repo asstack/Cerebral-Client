@@ -1,16 +1,17 @@
 import React, {Component} from 'react';
 import { Route, withRouter } from 'react-router-dom'
-import axios from 'axios'
 import { connect } from 'react-redux'
+
+import { update_patient_questions, move_next_step, create_patient_from_user,update_bank_type } from '../../actions/patient_action'
+import { register_user, sign_in} from '../../actions/user_auth_action'
+// import * as components from '../../components/question_components/components'
 import { update_app_state } from '../../actions/'
-import { update_patient_questions, move_next_step, update_bank_type} from '../../actions/patient_action'
-import * as components from '../../components/question_components/components'
+
 import {selector} from '../../components/question_types/selector'
 import CreateProfile from '../../components/question_types/create_profile'
 
-
 class PatientInit extends Component{
-  //in here, will call componentDidMount and route for [profile, assessment, treatment, verification and shipping]
+  //in here, will call componentDidMount and route for profile, assessment, treatment, verification and shipping]
   //route will state/number or state/ for init assessment
   constructor(props){
     super(props)
@@ -20,15 +21,8 @@ class PatientInit extends Component{
     }
   }
   componentDidMount(){
-    var header = {'Content-Type': 'application/json'}
     const {update_patient_questions} = this.props
-    axios.get("/api/question_banks/0/questions")
-      .then(function(resp){
-        update_patient_questions(resp.data, 0)
-        console.log("resp: ", resp)
-      }).catch(function(err){
-        console.log("err", err)
-      })
+    update_patient_questions(0)
   }
 
 	//TODO: move checking part to action and middleware
@@ -58,33 +52,18 @@ class PatientInit extends Component{
     move_next_step(this.props.question_step)
   }
 
-  create_profile_handler = (e) => {
-    e.preventDefault()
-    const {first_name, last_name, email, password, password_confirm} = this.state
-    const {sign_in, set_profile_question}=this.props
-    var header = {'Content-Type': 'application/json'}
-    if(first_name && last_name && email && (password && password_confirm)){
-      axios.post("/api/users",
-        {first_name:first_name, last_name:last_name, email:email, password:password, password_confirmation: password_confirm}, header)
-        .then(function(resp){
-          var attr = {attributes: { id: resp.data.id,
-                                    uid:resp.data.uid,
-                                    email:resp.data.email,
-                                    first_name:resp.data.first_name,
-                                    last_name:resp.data.last_name
-                                  }}
-          //TODO: NEVER use the dispatches like here. will move to action with err handling
-          sign_in(attr)
-        }).catch(function(err){
-          console.log("err", err)
-        })
-    }
-	}
-
   display_title = (questions, step) =>{
     if(questions[step]){
       return questions[step].title
     }
+  }
+
+  did_create_patient = (state) =>{
+    this.props.register_user(state)
+      .then(() => {return this.props.sign_in(state)})
+        .then(() => {return this.props.create_patient_from_user()})
+
+    this.props.move_next_step(this.props.question_step)
   }
 
   map_type_to_component = (questions, step) => {
@@ -95,8 +74,8 @@ class PatientInit extends Component{
       case 'create_profile':
         return <Route path='' render={(props) =>
             <CreateProfile
-              next_step_handler = {this.next_step_handler}
-              create_profile_handler={this.create_profile_handler} />} />
+              next_step_action = {this.did_create_patient.bind(this)}
+            />} />
       case 'bank_selector':
         return selector(this.set_bank_selector_handler.bind(this), questions[step])
       default:
@@ -155,4 +134,4 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default withRouter(connect(mapStateToProps,{update_app_state, update_patient_questions, move_next_step, update_bank_type}) (PatientInit))
+export default withRouter(connect(mapStateToProps,{update_app_state, update_patient_questions, register_user, sign_in, move_next_step, create_patient_from_user, update_bank_type}) (PatientInit))

@@ -10,6 +10,7 @@ import configure_store from './store/configure_store'
 const store = configure_store
 
 render(
+  // https://react-redux.js.org/introduction/basic-tutorial#providing-the-store
   <Provider store={store}>
     <Router>
       <App />

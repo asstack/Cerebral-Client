@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import { Route, withRouter } from 'react-router-dom'
-import axios from 'axios'
 import { connect } from 'react-redux'
 import { update_patient_questions, move_next_step } from '../../actions/patient_action'
 import * as components from '../../components/question_components/components'
@@ -17,16 +16,12 @@ class QuestionsComponent extends Component {
 
     componentDidMount(){
       //api call to get questions
-      var header = {'Content-Type': 'application/json'}
       const {update_patient_questions} = this.props
-      axios.get("/api/question_banks/0/questions")
-        .then(function(resp){
-          update_patient_questions(resp.data, 0)
-          console.log("resp: ", resp)
-        }).catch(function(err){
-          console.log("err", err)
-        })
+      update_patient_questions(0)
     }
+
+    // TODO: next_step_handler is identical in patient_init.js and
+    // profile.screening.js; they don't need to be in both
 
     next_step_handler=(e)=>{
       const {move_next_step} = this.props
@@ -45,16 +40,25 @@ class QuestionsComponent extends Component {
       move_next_step(this.props.question_step)
     }
 
+    did_create_patient = (state) =>{
+      this.props.register_user(state)
+      this.props.move_next_step(this.props.question_step)
+    }
+
+    did_create_patient
+
     map_type_to_component = (questions, step) => {
+
       if(!questions[step]) {return <div> loading </div>}
+
         switch(questions[step].question_type) {
           case 'selector':
             return selector(this.set_selector_handler.bind(this), questions[step])
           case 'create_profile':
             return <Route path='' render={(props) =>
                 <CreateProfile
-                  next_step_handler = {this.next_step_handler}
-                  create_profile_handler={this.create_profile_handler} />} />
+                next_step_action = {this.did_create_patient.bind(this)}
+                 />} />
           case 'bank_selector':
             return selector(this.set_bank_selector_handler.bind(this), questions[step])
           default:
