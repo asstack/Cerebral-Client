@@ -6,8 +6,10 @@ import { update_app_state } from '../../actions/'
 import { update_patient_questions, move_next_step, update_bank_type} from '../../actions/patient_action'
 import * as components from '../../components/question_components/components'
 import {selector} from '../../components/question_types/selector'
+import {date} from '../../components/question_types/date'
+import {height_weight} from '../../components/question_types/height_weight'
 import CreateProfile from '../../components/question_types/create_profile'
-
+import Phone from '../../components/question_types/phone'
 
 class PatientInit extends Component{
   //in here, will call componentDidMount and route for [profile, assessment, treatment, verification and shipping]
@@ -87,6 +89,7 @@ class PatientInit extends Component{
     }
   }
 
+	//TODO: next step hanlder should be replaced to proper event handlers
   map_type_to_component = (questions, step) => {
     if(!questions[step]) {return <div> loading </div>}
     switch(questions[step].question_type) {
@@ -99,6 +102,16 @@ class PatientInit extends Component{
               create_profile_handler={this.create_profile_handler} />} />
       case 'bank_selector':
         return selector(this.set_bank_selector_handler.bind(this), questions[step])
+			case 'phone':
+				return <Route path='' render={(props) => 
+						<Phone 
+							skip_btn_handler = {null}
+							confirm_btn_handler = {this.next_step_handler}		
+						/>} />
+			case 'date':
+				return date(this.next_step_handler)
+			case 'height_weight':
+				return height_weight(this.next_step_handler)
       default:
         return(
           <div>

@@ -12,7 +12,8 @@ export const input_type_1 = (event_handler, text) => {
 export const input_password_type_1 = (event_handler, text) => {
   return(
     <div className="d-flex justify-content-center p-2">
-      <input className="col input-type1" type="password" onChange={event_handler} placeholder={text}/>
+			<input className="col input-type1" type="password" value="" 
+				onChange={event_handler} placeholder={text}/>
     </div>
   )
 }
