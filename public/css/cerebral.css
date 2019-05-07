@@ -35,6 +35,18 @@ body {
   border-color: rgba(37, 0, 68, 1.0);
 }
 
+.group-checkbox {
+  background-color:white;
+  border: 2px solid #250044;
+  border-right: none
+}
+
+.group-checkbox-text {
+  border: 2px solid #250044;
+  border-left: none;
+}
+
+
 .checkbox-type1{
   width: 30px;
   height: 30px;
