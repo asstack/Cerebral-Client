@@ -72,13 +72,13 @@ class Register extends Component {
 const mapStateToProps = (state) => {
   const{
     global_reducer: {app_state, current_user},
-    patient_reducer: {patient_state, step, question_bank_type, questions, branch_questions, branch_step, branch_option}
+    patient_reducer: {patient_state, step, question_bank_id, questions, branch_questions, branch_step, branch_option}
   } = state
 
   return {
     patient_state: patient_state,
     question_step: step,
-    question_bank_type: question_bank_type,
+    question_bank_id: question_bank_id,
     questions: questions,
     branch_questions: branch_questions,
     branch_step: branch_step,

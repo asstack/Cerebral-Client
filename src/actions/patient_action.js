@@ -33,11 +33,11 @@ const set_state_with_step = (state, new_step) => ({
   new_step:new_step
 })
 
-const set_patient_questions = (questions,type) => ({
+const set_patient_questions = (questions,bank_id) => ({
   type:SET_PATIENT_QUESTIONS,
-  questinos:questions,
+  questions:questions,
   total_step:questions.length,
-  bank_type:type
+  bank_id:bank_id
 })
 
 const set_branch_questions = (questions,type) => ({
@@ -56,9 +56,9 @@ const set_visit = (visit_object) => ({
   visit_object:visit_object
 })
 
-const set_bank_type = btype => ({
+const set_bank_id = btype => ({
 	type:SET_BANK_TYPE,
-	bank_type: btype
+	bank_id: btype
 })
 
 const remove_patient_questions = () => ({
@@ -144,8 +144,8 @@ export const create_visit = () => (dispatch, getState) => {
     })
   }
 
-export const update_bank_type = bank_type => (dispatch, getState) => {
-	return dispatch(set_bank_type(bank_type))
+export const update_bank_type = bank_id => (dispatch, getState) => {
+	return dispatch(set_bank_id(bank_id))
 }
 
 export const answer_current_question = (answer) => (dispatch, getState) => {
@@ -153,15 +153,22 @@ export const answer_current_question = (answer) => (dispatch, getState) => {
   var user_attr = get_user_attr(getState())
 
   // TODO! Get all this stuff from global state
-  var patient = null; // TODO!!!
-  var visit = null; // TODO!!!
-  var bank_id = null; // TODO!!!
+  var patient = getState().patient_reducer.patient_object
+  var visit = getState().patient_reducer.visit_object
 
-  var body = {vis: patient.id}
+  var patient_state = getState().patient_reducer
 
-  return axios.get(`/api/patients/${patient.id}/visits/${visit.id}`, body, make_headers(user_attr))
+  var body = {
+    question_bank_id: patient_state.question_bank_id,
+    question_id: patient_state.questions[patient_state.step].id,
+      answer: answer
+    }
+
+  return axios.post(`/api/patients/${patient.id}/visits/${visit.id}/answers`, body, make_headers(user_attr))
     .then(function(resp){
       console.log("answer_current_question esp: ", resp)
-      return dispatch(set_patient_questions(resp.data, bank_id))
+
+      // TODO: not sure what, if any, state to update here since we don't want to store answers locally
+      return Promise.resolve()
     })
 }
