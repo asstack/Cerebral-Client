@@ -2,8 +2,10 @@ import React, {Component} from 'react';
 import {Route, withRouter } from "react-router-dom"
 import {connect} from 'react-redux'
 import Patient from './containers/patient'
-import PatientInit from './containers/patient/patient_init'
+import Qualification from './containers/patient/qualification'
 import MainPage from './containers'
+import CheckBoxComponent from './components/question_types/checkbox'
+
 
 class App extends Component{
 
@@ -33,8 +35,8 @@ class App extends Component{
     switch(state) {
       case 'patient':
         return Patient
-      case 'patient/initial_step':
-        return PatientInit
+      case 'qualification':
+        return Qualification
       default:
         return MainPage;
     }
@@ -44,8 +46,8 @@ class App extends Component{
     switch(state) {
       case 'patient':
         return "/patient"
-      case 'patient/initial_step':
-        return "/patient/initial_step"
+      case 'qualification':
+        return "/qualification"
       default:
         return "/";
     }
@@ -55,7 +57,7 @@ class App extends Component{
     return (
       <div className="App">
         <Route path={this.mapStateToPath(this.props.app_state)} component={this.target_component(this.props.app_state)}/>
-    </div>
+      </div>
     );
   }
 }

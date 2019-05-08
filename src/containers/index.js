@@ -12,7 +12,7 @@ class MainPage extends Component{
 
   app_state_update_handler = e => {
     const {update_app_state}=this.props
-    update_app_state('patient/initial_step')
+    update_app_state('qualification')
   }
 
   app_state_register_handler = e => {
