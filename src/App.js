@@ -45,7 +45,7 @@ class App extends Component{
       case 'patient':
         return "/patient"
       case 'qualification':
-        return "/qualification"
+        return "/start"
       default:
         return "/temp_menu";
     }

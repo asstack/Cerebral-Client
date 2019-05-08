@@ -23,7 +23,7 @@ export const input_password_type_1 = (event_handler, text) => {
 export const checkbox_type_1 = (event_handler, description) => {
   return(
     <div className="d-flex justify-content-center p-2">
-      <input className ="checkbox-type1" type="checkbox"/>
+      <input className ="checkbox-type1" type="checkbox" onClick={event_handler}/>
       <label className="text-small">
         I already have an account I consent to Telehealth, terms and privacy policy. All information is strictly confidential and is used to help our professionals provide the best care for you.
       </label>
