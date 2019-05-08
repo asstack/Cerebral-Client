@@ -11,8 +11,11 @@ class Phone extends Component {
 		}
 	}
 
-	render(){
-	
+	phone_number_handler = e => {	
+		this.setState({phone_number:e.target.value})
+	}
+
+	render(){	
 		return(
 			<div>
 				{components.input_type_1(null, "Phone number")}

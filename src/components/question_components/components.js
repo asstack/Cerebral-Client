@@ -1,4 +1,5 @@
 import React, {Component} from 'react'
+import uuidv1 from 'uuid'
 
 //TODO: replace the components name after get all componenets. some will reuse in different pages
 export const input_type_1 = (event_handler, text) => {
@@ -56,7 +57,7 @@ export const text_big_type_1 = text => {
 
 export const btn_selector = (event_handler, item)=>{
   return(
-    <div className="p-2 ">
+    <div className="p-2" key={uuidv1()}>
       <input className ="col btn-selector" onClick={event_handler} type="button" value={item}/>
     </div>
   )
