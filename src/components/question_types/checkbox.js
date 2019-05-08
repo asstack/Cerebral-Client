@@ -11,6 +11,7 @@ class CheckBoxComponent extends Component {
     }
   }
 
+  //TODO: Save multiple values from selected boxes
   check_box_handler = (e,item) => {
     //update local state in here
     this.setState({selected_item:item})
@@ -19,7 +20,7 @@ class CheckBoxComponent extends Component {
   submit_handler = () => {
     //call action from parents with this.state.selected 
     if(this.state.selected_item){
-    
+      this.submit_action(this.state.selected_item)
     }
   }
   
@@ -28,8 +29,7 @@ class CheckBoxComponent extends Component {
       <div className="input-group mb-3" key={uuidv1()}>
         <div className="input-group-prepend">
           <div className="input-group-text group-checkbox">
-            <input type="checkbox" onClick={(e) => 
-                this.check_box_handler(e,item)}/>
+            <input type="checkbox" onClick={(e) => this.check_box_handler(e,item)}/>
           </div>
         </div>
         <div className="d-flex justify-content-center form-control group-checkbox-text">

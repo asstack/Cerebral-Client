@@ -10,15 +10,16 @@ class CreateProfile extends Component {
       first_name:'',
       last_name:'',
       password:'',
-      opassword_confirm:'',
+      password_confirm:'',
       is_consent:false
     }
   }
 
   update_handler = e => { 
-    if(!this.state.is_consent){
-      const {next_step_action}=this.props
-      next_step_action(this.state) 
+    const {is_consent, email, first_name, 
+      last_name, password, password_confirm} = this.state
+    if(is_consent && email && first_name && last_name && (password===password_confirm)){
+      this.props.submit_action(this.state) 
     }else{
       console.log("plz consent: ", this.state.is_consent) 
     }

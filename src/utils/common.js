@@ -1,8 +1,8 @@
 import React from 'react'
 import {Route} from 'react-router-dom'
 import {selector} from '../components/question_types/selector'
-import {date} from '../components/question_types/date'
-import {height_weight} from '../components/question_types/height_weight'
+import Date from '../components/question_types/date'
+import HeightWeight from '../components/question_types/height_weight'
 import CreateProfile from '../components/question_types/create_profile'
 import Phone from '../components/question_types/phone'
 import CheckBoxComponent from '../components/question_types/checkbox'
@@ -15,28 +15,25 @@ export const map_type_to_component = (questions, step, handlers) => {
 				return selector(handlers.set_selector_handler.bind(this), questions[step])
 			case 'create_profile':
 				return <Route path='' render={(props) =>
-						<CreateProfile
-							next_step_action = {handlers.did_create_patient.bind(this)}
-						/>} />
+						    <CreateProfile
+							    submit_action = {handlers.did_create_patient.bind(this)}/>}/>
 			case 'bank_selector':
-				return selector(handlers.set_bank_selector_handler.bind(this), questions[step])
+        return selector(handlers.set_bank_selector_handler.bind(this), 
+          questions[step])
 			case 'phone':
 				return <Route path='' render={(props) => 
-						<Phone 
-							skip_btn_handler = {null}
-							confirm_btn_handler = {handlers.next_step_handler}		
-						/>} />
+						    <Phone skip_action = {null}
+							         submit_action = {handlers.next_step_handler}/>}/>
 			case 'checkbox':
-				return <Route path='' render={(props) =>
-						<CheckBoxComponent 
-							items = {["aa","bb"]}
-							confirm_btn_handler = {handlers.next_step_handler}
-						/>} 
-					/>
+				return <Route path='' render={(props) => 
+                <CheckBoxComponent items = {questions[step]} 
+                                   submit_action = {handlers.next_step_handler}/>}/>
 			case 'date':
-				return date(handlers.next_step_handler)
+        return <Route path='' render={(props) =>
+                <Date submit_action = {handlers.next_step_handler}/>}/>   
 			case 'height_weight':
-				return height_weight(handlers.next_step_handler)
+        return <Route path='' render={(props) =>
+                <HeightWeight submit_action = {handlers.next_step_handler}/>}/>   
 			default:
 				return(
 					<div>
