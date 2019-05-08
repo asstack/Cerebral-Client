@@ -1,4 +1,4 @@
-import React, {Component} from 'react'
+import React from 'react'
 import uuidv1 from 'uuid'
 
 //TODO: replace the components name after get all componenets. some will reuse in different pages

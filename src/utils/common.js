@@ -1,5 +1,5 @@
-import React, {Component} from 'react'
-import {Route, withRouter} from 'react-router-dom'
+import React from 'react'
+import {Route} from 'react-router-dom'
 import {selector} from '../components/question_types/selector'
 import {date} from '../components/question_types/date'
 import {height_weight} from '../components/question_types/height_weight'

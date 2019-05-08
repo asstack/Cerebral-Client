@@ -4,8 +4,6 @@ import {connect} from 'react-redux'
 import Patient from './containers/patient'
 import Qualification from './containers/patient/qualification'
 import MainPage from './containers'
-import CheckBoxComponent from './components/question_types/checkbox'
-
 
 class App extends Component{
 

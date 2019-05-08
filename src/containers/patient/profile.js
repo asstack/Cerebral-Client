@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import { Route, withRouter } from 'react-router-dom'
+import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 
 import { update_patient_questions, move_next_step, create_patient_from_user,create_visit,update_bank_id,answer_current_question } from '../../actions/patient_action'
@@ -19,9 +19,12 @@ class PatientProfile extends Component{
 
   //TODO: case to get this page -> california or have patient info 
   componentDidMount(){
-    const {patient_state, update_patient_questions, question_bank_id} = this.props
-    update_patient_questions(1)
-    console.log("update patient question in profile")
+    const {update_patient_questions, question_bank_id} = this.props
+    if(question_bank_id){
+      update_patient_questions(question_bank_id)
+    }else{ 
+      update_patient_questions(1)
+    }
     this.props.history.push("/patient/profile")
   }
 
@@ -29,7 +32,7 @@ class PatientProfile extends Component{
   componentDidUpdate(){
     const {patient_state} = this.props
 
-    if(patient_state!=this.state.prv_state){
+    if(patient_state!==this.state.prv_state){
       this.setState({prv_state: patient_state})
       this.props.history.push("/patient/profile")
     }
