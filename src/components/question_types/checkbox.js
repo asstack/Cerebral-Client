@@ -17,7 +17,7 @@ class CheckBoxComponent extends Component {
 
 	submit_handler = () => {
 		//call action from parents with this.state.selected 
-		if(selected_item){
+		if(this.state.selected_item){
 		
 		}
 	}
