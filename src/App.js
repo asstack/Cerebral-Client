@@ -47,7 +47,7 @@ class App extends Component{
       case 'qualification':
         return "/qualification"
       default:
-        return "/";
+        return "/temp_menu";
     }
   }
 

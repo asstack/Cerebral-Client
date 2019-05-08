@@ -22,10 +22,13 @@ body {
     outline: none;
     transition: border .24s ease-in-out;
 }
+.selector-holder {
+    height: 85px;
+    width: 50%
+}
 
 .input-type1::placeholder  {
   color: rgba(37, 0, 68, 1.0);
-
 }
 
 .input-type1 {
@@ -87,6 +90,7 @@ body {
 }
 
 .btn-selector {
+  height:90%;
   background-color: rgba(0,0,0,0);
   border-style: solid;
   border-width: 2px;
