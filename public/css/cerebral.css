@@ -27,12 +27,26 @@ body {
   color: rgba(37, 0, 68, 1.0);
 
 }
+
 .input-type1 {
   height: 60px;
   border-radius: 2px;
   border-style: solid;
   border-width: 2px;
   border-color: rgba(37, 0, 68, 1.0);
+}
+
+.input_height_weight {
+  height : 100%
+}
+
+.text_field_height_weight{
+  width : 75%;
+}
+
+.span_height_weight{
+  width : 100%;
+  background-color:white;
 }
 
 .group-checkbox {
