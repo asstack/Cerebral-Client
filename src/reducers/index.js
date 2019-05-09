@@ -28,7 +28,7 @@ const init_patient_state = {
   step:0,
   total_step:1,
   patient_type: '',
-  patient_state: 'profile/register',
+  patient_state: 'profile',
 
   question_bank_id: '',
   questions: '',
@@ -119,10 +119,10 @@ const patient_reducer = (state = init_patient_state, action) => {
         ...state,
         questions : action.questions
       }
-		case patient_action_types.SET_BANK_TYPE:
+		case patient_action_types.SET_PATIENT_TYPE:
 			return{
 				...state,
-				question_bank_id : action.bank_id
+				patient_type : action.patient_type
 			}
 		case patient_action_types.REMOVE_PATIENT_QUESTIONS:
 			return{
@@ -131,6 +131,11 @@ const patient_reducer = (state = init_patient_state, action) => {
 				total_step:1,
 				step: 0
 			}
+   case patient_action_types.SET_STATE:
+      return{
+        ...state,
+        patient_state:action.state
+      }
     // see notes in patient_actions
     // case patient_action_types.SUBMIT_ANSWERS:
       // return{}

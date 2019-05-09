@@ -8,7 +8,7 @@ export const SET_STEP = 'patient/SET_STEP'
 export const SET_STATE = 'patient/SET_STATE'
 export const SET_BRANCH_QUESTIONS = 'patient/SET_BRANCH_QUESTIONS'
 export const SET_PATIENT_QUESTIONS = 'patient/SET_PATIENT_QUESTIONS'
-export const SET_BANK_TYPE = 'patient/SET_BANK_TYPE'
+export const SET_PATIENT_TYPE = 'patient/SET_PATIENT_TYPE'
 export const REMOVE_PATIENT_QUESTIONS = 'patient/REMOVE_PATIENT_QUESTIONS'
 
 //step 2..9
@@ -45,7 +45,6 @@ const set_branch_questions = (questions,type) => ({
   questions:questions
 })
 
-
 const set_patient = (patient_object) => ({
   type:SET_PATIENT,
   patient_object: patient_object
@@ -56,14 +55,24 @@ const set_visit = (visit_object) => ({
   visit_object:visit_object
 })
 
-const set_bank_id = btype => ({
-	type:SET_BANK_TYPE,
-	bank_id: btype
-})
-
 const remove_patient_questions = () => ({
 	type:REMOVE_PATIENT_QUESTIONS
 })
+
+const set_patient_state = state => ({
+  type:SET_STATE,
+  state: state
+})
+
+const set_patient_type = ptype => ({
+	type:SET_PATIENT_TYPE,
+	patient_type: ptype
+})
+
+//patient type: get from bank selector(Insomnia or depression)
+export const update_patient_type = type => (dispatch, getState) => {
+  return dispatch(set_patient_type(type))
+}  
 
 export const set_profile_question = () => (dispatch, getState) => {
   return dispatch(set_state_with_step('profile/screening', 1))
@@ -144,10 +153,6 @@ export const create_visit = () => (dispatch, getState) => {
     })
   }
 
-export const update_bank_id = bank_id => (dispatch, getState) => {
-	return dispatch(set_bank_id(bank_id))
-}
-
 export const answer_current_question = (answer) => (dispatch, getState) => {
   
   var user_attr = get_user_attr(getState())
@@ -171,4 +176,8 @@ export const answer_current_question = (answer) => (dispatch, getState) => {
       // TODO: not sure what, if any, state to update here since we don't want to store answers locally
       return Promise.resolve()
     })
+}
+
+export const update_patient_state = state => (dispatch, getState) => {
+  return dispatch(set_patient_state(state))
 }

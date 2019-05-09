@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import { Route, withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 import PatientProfile from './profile'
-import {delete_patient_questions} from '../../actions/patient_action'
+import {update_patient_questions, delete_patient_questions} from '../../actions/patient_action'
 
 
 class Patient extends Component{
@@ -10,22 +10,50 @@ class Patient extends Component{
   //route will state/number or state/ for init assessment
   constructor(props){
     super(props)
+    this.state = {
+      prev_state:this.props.patient_state
+    }
+  }
+
+  map_state_to_view = () => {
+ 		const {update_patient_questions, patient_state, patient_type, delete_patient_questions} = this.props
+    console.log("check patient index: ", patient_state)
+    if(patient_state==="profile"){  
+      console.log("check patient profile: ", patient_state)
+      update_patient_questions(0)
+      this.props.history.push("/patient/profile") 
+    }else if(patient_state==="assessment" ){
+      if(patient_type==="Insomnia"){ 
+        update_patient_questions(1)
+      }else if(patient_type==="Depression & Anxiety"){ 
+        update_patient_questions(2)
+      }   
+      this.props.history.push("/patient/accessment") 
+    }else if(patient_state === "verification"){
+    
+    }else if(patient_state === "shipping_payment"){
+    
+    }else {  
+
+    } 
   }
 
   componentDidMount(){
-    //TODO: 1. check app states [patient/profile, patient/assessment, ...]
-    //if no user info and pages that need user info, redirect to login page
-		//clear question data
-		const {delete_patient_questions} = this.props
-		delete_patient_questions()
-    this.props.history.push('/patient/profile')	
+    this.map_state_to_view()
   }
 
-	//TODO: I am not sure it is right way
 	componentDidUpdate(){	
-		if(this.props.location.pathname==="/patient"){
+    const {patient_state} = this.props
+    if(patient_state!==this.state.prv_state){
+      this.setState({prv_state: patient_state})
+      this.map_state_to_view() 
+    }
+
+    /*
+    //may need to check path name
+    if(this.props.location.pathname==="/patient"){
 			this.props.history.push('/patient/profile')
-		}
+    }*/
 	}
 
   map_type_to_style_class = (state, target) => {
@@ -68,9 +96,10 @@ class Patient extends Component{
 const mapStateToProps = state => {
   const{
     global_reducer: {app_state},
-    patient_reducer: {patient_state, step, total_step, questions}
+    patient_reducer: {patient_type, patient_state, step, total_step, questions}
   } = state
   return {
+    patient_type:patient_type,
     app_state:app_state,
     patient_state:patient_state,
 		questions:questions,
@@ -81,5 +110,5 @@ const mapStateToProps = state => {
 
 
 // https://react-redux.js.org/introduction/basic-tutorial#connecting-the-components
-export default withRouter(connect(mapStateToProps, {delete_patient_questions}) (Patient))
+export default withRouter(connect(mapStateToProps, {update_patient_questions, delete_patient_questions}) (Patient))
 

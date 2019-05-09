@@ -36,7 +36,7 @@ class App extends Component{
       case 'qualification':
         return Qualification
       default:
-        return Patient;
+        return MainPage;
     }
   }
 
@@ -47,7 +47,7 @@ class App extends Component{
       case 'qualification':
         return "/start"
       default:
-        return "/patient";
+        return "/";
     }
   }
 

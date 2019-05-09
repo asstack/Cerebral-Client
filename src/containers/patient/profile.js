@@ -2,40 +2,32 @@ import React, {Component} from 'react'
 import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 
-import { update_patient_questions, move_next_step, create_patient_from_user,create_visit,update_bank_id,answer_current_question } from '../../actions/patient_action'
+import {update_patient_state, update_patient_questions, move_next_step, create_patient_from_user,create_visit,update_patient_type,answer_current_question } from '../../actions/patient_action'
 import { register_user, sign_in} from '../../actions/user_auth_action'
 import { update_app_state } from '../../actions/'
 import * as utils from '../../utils/common.js'
 
 class PatientProfile extends Component{
-  //in here, will call componentDidMount and route for [profile, assessment, treatment, verification and shipping]
-  //route will state/number or state/ for init assessment
+  
   constructor(props){
     super(props)
-    this.state = {
-      prv_state:this.props.patient_state
-    }
   }
 
-  //TODO: case to get this page -> california or have patient info 
   componentDidMount(){
-    const {update_patient_questions, question_bank_id} = this.props
-    if(question_bank_id){
-      update_patient_questions(question_bank_id)
-    }else{ 
-      update_patient_questions(0)
-    }
-    this.props.history.push("/patient/profile")
+    
   }
 
-  
   componentDidUpdate(){
-    const {patient_state} = this.props
-
+    const {update_patient_state, question_bank_id, patient_state, is_complete} = this.props
+    if(is_complete){
+      update_patient_state('assessment')
+    }
+    /*
     if(patient_state!==this.state.prv_state){
       this.setState({prv_state: patient_state})
       this.props.history.push("/patient/profile")
     }
+    */
   }
 
   /*local event this*/
@@ -45,7 +37,6 @@ class PatientProfile extends Component{
   }
 
   set_selector_handler=(e)=>{
-    console.log("set value check: ", e.target.value)
     answer_current_question(e.target.value)
     const {move_next_step} = this.props
     move_next_step(this.props.question_step)
@@ -53,8 +44,8 @@ class PatientProfile extends Component{
 
   set_bank_selector_handler=(e)=>{
     console.log("set value check: ", e.target.value)
-    const {move_next_step, update_bank_id} = this.props
-    update_bank_id(e.target.value)
+    const {move_next_step, update_patient_type} = this.props
+    update_patient_type(e.target.value)
     move_next_step(this.props.question_step)
   }
 
@@ -119,5 +110,4 @@ const mapStateToProps = (state) => {
 }
 
 export default withRouter(connect(mapStateToProps, {
-update_app_state, update_patient_questions,register_user, sign_in, move_next_step, create_patient_from_user, create_visit, update_bank_id,answer_current_question
-}) (PatientProfile))
+update_app_state, update_patient_questions,register_user, sign_in, move_next_step, create_patient_from_user, create_visit, update_patient_type,answer_current_question, update_patient_state}) (PatientProfile))
