@@ -16,7 +16,7 @@ class Phone extends Component {
 	}
 
   skip_btn_handler = e => {
-    this.psops.skip_action()
+    this.props.skip_action()
   }
 
   confirm_btn_handler = e => {
