@@ -161,6 +161,10 @@ export const answer_current_question = (answer) => (dispatch, getState) => {
   var patient = getState().patient_reducer.patient_object
   var visit = getState().patient_reducer.visit_object
 
+  if (patient == null || visit == null) {
+    return Promise.resolve(); 
+  }
+
   var patient_state = getState().patient_reducer
 
   var body = {
