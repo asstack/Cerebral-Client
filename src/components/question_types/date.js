@@ -11,7 +11,7 @@ class Date extends Component {
   }
 
   input_update_handler = e =>{
-    this.setState({birth_date:e.Target.value}) 
+    this.setState({birth_date:e.target.value}) 
   }
 
   confirm_btn_handler = e => {

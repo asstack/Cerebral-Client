@@ -37,8 +37,8 @@ class Qualification extends Component{
 
 	set_selector_handler=(e)=>{
 		console.log("set value check: ", e.target.value)
+		const {move_next_step, answer_current_question} = this.props
 		answer_current_question(e.target.value)
-		const {move_next_step} = this.props
 		move_next_step(this.props.question_step)
 	}
 
