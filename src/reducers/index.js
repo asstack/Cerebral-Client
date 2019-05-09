@@ -25,13 +25,22 @@ const init_global_state = {
 }
 
 const init_patient_state = {
-  step:0,
-  total_step:1,
+  
   patient_type: '',
   patient_state: 'profile',
 
+  // all of the question_banks for the current user
+  question_banks: [],
+  // which question bank the user is currently looking at 
+  question_banks_step: 0,
+  
+  // equal to questions_banks[question_bank_step].id
   question_bank_id: '',
+
+  // questions from current question_bank_id
   questions: '',
+  step:0,
+  total_step:1,
 
 	branch_ids: [],
   branch_questions: '',
@@ -114,10 +123,15 @@ const patient_reducer = (state = init_patient_state, action) => {
         questions : action.questions,
         total_step : action.total_step
       }
-    case patient_action_types.SET_BRANCH_QUESTIONS:
+    case patient_action_types.SET_QUESTION_BANKS:
       return{
         ...state,
-        questions : action.questions
+        question_banks : action.question_banks
+      }
+    case patient_action_types.SET_QUESTION_BANKS_STEP:
+      return{
+        ...state,
+        question_banks_step : action.question_banks_step
       }
 		case patient_action_types.SET_PATIENT_TYPE:
 			return{
@@ -130,6 +144,11 @@ const patient_reducer = (state = init_patient_state, action) => {
 				questions: null,
 				total_step:1,
 				step: 0
+      }
+      case patient_action_types.REMOVE_PATIENT_QUESTION_BANKS:
+			return{
+				...state,
+				question_banks: []
 			}
    case patient_action_types.SET_STATE:
       return{

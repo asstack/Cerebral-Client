@@ -6,10 +6,12 @@ export const SET_STEP = 'patient/SET_STEP'
 // export const SUBMIT_ANSWERS = 'profile/SUBMIT_ANSWERS'
 // export const SET_QUESTION_ID = 'profile/SET_QUESTION_ID'
 export const SET_STATE = 'patient/SET_STATE'
-export const SET_BRANCH_QUESTIONS = 'patient/SET_BRANCH_QUESTIONS'
+export const SET_QUESTION_BANKS = 'patient/SET_QUESTION_BANKS'
+export const SET_QUESTION_BANKS_STEP = 'patient/SET_QUESTION_BANKS_STEP'
 export const SET_PATIENT_QUESTIONS = 'patient/SET_PATIENT_QUESTIONS'
 export const SET_PATIENT_TYPE = 'patient/SET_PATIENT_TYPE'
 export const REMOVE_PATIENT_QUESTIONS = 'patient/REMOVE_PATIENT_QUESTIONS'
+export const REMOVE_PATIENT_QUESTION_BANKS = 'patient/REMOVE_PATIENT_QUESTION_BANKS'
 
 //step 2..9
 
@@ -40,9 +42,14 @@ const set_patient_questions = (questions,bank_id) => ({
   bank_id:bank_id
 })
 
-const set_branch_questions = (questions,type) => ({
-  type:SET_BRANCH_QUESTIONS,
-  questions:questions
+const set_question_banks = (questions_banks) => ({
+  type:SET_QUESTION_BANKS,
+  question_banks:questions_banks
+})
+
+const set_question_banks_step = (question_banks_step) => ({
+  type:SET_QUESTION_BANKS_STEP,
+  question_banks_step:question_banks_step
 })
 
 const set_patient = (patient_object) => ({
@@ -57,6 +64,10 @@ const set_visit = (visit_object) => ({
 
 const remove_patient_questions = () => ({
 	type:REMOVE_PATIENT_QUESTIONS
+})
+
+const remove_patient_question_banks = () => ({
+	type:REMOVE_PATIENT_QUESTION_BANKS
 })
 
 const set_patient_state = state => ({
@@ -87,30 +98,50 @@ export const move_patient_sign_up = (state) => (dispatch, getState) => {
 }
 
 export const move_next_step = (step_num) => (dispatch, getState) => {
-	var is_complete = false
-	if(step_num+1 === getState().patient_reducer.questions.length)
-		is_complete=true
-  return dispatch(set_step(step_num+1, is_complete))
+  var is_complete = false
+  var patient = getState().patient_reducer
+  var length = patient.questions.length
+  if (step_num + 1 >= length) {
+    // we are done with the current question bank, move to the next one
+    var banks_length = patient.question_banks.length
+    if (patient.question_banks_step + 1 <= banks_length) {
+
+      dispatch(set_current_question_bank_by_name(patient.question_banks[patient.question_banks_step + 1]))
+      dispatch(set_question_banks_step(patient.question_banks_step + 1))
+    }
+  }
+	else {
+    if (step_num+1 === length)
+      is_complete=true
+    return dispatch(set_step(step_num+1, is_complete))
+  }
+}
+
+export const update_patient_question_banks = (bank_names) => (dispatch, getState) => {
+  dispatch(set_question_banks(bank_names))
+}
+
+export const set_current_question_bank_by_name = (bank_name) => (dispatch, getState) => {
+  var header = {'Content-Type': 'application/json'}
+  return axios.get(`/api/question_banks/search?name=${bank_name}`)
+    .then(function(resp){
+      console.log("set_current_question_bank_by_name: ", resp.data)
+      return dispatch(update_patient_questions(resp.data.id))
+    })
 }
 
 export const update_patient_questions = (bank_id) => (dispatch, getState) => {
   
   var header = {'Content-Type': 'application/json'}
-    axios.get(`/api/question_banks/${bank_id}/questions`)
-      .then(function(resp){
-        console.log("resp: ", resp)
-        dispatch(set_patient_questions(resp.data, bank_id))
-      }).catch(function(err){
-        console.log("err", err)
-      })
+  return axios.get(`/api/question_banks/${bank_id}/questions`)
+    .then(function(resp){
+      console.log("resp: ", resp)
+      dispatch(set_patient_questions(resp.data, bank_id))
+    })
 }
 
 export const delete_patient_questions = () => (dispatch, getState) => {
 	return dispatch(remove_patient_questions())
-}
-
-export const update_branch_questions = questions => (dispatch, getState) => {
-  return dispatch(set_branch_questions(questions))
 }
 
 const  get_user_attr = (state) => {

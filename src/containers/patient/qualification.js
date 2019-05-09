@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
-import { update_patient_questions, move_next_step, create_patient_from_user,create_visit,update_patient_type,answer_current_question } from '../../actions/patient_action'
+import { set_current_question_bank_by_name, update_patient_question_banks, update_patient_questions, move_next_step, create_patient_from_user,create_visit,update_patient_type,answer_current_question } from '../../actions/patient_action'
 import { register_user, sign_in} from '../../actions/user_auth_action'
 import { update_app_state } from '../../actions/'
 import * as utils from '../../utils/common.js'
@@ -18,7 +18,11 @@ class Qualification extends Component{
 	}
 
 	componentDidMount(){
-		const {update_patient_questions} = this.props
+		const {update_patient_questions, update_patient_question_banks} = this.props
+		
+		update_patient_question_banks(['qualification'])
+		
+		// TODO: we should wait for the question banks to load then get the id of the first
 		update_patient_questions(1)
 	}
 
@@ -26,7 +30,9 @@ class Qualification extends Component{
 	componentDidUpdate(){
 		if(this.props.is_complete){
 			const {update_app_state} = this.props
-			update_app_state("patient")		
+
+			// TODO: changing the app state here causes a new object to load
+			// update_app_state("patient")		
 		}
 		console.log("check did update:", this.props.question_step)
 	}
@@ -41,13 +47,25 @@ class Qualification extends Component{
 		answer_current_question(option.option_name)
 		move_next_step(this.props.question_step)
 	}
-  //TODO: set bank_names, immeditate
-	set_bank_selector_handler=(e, option)=>{
-		const {update_app_state, move_next_step, update_patient_type} = this.props
-		update_patient_type(option.question_bank_names)
-    if(option.immediate){
-      update_app_state("patient")     
-    }
+
+	set_bank_selector_handler=(e)=>{
+		console.log("set value check: ", e.target.value)
+		const {set_current_question_bank_by_name, move_next_step, update_patient_question_banks, update_patient_type} = this.props
+
+		var option = this.props.questions[this.props.question_step].options.filter(opt => opt.option_name == e.target.value)[0]
+		if (option.question_bank_names.length > 0) {
+			if (option.immediate) {
+				// replace current questions banks with the new ones
+				update_patient_question_banks(option.question_bank_names)
+				set_current_question_bank_by_name(option.question_bank_names[0])
+			}
+			else {
+				// append question banks to the end
+				update_patient_question_banks(this.props.question_banks.concat( option.question_bank_names))
+			}
+		}
+		update_patient_type(e.target.value)
+		
 		move_next_step(this.props.question_step)
 	}
 
@@ -101,19 +119,18 @@ class Qualification extends Component{
 const mapStateToProps = (state) => {
 	const{
 		global_reducer: {app_state, current_user},
-		patient_reducer: {patient_state, step, question_bank_id, questions, branch_questions, branch_step, branch_option, is_complete}
+		patient_reducer: {patient_state, step, question_bank_id, question_banks, questions, is_complete}
 	} = state
 
 	return {
 		patient_state: patient_state,
+		question_banks: question_banks,
 		question_step: step,
 		question_bank_id: question_bank_id,
 		questions: questions,
-		branch_questions: branch_questions,
-		branch_step: branch_step,
-		branch_option: branch_option,
 		is_complete: is_complete
 	}
 }
 
-export default withRouter(connect(mapStateToProps,{update_app_state, update_patient_questions,register_user, sign_in, move_next_step, create_patient_from_user, create_visit, update_patient_type,answer_current_question}) (Qualification))
+export default withRouter(connect(mapStateToProps,{update_app_state, update_patient_questions, update_patient_question_banks, set_current_question_bank_by_name,
+	register_user, sign_in, move_next_step, create_patient_from_user, create_visit, update_patient_type,answer_current_question}) (Qualification))
