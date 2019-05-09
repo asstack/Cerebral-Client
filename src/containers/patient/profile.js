@@ -23,7 +23,7 @@ class PatientProfile extends Component{
     if(question_bank_id){
       update_patient_questions(question_bank_id)
     }else{ 
-      update_patient_questions(1)
+      update_patient_questions(0)
     }
     this.props.history.push("/patient/profile")
   }
@@ -66,6 +66,13 @@ class PatientProfile extends Component{
             .then(() => {return this.props.move_next_step(this.props.question_step)})}
 
 
+	display_title = (questions, step) =>{
+		if(questions && questions[step]){
+			return questions[step].title
+		}
+	}
+
+
   //Todo: update dynamic bounding by state
   //state global: patient local: profile/register profile/sign_in profile/questions
   render(){
@@ -77,11 +84,14 @@ class PatientProfile extends Component{
     }
           
     return(
-      <div>
-        <div>
-          {utils.map_type_to_component(this.props.questions, this.props.question_step, handlers)}
-        </div>  
-      </div>
+		  <div className="d-flex flex-column">
+        <div className="d-flex flex-column question-container">
+					<div className="d-flex justify-content-center text-big">
+            <p>{this.display_title(this.props.questions, this.props.question_step)}</p>
+          </div>
+					{utils.map_type_to_component(this.props.questions, this.props.question_step, handlers)}
+				</div>
+			</div>
     );
   }
 }

@@ -27,7 +27,7 @@ class Qualification extends Component{
 			const {update_app_state} = this.props
 			update_app_state("patient")		
 		}
-		console.log("chk did update:", this.props.question_step)
+		console.log("check did update:", this.props.question_step)
 	}
 
 	next_step_handler=(e)=>{
