@@ -16,9 +16,10 @@ class Qualification extends Component{
 			title: ''
 		}
 	}
+
 	componentDidMount(){
 		const {update_patient_questions} = this.props
-		update_patient_questions(0)
+		update_patient_questions(1)
 	}
 
 	//TODO: move checking part to action and middleware
@@ -35,20 +36,20 @@ class Qualification extends Component{
 		move_next_step(this.props.question_step)
 	}
 
-	set_selector_handler=(e)=>{
-		console.log("set value check: ", e.target.value)
+	set_selector_handler=(e, option)=>{
 		const {move_next_step, answer_current_question} = this.props
-		answer_current_question(e.target.value)
+		answer_current_question(option.option_name)
 		move_next_step(this.props.question_step)
 	}
-
-	set_bank_selector_handler=(e)=>{
-		console.log("set value check: ", e.target.value)
-		const {move_next_step, update_patient_type} = this.props
-		update_patient_type(e.target.value)
+  //TODO: set bank_names, immeditate
+	set_bank_selector_handler=(e, option)=>{
+		const {update_app_state, move_next_step, update_patient_type} = this.props
+		update_patient_type(option.question_bank_names)
+    if(option.immediate){
+      update_app_state("patient")     
+    }
 		move_next_step(this.props.question_step)
 	}
-
 
 	display_title = (questions, step) =>{
 		if(questions[step]){
@@ -69,7 +70,6 @@ class Qualification extends Component{
 	//Todo: update dynamic bounding by state
 	//state global: patient local: profile/register profile/sign_in profile/questions
 	render(){
-
 		const handlers = {
 			next_step_handler:this.next_step_handler,
 			set_selector_handler:this.set_selector_handler,
@@ -116,5 +116,4 @@ const mapStateToProps = (state) => {
 	}
 }
 
-export default withRouter(connect(mapStateToProps,{update_app_state, update_patient_questions, 
-	register_user, sign_in, move_next_step, create_patient_from_user, create_visit, update_patient_type,answer_current_question}) (Qualification))
+export default withRouter(connect(mapStateToProps,{update_app_state, update_patient_questions,register_user, sign_in, move_next_step, create_patient_from_user, create_visit, update_patient_type,answer_current_question}) (Qualification))

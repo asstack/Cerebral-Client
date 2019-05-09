@@ -1,10 +1,18 @@
 import React from 'react'
+import uuidv1 from 'uuid'
 import * as components from '../question_components/components'
 
 
+//TODO: move to components after all fixed
 const selector_items = (event_handler, options) => {
+  console.log(options)
   return options.map((item, index) => (
-    components.btn_selector(event_handler, item)
+    <div className="p-2 selector-holder" key={uuidv1()}>
+      <input className ="col btn-selector" onClick = {(e) => event_handler(e,item)} 
+        type="button" value={item.option_name}/>
+    </div>
+
+    //components.btn_selector(event_handler, item)
   ))
 }
 

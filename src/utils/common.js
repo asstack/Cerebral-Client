@@ -6,6 +6,9 @@ import HeightWeight from '../components/question_types/height_weight'
 import CreateProfile from '../components/question_types/create_profile'
 import Phone from '../components/question_types/phone'
 import CheckBoxComponent from '../components/question_types/checkbox'
+import StateSelector from '../components/question_types/state_selector' 
+import TextArea from '../components/question_types/text_area' 
+
 
 export const map_type_to_component = (questions, step, handlers) => {
 		console.log("map_type to component: ", handlers)
@@ -17,6 +20,11 @@ export const map_type_to_component = (questions, step, handlers) => {
 				return <Route path='' render={(props) =>
 						    <CreateProfile
 							    submit_action = {handlers.did_create_patient.bind(this)}/>}/>
+			case 'sign_up':
+				return <Route path='' render={(props) =>
+						    <CreateProfile
+							    submit_action = {handlers.did_create_patient.bind(this)}/>}/>
+	
 			case 'bank_selector':
         return selector(handlers.set_bank_selector_handler.bind(this), 
           questions[step])
@@ -34,6 +42,12 @@ export const map_type_to_component = (questions, step, handlers) => {
 			case 'height_weight':
         return <Route path='' render={(props) =>
                 <HeightWeight submit_action = {handlers.next_step_handler}/>}/>   
+			case 'state_selector':
+        return <Route path='' render={(props) =>
+                <StateSelector submit_action = {handlers.next_step_handler}/>}/>   	
+			case 'yes_no_details':
+        return <Route path='' render={(props) =>
+                <TextArea submit_action = {handlers.next_step_handler}/>}/>   	
 			default:
 				return(
 					<div>

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {Component} from 'react'
 import * as components from '../question_components/components'
 
 class TextArea extends Component {
@@ -9,13 +9,21 @@ class TextArea extends Component {
 		}
 	}
 
+  update_text_handler = e => { 
+    this.setState({selected_item:e.target.value})
+  }
+
+  submit_btn_handler = e => {
+    this.props.submit_action() 
+  }
+
 	render(){	
 		return(
 			<div>
         <div className="form-group">
-          <textarea className="form-control" rows="5" />
+          <textarea onChange={this.update_text_handler} className="form-control" rows="5" />
         </div>
-        {components.btn_selector(this.props.confirm_btn_handler, "Confirm your answer")}	
+        {components.btn_selector(this.submit_btn_handler, "Confirm your answer")}	
 			</div>
 		)
 	}

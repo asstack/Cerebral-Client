@@ -17,10 +17,8 @@ class Patient extends Component{
 
   map_state_to_view = () => {
  		const {update_patient_questions, patient_state, patient_type, delete_patient_questions} = this.props
-    console.log("check patient index: ", patient_state)
     if(patient_state==="profile"){  
-      console.log("check patient profile: ", patient_state)
-      update_patient_questions(0)
+      update_patient_questions(2)
       this.props.history.push("/patient/profile") 
     }else if(patient_state==="assessment" ){
       if(patient_type==="Insomnia"){ 
@@ -39,6 +37,7 @@ class Patient extends Component{
   }
 
   componentDidMount(){
+    console.log("patient component: ", this.props)
     this.map_state_to_view()
   }
 

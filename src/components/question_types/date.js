@@ -15,7 +15,7 @@ class Date extends Component {
   }
 
   confirm_btn_handler = e => {
-    console.log("check hanlder value". this.state.birth_dat) 
+    console.log("check hanlder value", this.state.birth_date) 
     this.props.submit_action() 
   }
 
@@ -23,7 +23,7 @@ class Date extends Component {
     return(
     	<div>
 			  {components.input_type_1(this.input_update_handler, "Date of Birth (mm/dd/yy)")}
-			  {components.confirm_button_type_1(this.cofirm_btn_handler, "Confirm date of birth")}
+			  {components.confirm_button_type_1(this.confirm_btn_handler, "Confirm date of birth")}
 		  </div>
 	
     )

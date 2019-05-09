@@ -12,14 +12,15 @@ class HeightWeight extends Component {
   }
   
   update_height_handler = e => {
-    this.setState({height:e.Target.value}) 
+    this.setState({height:e.target.value}) 
   }
 
   update_weight_handler = e => {
-    this.setState({weight:e.Target.value}) 
+    this.setState({weight:e.target.value}) 
   }
+  
   submit_btn_handler = e => {
-    this.submit_action(this.state)
+    this.props.submit_action()
   }
 
   render(){
@@ -40,7 +41,6 @@ class HeightWeight extends Component {
         {components.confirm_button_type_1(this.submit_btn_handler, "Confirm weight and height")}
       </div>
     )
-
   }
 }
 
