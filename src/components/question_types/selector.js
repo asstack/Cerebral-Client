@@ -5,7 +5,6 @@ import * as components from '../question_components/components'
 
 //TODO: move to components after all fixed
 const selector_items = (event_handler, options) => {
-  console.log(options)
   return options.map((item, index) => (
     <div className="p-2 selector-holder" key={uuidv1()}>
       <input className ="col btn-selector" onClick = {(e) => event_handler(e,item)} 

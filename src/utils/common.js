@@ -11,8 +11,8 @@ import TextArea from '../components/question_types/text_area'
 
 
 export const map_type_to_component = (questions, step, handlers) => {
-		console.log("map_type to component: ", handlers)
-		if(!questions || !questions[step]) {return <div> Loading </div>}
+  
+  if(!questions || !questions[step]) {return <div> Loading </div>}
 		switch(questions[step].question_type) {
 			case 'selector':
 				return selector(handlers.set_selector_handler.bind(this), questions[step])
@@ -23,31 +23,30 @@ export const map_type_to_component = (questions, step, handlers) => {
 			case 'sign_up':
 				return <Route path='' render={(props) =>
 						    <CreateProfile
-							    submit_action = {handlers.did_create_patient.bind(this)}/>}/>
-	
+							    submit_action = {handlers.did_create_patient.bind(this)}/>}/>	
 			case 'bank_selector':
         return selector(handlers.set_bank_selector_handler.bind(this), 
           questions[step])
 			case 'phone':
 				return <Route path='' render={(props) => 
-						    <Phone skip_action = {null}
-							         submit_action = {handlers.next_step_handler}/>}/>
+						    <Phone skip_action = {handlers.next_step_handler}
+							         submit_action = {handlers.submit_answer_and_next_step}/>}/>
 			case 'checkbox':
 				return <Route path='' render={(props) => 
                 <CheckBoxComponent items = {questions[step]} 
-                                   submit_action = {handlers.next_step_handler}/>}/>
+                                   submit_action = {handlers.submit_answer_and_next_step}/>}/>
 			case 'date':
         return <Route path='' render={(props) =>
-                <Date submit_action = {handlers.next_step_handler}/>}/>   
+                <Date submit_action = {handlers.submit_answer_and_next_step}/>}/>   
 			case 'height_weight':
         return <Route path='' render={(props) =>
-                <HeightWeight submit_action = {handlers.next_step_handler}/>}/>   
+                <HeightWeight submit_action = {handlers.submit_answer_and_next_step}/>}/>   
 			case 'state_selector':
         return <Route path='' render={(props) =>
-                <StateSelector submit_action = {handlers.next_step_handler}/>}/>   	
+                <StateSelector submit_action = {handlers.submit_answer_and_next_step}/>}/>   	
 			case 'yes_no_details':
         return <Route path='' render={(props) =>
-                <TextArea submit_action = {handlers.next_step_handler}/>}/>   	
+                <TextArea submit_action = {handlers.submit_answer_and_next_step}/>}/>   	
 			default:
 				return(
 					<div>

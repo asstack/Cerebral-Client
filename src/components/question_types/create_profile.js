@@ -21,7 +21,7 @@ class CreateProfile extends Component {
     if(is_consent && email && first_name && last_name && (password===password_confirm)){
       this.props.submit_action(this.state) 
     }else{
-      console.log("plz consent: ", this.state.is_consent) 
+      console.log("please input valid information") 
     }
    }
 
@@ -51,7 +51,6 @@ class CreateProfile extends Component {
   }
 
   set_concensus = e => {
-    console.log(e.target.value) 
     this.setState({is_consent:!this.state.is_consent})
   }
 

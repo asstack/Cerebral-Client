@@ -15,7 +15,6 @@ class Date extends Component {
   }
 
   confirm_btn_handler = e => {
-    console.log("check hanlder value", this.state.birth_date) 
     this.props.submit_action() 
   }
 

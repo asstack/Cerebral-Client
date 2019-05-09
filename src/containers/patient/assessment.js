@@ -31,14 +31,12 @@ class Assessment extends Component{
   }
 
   set_selector_handler=(e)=>{
-    console.log("set value check: ", e.target.value)
     const {move_next_step, answer_current_question} = this.props
     answer_current_question(e.target.value)
     move_next_step(this.props.question_step)
   }
 
   set_bank_selector_handler=(e)=>{
-    console.log("set value check: ", e.target.value)
     const {move_next_step, update_patient_type} = this.props
     update_patient_type(e.target.value)
     move_next_step(this.props.question_step)

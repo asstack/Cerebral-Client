@@ -34,7 +34,6 @@ class Qualification extends Component{
 			// TODO: changing the app state here causes a new object to load
 			// update_app_state("patient")		
 		}
-		console.log("check did update:", this.props.question_step)
 	}
 
 	next_step_handler=(e)=>{
@@ -48,11 +47,15 @@ class Qualification extends Component{
 		move_next_step(this.props.question_step)
 	}
 
-	set_bank_selector_handler=(e)=>{
-		console.log("set value check: ", e.target.value)
+  submit_answer_and_next_step = (e, ans) => {
+		const {move_next_step, answer_current_question} = this.props
+    answer_current_question(ans) 
+		move_next_step(this.props.question_step)
+  }
+
+	set_bank_selector_handler=(e, option)=>{
 		const {set_current_question_bank_by_name, move_next_step, update_patient_question_banks, update_patient_type} = this.props
 
-		var option = this.props.questions[this.props.question_step].options.filter(opt => opt.option_name == e.target.value)[0]
 		if (option.question_bank_names.length > 0) {
 			if (option.immediate) {
 				// replace current questions banks with the new ones
@@ -64,8 +67,8 @@ class Qualification extends Component{
 				update_patient_question_banks(this.props.question_banks.concat( option.question_bank_names))
 			}
 		}
-		update_patient_type(e.target.value)
-		
+    
+    update_patient_type(option.option_name)	
 		move_next_step(this.props.question_step)
 	}
 
@@ -85,6 +88,7 @@ class Qualification extends Component{
 						.then(() => {return this.props.move_next_step(this.props.question_step)})
 	}
 
+
 	//Todo: update dynamic bounding by state
 	//state global: patient local: profile/register profile/sign_in profile/questions
 	render(){
@@ -92,7 +96,8 @@ class Qualification extends Component{
 			next_step_handler:this.next_step_handler,
 			set_selector_handler:this.set_selector_handler,
 			set_bank_selector_handler:this.set_bank_selector_handler,
-			did_create_patient: this.did_create_patient
+			did_create_patient: this.did_create_patient,
+      submit_answer_and_next_step: this.submit_answer_and_next_step
 		}
 
 		return(
@@ -104,7 +109,6 @@ class Qualification extends Component{
 							</div>
 						</div>
 					</div>
-
 					<div className="d-flex flex-column question-container">
 						<div className="d-flex justify-content-center text-big">
 							<p>{this.display_title(this.props.questions, this.props.question_step)}</p>
@@ -133,4 +137,4 @@ const mapStateToProps = (state) => {
 }
 
 export default withRouter(connect(mapStateToProps,{update_app_state, update_patient_questions, update_patient_question_banks, set_current_question_bank_by_name,
-	register_user, sign_in, move_next_step, create_patient_from_user, create_visit, update_patient_type,answer_current_question}) (Qualification))
+	register_user, sign_in, move_next_step, create_patient_from_user, create_visit, update_patient_type, answer_current_question}) (Qualification))
