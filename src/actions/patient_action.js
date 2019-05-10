@@ -104,10 +104,14 @@ export const move_next_step = (step_num) => (dispatch, getState) => {
   if (step_num + 1 >= length) {
     // we are done with the current question bank, move to the next one
     var banks_length = patient.question_banks.length
-    if (patient.question_banks_step + 1 <= banks_length) {
+    if (patient.question_banks_step + 1 < banks_length) {
 
       dispatch(set_current_question_bank_by_name(patient.question_banks[patient.question_banks_step + 1]))
       dispatch(set_question_banks_step(patient.question_banks_step + 1))
+    } else {
+      // we are done! go to the CompletedPage
+      dispatch(update_patient_state('completed'));
+
     }
   }
 	else {
