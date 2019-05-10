@@ -7,29 +7,29 @@ class CheckBoxComponent extends Component {
     super(props)
     this.state = {
       isselected:'',
-      selected_item:''
+      selected_items:{}
     }
   }
 
   //TODO: Save multiple values from selected boxes
   check_box_handler = (e,item) => {
+    console.log(e.target.checked)
     //update local state in here
-    this.setState({selected_item:item})
+    //this.setState({selected_item:item})
   }
 
   submit_btn_handler = () => {
     //call action from parents with this.state.selected 
-    if(this.state.selected_item){
-      this.props.submit_action()
-    }
+    this.props.submit_action()
   }
   
+  //{(e) => this.check_box_handler(e,item.option_name)}
   map_data_to_checkbox = item => {
     return(
       <div className="input-group mb-3" key={uuidv1()}>
         <div className="input-group-prepend">
           <div className="input-group-text group-checkbox">
-            <input type="checkbox" onClick={(e) => this.check_box_handler(e,item.option_name)}/>
+            <input type="checkbox" name={item.option_name}/>
           </div>
         </div>
         <div className="d-flex justify-content-center form-control group-checkbox-text">
@@ -40,12 +40,10 @@ class CheckBoxComponent extends Component {
     }
 
   render(){
-    console.log("checkbox :", this.props.items)
     return (
-      <div>
-        
+      <div>    
         {this.props.items.options.map((item, index) => (this.map_data_to_checkbox(item)))}
-        {components.btn_selector(this.props.confirm_btn_handler, "Confirm")}  
+        {components.btn_selector(this.submit_btn_handler, "Confirm")}  
       </div>
     )
   }
