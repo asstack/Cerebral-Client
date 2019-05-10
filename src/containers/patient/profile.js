@@ -94,7 +94,7 @@ class PatientProfile extends Component{
       did_create_patient: this.did_create_patient,
       submit_answer_and_next_step: this.submit_answer_and_next_step
     }
-          
+    
     return(
 		  <div className="d-flex flex-column">
         <div className="d-flex flex-column question-container">

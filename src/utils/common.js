@@ -31,7 +31,12 @@ export const map_type_to_component = (questions, step, handlers) => {
 				return <Route path='' render={(props) => 
 						    <Phone skip_action = {handlers.next_step_handler}
 							         submit_action = {handlers.submit_answer_and_next_step}/>}/>
-			case 'checkbox':
+		  case 'checkbox':
+				return <Route path='' render={(props) => 
+                <CheckBoxComponent items = {questions[step]} 
+                                   submit_action = {handlers.submit_answer_and_next_step}/>}/>
+		
+			case 'checkboxes':
 				return <Route path='' render={(props) => 
                 <CheckBoxComponent items = {questions[step]} 
                                    submit_action = {handlers.submit_answer_and_next_step}/>}/>
