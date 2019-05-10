@@ -18,14 +18,8 @@ class Patient extends Component{
   map_state_to_view = () => {
  		const {update_patient_questions, patient_state, patient_type, delete_patient_questions} = this.props
     if(patient_state==="profile"){  
-      // update_patient_questions(0)
       this.props.history.push("/patient/profile") 
     }else if(patient_state==="assessment" ){
-      if(patient_type==="Insomnia"){ 
-        // update_patient_questions(1)
-      }else if(patient_type==="Depression & Anxiety"){  
-        // update_patient_questions(2)
-      }   
       this.props.history.push("/patient/accessment") 
     }else if(patient_state === "verification"){
     

@@ -4,6 +4,7 @@ import {connect} from 'react-redux'
 import Patient from './containers/patient'
 import Qualification from './containers/patient/qualification'
 import MainPage from './containers'
+import {update_app_state} from './actions'
 
 class App extends Component{
 
@@ -12,13 +13,16 @@ class App extends Component{
   constructor(props){
     super(props)
     this.state = {
-      prv_state:this.props.app_state
+      prv_state:"" 
     }
   }
-  //[patient/]
+  
   componentDidMount(){
     const {app_state} = this.props
-    this.props.history.push(this.mapStateToPath(app_state))
+    const init_state =  this.mapPathToState(this.props.location.pathname.split("/").pop())   
+    if(!app_state){
+      this.props.update_app_state(init_state) 
+    } 
   }
 
   componentDidUpdate(){
@@ -26,6 +30,15 @@ class App extends Component{
     if(app_state!==this.state.prv_state){
       this.setState({prv_state:app_state})
       this.props.history.push(this.mapStateToPath(app_state))
+    }
+  }
+
+  mapPathToState = path => {
+    switch(path){
+      case 'start':
+        return 'qualification'
+      default:
+        return path
     }
   }
 
@@ -65,4 +78,4 @@ const mapStateToProps = (state) => {
   return {app_state: app_state}
 }
 
-export default withRouter(connect(mapStateToProps,{}) (App))
+export default withRouter(connect(mapStateToProps,{update_app_state}) (App))

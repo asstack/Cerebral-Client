@@ -63,6 +63,7 @@ class Qualification extends Component{
 				set_current_question_bank_by_name(option.question_bank_names[0])
 			}
 			else {
+        //TODO: Need to update code to use react not redux, it makes component use shared state
 				// append question banks to the end
 				update_patient_question_banks(this.props.question_banks.concat( option.question_bank_names))
 			}

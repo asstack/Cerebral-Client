@@ -21,7 +21,7 @@ const init_global_state = {
       client: null
     },
   },
-  app_state: 'init',
+  app_state: '',
 }
 
 const init_patient_state = {

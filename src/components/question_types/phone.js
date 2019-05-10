@@ -33,7 +33,6 @@ class Phone extends Component {
 				</div>
 			</div>
 		)
-
 	}
 }
 

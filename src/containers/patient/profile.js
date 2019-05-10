@@ -57,6 +57,7 @@ class PatientProfile extends Component{
 				set_current_question_bank_by_name(option.question_bank_names[0])
 			}
 			else {
+        //TODO: Same with qualification.js. need to use react for functional
 				update_patient_question_banks(this.props.question_banks.concat( option.question_bank_names))
 			}
 		}
