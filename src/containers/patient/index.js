@@ -3,7 +3,7 @@ import { Route, withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 import PatientProfile from './profile'
 import {update_patient_questions, delete_patient_questions} from '../../actions/patient_action'
-
+import {CompleteProcess} from '../../components/static_components/complete_patient_process'
 
 class Patient extends Component{
   //in here, will call componentDidMount and route for [profile, assessment, treatment, verification and shipping]
@@ -25,8 +25,8 @@ class Patient extends Component{
     
     }else if(patient_state === "shipping_payment"){
     
-    }else {  
-
+    }else if(patient_state === "completed"){  
+      this.props.history.push("/patient/completed")
     } 
   }
 
@@ -63,24 +63,34 @@ class Patient extends Component{
   //TODO: update dynamic bounding by state
   //TODO: add redux state for size of questions
   // uses https://reacttraining.com/react-router/web/api/Route
+
+  render_views(){
+    if(this.props.patient_state==="completed"){  
+      return <Route path="/patient/completed" component={CompleteProcess}/>
+    }else{
+      return( 
+        <div className="d-flex flex-column">
+          <div className="d-flex flex-row">
+            <div className="p-2"><div className="btn-arrow"><a className="link-type1" href="">&lt;</a></div></div>
+          </div>
+          <div className="d-flex justify-content-center flex-row">
+            {this.props.question_banks.map((item, index) => (this.progress_menu(item, index)))}  
+          </div>
+          <div className="d-flex flex-column question-container">
+           <div className="d-flex justify-content-left text-middle">QUESTION {this.props.question_step+1} OF {this.props.total_step}</div>
+            <div className="questions-container">
+              <div className="d-flex justify-content-left text_description"> {this.props.questions[this.props.question_step].description}</div> 
+              <Route path="/patient/profile" component={PatientProfile}/>
+            </div>
+          </div>
+        </div>    
+      )   
+    }  
+  }
+  
   render(){
     return(
-      <div className="d-flex flex-column">
-        <div className="d-flex flex-row">
-          <div className="p-2"><div className="btn-arrow"><a className="link-type1" href="">&lt;</a></div></div>
-        </div>
-        <div className="d-flex justify-content-center flex-row">
-          {this.props.question_banks.map((item, index) => (this.progress_menu(item, index)))}  
-        </div>
-        <div className="d-flex flex-column question-container">
-         <div className="d-flex justify-content-left text-middle">QUESTION {this.props.question_step+1} OF {this.props.total_step}</div>
-          <div className="questions-container">
-            <div className="d-flex justify-content-left text_description"> {this.props.questions[this.props.question_step].description}</div>
-       
-          	<Route path="/patient/profile" component={PatientProfile}/>
-          </div>
-        </div>
-      </div>
+      this.render_views()
     );
   }
 }
