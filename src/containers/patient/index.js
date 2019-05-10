@@ -36,7 +36,6 @@ class Patient extends Component{
 
 	componentDidUpdate(){	
     const {patient_state} = this.props
-    console.log("check state : ",this.props.question_banks)
     if(patient_state!==this.state.prv_state){
       this.setState({prv_state: patient_state})
       this.map_state_to_view() 
@@ -58,7 +57,6 @@ class Patient extends Component{
   }
 
   progress_menu = (bank_name, index) => { 
-    console.log("progree menu check :", bank_name, this.props.question_bank_id)
     return <div className={this.map_type_to_style_class(this.props.question_banks_step, index)}>{bank_name}</div> 
   }
 

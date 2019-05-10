@@ -54,8 +54,9 @@ class Qualification extends Component{
   }
 
 	set_bank_selector_handler=(e, option)=>{
-		const {set_current_question_bank_by_name, move_next_step, update_patient_question_banks, update_patient_type} = this.props
+		const { answer_current_question, set_current_question_bank_by_name, move_next_step, update_patient_question_banks, update_patient_type} = this.props
 
+    answer_current_question(option.option_name) 
 		if (option.question_bank_names.length > 0) {
 			if (option.immediate) {
 				// replace current questions banks with the new ones
