@@ -29,20 +29,22 @@ class CheckBoxComponent extends Component {
       <div className="input-group mb-3" key={uuidv1()}>
         <div className="input-group-prepend">
           <div className="input-group-text group-checkbox">
-            <input type="checkbox" onClick={(e) => this.check_box_handler(e,item)}/>
+            <input type="checkbox" onClick={(e) => this.check_box_handler(e,item.option_name)}/>
           </div>
         </div>
         <div className="d-flex justify-content-center form-control group-checkbox-text">
-          <p className="text-small">{item}</p>
+          <p className="text-small">{item.option_name}</p>
         </div>
       </div>
       )
     }
 
   render(){
+    console.log("checkbox :", this.props.items)
     return (
       <div>
-        {this.props.items.map((item, index) => (this.map_data_to_checkbox(item)))}
+        
+        {this.props.items.options.map((item, index) => (this.map_data_to_checkbox(item)))}
         {components.btn_selector(this.props.confirm_btn_handler, "Confirm")}  
       </div>
     )
