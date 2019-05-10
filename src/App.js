@@ -5,6 +5,7 @@ import Patient from './containers/patient'
 import Qualification from './containers/patient/qualification'
 import MainPage from './containers'
 import {update_app_state} from './actions'
+import ReactGA from 'react-ga'
 
 class App extends Component{
 
@@ -18,6 +19,10 @@ class App extends Component{
   }
   
   componentDidMount(){
+    if (process.env.GA_ACCOUNT) {
+      ReactGA.initialize(process.env.GA_ACCOUNT);
+      ReactGA.pageview('/homepage');
+    }
     const {app_state} = this.props
     const init_state =  this.mapPathToState(this.props.location.pathname.split("/").pop())   
     if(!app_state){
