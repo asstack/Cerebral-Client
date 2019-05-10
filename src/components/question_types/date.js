@@ -15,7 +15,7 @@ class Date extends Component {
   }
 
   confirm_btn_handler = e => {
-    this.props.submit_action(this.state) 
+    this.props.submit_action(this.state.birth_date) 
   }
 
   render(){

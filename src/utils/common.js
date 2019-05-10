@@ -31,11 +31,6 @@ export const map_type_to_component = (questions, step, handlers) => {
 				return <Route path='' render={(props) => 
 						    <Phone skip_action = {handlers.next_step_handler}
 							         submit_action = {handlers.submit_answer_and_next_step}/>}/>
-		  case 'checkbox':
-				return <Route path='' render={(props) => 
-                <CheckBoxComponent items = {questions[step]} 
-                                   submit_action = {handlers.submit_answer_and_next_step}/>}/>
-		
 			case 'checkboxes':
 				return <Route path='' render={(props) => 
                 <CheckBoxComponent items = {questions[step]} 
@@ -55,11 +50,11 @@ export const map_type_to_component = (questions, step, handlers) => {
 			default:
 				return(
 					<div>
-					<div className='d-flex flex-row justify-content-center'>
+					<div className='pb-5 d-flex flex-row justify-content-center'>
 						<img src='https://cdn.pixabay.com/photo/2017/06/16/07/26/under-construction-2408060__340.png'/>
-						</div>
+					</div>
 					<div className='d-flex flex-row justify-content-center'>
-						<input type="button" onClick={handlers.next_step_handler.bind(this)} value="Next"/>
+						<input className ="col btn-confirm text-btn" type="button" onClick={handlers.next_step_handler.bind(this)} value="Next"/>
 					</div>
 				</div>
 				)

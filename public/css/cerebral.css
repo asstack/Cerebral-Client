@@ -121,6 +121,16 @@ body {
   color: rgba(37, 0, 68, 1.0);
 }
 
+.text-small-2 {
+
+  font-family: Proxima Nova;
+  font-size: 18px;
+  line-height: 35px;
+  letter-spacing: -0.43px;
+
+  color: #250044;
+}
+
 .text-small__unselected{
   font-size: 16.0px;
   color: #9998D6;
@@ -128,6 +138,11 @@ body {
 
 .text-middle {
   font-size: 20.0px;
+  color: rgba(37, 0, 68, 1.0);
+}
+
+.text-mid-title {
+  font-size: 24.0px;
   color: rgba(37, 0, 68, 1.0);
 }
 
@@ -153,4 +168,8 @@ body {
   padding-top:60px;
   width : 742px;
   align-self: center;
+}
+
+.image-holder {
+  padding:20px
 }

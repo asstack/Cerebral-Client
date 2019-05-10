@@ -25,7 +25,7 @@ class HeightWeight extends Component {
   }
   
   submit_btn_handler = e => {
-    this.props.submit_action(this.state)
+    this.props.submit_action(`${this.state.weight}lb ${this.state.ft}ft ${this.state.in}in`)
   }
 
   render(){
