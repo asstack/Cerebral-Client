@@ -10,7 +10,6 @@ const selector_items = (event_handler, options) => {
       <input className ="col btn-selector" onClick = {(e) => event_handler(e,item)} 
         type="button" value={item.option_name}/>
     </div>
-
     //components.btn_selector(event_handler, item)
   ))
 }

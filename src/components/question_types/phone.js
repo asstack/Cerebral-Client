@@ -7,7 +7,7 @@ class Phone extends Component {
 	constructor(props){
 		super(props)
 		this.state = {
-			phone_number:true
+			phone_number:''
 		}
 	}
 
@@ -20,7 +20,7 @@ class Phone extends Component {
   }
 
   confirm_btn_handler = e => {
-    this.props.submit_action()
+    this.props.submit_action(this.state)
   }
 
 	render(){	

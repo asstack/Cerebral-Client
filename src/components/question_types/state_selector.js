@@ -14,7 +14,7 @@ class StateSelector extends Component {
   }
 
   confirm_btn_handler = e => {
-    this.props.submit_action()
+    this.props.submit_action(this.state)
   }
 
 	render(){	
