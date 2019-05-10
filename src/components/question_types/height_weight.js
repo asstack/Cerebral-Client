@@ -7,12 +7,17 @@ class HeightWeight extends Component {
     super(props)
     this.state = {
       weight:'',
-      height:''
+      in:'',
+      ft:''
     }
   }
   
-  update_height_handler = e => {
-    this.setState({height:e.target.value}) 
+  update_height_ft_handler = e => {
+    this.setState({ft:e.target.value}) 
+  }
+
+  update_height_in_handler = e => {
+    this.setState({in:e.target.value}) 
   }
 
   update_weight_handler = e => {
@@ -26,15 +31,15 @@ class HeightWeight extends Component {
   render(){
      return (
       <div>
-        {components.input_type_1(null, "Weight lbs")}
+        {components.input_type_1(this.update_weight_handler, "Weight lbs")}
         <div className = "p-2">
            <div className = "input-group input-type1">
              <div className ="input-group-prepend text_field_height_weight">
                <span className = "input-group-text span_height_weight">Height</span>
              </div>
-             <input type="text" placeholder="Ft" onChange = {this.update_height_handler} 
+             <input type="text" placeholder="Ft" onChange = {this.update_height_ft_handler} 
                className="form-control input_height_weight"/>
-             <input type="text" placeholder="In" onChange = {this.update_height_handler} 
+             <input type="text" placeholder="In" onChange = {this.update_height_in_handler} 
                className="form-control input_height_weight"/>
            </div>
          </div>

@@ -13,7 +13,6 @@ class CheckBoxComponent extends Component {
 
   //TODO: Save multiple values from selected boxes
   check_box_handler = (e,item) => {
-    console.log(e.target.checked)
     //update local state in here
     //this.setState({selected_item:item})
   }

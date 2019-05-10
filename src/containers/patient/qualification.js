@@ -41,7 +41,7 @@ class Qualification extends Component{
 		move_next_step(this.props.question_step)
 	}
 
-	set_selector_handler=(e, option)=>{
+	set_selector_handler=(option)=>{
 		const {move_next_step, answer_current_question} = this.props
 		answer_current_question(option.option_name)
 		move_next_step(this.props.question_step)
@@ -99,7 +99,7 @@ class Qualification extends Component{
 			set_selector_handler:this.set_selector_handler,
 			set_bank_selector_handler:this.set_bank_selector_handler,
 			did_create_patient: this.did_create_patient,
-      submit_answer_and_next_step: this.submit_answer_and_next_step
+      submit_answer_and_next_step: this.submit_answer_and_next_step.bind(this)
 		}
 
 		return(

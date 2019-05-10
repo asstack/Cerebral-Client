@@ -204,6 +204,7 @@ export const answer_current_question = (answer) => (dispatch, getState) => {
       answer: answer
     }
 
+  console.log("answer body: ", body)
   return axios.post(`/api/patients/${patient.id}/visits/${visit.id}/answers`, body, make_headers(user_attr))
     .then(function(resp){
       console.log("answer_current_question esp: ", resp)
