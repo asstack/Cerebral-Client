@@ -25,7 +25,7 @@ export const checkbox_type_1 = (event_handler, description) => {
     <div className="d-flex justify-content-center p-2">
       <input className ="checkbox-type1" type="checkbox" onClick={event_handler}/>
       <label className="text-small">
-        I already have an account I consent to Telehealth, terms and privacy policy. All information is strictly confidential and is used to help our professionals provide the best care for you.
+        {description}
       </label>
     </div>
   )
@@ -35,6 +35,14 @@ export const confirm_button_type_1 = (event_handler, description) => {
   return(
     <div className="d-flex justify-content-center p-2">
       <input className ="col btn-confirm text-btn" onClick={event_handler} type="button" value={description}/>
+    </div>
+  )
+}
+
+export const confirm_button_type_2 = (event_handler, description) => {
+  return(
+    <div className="d-flex justify-content-center p-2">
+      <input className ="col btn-link btn" onClick={event_handler} type="button" value={description}/>
     </div>
   )
 }

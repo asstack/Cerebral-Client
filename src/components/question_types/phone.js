@@ -20,17 +20,19 @@ class Phone extends Component {
   }
 
   confirm_btn_handler = e => {
-    this.props.submit_action(this.state)
+    this.props.submit_action(this.state.phone_number)
   }
 
 	render(){	
 		return(
 			<div>
 				{components.input_type_1(this.phone_number_handler, "Phone number")}
-				<div className="d-flex flex-row justify-content-center">
-					{components.btn_selector(this.skip_btn_handler, "Skip")}	
-					{components.btn_selector(this.confirm_btn_handler, "Confirm Phone Number")}	
+					<div className="d-flex flex-row justify-content-center">	
+					{components.checkbox_type_1(this.confirm_btn_handler, "Text me updates about my prescription deliveries and notifications from my doctor")}	
 				</div>
+				<div className="d-flex flex-row justify-content-center">	
+					{components.confirm_button_type_1(this.confirm_btn_handler, "Confirm Phone Number")}	
+					</div>
 			</div>
 		)
 	}
