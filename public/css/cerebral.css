@@ -110,6 +110,12 @@ body {
   color: rgba(36, 0, 68, 1.0);
 }
 
+.text_description {
+  font-size:16.0px;
+  color:#9998D6;
+  padding-top:30px;
+}
+
 .text-small {
   font-size: 16.0px;
   color: rgba(37, 0, 68, 1.0);
@@ -144,7 +150,7 @@ body {
 }
 
 .question-container {
-  padding-top:80px;
+  padding-top:60px;
   width : 742px;
   align-self: center;
 }

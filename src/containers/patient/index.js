@@ -75,8 +75,10 @@ class Patient extends Component{
           {this.props.question_banks.map((item, index) => (this.progress_menu(item, index)))}  
         </div>
         <div className="d-flex flex-column question-container">
-          <div className="d-flex justify-content-left text-middle">QUESTION {this.props.question_step+1} OF {this.props.total_step}</div>
+         <div className="d-flex justify-content-left text-middle">QUESTION {this.props.question_step+1} OF {this.props.total_step}</div>
           <div className="questions-container">
+            <div className="d-flex justify-content-left text_description"> {this.props.questions[this.props.question_step].description}</div>
+       
           	<Route path="/patient/profile" component={PatientProfile}/>
           </div>
         </div>
