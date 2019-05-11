@@ -1576,6 +1576,11 @@ airbnb-prop-types@^2.13.2:
     prop-types-exact "^1.2.0"
     react-is "^16.8.6"
 
+airbrake-js@^1.6.7:
+  version "1.6.7"
+  resolved "https://registry.yarnpkg.com/airbrake-js/-/airbrake-js-1.6.7.tgz#96a029de94687fa3c1cf3063bb8f1493f338d6a6"
+  integrity sha512-KDOLboqC1VfNkj6f23rYQLNhJD4KO6MrnL6ePEJycPOpHQjRtx92jIT3fZidKLGEmc3BMix3NRZ85+MJt+ioRA==
+
 ajv-errors@^1.0.0:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/ajv-errors/-/ajv-errors-1.0.1.tgz#f35986aceb91afadec4102fbd85014950cefa64d"

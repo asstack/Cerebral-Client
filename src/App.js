@@ -6,6 +6,7 @@ import Qualification from './containers/patient/qualification'
 import MainPage from './containers'
 import {update_app_state} from './actions'
 import ReactGA from 'react-ga'
+// import ErrorBoundary from './error_boundary'
 
 class App extends Component{
 

@@ -12,7 +12,6 @@ class MainPage extends Component{
 
   componentDidMount(){
     ReactGA.pageview('/MainPage');
-    this.map_state_to_view()
   }
 
   app_state_update_handler = e => {
