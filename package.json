@@ -5,6 +5,7 @@
   "dependencies": {
     "airbrake-js": "^1.6.7",
     "axios": "^0.18.0",
+    "babel": "^6.23.0",
     "dotenv": "^8.0.0",
     "enzyme": "^3.9.0",
     "enzyme-adapter-react-16": "^1.12.1",

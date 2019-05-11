@@ -6,6 +6,7 @@ import {update_patient_state, move_next_step, create_patient_from_user,create_vi
 import { register_user, sign_in} from '../../actions/user_auth_action'
 import { update_app_state } from '../../actions/'
 import * as utils from '../../utils/common.js'
+import ReactGA from 'react-ga'
 
 class PatientProfile extends Component{
   
@@ -14,7 +15,8 @@ class PatientProfile extends Component{
   }
 
   componentDidMount(){
-    
+    ReactGA.initialize('UA-139974495-1');
+		ReactGA.pageview('/PatientProfile');
   }
 
   componentDidUpdate(){

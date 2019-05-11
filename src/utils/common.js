@@ -8,11 +8,17 @@ import Phone from '../components/question_types/phone'
 import CheckBoxComponent from '../components/question_types/checkbox'
 import StateSelector from '../components/question_types/state_selector' 
 import TextArea from '../components/question_types/text_area' 
-
+import ReactGA from 'react-ga'
 
 export const map_type_to_component = (questions, step, handlers) => {
   
-  if(!questions || !questions[step]) {return <div> Loading </div>}
+	if(!questions || !questions[step]) {return <div> Loading </div>}
+	
+	ReactGA.event({
+		category: 'Questions',
+		action: questions[step].question_type
+	});
+
 		switch(questions[step].question_type) {
 			case 'selector':
 				return selector(handlers.set_selector_handler.bind(this), questions[step])

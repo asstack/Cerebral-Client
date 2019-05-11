@@ -11,6 +11,7 @@ class MainPage extends Component{
   }
 
   componentDidMount(){
+    ReactGA.initialize('UA-139974495-1');
     ReactGA.pageview('/MainPage');
   }
 

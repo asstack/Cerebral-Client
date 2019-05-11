@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-
+import ReactGA from 'react-ga'
 
 class Assessment extends Component{
   
@@ -8,7 +8,8 @@ class Assessment extends Component{
   }
 
   componentDidMount(){
-    
+    ReactGA.initialize('UA-139974495-1');
+		ReactGA.pageview('/Assessment');
   }
 
   componentDidUpdate(){

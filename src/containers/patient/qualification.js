@@ -5,6 +5,7 @@ import { set_current_question_bank_by_name, update_patient_question_banks, updat
 import { register_user, sign_in} from '../../actions/user_auth_action'
 import { update_app_state } from '../../actions/'
 import * as utils from '../../utils/common.js'
+import ReactGA from 'react-ga'
 
 class Qualification extends Component{
 	//in here, will call componentDidMount and route for profile, assessment, treatment, verification and shipping]
@@ -18,6 +19,9 @@ class Qualification extends Component{
 	}
 
 	componentDidMount(){
+		ReactGA.initialize('UA-139974495-1');
+		ReactGA.pageview('/Qualification');
+		
 		const {update_patient_questions, update_patient_question_banks} = this.props
 		
 		update_patient_question_banks(['qualification'])

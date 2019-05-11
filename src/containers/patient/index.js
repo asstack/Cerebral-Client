@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import PatientProfile from './profile'
 import {update_patient_questions, delete_patient_questions} from '../../actions/patient_action'
 import {CompleteProcess} from '../../components/static_components/complete_patient_process'
+import ReactGA from 'react-ga'
 
 class Patient extends Component{
   //in here, will call componentDidMount and route for [profile, assessment, treatment, verification and shipping]
@@ -32,6 +33,8 @@ class Patient extends Component{
 
   componentDidMount(){
     this.map_state_to_view()
+    ReactGA.initialize('UA-139974495-1');
+		ReactGA.pageview('/Patient');
   }
 
 	componentDidUpdate(){	
