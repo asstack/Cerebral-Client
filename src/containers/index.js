@@ -2,12 +2,17 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {update_app_state} from '../actions'
 import { move_patient_sign_in, set_profile_question } from '../actions/patient_action'
-
+import ReactGA from 'react-ga'
 
 class MainPage extends Component{
 
   constructor(props){
     super(props)
+  }
+
+  componentDidMount(){
+    ReactGA.pageview('/MainPage');
+    this.map_state_to_view()
   }
 
   app_state_update_handler = e => {

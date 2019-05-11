@@ -21,7 +21,7 @@ class App extends Component{
   componentDidMount(){
     if (process.env.GA_ACCOUNT) {
       ReactGA.initialize(process.env.GA_ACCOUNT);
-      ReactGA.pageview('/homepage');
+      console.log(`initializeing GA with account${process.env.GA_ACCOUNT}`)
     }
     const {app_state} = this.props
     const init_state =  this.mapPathToState(this.props.location.pathname.split("/").pop())   
