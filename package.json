@@ -9,6 +9,7 @@
     "dotenv": "^8.0.0",
     "enzyme": "^3.9.0",
     "enzyme-adapter-react-16": "^1.12.1",
+    "enzyme-to-json": "^3.3.5",
     "http-proxy-middleware": "^0.19.1",
     "merge": "^1.2.1",
     "prop-types": "^15.7.2",

@@ -1,9 +1,17 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './App';
+import { BrowserRouter as Router } from 'react-router-dom';
+import {shallow} from 'enzyme'
+import './test/setup_tests'
+import {CompleteProcess} from './components/static_components/complete_patient_process'
 
-it('renders without crashing', () => {
-  const div = document.createElement('div');
-  ReactDOM.render(<App />, div);
-  ReactDOM.unmountComponentAtNode(div);
+describe('CompleteProcess', () => {
+  let component = null;
+  it('renders correctlry', () => {
+    component = shallow(<CompleteProcess />); 
+  });
+
+  it('matches snapshot', () => {
+    expect(component).toMatchSnapshot();
+  });
 });
