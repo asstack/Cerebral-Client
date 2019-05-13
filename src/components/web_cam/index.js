@@ -14,7 +14,6 @@ class WebcamComponent extends Component {
 
 	screenshot_handler = () => {
 		const screenshot = this.refs.webcam.getScreenshot()
-    console.log(screenshot)
 		this.setState({screenshot:screenshot, cam_state:'display'})
 	}
 
@@ -26,6 +25,7 @@ class WebcamComponent extends Component {
 	confirm_handler = () => {
 		//const {submit_id_photo} = this.props
 		//submit_id_photo(this.screenshot)
+    this.props.submit_action()
 	}
 
 	map_state_to_component = state => {
@@ -52,7 +52,7 @@ class WebcamComponent extends Component {
 						{this.state.screenshot ? <img src={this.state.screenshot} /> : null}
 					</div>
 					<div className = "d-flex justify-content-center p-2">	
-						<input className="col btn-confirm text-btn" type="button" 
+						<input className="col btn-confirm text-btn" onClick={this.confirm_handler} type="button" 
 							value="Confirm and Continue to Shopping"/>	
 					</div>
 				
