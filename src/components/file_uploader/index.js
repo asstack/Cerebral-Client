@@ -19,10 +19,18 @@ class FileUploader extends Component {
   }
 
   get_file_handler = (data) => {
-      var fr = new FileReader();
-      //fr.onloadend = this.handleFile;
-      fr.onload= this.file_onload_handler;
+
+    var fr = new FileReader();
+    //fr.onloadend = this.handleFile;
+    console.log(data[0].type)
+    //"image/png" image/jpeg
+    const type = data[0].type
+    if(type === 'image/png'|| type==='image/jpeg'){ 
+      fr.onload= this.file_onload_handler; 
       fr.readAsDataURL(data[0]); 
+    }else{
+      alert("Please use image file")
+    }
  }
 
   confirm_btn_handler = e => {
@@ -59,7 +67,7 @@ class FileUploader extends Component {
     					<section>
       					<div {...getRootProps( {className: 'dropzone'})}>
         					<input {...getInputProps()} />
-        						<p>Drag 'n' drop some files here, or click to select files</p>
+        						<p>Drag image(png or jpeg) here, or click to select files</p>
       					</div>
     					</section>
   					)}
