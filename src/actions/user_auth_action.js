@@ -15,10 +15,11 @@ export const sign_in = user_info => (dispatch, getState) =>  {
   const {email, password} = user_info
 
   // sign in API call here
-  var header = {'Content-Type': 'application/json'}
+  var headers = {'Content-Type': 'application/json'}
     if(email && password){
 
-      return axios.post("/api/auth/sign_in" ,{email:email, password:password}, header).then(function(resp){
+      return axios.post("/api/auth/sign_in" ,{email:email, password:password}, {headers: headers})
+      .then(function(resp){
           console.info(resp)
           var attr = { id: resp.data.data.id,
                           uid:resp.data.data.uid,
@@ -44,10 +45,11 @@ export const register_user = user_info => (dispatch, getState)=>{
   const {first_name, last_name, email, password, password_confirm} = user_info
 
   // register API call here
-  var header = {'Content-Type': 'application/json'}
+  var headers = {'Content-Type': 'application/json'}
     if(first_name && last_name && email && (password && password_confirm)){
       return axios.post("/api/users",
-        {first_name:first_name, last_name:last_name, email:email, password:password, password_confirmation: password_confirm}, header)
+        {first_name:first_name, last_name:last_name, email:email, password:password, password_confirmation: password_confirm}, 
+        {headers: headers})
         .then(function(resp){
           var attr = { id: resp.data.id,
                         uid:resp.data.uid,

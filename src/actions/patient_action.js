@@ -154,7 +154,8 @@ const  get_user_attr = (state) => {
 }
 
 const make_headers = (user_attr) => {
-  return {'Content-Type': 'application/json', 
+  return {
+    'Content-Type': 'application/json', 
   'access-token': user_attr.token, 
   'client': user_attr.client, 
   'uid':user_attr.uid}
@@ -165,7 +166,7 @@ export const create_patient_from_user = () => (dispatch, getState) => {
   var user_attr = get_user_attr(getState())
   var body = {user_id: user_attr.id}
 
-  return axios.post(`/api/patients`, body, make_headers(user_attr))
+  return axios.post(`/api/patients`, body, {headers: make_headers(user_attr)})
     .then(function(resp){
       // TODO: update global store with patient information
       console.log("create_patient_from_user resp: ", resp)
@@ -181,7 +182,7 @@ export const create_visit = () => (dispatch, getState) => {
 
   var body = {patient_id: patient.id}
 
-  return axios.post(`/api/patients/${patient.id}/visits`, body, make_headers(user_attr))
+  return axios.post(`/api/patients/${patient.id}/visits`, body, {headers: make_headers(user_attr)})
     .then(function(resp){
       // TODO: update global store with visit information
       console.log("create_visit resp: ", resp)
@@ -210,7 +211,7 @@ export const answer_current_question = (answer) => (dispatch, getState) => {
     }
 
   console.log("answer body: ", body)
-  return axios.post(`/api/patients/${patient.id}/visits/${visit.id}/answers`, body, make_headers(user_attr))
+  return axios.post(`/api/patients/${patient.id}/visits/${visit.id}/answers`, body, {headers: make_headers(user_attr)})
     .then(function(resp){
       console.log("answer_current_question esp: ", resp)
 
