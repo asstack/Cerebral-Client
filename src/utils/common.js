@@ -8,8 +8,14 @@ import Phone from '../components/question_types/phone'
 import CheckBoxComponent from '../components/question_types/checkbox'
 import StateSelector from '../components/question_types/state_selector' 
 import TextArea from '../components/question_types/text_area' 
+<<<<<<< HEAD
 import Identification from '../components/question_types/patient_identification'
 import PatientPayment from '../components/question_types/patient_payment' 
+=======
+
+import PatientPayment from '../components/question_types/patient_payment' 
+import Identification from '../components/question_types/patient_identification' 
+>>>>>>> 64b4ddbfa9920abd802f9fbcdb9ab80d5017c29e
 import PatientShipping from '../components/question_types/patient_shipping' 
 
 import ReactGA from 'react-ga'
