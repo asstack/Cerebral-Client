@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Route, withRouter } from "react-router-dom"
+import {Route, withRouter} from "react-router-dom"
 import {connect} from 'react-redux'
 import Patient from './containers/patient'
 import Qualification from './containers/patient/qualification'

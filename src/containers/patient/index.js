@@ -1,7 +1,9 @@
 import React, {Component} from 'react';
-import { Route, withRouter } from 'react-router-dom'
+import {Router, Route, withRouter} from 'react-router-dom'
 import { connect } from 'react-redux'
 import PatientProfile from './profile'
+import PatientDashboard from './dash_board'
+import SignIn from './sign_in'
 import {update_patient_questions, delete_patient_questions} from '../../actions/patient_action'
 import {CompleteProcess} from '../../components/static_components/complete_patient_process'
 import ReactGA from 'react-ga'
@@ -28,29 +30,28 @@ class Patient extends Component{
     
     }else if(patient_state === "completed"){  
       this.props.history.push("/patient/completed")
-    } 
+    }else if(patient_state === "dashboard"){
+      this.props.history.push("/patient/dashboard")
+    }else if(patient_state === "sign_in"){  
+      this.props.history.push("/patient/sign_in")
+    }
   }
 
   componentDidMount(){
+
     this.map_state_to_view()
     /*
     ReactGA.initialize('UA-139974495-1');
 		ReactGA.pageview('/Patient');
     */
   }
-
+ 
 	componentDidUpdate(){	
     const {patient_state} = this.props
     if(patient_state!==this.state.prv_state){
       this.setState({prv_state: patient_state})
       this.map_state_to_view() 
     }
-
-    /*
-    //may need to check path name
-    if(this.props.location.pathname==="/patient"){
-			this.props.history.push('/patient/profile')
-    }*/
 	}
 
   map_type_to_style_class = (state, target) => {
@@ -71,8 +72,18 @@ class Patient extends Component{
 
   render_views(){
     if(this.props.patient_state==="completed"){  
-      return <Route path="/patient/completed" component={CompleteProcess}/>
-    }else{
+      return(
+        <Route path="/patient/completed" component={CompleteProcess}/>
+      )
+    }else if(this.props.patient_state==="dashboard"){ 
+      return (
+        <Route path="/patient/dashboard" component={PatientDashboard}/>
+      )
+    }else if(this.props.patient_state==="sign_in"){ 
+      return( 
+        <Route path="/patient/sign_in" component={SignIn}/>
+      )
+    }else if(this.props.questions && this.props.questions[this.props.question_step]){
       return( 
         <div className="d-flex flex-column">
           <div className="d-flex flex-row">
@@ -90,6 +101,8 @@ class Patient extends Component{
           </div>
         </div>    
       )   
+    }else {
+      return <div>loading</div>
     }  
   }
   

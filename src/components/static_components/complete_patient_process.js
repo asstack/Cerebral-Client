@@ -3,7 +3,7 @@ import logo from './complete_patient.png';
 
 export const CompleteProcess = () =>{
     return (
-      <div className="d-flex flex-column question-container">
+      <div className="d-flex flex-column">
         <div className="d-flex justify-content-center text-big">
           <p>Thanks for choosing Cerebral. </p>
         </div>

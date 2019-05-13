@@ -5,7 +5,8 @@ export const SET_STEP = 'patient/SET_STEP'
 // export const SET_ANSWER = 'profile/SET_ANSWER'
 // export const SUBMIT_ANSWERS = 'profile/SUBMIT_ANSWERS'
 // export const SET_QUESTION_ID = 'profile/SET_QUESTION_ID'
-export const SET_STATE = 'patient/SET_STATE'
+export const SET_PATIENT_STATE = 'patient/SET_STATE'
+export const SET_STATE_WITH_STEP = 'patient/SET_STATE_WITH_STEP' 
 export const SET_QUESTION_BANKS = 'patient/SET_QUESTION_BANKS'
 export const SET_QUESTION_BANKS_STEP = 'patient/SET_QUESTION_BANKS_STEP'
 export const SET_PATIENT_QUESTIONS = 'patient/SET_PATIENT_QUESTIONS'
@@ -30,7 +31,7 @@ const set_step = (step_num, is_complete) => ({
 // https://redux.js.org/basics/actions#action-creators
 
 const set_state_with_step = (state, new_step) => ({
-  type:SET_STATE,
+  type:SET_STATE_WITH_STEP,
   new_state:state,
   new_step:new_step
 })
@@ -70,9 +71,9 @@ const remove_patient_question_banks = () => ({
 	type:REMOVE_PATIENT_QUESTION_BANKS
 })
 
-const set_patient_state = state => ({
-  type:SET_STATE,
-  state: state
+const set_patient_state = pstate => ({
+  type:SET_PATIENT_STATE,
+  patient_state: pstate
 })
 
 const set_patient_type = ptype => ({

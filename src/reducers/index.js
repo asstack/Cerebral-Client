@@ -107,9 +107,8 @@ const patient_reducer = (state = init_patient_state, action) => {
       return{
         ...state,
         visit_object: action.visit_object
-      }
-    
-    case patient_action_types.SET_STATE:
+      } 
+    case patient_action_types.SET_STATE_WITH_STEP:
       return{
         ...state,
         step : action.new_step,
@@ -145,15 +144,15 @@ const patient_reducer = (state = init_patient_state, action) => {
 				total_step:1,
 				step: 0
       }
-      case patient_action_types.REMOVE_PATIENT_QUESTION_BANKS:
+    case patient_action_types.REMOVE_PATIENT_QUESTION_BANKS:
 			return{
 				...state,
 				question_banks: []
 			}
-   case patient_action_types.SET_STATE:
+    case patient_action_types.SET_PATIENT_STATE:
       return{
         ...state,
-        patient_state:action.state
+        patient_state:action.patient_state
       }
     // see notes in patient_actions
     // case patient_action_types.SUBMIT_ANSWERS:

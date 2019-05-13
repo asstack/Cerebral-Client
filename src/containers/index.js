@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {update_app_state} from '../actions'
-import { move_patient_sign_in, set_profile_question } from '../actions/patient_action'
+import {update_patient_state, set_profile_question} from '../actions/patient_action'
 import ReactGA from 'react-ga'
 
 class MainPage extends Component{
@@ -9,12 +9,11 @@ class MainPage extends Component{
   constructor(props){
     super(props)
   }
-
+  
   componentDidMount(){
-    ReactGA.initialize('UA-139974495-1');
-    ReactGA.pageview('/MainPage');
+    //ReactGA.initialize('UA-139974495-1');
+    //ReactGA.pageview('/MainPage');
   }
-
   app_state_update_handler = e => {
     const {update_app_state}=this.props
     update_app_state('qualification')
@@ -26,8 +25,9 @@ class MainPage extends Component{
   }
 
   app_state_signin_handler = e => {
+
+    this.props.update_patient_state('sign_in')
     this.props.update_app_state('patient')
-    this.props.move_patient_sign_in()
   }
 
   render(){
@@ -44,4 +44,4 @@ class MainPage extends Component{
 
 
 
-export default connect(null, {update_app_state, move_patient_sign_in}) (MainPage)
+export default connect(null, {update_app_state, update_patient_state}) (MainPage)
