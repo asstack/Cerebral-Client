@@ -33,7 +33,7 @@ class VideoRecorderComponent extends Component {
 				<div className = "d-flex justify-content-center text-small">
 					<p>(approximately 2 minutes)</p>
 				</div>
-				<div className = "video_cam_holder">
+				<div className = "video-cam-holder">
 					<VideoRecorder ref='recorder' timeLimit='120000'/>
 				</div>
 				<div className = "d-flex justify-content-center p-2">	

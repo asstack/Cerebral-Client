@@ -14,6 +14,7 @@ class WebcamComponent extends Component {
 
 	screenshot_handler = () => {
 		const screenshot = this.refs.webcam.getScreenshot()
+    console.log(screenshot)
 		this.setState({screenshot:screenshot, cam_state:'display'})
 	}
 

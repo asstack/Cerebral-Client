@@ -3,8 +3,17 @@ body {
   font-family: "ProximaNova-Bold", Helvetica, Arial, serif;
 }
 
-.video_cam_holder {
+.video-cam-holder {
 	height: 400px;
+}
+
+.id-image {
+  width: 40%;
+}
+.id-image-holder {
+  text-align: center;
+  padding: 5px;
+  padding-bottom: 20px;
 }
 
 .dropzone {

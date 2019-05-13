@@ -4,6 +4,7 @@ import {connect} from 'react-redux'
 import Patient from './containers/patient'
 import Qualification from './containers/patient/qualification'
 import MainPage from './containers'
+import Identification from './components/question_types/patient_identification'
 import {update_app_state} from './actions'
 import ReactGA from 'react-ga'
 // import ErrorBoundary from './error_boundary'
@@ -59,7 +60,8 @@ class App extends Component{
       case 'qualification':
         return Qualification
       default:
-        return MainPage;
+        return Identification
+          //return MainPage;
     }
   }
 

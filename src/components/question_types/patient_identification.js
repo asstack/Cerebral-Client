@@ -1,5 +1,8 @@
 import React, {Component} from 'react';
 import * as components from '../question_components/components'
+import {} from '../web_cam'
+import WebcamComponent from '../web_cam'
+import FileUploader from '../file_uploader' 
 
 class Identification extends Component {
 
@@ -11,29 +14,32 @@ class Identification extends Component {
   }
 
   update_handler = e => { 
-    const {is_consent, email, first_name, 
-      last_name, password, password_confirm} = this.state
-      this.props.submit_action(this.state) 
+    this.props.submit_action(this.state) 
    }
 
-  set_view_type_handler = (e, type) => {
-    this.setState({validation_method:type})
+  set_type_handler = (e, type) => {
+    console.log(type)
+    this.setState({view_type:type})
   }
 
   view = () => {
-  
-    if(this.state.view_type === 'file_upload'){
-      return <div>"for file uploader"</div> 
-    }else if(this.state.view_type === 'picture'){
-      return <div>"for picture"</div> 
+    if(this.state.view_type === 'file'){
+      return <FileUploader submit_action = {this.props.submit_action} /> 
+    }else if(this.state.view_type === 'webcam'){
+      return <WebcamComponent submit_action = {this.props.submit_action}/> 
     }else{
-      return <div>
-        <input className ="col btn-selector" onClick = {(e) => event_handler(e,item)} 
-        type="button" value="Take a photo with my webcam"/> 
-       <input className ="col btn-selector" onClick = {(e) => event_handler(e,item)} 
-        type="button" value="Upload a photo of myself"/>
-        {components.confirm_button_type_1(this.update_handler.bind(this), "Sign up for Cerebral Updates")}
-      </div> 
+      return (
+        <div className="d-flex flex-row justify-contnet-center">
+          <div className="p-2 selector-holder"> 
+            <input className ="col btn-selector" onClick = {(e) => this.set_type_handler(e,'webcam')} 
+            type="button" value="Take a photo with my webcam"/> 
+          </div>
+          <div className="p-2 selector-holder"> 
+          <input className ="col btn-selector" onClick = {(e) => this.set_type_handler(e,'file')} 
+            type="button" value="Upload a photo of myself"/>
+          </div>
+        </div> 
+      )
     } 
   }
   

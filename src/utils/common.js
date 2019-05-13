@@ -8,6 +8,7 @@ import Phone from '../components/question_types/phone'
 import CheckBoxComponent from '../components/question_types/checkbox'
 import StateSelector from '../components/question_types/state_selector' 
 import TextArea from '../components/question_types/text_area' 
+import Identification from '../components/question_types/patient_identification'
 import ReactGA from 'react-ga'
 
 export const map_type_to_component = (questions, step, handlers) => {
@@ -53,6 +54,9 @@ export const map_type_to_component = (questions, step, handlers) => {
 			case 'yes_no_details':
         return <Route path='' render={(props) =>
                 <TextArea submit_action = {handlers.submit_answer_and_next_step}/>}/>   	
+			case 'patient_identification':
+        return <Route path='' render={(props) =>
+                <Identification submit_action = {handlers.submit_answer_and_next_step}/>}/>   	
 			default:
 				return(
 					<div>
