@@ -9,6 +9,9 @@ import CheckBoxComponent from '../components/question_types/checkbox'
 import StateSelector from '../components/question_types/state_selector' 
 import TextArea from '../components/question_types/text_area' 
 import Identification from '../components/question_types/patient_identification'
+import PatientPayment from '../components/question_types/patient_payment' 
+import PatientShipping from '../components/question_types/patient_shipping' 
+
 import ReactGA from 'react-ga'
 
 export const map_type_to_component = (questions, step, handlers) => {
@@ -53,10 +56,16 @@ export const map_type_to_component = (questions, step, handlers) => {
                 <StateSelector submit_action = {handlers.submit_answer_and_next_step}/>}/>   	
 			case 'yes_no_details':
         return <Route path='' render={(props) =>
-                <TextArea submit_action = {handlers.submit_answer_and_next_step}/>}/>   	
+								<TextArea submit_action = {handlers.submit_answer_and_next_step}/>}/>  
 			case 'patient_identification':
+				return <Route path='' render={(props) =>
+								<Identification submit_action = {handlers.submit_answer_and_next_step}/>}/>  
+			case 'patient_shipping':
         return <Route path='' render={(props) =>
-                <Identification submit_action = {handlers.submit_answer_and_next_step}/>}/>   	
+								<PatientShipping submit_action = {handlers.submit_answer_and_next_step}/>}/>  
+			case 'patient_payment':
+        return <Route path='' render={(props) =>
+                <PatientPayment submit_action = {handlers.submit_answer_and_next_step}/>}/>  
 			default:
 				return(
 					<div>

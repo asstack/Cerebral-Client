@@ -7,6 +7,7 @@ import MainPage from './containers'
 import Identification from './components/question_types/patient_identification'
 import {update_app_state} from './actions'
 import ReactGA from 'react-ga'
+import ShippingPayment from './containers/patient/shipping_payment';
 // import ErrorBoundary from './error_boundary'
 
 class App extends Component{
@@ -57,16 +58,19 @@ class App extends Component{
     switch(state) {
       case 'patient':
         return Patient
+      case 'checkout':
+        return ShippingPayment
       case 'qualification':
         return Qualification
       default:
-        return Identification
-          //return MainPage;
+        return MainPage;
     }
   }
 
   mapStateToPath = state => {
     switch(state) {
+      case 'checkout':
+        return "/checkout"
       case 'patient':
         return "/patient"
       case 'qualification':
