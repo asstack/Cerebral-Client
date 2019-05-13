@@ -76,7 +76,11 @@ class PatientProfile extends Component{
       .then(() => {return this.props.sign_in(state)})
         .then(() => { return this.props.create_patient_from_user() })
           .then( () => {return this.props.create_visit()} )
-            .then(() => {return this.props.move_next_step(this.props.question_step)})}
+            .then(() => {return this.props.move_next_step(this.props.question_step)})
+      .catch((err) => {
+        console.log(err)
+      })
+    }
 
 
 	display_title = (questions, step) =>{
