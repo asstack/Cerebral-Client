@@ -33,8 +33,10 @@ class Patient extends Component{
 
   componentDidMount(){
     this.map_state_to_view()
+    /*
     ReactGA.initialize('UA-139974495-1');
 		ReactGA.pageview('/Patient');
+    */
   }
 
 	componentDidUpdate(){	

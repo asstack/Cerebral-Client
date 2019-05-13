@@ -15,7 +15,8 @@ class App extends Component{
   constructor(props){
     super(props)
     this.state = {
-      prv_state:"" 
+      prv_state:"", 
+      prv_path:"/"
     }
   }
   
@@ -29,6 +30,13 @@ class App extends Component{
 
   componentDidUpdate(){
     const {app_state} = this.props
+    const current_path = this.props.location.pathname
+    
+    if(current_path!==this.state.prv_path){
+      ReactGA.initialize('UA-139974495-1');
+		  ReactGA.pageview(current_path);
+      this.setState({prv_path:current_path});  
+    }
     if(app_state!==this.state.prv_state){
       this.setState({prv_state:app_state})
       this.props.history.push(this.mapStateToPath(app_state))

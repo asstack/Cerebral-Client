@@ -19,9 +19,10 @@ class Qualification extends Component{
 	}
 
 	componentDidMount(){
+    /*
 		ReactGA.initialize('UA-139974495-1');
 		ReactGA.pageview('/Qualification');
-		
+    */	
 		const {update_patient_questions, update_patient_question_banks} = this.props
 		
 		update_patient_question_banks(['qualification'])
