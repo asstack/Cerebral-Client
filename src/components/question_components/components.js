@@ -11,6 +11,15 @@ export const input_type_1 = (event_handler, text) => {
   )
 }
 
+export const input_type_autocomplete = (event_handler, text, autocomplete_value) => {
+  return(
+    <div className="d-flex justify-content-center p-2">
+			<input className="col input-type1" onChange={event_handler} defaultValue=""
+				type="text" placeholder={text} autoComplete={autocomplete_value}/>
+    </div>
+  )
+}
+
 export const input_password_type_1 = (event_handler, text) => {
   return(
     <div className="d-flex justify-content-center p-2">
