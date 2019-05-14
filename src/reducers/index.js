@@ -41,11 +41,6 @@ const init_patient_state = {
   questions: '',
   step:0,
   total_step:1,
-
-	branch_ids: [],
-  branch_questions: '',
-  branch_option:'',
-  branch_step:'',
   
   // NOTE: answers are never stored locally
   // answers: '',

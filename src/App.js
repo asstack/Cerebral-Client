@@ -7,7 +7,8 @@ import MainPage from './containers'
 import Identification from './components/question_types/patient_identification'
 import {update_app_state} from './actions'
 import ReactGA from 'react-ga'
-import ShippingPayment from './containers/patient/shipping_payment';
+import ShippingPayment from './containers/patient/shipping_payment'
+import Treatment from './containers/patient/treatment_information'
 // import ErrorBoundary from './error_boundary'
 
 class App extends Component{
@@ -60,6 +61,8 @@ class App extends Component{
         return Patient
       case 'checkout':
         return ShippingPayment
+      case 'treatment':
+        return Treatment
       case 'qualification':
         return Qualification
       default:
@@ -71,6 +74,8 @@ class App extends Component{
     switch(state) {
       case 'checkout':
         return "/checkout"
+      case 'treatment':
+        return "/treatment"
       case 'patient':
         return "/patient"
       case 'qualification':

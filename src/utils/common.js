@@ -13,6 +13,9 @@ import PatientPayment from '../components/question_types/patient_payment'
 import PatientShipping from '../components/question_types/patient_shipping' 
 
 import ReactGA from 'react-ga'
+import SideEffects from '../components/question_types/side_effects';
+import MedicationPreference from '../components/question_types/medication_preference';
+import DosagePreference from '../components/question_types/dosage_preference';
 
 export const map_type_to_component = (questions, step, handlers) => {
   
@@ -65,7 +68,16 @@ export const map_type_to_component = (questions, step, handlers) => {
 								<PatientShipping submit_action = {handlers.submit_answer_and_next_step}/>}/>  
 			case 'patient_payment':
         return <Route path='' render={(props) =>
-                <PatientPayment submit_action = {handlers.submit_answer_and_next_step}/>}/>  
+								<PatientPayment submit_action = {handlers.submit_answer_and_next_step}/>}/>  
+			case 'side_effects':
+				return <Route path='' render={(props) =>
+							<SideEffects submit_action = {handlers.submit_answer_and_next_step}/>}/>  
+			case 'medication_preference':
+				return <Route path='' render={(props) =>
+							<MedicationPreference submit_action = {handlers.submit_answer_and_next_step}/>}/>  
+			case 'dosage_preference':
+				return <Route path='' render={(props) =>
+							<DosagePreference submit_action = {handlers.submit_answer_and_next_step}/>}/>  
 			default:
 				return(
 					<div>

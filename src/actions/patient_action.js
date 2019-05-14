@@ -174,6 +174,28 @@ export const create_patient_from_user = () => (dispatch, getState) => {
     })
 }
 
+export const get_side_effects = () => (dispatch, getState) => {
+  var user_attr = get_user_attr(getState())
+  var body = {user_id: user_attr.id}
+
+  return axios.get(`/api/side_effects`, {headers: make_headers(user_attr)})
+}
+
+// TODO: add service_line
+export const get_treatments = () => (dispatch, getState) => {
+  var user_attr = get_user_attr(getState())
+  var body = {user_id: user_attr.id}
+
+  return axios.get(`/api/treatments`, {headers: make_headers(user_attr)})
+}
+
+export const get_treatment_dosages = (treatment_id) => (dispatch, getState) => {
+  var user_attr = get_user_attr(getState())
+  var body = {user_id: user_attr.id}
+
+  return axios.get(`/api/treatments/${treatment_id}/dosages`, {headers: make_headers(user_attr)})
+}
+
 export const create_visit = () => (dispatch, getState) => {
   
   var user_attr = get_user_attr(getState())

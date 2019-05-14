@@ -30,11 +30,6 @@ class MainPage extends Component{
     this.props.update_app_state('patient')
   }
 
-  app_state_checkout_handler = e => {
-    const {update_app_state}=this.props
-    update_app_state('checkout')
-  }
-
   render(){
     return(
       <div>
@@ -42,7 +37,7 @@ class MainPage extends Component{
         <input type='button' value='Get Started' onClick={this.app_state_update_handler.bind(this)}/>
         <input type='button' value='Register' onClick={this.app_state_register_handler.bind(this)}/>
         <input type='button' value='Sign In' onClick={this.app_state_signin_handler.bind(this)}/>
-        <input type='button' value='Checkout' onClick={this.app_state_checkout_handler.bind(this)}/>
+      
       </div>
     )
   }

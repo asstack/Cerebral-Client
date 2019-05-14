@@ -88,7 +88,7 @@ const mapStateToProps = (state) => {
 
   const {
     global_reducer: {app_state, current_user},
-    patient_reducer: {patient_state, step, question_bank_id, questions, branch_questions, branch_step, branch_option, is_complete}
+    patient_reducer: {patient_state, step, question_bank_id, questions, is_complete}
   } = state
 
   return {
@@ -98,9 +98,6 @@ const mapStateToProps = (state) => {
     question_step: step,
     question_bank_id: question_bank_id,
     questions: questions,
-    branch_questions: branch_questions,
-    branch_step: branch_step,
-    branch_option: branch_option,
     is_complete: is_complete
   }
 }

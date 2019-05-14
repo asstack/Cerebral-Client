@@ -1,12 +1,23 @@
 import React, {Component} from 'react';
 import {Route, withRouter } from "react-router-dom"
 import {connect} from 'react-redux'
-import default_icon from '../../img/user.png';
+import default_icon from '../../img/user.png'
+import {update_app_state} from '../../actions'
 
 class PatientDashboard extends Component{
 
   constructor(props){
     super(props)
+  }
+
+  app_state_checkout_handler = e => {
+    const {update_app_state}=this.props
+    update_app_state('checkout')
+  }
+
+  app_state_treatment_handler = e => {
+    const {update_app_state}=this.props
+    update_app_state('treatment')
   }
 
   render(){ 
@@ -38,7 +49,10 @@ class PatientDashboard extends Component{
               <div className="d-flex justify-content-end text-main-title">main page title</div>
               <div className="d-flex flex-column main-content-column">
                 <div className="d-flex flex-row justify-content-between main-content-row">
-                  <div className="main-content-small-card">item 1</div> 
+                  <div className="main-content-small-card">
+                  <input type='button' value='Checkout' onClick={this.app_state_checkout_handler.bind(this)}/>
+                  <input type='button' value='Treatment' onClick={this.app_state_treatment_handler.bind(this)}/>
+                  </div> 
                   <div className="main-content-small-card">item 2</div> 
                 </div>
                 <div className="d-flex flex-row justify-content-between main-content-row">
@@ -54,4 +68,4 @@ class PatientDashboard extends Component{
   } 
 }
 
-export default PatientDashboard
+export default connect(null, {update_app_state}) (PatientDashboard)
