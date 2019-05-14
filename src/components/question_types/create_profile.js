@@ -11,6 +11,7 @@ class CreateProfile extends Component {
       last_name:'',
       password:'',
       password_confirm:'',
+      msg:'',
       is_consent:false
     }
   }
@@ -18,10 +19,20 @@ class CreateProfile extends Component {
   update_handler = e => { 
     const {is_consent, email, first_name, 
       last_name, password, password_confirm} = this.state
-    if(is_consent && email && first_name && last_name && (password===password_confirm)){
+    if(is_consent && email && first_name && last_name && password.length > 6 &&(password===password_confirm)){
       this.props.submit_action(this.state) 
     }else{
-      console.log("please input valid information") 
+      if(!email || !first_name || !last_name || !password || !password_confirm){ 
+        this.setState({msg:"Please fill all the fields"}) 
+      }else if(!is_consent){
+        this.setState({msg:"Please agree to the terms and conditions"})
+      }else if(password!==password_confirm){
+        this.setState({msg:"Please check your password"}) 
+      }else if(password.length < 6){ 
+        this.setState({msg:"Password should be at least 6 characters"}) 
+      }else { 
+        this.setState({msg:"Please input valid email"}) 
+      }
     }
    }
 
@@ -57,6 +68,7 @@ class CreateProfile extends Component {
   render(){
     return (
       <div>
+        <div className = "d-flex justify-content-center p-2 text-small-red">{this.state.msg}</div>
         {components.input_type_1(this.update_email.bind(this), "Email Address")}
         {components.input_type_1(this.update_firstname.bind(this), "First Name")}
         {components.input_type_1(this.update_lastname.bind(this), "Last Name")}

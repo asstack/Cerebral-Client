@@ -9,8 +9,7 @@ import {CompleteProcess} from '../../components/static_components/complete_patie
 import ReactGA from 'react-ga'
 
 class Patient extends Component{
-  //in here, will call componentDidMount and route for [profile, assessment, treatment, verification and shipping]
-  //route will state/number or state/ for init assessment
+  
   constructor(props){
     super(props)
     this.state = {
@@ -18,6 +17,8 @@ class Patient extends Component{
     }
   }
 
+  //TODO: code refactoring for states that sharing redux state (qualification, profile, shipping_payment)
+  //TODO: Higher order components for question bank related containers 
   map_state_to_view = () => {
  		const {update_patient_questions, patient_state, patient_type, delete_patient_questions} = this.props
     if(patient_state==="profile"){  

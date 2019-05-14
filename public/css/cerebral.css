@@ -140,6 +140,11 @@ body {
   color: #250044;
 }
 
+.text-small-red {
+  font-size: #16.0px;
+  color: #FFD2D2;
+}
+
 .text-small__unselected{
   font-size: 16.0px;
   color: #9998D6;
