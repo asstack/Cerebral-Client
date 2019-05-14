@@ -1,8 +1,8 @@
 import React, {Component} from 'react'
 import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
+import { upload_photo_id, update_patient_state, move_next_step, create_patient_from_user,create_visit,update_patient_type,answer_current_question } from '../../actions/patient_action'
 
-import {update_patient_state, move_next_step, create_patient_from_user,create_visit,update_patient_type,answer_current_question } from '../../actions/patient_action'
 import { register_user, sign_in} from '../../actions/user_auth_action'
 import { update_app_state } from '../../actions/'
 import * as utils from '../../utils/common.js'
@@ -84,6 +84,13 @@ class PatientProfile extends Component{
       })
     }
 
+  submit_and_upload_id = (data, type) => { 
+    const { upload_photo_id, move_next_step, answer_current_question,
+            current_user} = this.props
+    upload_photo_id(current_user.attributes.id, data, type)
+    move_next_step(this.props.question_step)
+  }
+
 
 	display_title = (questions, step) =>{
 		if(questions && questions[step]){
@@ -100,7 +107,8 @@ class PatientProfile extends Component{
       set_selector_handler:this.set_selector_handler,
       set_bank_selector_handler:this.set_bank_selector_handler,
       did_create_patient: this.did_create_patient,
-      submit_answer_and_next_step: this.submit_answer_and_next_step.bind(this)
+      submit_answer_and_next_step: this.submit_answer_and_next_step.bind(this),
+      submit_and_upload_id:this.submit_and_upload_id.bind(this)
     }
     
     return(
@@ -139,4 +147,4 @@ const mapStateToProps = (state) => {
 }
 
 export default withRouter(connect(mapStateToProps, {
-update_app_state, register_user, sign_in, move_next_step, create_patient_from_user, create_visit, update_patient_type,answer_current_question, update_patient_state}) (PatientProfile))
+ upload_photo_id, update_app_state, register_user, sign_in, move_next_step, create_patient_from_user, create_visit, update_patient_type,answer_current_question, update_patient_state}) (PatientProfile))

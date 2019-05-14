@@ -25,7 +25,7 @@ class WebcamComponent extends Component {
 	confirm_handler = () => {
 		//const {submit_id_photo} = this.props
 		//submit_id_photo(this.screenshot)
-    this.props.submit_action()
+    this.props.submit_action(this.state.screenshot, "image/jpeg")
 	}
 
 	map_state_to_component = state => {
@@ -36,9 +36,10 @@ class WebcamComponent extends Component {
 					<div className = "d-flex justify-content-center text-big">
 						<p>Take a photo of yourself.</p>
 					</div>
-					<Webcam className = {"d-flex justify-content-center p-2"} width={'100%'} height={'100%'}  ref='webcam' />
+          <Webcam className = {"d-flex justify-content-center p-2"} width={'100%'} 
+            height={'100%'} ref='webcam' screenshotFormat="image/jpeg"/>
 					<div className = "d-flex justify-content-center p-2">	
-						<input className="col btn-confirm text-btn"type="button" value="Take the picture" onClick={this.screenshot_handler}/>
+						<input className="col btn-confirm text-btn" type="button" value="Take the picture" onClick={this.screenshot_handler}/>
 					</div>
 				</div>		
 			)

@@ -7,7 +7,8 @@ class FileUploader extends Component {
 	constructor(props){
 		super(props)
     this.state = {
-      file:null
+      file:null,
+      file_type:null
     }
 	}
 
@@ -28,6 +29,7 @@ class FileUploader extends Component {
     if(type === 'image/png'|| type==='image/jpeg'){ 
       fr.onload= this.file_onload_handler; 
       fr.readAsDataURL(data[0]); 
+      this.setState({file_type:type})
     }else{
       alert("Please use image file")
     }
@@ -35,7 +37,7 @@ class FileUploader extends Component {
 
   confirm_btn_handler = e => {
     if(this.state.file){
-      this.props.submit_action()
+      this.props.submit_action(this.state.file, this.state.file_type)
     } 
   }
 

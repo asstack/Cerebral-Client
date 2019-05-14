@@ -69,7 +69,6 @@ class Patient extends Component{
   //TODO: update dynamic bounding by state
   //TODO: add redux state for size of questions
   // uses https://reacttraining.com/react-router/web/api/Route
-
   render_views(){
     if(this.props.patient_state==="completed"){  
       return(
@@ -107,8 +106,9 @@ class Patient extends Component{
   }
   
   render(){
+    const target_view = this.render_views()
     return(
-      this.render_views()
+      target_view
     );
   }
 }

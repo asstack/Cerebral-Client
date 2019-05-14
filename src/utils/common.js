@@ -59,7 +59,7 @@ export const map_type_to_component = (questions, step, handlers) => {
 								<TextArea submit_action = {handlers.submit_answer_and_next_step}/>}/>  
 			case 'patient_identification':
 				return <Route path='' render={(props) =>
-								<Identification submit_action = {handlers.submit_answer_and_next_step}/>}/>  
+								<Identification submit_action = {handlers.submit_and_upload_id}/>}/>  
 			case 'patient_shipping':
         return <Route path='' render={(props) =>
 								<PatientShipping submit_action = {handlers.submit_answer_and_next_step}/>}/>  
