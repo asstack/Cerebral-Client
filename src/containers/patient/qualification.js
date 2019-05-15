@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
-import { set_current_question_bank_by_name, update_patient_question_banks, update_patient_questions, move_next_step, create_patient_from_user,create_visit,update_patient_type,answer_current_question } from '../../actions/patient_action'
+import { update_patient_state, set_current_question_bank_by_name, update_patient_question_banks, move_next_step, create_patient_from_user,create_visit,update_patient_type,answer_current_question } from '../../actions/patient_action'
 import { register_user, sign_in} from '../../actions/user_auth_action'
 import { update_app_state } from '../../actions/'
 import * as utils from '../../utils/common.js'
@@ -19,25 +19,14 @@ class Qualification extends Component{
 	}
 
 	componentDidMount(){
-    /*
-		ReactGA.initialize('UA-139974495-1');
-		ReactGA.pageview('/Qualification');
-    */	
-		const {update_patient_questions, update_patient_question_banks} = this.props
-		
-		update_patient_question_banks(['qualification'])
-		
-		// TODO: we should wait for the question banks to load then get the id of the first
-		update_patient_questions(1)
+		const {set_current_question_bank_by_name, update_patient_question_banks} = this.props
+		update_patient_question_banks(['qualification'], 0)		
+    set_current_question_bank_by_name('qualification')
 	}
 
-	//TODO: move checking part to action and middleware
 	componentDidUpdate(){
 		if(this.props.is_complete){
 			const {update_app_state} = this.props
-
-			// TODO: changing the app state here causes a new object to load
-			// update_app_state("patient")		
 		}
 	}
 
@@ -59,24 +48,20 @@ class Qualification extends Component{
   }
 
 	set_bank_selector_handler=(e, option)=>{
-		const { answer_current_question, set_current_question_bank_by_name, move_next_step, update_patient_question_banks, update_patient_type} = this.props
+    const { bank_step, answer_current_question, set_current_question_bank_by_name, move_next_step, 
+      update_app_state, update_patient_question_banks, update_patient_type, question_banks_step} = this.props
 
     answer_current_question(option.option_name) 
 		if (option.question_bank_names.length > 0) {
 			if (option.immediate) {
-				// replace current questions banks with the new ones
-				update_patient_question_banks(option.question_bank_names)
-				set_current_question_bank_by_name(option.question_bank_names[0])
+        this.props.history.push("/patient/profile") 
+        update_patient_question_banks(option.question_bank_names, bank_step)
 			}
 			else {
-        //TODO: Need to update code to use react not redux, it makes component use shared state
-				// append question banks to the end
-				update_patient_question_banks(this.props.question_banks.concat( option.question_bank_names))
+				update_patient_question_banks(this.props.question_banks.concat( option.question_bank_names), question_banks_step)
+		    move_next_step(this.props.question_step)
 			}
-		}
-    
-    update_patient_type(option.option_name)	
-		move_next_step(this.props.question_step)
+		} 
 	}
 
 	display_title = (questions, step) =>{
@@ -130,18 +115,19 @@ class Qualification extends Component{
 const mapStateToProps = (state) => {
 	const{
 		global_reducer: {app_state, current_user},
-		patient_reducer: {patient_state, step, question_bank_id, question_banks, questions, is_complete}
+		patient_reducer: {question_banks_step, patient_state, step, question_bank_id, question_banks, questions, is_complete}
 	} = state
 
 	return {
 		patient_state: patient_state,
-		question_banks: question_banks,
+    question_banks_step: question_banks_step,
 		question_step: step,
+    bank_step: question_banks_step,
 		question_bank_id: question_bank_id,
 		questions: questions,
 		is_complete: is_complete
 	}
 }
 
-export default withRouter(connect(mapStateToProps,{update_app_state, update_patient_questions, update_patient_question_banks, set_current_question_bank_by_name,
+export default withRouter(connect(mapStateToProps,{update_patient_state, update_app_state, update_patient_question_banks, set_current_question_bank_by_name,
 	register_user, sign_in, move_next_step, create_patient_from_user, create_visit, update_patient_type, answer_current_question}) (Qualification))

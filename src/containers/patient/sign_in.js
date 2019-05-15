@@ -17,6 +17,7 @@ class SignIn extends Component {
     }
   }
   componentDidUpdate(){
+    console.log("check here", this.props.login_info.attributes.token)
     if(this.props.login_info.attributes.token){  
       this.props.update_patient_state('dashboard')
     } 

@@ -28,7 +28,7 @@ const init_global_state = {
 const init_patient_state = {
   
   patient_type: '',
-  patient_state: 'profile',
+  patient_state: '',
 
   // all of the question_banks for the current user
   question_banks: [],
@@ -37,6 +37,9 @@ const init_patient_state = {
   
   // equal to questions_banks[question_bank_step].id
   question_bank_id: '',
+
+  // question bank name that for current questions
+  current_bank_name:'',
 
   // questions from current question_bank_id
   questions: '',
@@ -115,6 +118,7 @@ const patient_reducer = handleActions({
       ...state,
       step:0,
       question_bank_id : action.bank_id,
+      current_bank_name : action.bank_name,
       questions : action.questions,
       total_step : action.total_step
     }
@@ -122,7 +126,8 @@ const patient_reducer = handleActions({
   [patient_action_types.SET_QUESTION_BANKS]: (state, action) => {
     return{
       ...state,
-      question_banks : action.question_banks
+      question_banks : action.question_banks,
+      question_banks_step : action.question_banks_step 
     }
   },
   [patient_action_types.SET_QUESTION_BANKS_STEP]: (state, action) => {

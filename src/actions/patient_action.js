@@ -36,16 +36,18 @@ const set_state_with_step = (state, new_step) => ({
   new_step:new_step
 })
 
-const set_patient_questions = (questions,bank_id) => ({
+const set_patient_questions = (questions, bank_id, bank_name) => ({
   type:SET_PATIENT_QUESTIONS,
   questions:questions,
   total_step:questions.length,
-  bank_id:bank_id
+  bank_id:bank_id,
+  bank_name:bank_name
 })
 
-const set_question_banks = (questions_banks) => ({
+const set_question_banks = (questions_banks, bank_step=0) => ({
   type:SET_QUESTION_BANKS,
-  question_banks:questions_banks
+  question_banks:questions_banks,
+  question_banks_step:bank_step
 })
 
 const set_question_banks_step = (question_banks_step) => ({
@@ -98,6 +100,7 @@ export const move_patient_sign_up = (state) => (dispatch, getState) => {
   return dispatch(set_state_with_step('profile/sign_up', 0))
 }
 
+//TODO: sharing state can be updated by ohters and make side effects, so ,move to react part
 export const move_next_step = (step_num) => (dispatch, getState) => {
   var is_complete = false
   var patient = getState().patient_reducer
@@ -106,7 +109,6 @@ export const move_next_step = (step_num) => (dispatch, getState) => {
     // we are done with the current question bank, move to the next one
     var banks_length = patient.question_banks.length
     if (patient.question_banks_step + 1 < banks_length) {
-
       dispatch(set_current_question_bank_by_name(patient.question_banks[patient.question_banks_step + 1]))
       dispatch(set_question_banks_step(patient.question_banks_step + 1))
     } else {
@@ -122,26 +124,24 @@ export const move_next_step = (step_num) => (dispatch, getState) => {
   }
 }
 
-export const update_patient_question_banks = (bank_names) => (dispatch, getState) => {
-  dispatch(set_question_banks(bank_names))
+export const update_patient_question_banks = (bank_names, step) => (dispatch, getState) => {
+  dispatch(set_question_banks(bank_names, step))
 }
 
 export const set_current_question_bank_by_name = (bank_name) => (dispatch, getState) => {
   var header = {'Content-Type': 'application/json'}
   return axios.get(`/api/question_banks/search?name=${bank_name}`)
     .then(function(resp){
-      console.log("set_current_question_bank_by_name: ", resp.data)
-      return dispatch(update_patient_questions(resp.data.id))
+      console.log("current bank:", bank_name, " ", resp.data)
+      return dispatch(update_patient_questions(resp.data.id, bank_name))
     })
 }
 
-export const update_patient_questions = (bank_id) => (dispatch, getState) => {
-  
+export const update_patient_questions = (bank_id, bank_name) => (dispatch, getState) => { 
   var header = {'Content-Type': 'application/json'}
   return axios.get(`/api/question_banks/${bank_id}/questions`)
     .then(function(resp){
-      console.log("resp: ", resp)
-      dispatch(set_patient_questions(resp.data, bank_id))
+      dispatch(set_patient_questions(resp.data, bank_id, bank_name))
     })
 }
 
@@ -171,7 +171,6 @@ export const create_patient_from_user = () => (dispatch, getState) => {
   return axios.post(`/api/patients`, body, {headers: make_headers(user_attr)})
     .then(function(resp){
       // TODO: update global store with patient information
-      console.log("create_patient_from_user resp: ", resp)
       dispatch(set_patient(resp.data))
     })
 }
@@ -198,18 +197,16 @@ export const get_treatment_dosages = (treatment_id) => (dispatch, getState) => {
   return axios.get(`/api/treatments/${treatment_id}/dosages`, {headers: make_headers(user_attr)})
 }
 
-export const create_visit = () => (dispatch, getState) => {
+export const create_visit = (line_id) => (dispatch, getState) => {
   
   var user_attr = get_user_attr(getState())
 
   var patient = getState().patient_reducer.patient_object
-
-  var body = {patient_id: patient.id}
+  var body = {patient_id: patient.id, service_line_id: line_id}
 
   return axios.post(`/api/patients/${patient.id}/visits`, body, {headers: make_headers(user_attr)})
     .then(function(resp){
       // TODO: update global store with visit information
-      console.log("create_visit resp: ", resp)
       return dispatch(set_visit(resp.data))
     })
   }
@@ -234,10 +231,8 @@ export const answer_current_question = (answer) => (dispatch, getState) => {
       answer: answer
     }
 
-  console.log("answer body: ", body)
   return axios.post(`/api/patients/${patient.id}/visits/${visit.id}/answers`, body, {headers: make_headers(user_attr)})
     .then(function(resp){
-      console.log("answer_current_question esp: ", resp)
 
       // TODO: not sure what, if any, state to update here since we don't want to store answers locally
       return Promise.resolve()

@@ -5,18 +5,24 @@ import { BrowserRouter as Router } from "react-router-dom"
 import App from './App';
 import * as serviceWorker from './serviceWorker'
 import configure_store from './store/configure_store'
+import { PersistGate } from 'redux-persist/integration/react'
+
+
 //import {BrowserRouter as Router} from 'react-router-dom';
 
-const store = configure_store
+const {store, persistor} = configure_store()
 
 render(
   // https://react-redux.js.org/introduction/basic-tutorial#providing-the-store
   <Provider store={store}>
-    <Router>
-      <App />
-    </Router>
+    <PersistGate loading={null} persistor={persistor}>
+      <Router>
+        <App />
+      </Router>
+    </PersistGate>
   </Provider>,
-  document.getElementById('root'));
+  document.getElementById('root')
+);
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.

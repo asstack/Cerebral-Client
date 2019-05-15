@@ -1,8 +1,7 @@
 import React, {Component} from 'react'
 import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
-import { upload_photo_id, update_patient_state, move_next_step, create_patient_from_user,create_visit,update_patient_type,answer_current_question } from '../../actions/patient_action'
-
+import { set_current_question_bank_by_name, update_patient_question_banks, upload_photo_id, update_patient_state, move_next_step, create_patient_from_user,create_visit,update_patient_type,answer_current_question } from '../../actions/patient_action'
 import { register_user, sign_in} from '../../actions/user_auth_action'
 import { update_app_state } from '../../actions/'
 import * as utils from '../../utils/common.js'
@@ -12,26 +11,36 @@ class PatientProfile extends Component{
   
   constructor(props){
     super(props)
+    //TODO: not sure if we want to use one container for q-banks or seperate
+    this.state = {
+      bank_step:null, 
+    }
   }
 
+
   componentDidMount(){
-    /*
-    ReactGA.initialize('UA-139974495-1');
-		ReactGA.pageview('/PatientProfile');
-    */
+
+    const {bank_name, question_banks_step, question_banks, patient_state, update_patient_state} = this.props
+    const step = this.props.question_banks_step;
+
+    console.log("question_banks:", question_banks)
+
+    if(bank_name === question_banks[step]){
+      this.setState({bank_step:step})
+    }else if(question_banks && question_banks[step]){
+      this.setState({bank_step:step})
+      update_patient_state(question_banks[step])
+      this.props.set_current_question_bank_by_name(question_banks[step]) 
+    } 
   }
 
   componentDidUpdate(){
-    const {update_patient_state, question_bank_id, patient_state, is_complete} = this.props
-    if(is_complete){
-      update_patient_state('assessment')
+    const {question_banks_step, question_banks, update_patient_state} = this.props
+    if(this.state.bank_step!==question_banks_step){
+      this.setState({bank_step: question_banks_step})
+      update_patient_state(question_banks[question_banks_step])
+      this.props.set_current_question_bank_by_name(question_banks[question_banks_step]) 
     }
-    /*
-    if(patient_state!==this.state.prv_state){
-      this.setState({prv_state: patient_state})
-      this.props.history.push("/patient/profile")
-    }
-    */
   }
 
   /*local event this*/
@@ -54,35 +63,40 @@ class PatientProfile extends Component{
 
   set_bank_selector_handler=(e, option)=>{
 
-		const { answer_current_question, set_current_question_bank_by_name, move_next_step, update_patient_question_banks, update_patient_type} = this.props
+		const {question_banks_step, answer_current_question, set_current_question_bank_by_name, move_next_step, update_patient_question_banks, update_patient_type} = this.props
 
     answer_current_question(option.option_name) 
 
 	  if (option.question_bank_names.length > 0) {
 			if (option.immediate) {
-				update_patient_question_banks(option.question_bank_names)
-				set_current_question_bank_by_name(option.question_bank_names[0])
+				update_patient_question_banks(option.question_bank_names, 0)
 			}
 			else {
-        //TODO: Same with qualification.js. need to use react for functional
-				update_patient_question_banks(this.props.question_banks.concat( option.question_bank_names))
+				update_patient_question_banks(this.props.question_banks.concat( option.question_bank_names), question_banks_step)
+		    move_next_step(this.props.question_step)
 			}
 		}
+  }
 
-		update_patient_type(option.option_name)	
-		move_next_step(this.props.question_step)
+  get_line_id = () => {
+    const line_name = this.props.patient_type;
+    if(line_name==="Depression & Anxiety"){
+      return 1;
+    }else if(line_name==="Insomnia"){
+      return 2;
+    }
   }
 
   did_create_patient = (state) => {
     this.props.register_user(state)
       .then(() => {return this.props.sign_in(state)})
         .then(() => { return this.props.create_patient_from_user() })
-          .then( () => {return this.props.create_visit()} )
+          .then( () => {return this.props.create_visit(this.get_line_id())} )
             .then(() => {return this.props.move_next_step(this.props.question_step)})
       .catch((err) => {
         console.log(err)
       })
-    }
+  }
 
   submit_and_upload_id = (data, type) => { 
     const { upload_photo_id, move_next_step, answer_current_question,
@@ -99,8 +113,6 @@ class PatientProfile extends Component{
 	}
 
 
-  //Todo: update dynamic bounding by state
-  //state global: patient local: profile/register profile/sign_in profile/questions
   render(){
     const handlers = {
       next_step_handler:this.next_step_handler,
@@ -129,19 +141,22 @@ const mapStateToProps = (state) => {
 
   const {
     global_reducer: {app_state, current_user},
-    patient_reducer: {patient_state, step, question_bank_id, questions, is_complete}
+    patient_reducer: {patient_type, question_banks,question_banks_step, patient_state, step, question_bank_id, questions, current_bank_name, is_complete}
   } = state
 
   return {
     app_state: app_state,
+		question_banks: question_banks,
+    question_banks_step: question_banks_step,
     current_user: current_user,
+    patient_type: patient_type,
     patient_state: patient_state,
     question_step: step,
     question_bank_id: question_bank_id,
+    bank_name:current_bank_name,
     questions: questions,
     is_complete: is_complete
   }
 }
 
-export default withRouter(connect(mapStateToProps, {
- upload_photo_id, update_app_state, register_user, sign_in, move_next_step, create_patient_from_user, create_visit, update_patient_type,answer_current_question, update_patient_state}) (PatientProfile))
+export default withRouter(connect(mapStateToProps, {update_patient_question_banks,upload_photo_id, update_app_state, register_user, sign_in, move_next_step, create_patient_from_user, create_visit, update_patient_type,answer_current_question, update_patient_state,set_current_question_bank_by_name}) (PatientProfile))

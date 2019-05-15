@@ -13,21 +13,22 @@ class MainPage extends Component{
   componentDidMount(){
     //ReactGA.initialize('UA-139974495-1');
     //ReactGA.pageview('/MainPage');
+    console.log("main page here")
   }
   app_state_update_handler = e => {
     const {update_app_state}=this.props
-    update_app_state('qualification')
+
+    //update_app_state('qualification')
+    this.props.history.push('/start') 
   }
 
   app_state_register_handler = e => {
     const {update_app_state}=this.props
-    update_app_state('patient')
+    this.props.history.push('patient/profile')
   }
 
   app_state_signin_handler = e => {
-
-    this.props.update_patient_state('sign_in')
-    this.props.update_app_state('patient')
+    this.props.history.push('patient/sign_in')
   }
 
   render(){
@@ -36,8 +37,7 @@ class MainPage extends Component{
         <h1> main page </h1>
         <input type='button' value='Get Started' onClick={this.app_state_update_handler.bind(this)}/>
         <input type='button' value='Register' onClick={this.app_state_register_handler.bind(this)}/>
-        <input type='button' value='Sign In' onClick={this.app_state_signin_handler.bind(this)}/>
-      
+        <input type='button' value='Sign In' onClick={this.app_state_signin_handler.bind(this)}/>      
       </div>
     )
   }

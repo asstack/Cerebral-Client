@@ -18,31 +18,30 @@ class App extends Component{
   constructor(props){
     super(props)
     this.state = {
-      prv_state:"", 
+      prv_state:this.props.app_state, 
       prv_path:"/"
     }
   }
   
   componentDidMount(){
-    const {app_state} = this.props
-    const init_state =  this.mapPathToState(this.props.location.pathname.split("/").pop())   
-    if(!app_state){
+    const init_state =  this.mapPathToState(this.props.location.pathname.split("/")[1])   
+    if(init_state!=this.state.prv_state){
+      this.setState({prv_state:init_state})
       this.props.update_app_state(init_state) 
-    } 
+    }
   }
 
   componentDidUpdate(){
     const {app_state} = this.props
     const current_path = this.props.location.pathname
-    
+    const new_state = current_path.split("/")[1]
     if(current_path!==this.state.prv_path){
       ReactGA.initialize('UA-139974495-1');
 		  ReactGA.pageview(current_path);
       this.setState({prv_path:current_path});  
     }
-    if(app_state!==this.state.prv_state){
-      this.setState({prv_state:app_state})
-      this.props.history.push(this.mapStateToPath(app_state))
+    if(new_state!==this.state.prv_state){
+      this.setState({prv_state:new_state})
     }
   }
 
@@ -55,7 +54,8 @@ class App extends Component{
     }
   }
 
-  target_component = state => {
+  target_component = state => { 
+    console.log(state)
     switch(state) {
       case 'patient':
         return Patient
@@ -63,7 +63,7 @@ class App extends Component{
         return ShippingPayment
       case 'treatment':
         return Treatment
-      case 'qualification':
+      case 'start':
         return Qualification
       default:
         return MainPage;
@@ -78,7 +78,7 @@ class App extends Component{
         return "/treatment"
       case 'patient':
         return "/patient"
-      case 'qualification':
+      case 'start':
         return "/start"
       default:
         return "/";
@@ -86,9 +86,12 @@ class App extends Component{
   }
 
   render(){
+    let component = this.target_component(this.state.prv_state)
+    let path = this.mapStateToPath(this.state.prv_state)
+    
     return (
       <div className="App">
-        <Route path={this.mapStateToPath(this.props.app_state)} component={this.target_component(this.props.app_state)}/>
+        <Route path={path} component={component}/>
       </div>
     );
   }
