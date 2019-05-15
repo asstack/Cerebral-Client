@@ -13,10 +13,6 @@ class Identification extends Component {
     }
   }
 
-  update_handler = e => { 
-    this.props.submit_action(this.state) 
-   }
-
   set_type_handler = (e, type) => {
     console.log(type)
     this.setState({view_type:type})

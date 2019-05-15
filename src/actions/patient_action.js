@@ -156,10 +156,12 @@ const  get_user_attr = (state) => {
 const make_headers = (user_attr) => {
   return {
     'Content-Type': 'application/json', 
-  'access-token': user_attr.token, 
-  'client': user_attr.client, 
-  'uid':user_attr.uid}
+    'access-token': user_attr.token, 
+    'client': user_attr.client, 
+    'uid':user_attr.uid
+  }
 }
+
 
 export const create_patient_from_user = () => (dispatch, getState) => {
   
@@ -245,3 +247,23 @@ export const answer_current_question = (answer) => (dispatch, getState) => {
 export const update_patient_state = state => (dispatch, getState) => {
   return dispatch(set_patient_state(state))
 }
+
+
+export const upload_photo_id = (patient_id, file, file_type) => (dispatch, getState) => {
+  var user_attr = get_user_attr(getState())
+  var option = {headers:
+                {'ContentEncoding': 'base64', 
+                 'Content-Type': file_type}}
+  
+  return axios.post(`/api/patients/${patient_id}/identification`,null,{headers:make_headers(user_attr)})
+    .then(function(resp){
+     axios.put(resp.data.url, file, option)
+        .then(function(resp){
+          return Promise.resolve()
+        })
+    })
+}
+
+
+
+

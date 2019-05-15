@@ -7,8 +7,9 @@ class HeightWeight extends Component {
     super(props)
     this.state = {
       weight:'',
-      in:'',
-      ft:''
+      inch:'',
+      ft:'',
+      msg:''
     }
   }
   
@@ -17,7 +18,7 @@ class HeightWeight extends Component {
   }
 
   update_height_in_handler = e => {
-    this.setState({in:e.target.value}) 
+    this.setState({inch:e.target.value}) 
   }
 
   update_weight_handler = e => {
@@ -25,12 +26,18 @@ class HeightWeight extends Component {
   }
   
   submit_btn_handler = e => {
-    this.props.submit_action(`${this.state.weight}lb ${this.state.ft}ft ${this.state.in}in`)
+    const {weight, inch, ft} = this.state
+    if(weight && inch && ft && !isNaN(weight) && !isNaN(inch) && !isNaN(ft)){ 
+      this.props.submit_action(`${weight}lb ${ft}ft ${inch}in`)
+    }else{
+      this.setState({msg: "Please input valid information"})
+    }
   }
 
   render(){
      return (
       <div>
+        <div className = "d-flex justify-content-center p-2 text-small-red">{this.state.msg}</div>
         {components.input_type_1(this.update_weight_handler, "Weight lbs")}
         <div className = "p-2">
            <div className = "input-group input-type1">

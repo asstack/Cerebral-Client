@@ -1,4 +1,5 @@
 import {combineReducers} from 'redux'
+import { handleActions } from 'redux-actions'
 import * as app_types from '../actions'
 import * as user_auth_types from '../actions/user_auth_action'
 import * as patient_action_types from '../actions/patient_action'
@@ -53,111 +54,110 @@ const init_patient_state = {
 
 //global state storage, it will have user account information and current global state
 // https://redux.js.org/basics/reducers#handling-actions
-const global_reducer = (state = init_global_state, action) => {
+const global_reducer = handleActions({
 
-  switch(action.type){
-    case user_auth_types.SET_USER:
-      return {
-        // https://redux.js.org/recipes/using-object-spread-operator
-        ...state,
-        // TODO: don't assume that user is patient... they may be a therapist
-        // probably don't want to change app_state here at all
-        app_state:'patient',
-        current_user: {
-          ...state.current_user,
-          user_type: 'patient',
-          is_loading: true,
-          is_signedIn: true,
-          attributes : action.user_attr
-        }
+  [user_auth_types.SET_USER]:(state, action) => {
+    return {
+      // https://redux.js.org/recipes/using-object-spread-operator
+      ...state,
+      // TODO: don't assume that user is patient... they may be a therapist
+      // probably don't want to change app_state here at all
+      app_state:'patient',
+      current_user: {
+        ...state.current_user,
+        user_type: 'patient',
+        is_loading: true,
+        is_signedIn: true,
+        attributes : action.user_attr
       }
-      case app_types.SET_APP_STATE:
-        return{
-          ...state,
-          app_state:action.new_app_state
-        }
-    default:
-      return state
+    }
+  },
+  [app_types.SET_APP_STATE]: (state, action) => {
+    return{
+      ...state,
+      app_state:action.new_app_state
+    }
   }
-}
+}, init_global_state)
 
 
 //TODO: move independent file ex) patient_reducer.js
-const patient_reducer = (state = init_patient_state, action) => {
-  switch(action.type){
-    case patient_action_types.SET_STEP:
-      return{
-        ...state,
-        step : action.step,
-				is_complete: action.is_complete
-      }
 
-    case patient_action_types.SET_PATIENT:
-      return{
-        ...state,
-        patient_object: action.patient_object
-      }
-
-    case patient_action_types.SET_VISIT:
-      return{
-        ...state,
-        visit_object: action.visit_object
-      } 
-    case patient_action_types.SET_STATE_WITH_STEP:
-      return{
-        ...state,
-        step : action.new_step,
-        patient_state : action.new_state
-      }
-    case patient_action_types.SET_PATIENT_QUESTIONS:
-      return{
-        ...state,
-				step:0,
-        question_bank_id : action.bank_id,
-        questions : action.questions,
-        total_step : action.total_step
-      }
-    case patient_action_types.SET_QUESTION_BANKS:
-      return{
-        ...state,
-        question_banks : action.question_banks
-      }
-    case patient_action_types.SET_QUESTION_BANKS_STEP:
-      return{
-        ...state,
-        question_banks_step : action.question_banks_step
-      }
-		case patient_action_types.SET_PATIENT_TYPE:
-			return{
-				...state,
-				patient_type : action.patient_type
-			}
-		case patient_action_types.REMOVE_PATIENT_QUESTIONS:
-			return{
-				...state,
-				questions: null,
-				total_step:1,
-				step: 0
-      }
-    case patient_action_types.REMOVE_PATIENT_QUESTION_BANKS:
-			return{
-				...state,
-				question_banks: []
-			}
-    case patient_action_types.SET_PATIENT_STATE:
-      return{
-        ...state,
-        patient_state:action.patient_state
-      }
-    // see notes in patient_actions
-    // case patient_action_types.SUBMIT_ANSWERS:
-      // return{}
-    // case patient_action_types.SET_QUESTION_ID:
-      // return{}
-    default:
-      return state
-  }
-}
+const patient_reducer = handleActions({
+  [patient_action_types.SET_STEP]: (state, action) => {
+    return{
+      ...state,
+      step : action.step,
+      is_complete: action.is_complete
+    }
+  },
+  [patient_action_types.SET_PATIENT]: (state, action) => {
+    return{
+      ...state,
+      patient_object: action.patient_object
+    }
+  },
+  [patient_action_types.SET_VISIT]: (state, action) => {
+    return{
+      ...state,
+      visit_object: action.visit_object
+    } 
+  },
+  [patient_action_types.SET_STATE_WITH_STEP]:(state, action) => {
+    return{
+      ...state,
+      step : action.new_step,
+      patient_state : action.new_state
+    }
+  },
+  [patient_action_types.SET_PATIENT_QUESTIONS]:(state, action) => {
+    return{
+      ...state,
+      step:0,
+      question_bank_id : action.bank_id,
+      questions : action.questions,
+      total_step : action.total_step
+    }
+  },
+  [patient_action_types.SET_QUESTION_BANKS]: (state, action) => {
+    return{
+      ...state,
+      question_banks : action.question_banks
+    }
+  },
+  [patient_action_types.SET_QUESTION_BANKS_STEP]: (state, action) => {
+    return{
+      ...state,
+      question_banks_step : action.question_banks_step
+    }
+  },
+	[patient_action_types.SET_PATIENT_TYPE]: (state, action) => {
+    return{
+      ...state,
+      patient_type : action.patient_type
+    }
+  },
+  [patient_action_types.REMOVE_PATIENT_QUESTIONS]: (state, action) => {
+    return{
+      ...state,
+      questions: null,
+      total_step:1,
+      step: 0
+    }
+  },
+  [patient_action_types.REMOVE_PATIENT_QUESTION_BANKS]: (state, action) => {
+    return{
+      ...state,
+      question_banks: []
+    }
+  },
+  [patient_action_types.SET_PATIENT_STATE]:(state, action) => {
+    return{
+      ...state,
+      patient_state:action.patient_state
+    }
+  },
+}, init_patient_state)
 
 const rootReducer = combineReducers({
   patient_reducer,

@@ -35,6 +35,8 @@ class SignIn extends Component {
       this.props.sign_in(this.state)
     }
 
+  //check: Please input your email address ex) yourname@example.com 
+    
     render(){
       return (
         <div className="patient_signin">

@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
-import { set_current_question_bank_by_name, update_patient_question_banks, update_patient_questions, move_next_step, create_patient_from_user,create_visit,update_patient_type,answer_current_question } from '../../actions/patient_action'
+import {upload_photo_id, set_current_question_bank_by_name, update_patient_question_banks, update_patient_questions, move_next_step, create_patient_from_user,create_visit,update_patient_type,answer_current_question } from '../../actions/patient_action'
 import { register_user, sign_in} from '../../actions/user_auth_action'
 import { update_app_state } from '../../actions/'
 import * as utils from '../../utils/common.js'
@@ -78,6 +78,13 @@ class ShippingPayment extends Component{
     update_patient_type(option.option_name)	
 		move_next_step(this.props.question_step)
 	}
+  
+  submit_and_upload_id = (data, type) => { 
+    const { upload_photo_id, move_next_step, answer_current_question,
+            current_user} = this.props
+    //upload_photo_id(current_user.attributes.id, data, type)
+    move_next_step(this.props.question_step)
+  }
 
 	display_title = (questions, step) =>{
 		if(questions[step]){
@@ -104,7 +111,8 @@ class ShippingPayment extends Component{
 			set_selector_handler:this.set_selector_handler,
 			set_bank_selector_handler:this.set_bank_selector_handler,
 			did_create_patient: this.did_create_patient,
-      submit_answer_and_next_step: this.submit_answer_and_next_step.bind(this)
+      submit_answer_and_next_step: this.submit_answer_and_next_step.bind(this),
+      submit_and_upload_id:this.submit_and_upload_id.bind(this)
 		}
 
 		return(
@@ -134,6 +142,7 @@ const mapStateToProps = (state) => {
 	} = state
 
 	return {
+    current_user: current_user,
 		patient_state: patient_state,
 		question_banks: question_banks,
 		question_step: step,
@@ -143,5 +152,5 @@ const mapStateToProps = (state) => {
 	}
 }
 
-export default withRouter(connect(mapStateToProps,{update_app_state, update_patient_questions, update_patient_question_banks, set_current_question_bank_by_name,
+export default withRouter(connect(mapStateToProps,{upload_photo_id, update_app_state, update_patient_questions, update_patient_question_banks, set_current_question_bank_by_name,
 	register_user, sign_in, move_next_step, create_patient_from_user, create_visit, update_patient_type, answer_current_question}) (ShippingPayment))
