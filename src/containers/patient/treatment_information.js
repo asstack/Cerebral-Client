@@ -75,7 +75,7 @@ class Treatment extends Component{
 			}
 		}
     
-    update_patient_type(option.option_name)	
+    update_patient_type(option.name)	
 		move_next_step(this.props.question_step)
 	}
 

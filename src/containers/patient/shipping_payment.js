@@ -58,6 +58,7 @@ class ShippingPayment extends Component{
 		move_next_step(this.props.question_step)
   }
 
+	// TODO: REMOVE
 	set_bank_selector_handler=(e, option)=>{
 		const { answer_current_question, set_current_question_bank_by_name, move_next_step, update_patient_question_banks, update_patient_type} = this.props
 
@@ -75,7 +76,7 @@ class ShippingPayment extends Component{
 			}
 		}
     
-    update_patient_type(option.option_name)	
+    update_patient_type(option.name)	
 		move_next_step(this.props.question_step)
 	}
   
