@@ -5,7 +5,7 @@ import PatientProfile from './profile'
 import PatientDashboard from './dash_board'
 import SignIn from './sign_in'
 import {update_patient_state, update_patient_questions, delete_patient_questions} from '../../actions/patient_action'
-import {CompleteProcess} from '../../components/static_components/complete_patient_process'
+import CompleteProcess from '../../components/static_components/complete_patient_process'
 import uuidv1 from 'uuid'
 import ReactGA from 'react-ga'
 
