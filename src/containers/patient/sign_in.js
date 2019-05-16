@@ -16,13 +16,17 @@ class SignIn extends Component {
       password:''
     }
   }
+
+  componentDidMount(){
+    if(this.props.login_info.attributes.token){    
+      this.props.history.push('/patient/dashboard') 
+    } 
+  } 
   componentDidUpdate(){
-    console.log("check here", this.props.login_info.attributes.token)
-    if(this.props.login_info.attributes.token){  
-      this.props.update_patient_state('dashboard')
+    if(this.props.login_info.attributes.token){    
+      this.props.history.push('/patient/dashboard') 
     } 
   }
-
 
   update_email = (e) => {
     const em = e.target.value

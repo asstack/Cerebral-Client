@@ -12,12 +12,14 @@ class PatientDashboard extends Component{
 
   app_state_checkout_handler = e => {
     const {update_app_state}=this.props
-    update_app_state('checkout')
+
+    this.props.history.push('/checkout') 
   }
 
   app_state_treatment_handler = e => {
     const {update_app_state}=this.props
-    update_app_state('treatment')
+
+    this.props.history.push('/treatment') 
   }
 
   render(){ 
