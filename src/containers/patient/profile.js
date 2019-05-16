@@ -23,8 +23,6 @@ class PatientProfile extends Component{
     const {bank_name, question_banks_step, question_banks, patient_state, update_patient_state} = this.props
     const step = this.props.question_banks_step;
 
-    console.log("question_banks:", question_banks)
-
     if(bank_name === question_banks[step]){
       this.setState({bank_step:step})
     }else if(question_banks && question_banks[step]){
@@ -73,6 +71,7 @@ class PatientProfile extends Component{
 			}
 			else {
 				update_patient_question_banks(this.props.question_banks.concat( option.question_bank_names), question_banks_step)
+        update_patient_type(option.option_name)	
 		    move_next_step(this.props.question_step)
 			}
 		}

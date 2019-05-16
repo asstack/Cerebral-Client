@@ -59,6 +59,7 @@ class Qualification extends Component{
 			}
 			else {
 				update_patient_question_banks(this.props.question_banks.concat( option.question_bank_names), question_banks_step)
+        update_patient_type(option.option_name)	
 		    move_next_step(this.props.question_step)
 			}
 		} 
