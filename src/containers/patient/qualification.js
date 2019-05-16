@@ -62,7 +62,10 @@ class Qualification extends Component{
         update_patient_type(option.option_name)	
 		    move_next_step(this.props.question_step)
 			}
-		} 
+		}
+    
+    update_patient_type(option.name)	
+		move_next_step(this.props.question_step)
 	}
 
 	display_title = (questions, step) =>{

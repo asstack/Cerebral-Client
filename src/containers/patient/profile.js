@@ -71,7 +71,7 @@ class PatientProfile extends Component{
 			}
 			else {
 				update_patient_question_banks(this.props.question_banks.concat( option.question_bank_names), question_banks_step)
-        update_patient_type(option.option_name)	
+        update_patient_type(option.name)	
 		    move_next_step(this.props.question_step)
 			}
 		}
@@ -79,9 +79,9 @@ class PatientProfile extends Component{
 
   get_line_id = () => {
     const line_name = this.props.patient_type;
-    if(line_name==="Depression & Anxiety"){
+    if(line_name==="dep_anx"){
       return 1;
-    }else if(line_name==="Insomnia"){
+    }else if(line_name==="ins"){
       return 2;
     }
   }

@@ -39,6 +39,7 @@ class Assessment extends Component{
     move_next_step(this.props.question_step)
   }
 
+  // TODO: REMOVE
   set_bank_selector_handler=(e)=>{
     const {move_next_step, update_patient_type} = this.props
     update_patient_type(e.target.value)
