@@ -17,28 +17,25 @@ class VideoRecorderComponent extends Component {
 	}
 
 	//TODO: make actio for submit video, call api and update into s3
-	submit_handler = () => {
-		const  data= this.refs.recorder
-		const {submit_video} = this.props
-		console.log(this.refs.recorder.mediaRecorder)
-		//submit_video({data})
-	}
+	submit_btn_handler = (e) => {
 
+    const data= this.refs.recorder
+    const type ='video/webm;codecs=vp8'
+    this.props.submit_action(data, type)
+	}
+  
   render() {
     return (
 			<div>
-				<div className = "d-flex justify-content-center text-big">
-					<p>Tell me us more about why you're seeking out a prescription for antidepressants</p>
-				</div>	
-				<div className = "d-flex justify-content-center text-small">
+			  <div className = "d-flex justify-content-center text-small">
 					<p>(approximately 2 minutes)</p>
 				</div>
 				<div className = "video-cam-holder">
-					<VideoRecorder ref='recorder' timeLimit='120000'/>
+          <VideoRecorder ref='recorder' timeLimit={120000}/>
 				</div>
 				<div className = "d-flex justify-content-center p-2">	
-					<input className="col btn-confirm text-btn" type="button" value="Submit Video" 
-						onClick={this.submit_hanlder}/>	
+
+          <input className="col btn-confirm text-btn" type="button" onClick={this.submit_btn_handler} value="Submit Video"/>
 				</div>
 		
 			</div>
