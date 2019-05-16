@@ -77,6 +77,7 @@ class PatientProfile extends Component{
 		}
   }
 
+  // TODO: we need to load service_lines into global state
   get_line_id = () => {
     const line_name = this.props.patient_type;
     if(line_name==="dep_anx"){
