@@ -77,21 +77,13 @@ class PatientProfile extends Component{
 		}
   }
 
-  // TODO: we need to load service_lines into global state
-  get_line_id = () => {
-    const line_name = this.props.service_line;
-    if(line_name==="dep_anx"){
-      return 1;
-    }else if(line_name==="ins"){
-      return 2;
-    }
-  }
-
   did_create_patient = (state) => {
+    const service_line = this.props.service_line.id;
+    console.log("check line id:", service_line)
     this.props.register_user(state)
       .then(() => {return this.props.sign_in(state)})
         .then(() => { return this.props.create_patient_from_user() })
-          .then( () => {return this.props.create_visit(this.get_line_id())} )
+          .then( () => {return this.props.create_visit(service_line)})
             .then(() => {return this.props.move_next_step(this.props.question_step)})
       .catch((err) => {
         console.log(err)
