@@ -21,18 +21,13 @@ export const sign_in = user_info => (dispatch, getState) =>  {
       return axios.post("/api/auth/sign_in" ,{email:email, password:password}, {headers: headers})
       .then(function(resp){
           console.info(resp)
-          var attr = { id: resp.data.data.id,
-                          uid:resp.data.data.uid,
-                          email:resp.data.data.email,
-                          first_name:resp.data.data.first_name,
-                          last_name:resp.data.data.last_name,
-                          token: resp.headers['access-token'],
-                          client: resp.headers.client
-                        }
-                                  
-          dispatch(set_user(attr))
 
-          console.log("sign_in", attr)
+          resp.data.data['client'] = resp.headers.client
+          resp.data.data['access-token'] = resp.headers['access-token']
+
+          console.log("sign_in data", resp.data.data)
+                                  
+          return dispatch(set_user(resp.data.data))
         })
     }
     else {
@@ -58,8 +53,7 @@ export const register_user = user_info => (dispatch, getState)=>{
                         last_name:resp.data.last_name
                       }
 
-          dispatch(set_user(attr))
-
+          return dispatch(set_user(attr))
         })
     }
     else {

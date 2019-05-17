@@ -59,12 +59,12 @@ const set_question_banks_step = (question_banks_step) => ({
   question_banks_step:question_banks_step
 })
 
-const set_patient = (patient_object) => ({
+export const set_patient = (patient_object) => ({
   type:SET_PATIENT,
   patient_object: patient_object
 })
 
-const set_visit = (visit_object) => ({
+export const set_visit = (visit_object) => ({
   type:SET_VISIT,
   visit_object:visit_object
 })
@@ -163,12 +163,11 @@ const  get_user_attr = (state) => {
 const make_headers = (user_attr) => {
   return {
     'Content-Type': 'application/json', 
-    'access-token': user_attr.token, 
+    'access-token': user_attr['access-token'], 
     'client': user_attr.client, 
     'uid':user_attr.uid
   }
 }
-
 
 export const create_patient_from_user = () => (dispatch, getState) => {
   
@@ -183,18 +182,15 @@ export const create_patient_from_user = () => (dispatch, getState) => {
 }
 
 export const get_side_effects = (service_line_id) => (dispatch, getState) => {
-  return axios.get(`/api/service_lines/${service_line_id}/side_effects`, {headers: make_headers(get_user_attr(getState()))})
+  return dispatch(get_with_auth_and_return_just_data(`/api/service_lines/${service_line_id}/side_effects`))
 }
 
 export const get_treatments = (service_line_id) => (dispatch, getState) => {
-  return axios.get(`/api/service_lines/${service_line_id}/treatments`, {headers: make_headers(get_user_attr(getState()))})
+  return dispatch(get_with_auth_and_return_just_data(`/api/service_lines/${service_line_id}/treatments`))
 }
 
 export const get_treatment_dosages = (treatment_id) => (dispatch, getState) => {
-  var user_attr = get_user_attr(getState())
-  var body = {user_id: user_attr.id}
-
-  return axios.get(`/api/treatments/${treatment_id}/dosages`, {headers: make_headers(user_attr)})
+  return dispatch(get_with_auth_and_return_just_data(`/api/treatments/${treatment_id}/dosages`))
 }
 
 export const create_visit = (line_id) => (dispatch, getState) => {
@@ -211,13 +207,45 @@ export const create_visit = (line_id) => (dispatch, getState) => {
     })
   }
 
+export const get_patient_most_recent_visits = (patient) => (dispatch, getState) => {
+  
+  // the visit in app_state SHOULD BE the most recent visit
+  var visit = getState().patient_reducer.visit_object
+  if (visit) {
+    return Promise.resolve([visit])
+  }
+  // TODO and NOTE: the first visit is always the most recent visit
+  return dispatch(get_with_auth_and_return_just_data(`/api/patients/${patient.id}/visits`))
+}
+
+export const get_current_patient_and_visit = () => (dispatch, getState) => {
+  // TODO! Get all this stuff from global state
+  var patient = getState().patient_reducer.patient_object
+  return dispatch(get_patient_most_recent_visits(patient)).then((visits) => {
+    return Promise.resolve({patient: patient, visit : visits[0]} )
+  })
+}
+
+// makes an authenticated GET call to the server and unwraps the response nicely
+export const get_with_auth_and_return_just_data = (url) => (dispatch, getState) => {
+  return axios.get(url, {headers: make_headers(get_user_attr(getState()))})
+  .then((resp) => {
+    return Promise.resolve(resp.data)
+  })
+}
+
+// given a question name, get the answer for that question in the *current* visit
+export const get_current_answer_by_name = (name) => (dispatch, getState) => {
+  return dispatch(get_current_patient_and_visit()).then((resp) => {
+    return dispatch(get_with_auth_and_return_just_data(`/api/patients/${resp.patient.id}/visits/${resp.visit.id}/answers?question.name=${name}`))
+  })
+}
+
 export const answer_current_question = (answer) => (dispatch, getState) => {
   
   var user_attr = get_user_attr(getState())
 
-  // TODO! Get all this stuff from global state
-  var patient = getState().patient_reducer.patient_object
-  var visit = getState().patient_reducer.visit_object
+  var {patient, visit} = get_current_patient_and_visit()
 
   if (patient == null || visit == null) {
     return Promise.resolve(); 

@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import { connect } from 'react-redux'
 import axios from 'axios'
 import { sign_in } from '../../actions/user_auth_action'
-import { update_patient_state, move_patient_sign_up, set_profile_question } from '../../actions/patient_action'
+import { set_visit, get_patient_most_recent_visits, update_patient_state, move_patient_sign_up, set_profile_question, set_patient } from '../../actions/patient_action'
 import * as components from '../../components/question_components/components'
 
 
@@ -18,12 +18,12 @@ class SignIn extends Component {
   }
 
   componentDidMount(){
-    if(this.props.login_info.attributes.token){    
+    if(this.props.login_info.attributes['access-token']){    
       this.props.history.push('/patient/dashboard') 
     } 
   } 
   componentDidUpdate(){
-    if(this.props.login_info.attributes.token){    
+    if(this.props.login_info.attributes['access-token']){    
       this.props.history.push('/patient/dashboard') 
     } 
   }
@@ -43,7 +43,16 @@ class SignIn extends Component {
   }
 
   sign_in_handler = e => {
-    this.props.sign_in(this.state)
+    this.props.sign_in(this.state).then ((resp) => {
+      console.log(resp)
+      if (resp.user_attr.patient) {
+        this.props.set_patient(resp.user_attr.patient);
+
+        this.props.get_patient_most_recent_visits(resp.user_attr.patient).then((visits) => {
+          this.props.set_visit(visits[0])
+        })
+      }
+    })
   }
 
   render(){
@@ -77,4 +86,4 @@ const mapStateToProps = (state) => ({
   login_info : state.global_reducer.current_user
 })
 
-export default connect(mapStateToProps, {update_patient_state, sign_in,set_profile_question, move_patient_sign_up},)(SignIn)
+export default connect(mapStateToProps, {set_visit, get_patient_most_recent_visits, set_patient, update_patient_state, sign_in,set_profile_question, move_patient_sign_up},)(SignIn)

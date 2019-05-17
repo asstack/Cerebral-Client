@@ -18,7 +18,7 @@ const init_global_state = {
       email: null,
       first_name: null,
       last_name: null,
-      token: null,
+      'access-token': null,
       client: null
     },
   },

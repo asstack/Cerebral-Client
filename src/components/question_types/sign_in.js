@@ -32,7 +32,9 @@ class SignIn extends Component {
     }
 			
     sign_in_handler = e => {
-      this.props.sign_in(this.state)
+      this.props.sign_in(this.state).then ((resp) => {
+        console.log(resp)
+      })
     }
 
   //check: Please input your email address ex) yourname@example.com 
