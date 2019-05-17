@@ -3,25 +3,12 @@ import uuidv1 from  'uuid/v1';
 import {Router, Route, withRouter} from 'react-router-dom'
 import * as components from '../question_components/components'
 
-import { get_treatments } from '../../actions/patient_action'
-
 export class QuestionPreference extends Component {
   constructor(props) {
     super(props)
     this.state = {
       options: []
     }
-  }
-
-  componentDidMount = () => {
-    this.props.get_treatments().then((resp) => {
-      // TODO: update global store with patient information
-      console.log("get_treatments resp: ", resp)
-      this.setState({
-        ...this.state,
-        options: resp.data
-      });
-    })
   }
 
   //TODO: Save multiple values from selected boxes
@@ -129,6 +116,7 @@ export class QuestionPreference extends Component {
   }
 }
 
-const prop_methods = {get_treatments}
+// As you use new methods, add their signature here so that they will be merged with sub classes
+const prop_methods = {}
 
 export {prop_methods}

@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
-import { update_patient_state, set_current_question_bank_by_name, update_patient_question_banks, move_next_step, create_patient_from_user,create_visit,update_patient_type,answer_current_question } from '../../actions/patient_action'
+import { update_patient_state, set_current_question_bank_by_name, update_patient_question_banks, move_next_step, create_patient_from_user,create_visit,update_service_line,answer_current_question } from '../../actions/patient_action'
 import { register_user, sign_in} from '../../actions/user_auth_action'
 import { update_app_state } from '../../actions/'
 import * as utils from '../../utils/common.js'
@@ -49,7 +49,7 @@ class Qualification extends Component{
 
 	set_bank_selector_handler=(e, option)=>{
     const { bank_step, answer_current_question, set_current_question_bank_by_name, move_next_step, 
-      update_app_state, update_patient_question_banks, update_patient_type, question_banks_step} = this.props
+      update_app_state, update_patient_question_banks, update_service_line, question_banks_step} = this.props
 
     answer_current_question(option.option_name) 
 		if (option.question_bank_names.length > 0) {
@@ -59,12 +59,12 @@ class Qualification extends Component{
 			}
 			else {
 				update_patient_question_banks(this.props.question_banks.concat( option.question_bank_names), question_banks_step)
-        update_patient_type(option.option_name)	
+        update_service_line(option.option_name)	
 		    move_next_step(this.props.question_step)
 			}
 		}
     
-    update_patient_type(option.name)	
+    update_service_line(option.name)	
 		move_next_step(this.props.question_step)
 	}
 
@@ -134,4 +134,4 @@ const mapStateToProps = (state) => {
 }
 
 export default withRouter(connect(mapStateToProps,{update_patient_state, update_app_state, update_patient_question_banks, set_current_question_bank_by_name,
-	register_user, sign_in, move_next_step, create_patient_from_user, create_visit, update_patient_type, answer_current_question}) (Qualification))
+	register_user, sign_in, move_next_step, create_patient_from_user, create_visit, update_service_line, answer_current_question}) (Qualification))

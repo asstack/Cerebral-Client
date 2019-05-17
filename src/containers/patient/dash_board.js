@@ -3,6 +3,7 @@ import {Route, withRouter } from "react-router-dom"
 import {connect} from 'react-redux'
 import default_icon from '../../img/user.png'
 import {update_app_state} from '../../actions'
+import {update_service_line} from '../../actions/patient_action'
 
 class PatientDashboard extends Component{
 
@@ -18,6 +19,9 @@ class PatientDashboard extends Component{
 
   app_state_treatment_handler = e => {
     const {update_app_state}=this.props
+
+    // TODO: this is a hack just for testing purposes!
+    this.props.update_service_line('dep_anx')
 
     this.props.history.push('/treatment') 
   }
@@ -70,4 +74,4 @@ class PatientDashboard extends Component{
   } 
 }
 
-export default connect(null, {update_app_state}) (PatientDashboard)
+export default connect(null, {update_app_state, update_service_line}) (PatientDashboard)

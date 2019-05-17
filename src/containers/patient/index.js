@@ -138,10 +138,10 @@ class Patient extends Component{
 const mapStateToProps = state => {
   const{
     global_reducer: {app_state},
-    patient_reducer: {patient_type, patient_state, step, total_step, questions, question_banks, question_banks_step}
+    patient_reducer: {service_line, patient_state, step, total_step, questions, question_banks, question_banks_step}
   } = state
   return {
-    patient_type:patient_type,
+    service_line:service_line,
     app_state:app_state,
     patient_state:patient_state,
 		questions:questions,

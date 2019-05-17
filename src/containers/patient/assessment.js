@@ -41,8 +41,8 @@ class Assessment extends Component{
 
   // TODO: REMOVE
   set_bank_selector_handler=(e)=>{
-    const {move_next_step, update_patient_type} = this.props
-    update_patient_type(e.target.value)
+    const {move_next_step, update_service_line} = this.props
+    update_service_line(e.target.value)
     move_next_step(this.props.question_step)
   }
 
@@ -104,5 +104,5 @@ const mapStateToProps = (state) => {
 }
 
 export default withRouter(connect(mapStateToProps, {
-update_app_state, register_user, sign_in, move_next_step, create_patient_from_user, create_visit, update_patient_type,answer_current_question, update_patient_state}) (PatientProfile))
+update_app_state, register_user, sign_in, move_next_step, create_patient_from_user, create_visit, update_service_line,answer_current_question, update_patient_state}) (PatientProfile))
 
