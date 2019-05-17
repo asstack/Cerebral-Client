@@ -35,6 +35,7 @@ class App extends Component{
     const {app_state} = this.props
     const current_path = this.props.location.pathname
     const new_state = current_path.split("/")[1]
+
     if(current_path!==this.state.prv_path){
       ReactGA.initialize('UA-139974495-1');
 		  ReactGA.pageview(current_path);

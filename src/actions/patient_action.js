@@ -10,7 +10,7 @@ export const SET_STATE_WITH_STEP = 'patient/SET_STATE_WITH_STEP'
 export const SET_QUESTION_BANKS = 'patient/SET_QUESTION_BANKS'
 export const SET_QUESTION_BANKS_STEP = 'patient/SET_QUESTION_BANKS_STEP'
 export const SET_PATIENT_QUESTIONS = 'patient/SET_PATIENT_QUESTIONS'
-export const SET_PATIENT_TYPE = 'patient/SET_PATIENT_TYPE'
+export const SET_SERVICE_LINE = 'patient/SET_SERVICE_LINE'
 export const REMOVE_PATIENT_QUESTIONS = 'patient/REMOVE_PATIENT_QUESTIONS'
 export const REMOVE_PATIENT_QUESTION_BANKS = 'patient/REMOVE_PATIENT_QUESTION_BANKS'
 
@@ -78,14 +78,17 @@ const set_patient_state = pstate => ({
   patient_state: pstate
 })
 
-const set_patient_type = ptype => ({
-	type:SET_PATIENT_TYPE,
-	patient_type: ptype
+const set_service_line = ptype => ({
+	type:SET_SERVICE_LINE,
+	service_line: ptype
 })
 
-//patient type: get from bank selector(Insomnia or depression)
-export const update_patient_type = type => (dispatch, getState) => {
-  return dispatch(set_patient_type(type))
+export const update_service_line = name => (dispatch, getState) => {
+  return axios.get(`/api/service_lines/search?name=${name}`, {headers: make_headers(get_user_attr(getState()))})
+  .then(function(resp){
+    // TODO: update global store with patient information
+    return dispatch(set_service_line(resp.data))
+  })
 }  
 
 export const set_profile_question = () => (dispatch, getState) => {
@@ -175,19 +178,12 @@ export const create_patient_from_user = () => (dispatch, getState) => {
     })
 }
 
-export const get_side_effects = () => (dispatch, getState) => {
-  var user_attr = get_user_attr(getState())
-  var body = {user_id: user_attr.id}
-
-  return axios.get(`/api/side_effects`, {headers: make_headers(user_attr)})
+export const get_side_effects = (service_line_id) => (dispatch, getState) => {
+  return axios.get(`/api/service_lines/${service_line_id}/side_effects`, {headers: make_headers(get_user_attr(getState()))})
 }
 
-// TODO: add service_line
-export const get_treatments = () => (dispatch, getState) => {
-  var user_attr = get_user_attr(getState())
-  var body = {user_id: user_attr.id}
-
-  return axios.get(`/api/treatments`, {headers: make_headers(user_attr)})
+export const get_treatments = (service_line_id) => (dispatch, getState) => {
+  return axios.get(`/api/service_lines/${service_line_id}/treatments`, {headers: make_headers(get_user_attr(getState()))})
 }
 
 export const get_treatment_dosages = (treatment_id) => (dispatch, getState) => {

@@ -27,7 +27,7 @@ const init_global_state = {
 
 const init_patient_state = {
   
-  patient_type: '',
+  service_line: '',
   patient_state: '',
 
   // all of the question_banks for the current user
@@ -136,10 +136,10 @@ const patient_reducer = handleActions({
       question_banks_step : action.question_banks_step
     }
   },
-	[patient_action_types.SET_PATIENT_TYPE]: (state, action) => {
+	[patient_action_types.SET_SERVICE_LINE]: (state, action) => {
     return{
       ...state,
-      patient_type : action.patient_type
+      service_line : action.service_line
     }
   },
   [patient_action_types.REMOVE_PATIENT_QUESTIONS]: (state, action) => {

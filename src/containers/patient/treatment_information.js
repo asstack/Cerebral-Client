@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
-import { set_current_question_bank_by_name, update_patient_question_banks, update_patient_questions, move_next_step, create_patient_from_user,create_visit,update_patient_type,answer_current_question } from '../../actions/patient_action'
+import { set_current_question_bank_by_name, update_patient_question_banks, update_patient_questions, move_next_step, create_patient_from_user,create_visit,update_service_line,answer_current_question } from '../../actions/patient_action'
 import { register_user, sign_in} from '../../actions/user_auth_action'
 import { update_app_state } from '../../actions/'
 import * as utils from '../../utils/common.js'
@@ -59,7 +59,7 @@ class Treatment extends Component{
   }
 
 	set_bank_selector_handler=(e, option)=>{
-		const { answer_current_question, set_current_question_bank_by_name, move_next_step, update_patient_question_banks, update_patient_type} = this.props
+		const { answer_current_question, set_current_question_bank_by_name, move_next_step, update_patient_question_banks, update_service_line} = this.props
 
     answer_current_question(option.option_name) 
 		if (option.question_bank_names.length > 0) {
@@ -75,7 +75,7 @@ class Treatment extends Component{
 			}
 		}
     
-    update_patient_type(option.name)	
+    update_service_line(option.name)	
 		move_next_step(this.props.question_step)
 	}
 
@@ -144,4 +144,4 @@ const mapStateToProps = (state) => {
 }
 
 export default withRouter(connect(mapStateToProps,{update_app_state, update_patient_questions, update_patient_question_banks, set_current_question_bank_by_name,
-	register_user, sign_in, move_next_step, create_patient_from_user, create_visit, update_patient_type, answer_current_question}) (Treatment))
+	register_user, sign_in, move_next_step, create_patient_from_user, create_visit, update_service_line, answer_current_question}) (Treatment))
