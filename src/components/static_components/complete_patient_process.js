@@ -6,9 +6,9 @@ import * as components from '../../components/question_components/components'
 
 class CompleteProcess extends Component{
 
-    constructor(props){
-      super(props)
-    }
+  constructor(props){
+    super(props)
+  }
   
   btn_handler = () => {
       this.props.history.push('/patient/dashboard') 

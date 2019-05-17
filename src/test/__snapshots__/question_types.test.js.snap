@@ -1,0 +1,5 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Yes No Component testing componet check 1`] = `ShallowWrapper {}`;
+
+exports[`Yes No Component testing matches snapshot 1`] = `ShallowWrapper {}`;

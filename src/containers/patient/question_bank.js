@@ -32,7 +32,8 @@ class QuestionBank extends Component{
       update_patient_state(question_banks[step])
       this.props.set_current_question_bank_by_name(question_banks[step]) 
       this.props.history.push("/patient/"+question_banks[step]) 
-    } 
+    }
+    //else need to redirect to somewhere..
   }
 
   componentDidUpdate(){
