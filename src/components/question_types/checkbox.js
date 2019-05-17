@@ -47,11 +47,11 @@ class CheckBoxComponent extends Component {
       <div className="input-group mb-3" key={uuidv1()}>
         <div className="input-group-prepend">
           <div className="input-group-text group-checkbox">
-            <input type="checkbox" onChange={(e) => {this.check_box_handler(e,index)}} name={item.option_name} checked={this.state.items[index]}/>
+            <input type="checkbox" onChange={(e) => {this.check_box_handler(e,index)}} name={item.title} checked={this.state.items[index]}/>
           </div>
         </div>
         <div className="d-flex justify-content-center form-control group-checkbox-text">
-          <p className="text-small">{item.option_name}</p>
+          <p className="text-small">{item.title}</p>
         </div>
       </div>
       )

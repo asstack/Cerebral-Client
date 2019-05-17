@@ -127,7 +127,8 @@ const patient_reducer = handleActions({
     return{
       ...state,
       question_banks : action.question_banks,
-      question_banks_step : action.question_banks_step 
+      question_banks_step : action.question_banks_step,
+      step:0
     }
   },
   [patient_action_types.SET_QUESTION_BANKS_STEP]: (state, action) => {
@@ -164,9 +165,18 @@ const patient_reducer = handleActions({
   },
 }, init_patient_state)
 
-const rootReducer = combineReducers({
+const appReducer = combineReducers({
   patient_reducer,
   global_reducer
 })
+
+
+const rootReducer = (state, action) => {
+  if(action.TYPE=='RESET'){
+    state = {global_reducer: init_global_state,
+             patient_reducer: init_patient_state}
+  }
+  return appReducer(state, action)
+} 
 
 export default rootReducer

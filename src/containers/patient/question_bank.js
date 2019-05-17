@@ -7,7 +7,9 @@ import { update_app_state } from '../../actions/'
 import * as utils from '../../utils/common.js'
 import ReactGA from 'react-ga'
 
-class PatientProfile extends Component{
+
+//TODO: implement wrapper for banks, ex) question, function to move to next bank or set new bank
+class QuestionBank extends Component{
   
   constructor(props){
     super(props)
@@ -17,9 +19,8 @@ class PatientProfile extends Component{
     }
   }
 
-
   componentDidMount(){
-
+    //TODO: this part should be moved to wrapper and thie component will check only one bank
     const {bank_name, question_banks_step, question_banks, patient_state, update_patient_state} = this.props
     const step = this.props.question_banks_step;
 
@@ -151,4 +152,4 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default withRouter(connect(mapStateToProps, {update_patient_question_banks,upload_photo_id, update_app_state, register_user, sign_in, move_next_step, create_patient_from_user, create_visit, update_service_line,answer_current_question, update_patient_state,set_current_question_bank_by_name}) (PatientProfile))
+export default withRouter(connect(mapStateToProps, {update_patient_question_banks,upload_photo_id, update_app_state, register_user, sign_in, move_next_step, create_patient_from_user, create_visit, update_service_line,answer_current_question, update_patient_state,set_current_question_bank_by_name}) (QuestionBank))

@@ -3,7 +3,7 @@ import {Route, withRouter } from "react-router-dom"
 import {connect} from 'react-redux'
 import default_icon from '../../img/user.png'
 import {update_app_state} from '../../actions'
-import {update_service_line} from '../../actions/patient_action'
+import {sign_out, update_service_line, update_patient_question_banks} from '../../actions/patient_action'
 
 class PatientDashboard extends Component{
 
@@ -11,19 +11,30 @@ class PatientDashboard extends Component{
     super(props)
   }
 
+  componentDidMount(){
+    if(!this.props.user.attributes.token){ 
+      this.props.history.push('/') 
+    }      
+  }
+
   app_state_checkout_handler = e => {
     const {update_app_state}=this.props
 
-    this.props.history.push('/checkout') 
+		this.props.update_patient_question_banks(['checkout'], 0)		
+    this.props.history.push('/patient/checkout') 
   }
 
   app_state_treatment_handler = e => {
     const {update_app_state}=this.props
 
-    // TODO: this is a hack just for testing purposes!
     this.props.update_service_line('dep_anx')
+		this.props.update_patient_question_banks(['treatment_info'], 0)		
+    this.props.history.push('/patient/profile') 
+  }
 
-    this.props.history.push('/treatment') 
+  sign_out_handler = e => {
+    this.props.sign_out() 
+    this.props.history.push('/') 
   }
 
   render(){ 
@@ -49,7 +60,7 @@ class PatientDashboard extends Component{
           <div className = "profile-main-container">
             <div className="p-2 d-flex justify-content-end profile-top-menu">
               <div className = "p-2 log-out-divider"></div>
-              <div className = "p-2 log-out-holder text-logout">Logout</div>
+              <div className = "p-2 log-out-holder text-logout" onClick={this.sign_out_handler.bind(this)}>Logout</div>
             </div>
             <div className="d-flex flex-column p-2 profile-main-content">
               <div className="d-flex justify-content-end text-main-title">main page title</div>
@@ -74,4 +85,4 @@ class PatientDashboard extends Component{
   } 
 }
 
-export default connect(null, {update_app_state, update_service_line}) (PatientDashboard)
+export default withRouter(connect(null, {sign_out, update_patient_question_banks, update_app_state, update_service_line}) (PatientDashboard))

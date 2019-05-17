@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {Router, Route, withRouter} from 'react-router-dom'
 import { connect } from 'react-redux'
-import PatientProfile from './profile'
+import QuestionBank from './question_bank'
 import PatientDashboard from './dash_board'
 import SignIn from './sign_in'
 import {update_patient_state, update_patient_questions, delete_patient_questions} from '../../actions/patient_action'
@@ -70,7 +70,6 @@ class Patient extends Component{
 	}
 
 
-
   //TODO: update dynamic bounding by state
   //TODO: add redux state for size of questions
   // uses https://reacttraining.com/react-router/web/api/Route
@@ -82,7 +81,9 @@ class Patient extends Component{
       )
     }else if(state==="dashboard"){ 
       return (
-        <Route path="/patient/dashboard" component={PatientDashboard}/>
+        <Route path="/patient/dashboard" render = {(props) => 
+            <PatientDashboard user={this.props.user} />
+        }/>
       )
     }else if(state==="sign_in"){ 
       return( 
@@ -100,7 +101,7 @@ class Patient extends Component{
 						</div>
 					</div>
 					<div className="d-flex flex-column question-container">
-              <Route path="/patient/profile" component={PatientProfile}/>
+              <Route path="/patient/profile" component={QuestionBank}/>
 						</div>
 				</div>
       )	 
@@ -117,7 +118,7 @@ class Patient extends Component{
            <div className="d-flex justify-content-left text-middle">QUESTION {this.props.question_step+1} OF {this.props.total_step}</div>
             <div className="questions-container">
               <div className="d-flex justify-content-left text_description"> {this.props.questions[this.props.question_step].description}</div> 
-              <Route path="/patient/profile" component={PatientProfile}/>
+              <Route path="/patient/profile" component={QuestionBank}/>
             </div>
           </div>
         </div>    
@@ -137,10 +138,11 @@ class Patient extends Component{
 
 const mapStateToProps = state => {
   const{
-    global_reducer: {app_state},
+    global_reducer: {app_state, current_user},
     patient_reducer: {service_line, patient_state, step, total_step, questions, question_banks, question_banks_step}
   } = state
   return {
+    user:current_user,
     service_line:service_line,
     app_state:app_state,
     patient_state:patient_state,

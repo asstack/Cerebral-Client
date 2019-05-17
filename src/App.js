@@ -2,13 +2,11 @@ import React, {Component} from 'react';
 import {Route, withRouter} from "react-router-dom"
 import {connect} from 'react-redux'
 import Patient from './containers/patient'
-import Qualification from './containers/patient/qualification'
+import Qualification from './containers/qualification'
 import MainPage from './containers'
 import Identification from './components/question_types/patient_identification'
 import {update_app_state} from './actions'
 import ReactGA from 'react-ga'
-import ShippingPayment from './containers/patient/shipping_payment'
-import Treatment from './containers/patient/treatment_information'
 // import ErrorBoundary from './error_boundary'
 
 class App extends Component{
@@ -60,10 +58,6 @@ class App extends Component{
     switch(state) {
       case 'patient':
         return Patient
-      case 'checkout':
-        return ShippingPayment
-      case 'treatment':
-        return Treatment
       case 'start':
         return Qualification
       default:

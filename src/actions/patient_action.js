@@ -1,6 +1,7 @@
 import axios from 'axios'
 
 export const SET_STEP = 'patient/SET_STEP'
+export const RESET_STATE = 'RESET'
 // these constants will not be used because answers will not be stored locally
 // export const SET_ANSWER = 'profile/SET_ANSWER'
 // export const SUBMIT_ANSWERS = 'profile/SUBMIT_ANSWERS'
@@ -19,6 +20,9 @@ export const REMOVE_PATIENT_QUESTION_BANKS = 'patient/REMOVE_PATIENT_QUESTION_BA
 export const SET_PATIENT = 'patient/SET_PATIENT'
 export const SET_VISIT = 'patient/SET_VISIT'
 
+const reset_state = () => ({
+  type:RESET_STATE
+})
 
 //TODO: implement middleware for handling api call
 const set_step = (step_num, is_complete) => ({
@@ -255,6 +259,6 @@ export const upload_photo_id = (patient_id, file, file_type) => (dispatch, getSt
     })
 }
 
-
-
-
+export const sign_out = () => (dispatch, getState) => {
+  return dispatch(reset_state())
+}
