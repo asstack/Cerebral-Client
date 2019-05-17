@@ -29,9 +29,6 @@ class Patient extends Component{
       update_patient_state(init_state)
     }
 
-    //this.map_state_to_view(init_state)
-       
-    console.log("patient check:", this.state.prev_state)
     /*
     ReactGA.initialize('UA-139974495-1');
 		ReactGA.pageview('/Patient');
@@ -124,7 +121,9 @@ class Patient extends Component{
         </div>    
       )   
     }else {
-      return <div>{this.props.history.push('/start')}</div>
+      return (  
+        <Route path="/patient/sign_in" component={SignIn}/>
+      ) 
     }  
   }
   
