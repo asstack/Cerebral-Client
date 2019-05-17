@@ -46,7 +46,6 @@ class Patient extends Component{
     if(!new_state){  
       this.props.history.push("/patient/sign_in") 
     }else if(new_state!==this.state.prev_state){
-      console.log("patient update :", new_state)
       this.setState({prev_state: new_state})
     }
 	}
@@ -101,7 +100,7 @@ class Patient extends Component{
 						</div>
 					</div>
 					<div className="d-flex flex-column question-container">
-              <Route path="/patient/profile" component={QuestionBank}/>
+              <Route path="/patient/:bank_name" component={QuestionBank}/>
 						</div>
 				</div>
       )	 
@@ -118,7 +117,7 @@ class Patient extends Component{
            <div className="d-flex justify-content-left text-middle">QUESTION {this.props.question_step+1} OF {this.props.total_step}</div>
             <div className="questions-container">
               <div className="d-flex justify-content-left text_description"> {this.props.questions[this.props.question_step].description}</div> 
-              <Route path="/patient/profile" component={QuestionBank}/>
+              <Route path="/patient/:bank_name" component={QuestionBank}/>
             </div>
           </div>
         </div>    

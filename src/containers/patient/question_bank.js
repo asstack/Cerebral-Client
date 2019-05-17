@@ -9,6 +9,7 @@ import ReactGA from 'react-ga'
 
 
 //TODO: implement wrapper for banks, ex) question, function to move to next bank or set new bank
+//TODO: Implement function for URL checking
 class QuestionBank extends Component{
   
   constructor(props){
@@ -30,6 +31,7 @@ class QuestionBank extends Component{
       this.setState({bank_step:step})
       update_patient_state(question_banks[step])
       this.props.set_current_question_bank_by_name(question_banks[step]) 
+      this.props.history.push("/patient/"+question_banks[step]) 
     } 
   }
 
@@ -39,6 +41,8 @@ class QuestionBank extends Component{
       this.setState({bank_step: question_banks_step})
       update_patient_state(question_banks[question_banks_step])
       this.props.set_current_question_bank_by_name(question_banks[question_banks_step]) 
+      this.props.history.push("/patient/"+question_banks[question_banks_step]) 
+
     }
   }
 

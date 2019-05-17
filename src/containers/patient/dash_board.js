@@ -29,7 +29,7 @@ class PatientDashboard extends Component{
 
     this.props.update_service_line('dep_anx')
 		this.props.update_patient_question_banks(['treatment_info'], 0)		
-    this.props.history.push('/patient/profile') 
+    this.props.history.push('/patient/treatment_info') 
   }
 
   sign_out_handler = e => {
@@ -40,7 +40,7 @@ class PatientDashboard extends Component{
   render(){ 
     return(
       <div className="d-flex flex-row">
-        <div class="d-flex flex-column profile-side-bar-holder">
+        <div className="d-flex flex-column profile-side-bar-holder">
           <div className="d-flex justify-content-center p-2 profile-logo">
             Cerebral 
           </div>    
