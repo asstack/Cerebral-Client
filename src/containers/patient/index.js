@@ -120,7 +120,9 @@ class Patient extends Component{
         </div>    
       )   
     }else {
-      return <div>loading</div>
+      return (  
+        <Route path="/patient/sign_in" component={SignIn}/>
+      ) 
     }  
   }
   
