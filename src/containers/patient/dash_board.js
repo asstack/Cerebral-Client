@@ -12,7 +12,7 @@ class PatientDashboard extends Component{
   }
 
   componentDidMount(){
-    if(!this.props.user.attributes.token){ 
+    if(!this.props.user.attributes['access-token']){ 
       this.props.history.push('/') 
     }      
   }

@@ -71,7 +71,8 @@ class Patient extends Component{
   // uses https://reacttraining.com/react-router/web/api/Route
   render_views(state){
     
-    if(state==="completed"){  
+
+   if(state==="completed"){  
       return(
         <Route path="/patient/completed" component={CompleteProcess}/>
       )

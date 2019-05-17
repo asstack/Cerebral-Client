@@ -1,12 +1,11 @@
 import React, {Component} from 'react'
-import { withRouter } from 'react-router-dom'
-import { connect } from 'react-redux'
+import {Router, Route, withRouter} from 'react-router-dom'
+import {connect} from 'react-redux'
 import { set_current_question_bank_by_name, update_patient_question_banks, upload_photo_id, update_patient_state, move_next_step, create_patient_from_user,create_visit,update_service_line,answer_current_question } from '../../actions/patient_action'
 import { register_user, sign_in} from '../../actions/user_auth_action'
 import { update_app_state } from '../../actions/'
 import * as utils from '../../utils/common.js'
 import ReactGA from 'react-ga'
-
 
 //TODO: implement wrapper for banks, ex) question, function to move to next bank or set new bank
 //TODO: Implement function for URL checking
