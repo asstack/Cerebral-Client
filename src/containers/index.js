@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
+import { withRouter } from 'react-router-dom'
 import {update_app_state} from '../actions'
 import {update_patient_state, set_profile_question} from '../actions/patient_action'
 import ReactGA from 'react-ga'
@@ -45,4 +46,4 @@ class MainPage extends Component{
 
 
 
-export default connect(null, {update_app_state, update_patient_state}) (MainPage)
+export default withRouter(connect(null, {update_app_state, update_patient_state}) (MainPage))
