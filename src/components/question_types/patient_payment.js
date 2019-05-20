@@ -1,5 +1,7 @@
 import React, {Component} from 'react';
+import { connect } from 'react-redux'
 import * as components from '../question_components/components'
+import { create_payment } from '../../actions/patient_action'
 
 class PatientPayment extends Component {
 
@@ -15,7 +17,12 @@ class PatientPayment extends Component {
   }
 
   update_handler = (e) => { 
-      this.props.submit_action(this.state) 
+
+    create_payment(this.state.payment_full_name, this.state.payment_card_number, this.state.payment_exp_month, this.state.payment_exp_year, this.state.payment_cc).then((resp) => {
+      
+      // DO NOT SEND PAYMENT INFORMATION to submit_action here IT WILL END UP IN THE DATABASE
+      this.props.submit_action(resp.transaction_code) 
+    })
    }
 
    update_property = (which, e) => {
@@ -35,4 +42,4 @@ class PatientPayment extends Component {
   }
 }
 
-export default PatientPayment
+export default connect(null, {create_payment}) (PatientPayment)

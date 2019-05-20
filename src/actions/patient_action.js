@@ -19,6 +19,8 @@ export const REMOVE_PATIENT_QUESTION_BANKS = 'patient/REMOVE_PATIENT_QUESTION_BA
 
 export const SET_PATIENT = 'patient/SET_PATIENT'
 export const SET_VISIT = 'patient/SET_VISIT'
+export const SET_TREATMENT = 'patient/SET_TREATMENT'
+export const SET_DOSAGE = 'patient/SET_DOSAGE'
 
 const reset_state = () => ({
   type:RESET_STATE
@@ -67,6 +69,16 @@ export const set_patient = (patient_object) => ({
 export const set_visit = (visit_object) => ({
   type:SET_VISIT,
   visit_object:visit_object
+})
+
+export const set_treatment = (treatment_object) => ({
+  type:SET_TREATMENT,
+  treatment_object:treatment_object
+})
+
+export const set_dosage = (dosage_object) => ({
+  type:SET_DOSAGE,
+  dosage_object:dosage_object
 })
 
 const remove_patient_questions = () => ({
@@ -197,6 +209,20 @@ export const get_treatment_by_name = (treatment_name) => (dispatch, getState) =>
   return dispatch(get_with_auth_and_return_just_data(`/api/treatments/search?name=${treatment_name}`))
 }
 
+export const create_payment = (full_name, card_number, exp_month, exp_year, cc) => (dispatch, getState) => {
+
+  return dispatch(get_current_patient_and_visit()).then((pv_resp) => {
+
+      return dispatch(get_current_treatment_and_dosage()).then((td_resp) => {
+        var body = {
+          full_name: full_name, card_number: card_number, exp_month: exp_month, exp_year: exp_year, cc: cc, treatment_id: td_resp.treatment.id, dosage_id: td_resp.dosage.id
+        }
+    
+        return axios.post(`/api/patients/${pv_resp.patient.id}/visits/${pv_resp.visit.id}`, body, {headers: make_headers(get_user_attr(getState()))})
+      })
+    })
+}
+
 export const create_visit = (line_id) => (dispatch, getState) => {
   
   var user_attr = get_user_attr(getState())
@@ -209,7 +235,7 @@ export const create_visit = (line_id) => (dispatch, getState) => {
       // TODO: update global store with visit information
       return dispatch(set_visit(resp.data))
     })
-  }
+}
 
 export const get_patient_most_recent_visits = (patient) => (dispatch, getState) => {
   
@@ -228,6 +254,11 @@ export const get_current_patient_and_visit = () => (dispatch, getState) => {
   return dispatch(get_patient_most_recent_visits(patient)).then((visits) => {
     return Promise.resolve({patient: patient, visit : visits[0]} )
   })
+}
+
+export const get_current_treatment_and_dosage = () => (dispatch, getState) => {
+  // TODO: get treatment and dosage from current answers if needed
+  return Promise.resolve({treatment: getState().patient_reducer.treatment_object, dosage : getState().patient_reducer.dosage_object} )
 }
 
 // makes an authenticated GET call to the server and unwraps the response nicely
