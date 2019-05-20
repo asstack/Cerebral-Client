@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import { connect } from 'react-redux'
 import {QuestionPreference, prop_methods} from './question_preference'
-import { get_treatment_dosages, get_current_answer_by_name, get_treatment_by_name } from '../../actions/patient_action'
+import { get_treatment_dosages, get_current_answer_by_name, get_treatment_by_name, set_dosage } from '../../actions/patient_action'
 
 class DosagePreference extends QuestionPreference {
   constructor(props) {
@@ -35,6 +35,13 @@ class DosagePreference extends QuestionPreference {
     })
   }
 
+  submit_btn_handler = e => {
+    var selected_dosage = this.state.options[this.state.selected_index]
+    //call action from parents with this.state.selected 
+    set_dosage(selected_dosage)
+    this.props.submit_action(selected_dosage.name)
+  }
+
   draw_checkbox_description = (item, is_recommended) => {
     return (
       <div style={{width: '100%', height: '100%'}}>
@@ -57,4 +64,4 @@ class DosagePreference extends QuestionPreference {
   }
 }
 
-export default connect(null, {...prop_methods, get_treatment_dosages, get_current_answer_by_name, get_treatment_by_name}) (DosagePreference)
+export default connect(null, {...prop_methods, get_treatment_dosages, get_current_answer_by_name, get_treatment_by_name, set_dosage}) (DosagePreference)

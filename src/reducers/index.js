@@ -52,6 +52,8 @@ const init_patient_state = {
   // contains a copy of patient/visit information from the database
   patient_object: null,
   visit_object: null,
+  treatment_object: null,
+  dosage_object: null,
 	is_valid_state: false
 }
 
@@ -104,6 +106,18 @@ const patient_reducer = handleActions({
     return{
       ...state,
       visit_object: action.visit_object
+    } 
+  },
+  [patient_action_types.SET_TREATMENT]: (state, action) => {
+    return{
+      ...state,
+      treatment_object: action.treatment_object
+    } 
+  },
+  [patient_action_types.SET_DOSAGE]: (state, action) => {
+    return{
+      ...state,
+      dosage_object: action.dosage_object
     } 
   },
   [patient_action_types.SET_STATE_WITH_STEP]:(state, action) => {

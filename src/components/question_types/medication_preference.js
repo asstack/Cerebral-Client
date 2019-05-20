@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import {QuestionPreference, prop_methods} from './question_preference'
 import { connect } from 'react-redux'
-import { get_treatments } from '../../actions/patient_action'
+import { get_treatments, set_treatment } from '../../actions/patient_action'
 
 
 class MedicationPreference extends QuestionPreference {
@@ -20,6 +20,12 @@ class MedicationPreference extends QuestionPreference {
         options: resp
       });
     })
+  }
+
+  submit_btn_handler = e => {
+    var selected_treatment = this.state.options[this.state.selected_index]
+    set_treatment(selected_treatment)
+    this.props.submit_action(selected_treatment.name)
   }
 
   get_image_for_item = (item, is_recommended) => {
@@ -51,4 +57,4 @@ const mapStateToProps = (state) => {
 	}
 }
 
-export default connect(mapStateToProps, {...prop_methods, get_treatments}) (MedicationPreference)
+export default connect(mapStateToProps, {...prop_methods, get_treatments, set_treatment}) (MedicationPreference)

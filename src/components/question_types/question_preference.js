@@ -17,11 +17,6 @@ export class QuestionPreference extends Component {
     this.setState({...this.state, selected_index:selected_index})
   }
 
-  submit_btn_handler = e => {
-    //call action from parents with this.state.selected 
-    this.props.submit_action(this.state.options[this.state.selected_index].name)
-  }
-
   capitalize = (str) => {
     return str.charAt(0).toUpperCase() + str.slice(1);
     }
