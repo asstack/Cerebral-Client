@@ -1,3 +1,4 @@
+import React, {Component} from 'react'
 import {QuestionPreference, prop_methods} from './question_preference'
 import { connect } from 'react-redux'
 import { get_treatments } from '../../actions/patient_action'
@@ -16,9 +17,30 @@ class MedicationPreference extends QuestionPreference {
       console.log("get_treatments resp: ", resp)
       this.setState({
         ...this.state,
-        options: resp.data
+        options: resp
       });
     })
+  }
+
+  get_image_for_item = (item, is_recommended) => {
+    let color = is_recommended ? 'purple' : 'blue'
+    return `/img/${item.service_line.name}/${color}/${item.name}.png`
+  }
+
+  draw_checkbox_description = (item, is_recommended) => {
+    return (
+      <div style={{width: '100%', height: '100%'}}>
+      <div className='text-recommendation' 
+        style={{visibility: is_recommended ? 'visible' : 'hidden', position: 'relative', left: '10%', top: '8%', width: '200px'}}>Our Recommendation</div>
+      <div className='text-middle' style={{position: 'relative', left: '10%', top: '15%', fontWeight: 'bold'}}>{this.capitalize(item.name)}</div>
+      
+      <div className='text-middle' style={{position: 'relative', left: '10%', top: '25%'}}>Used To Treat</div>
+      <div className='text-small' style={{position: 'relative', left: '10%', top: '27%'}}>{item.service_line.title}</div>
+
+      <div className='text-middle'style={{position: 'relative', left: '10%', top: '35%'}}>Side Effects</div>
+      <div className='text-small'style={{position: 'relative', left: '10%', top: '37%'}}>{item.side_effects.map(e => e.title).join(", ")}</div>
+      </div>
+  )
   }
 }
 

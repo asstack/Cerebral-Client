@@ -47,7 +47,7 @@ export const map_type_to_component = (questions, step, handlers) => {
 							         submit_action = {handlers.submit_answer_and_next_step}/>}/>
 			case 'checkboxes':
 				return <Route path='' render={(props) => 
-                <CheckBoxComponent items = {questions[step]} 
+                <CheckBoxComponent options = {questions[step].options} 
                                    submit_action = {handlers.submit_answer_and_next_step}/>}/>
 			case 'date':
         return <Route path='' render={(props) =>

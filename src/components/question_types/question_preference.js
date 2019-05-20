@@ -7,37 +7,32 @@ export class QuestionPreference extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      options: []
+      options: [],
+      selected_index: null
     }
   }
 
   //TODO: Save multiple values from selected boxes
-  check_box_handler = (e,item) => {
-    //update local state in here
-    //this.setState({selected_item:item})
+  check_box_handler = (e, selected_index) => {
+    this.setState({...this.state, selected_index:selected_index})
   }
 
-  submit_btn_handler = () => {
+  submit_btn_handler = e => {
     //call action from parents with this.state.selected 
-    this.props.submit_action()
-  }
-
-  get_image_for_item = (item, is_recommended) => {
-    let color = is_recommended ? 'purple' : 'blue'
-    return `/img/${item.service_line.name}/${color}/${item.name}.png`
+    this.props.submit_action(this.state.options[this.state.selected_index].name)
   }
 
   capitalize = (str) => {
     return str.charAt(0).toUpperCase() + str.slice(1);
     }
     
-  draw_image_checkbox = (item, backStyle, draw_text_f) => {
+  draw_image_checkbox = (item, index, backStyle, draw_text_f) => {
     
     return(
       <div className="input-group mb-1" key={uuidv1()}>
         <div className="input-group-prepend" >
           <div className="input-group-text group-checkbox">
-            <input type="checkbox" name={item.name}/>
+          <input type="checkbox" onChange={(e) => {this.check_box_handler(e, index)}} index={index} name={item.title} checked={index == this.state.selected_index} />
           </div>
         </div>
         <div className="form-control group-checkbox-text" style={backStyle}>
@@ -49,8 +44,7 @@ export class QuestionPreference extends Component {
       )
   }
   
-  //{(e) => this.check_box_handler(e,item.option_name)}
-  map_data_to_checkbox = item => {
+  map_data_to_checkbox = (item, index) => {
     let is_recommended = item.id == 1
     var checkStyle = 
     {
@@ -60,28 +54,18 @@ export class QuestionPreference extends Component {
       backgroundRepeat: 'no-repeat',
       backgroundPosition: 'center left',
     }
-    return this.draw_image_checkbox(item, checkStyle, (item) => {
-      return(
-          <div style={{width: '100%', height: '100%'}}>
-          <div className='text-recommendation' 
-            style={{visibility: is_recommended ? 'visible' : 'hidden', position: 'relative', left: '10%', top: '8%', width: '200px'}}>Our Recommendation</div>
-          <div className='text-middle' style={{position: 'relative', left: '10%', top: '15%', fontWeight: 'bold'}}>{this.capitalize(item.name)}</div>
-          
-          <div className='text-middle' style={{position: 'relative', left: '10%', top: '25%'}}>Used To Treat</div>
-          <div className='text-small' style={{position: 'relative', left: '10%', top: '27%'}}>{item.service_line.title}</div>
 
-          <div className='text-middle'style={{position: 'relative', left: '10%', top: '35%'}}>Side Effects</div>
-          <div className='text-small'style={{position: 'relative', left: '10%', top: '37%'}}>{item.side_effects.map(e => e.title).join(", ")}</div>
-          </div>
-      )
-    })
+      return this.draw_image_checkbox(item, index, checkStyle, (item) => {
+        return this.draw_checkbox_description(item, is_recommended)
+      })
+    
     }
 
-    default_option = () => {
+    default_option = (index) => {
       let item = {
         name: 'default'
       }
-      return this.draw_image_checkbox(item, {
+      return this.draw_image_checkbox(item, index, {
         backgroundImage: `url('/img/Doctor.png')`,
         height: '340px',
         backgroundSize: '200px',
@@ -103,10 +87,10 @@ export class QuestionPreference extends Component {
     return (
       <div>    
         {
-          this.state.options.map((item, index) => (this.map_data_to_checkbox(item)))
+          this.state.options.map((item, index) => (this.map_data_to_checkbox(item, index)))
         }
         {
-          this.default_option()
+          this.default_option(this.state.options.length)
         }
         <div className="d-flex flex-row justify-content-center">
         {components.confirm_button_type_1(this.submit_btn_handler, "Confirm")}  

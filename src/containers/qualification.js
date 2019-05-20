@@ -37,35 +37,34 @@ class Qualification extends Component{
 
 	set_selector_handler=(option)=>{
 		const {move_next_step, answer_current_question} = this.props
-		answer_current_question(option.option_name)
-		move_next_step(this.props.question_step)
+		answer_current_question(option.name).then(() => {move_next_step(this.props.question_step)})
 	}
 
   submit_answer_and_next_step = (e, ans) => {
 		const {move_next_step, answer_current_question} = this.props
-    answer_current_question(ans) 
-		move_next_step(this.props.question_step)
+    answer_current_question(ans).then(() => {move_next_step(this.props.question_step)})
   }
 
 	set_bank_selector_handler=(e, option)=>{
     const { bank_step, answer_current_question, set_current_question_bank_by_name, move_next_step, 
       update_app_state, update_patient_question_banks, update_service_line, question_banks_step} = this.props
 
-    answer_current_question(option.option_name) 
-		if (option.question_bank_names.length > 0) {
-			if (option.immediate) {
-        this.props.history.push("/patient/profile") 
-        update_patient_question_banks(option.question_bank_names, bank_step)
+		answer_current_question(option.name).then(() => {
+			if (option.question_bank_names.length > 0) {
+				if (option.immediate) {
+					this.props.history.push("/patient/profile") 
+					update_patient_question_banks(option.question_bank_names, bank_step)
+				}
+				else {
+					update_patient_question_banks(this.props.question_banks.concat( option.question_bank_names), question_banks_step)
+					update_service_line(option.name)	
+					move_next_step(this.props.question_step)
+				}
 			}
-			else {
-				update_patient_question_banks(this.props.question_banks.concat( option.question_bank_names), question_banks_step)
-        update_service_line(option.option_name)	
-		    move_next_step(this.props.question_step)
-			}
-		}
-    
-    update_service_line(option.name)	
-		move_next_step(this.props.question_step)
+			
+			update_service_line(option.name)	
+			move_next_step(this.props.question_step)
+		})
 	}
 
 	display_title = (questions, step) =>{
