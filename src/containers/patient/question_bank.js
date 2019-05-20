@@ -54,32 +54,33 @@ class QuestionBank extends Component{
 
   set_selector_handler=(e, option)=>{
     const {move_next_step, answer_current_question} = this.props
-    answer_current_question(option.option_name)
-    move_next_step(this.props.question_step)
+    answer_current_question(option.name).then(() => {
+      return move_next_step(this.props.question_step)
+    })
   }
 
   submit_answer_and_next_step = (ans) => {
-		const {move_next_step, answer_current_question} = this.props
-    answer_current_question(ans) 
-		move_next_step(this.props.question_step)
+    this.props.answer_current_question(ans).then(() => {
+      return this.props.move_next_step(this.props.question_step)
+    })
   }
 
   set_bank_selector_handler=(e, option)=>{
 
 		const {question_banks_step, answer_current_question, set_current_question_bank_by_name, move_next_step, update_patient_question_banks, update_service_line} = this.props
 
-    answer_current_question(option.option_name) 
-
-	  if (option.question_bank_names.length > 0) {
-			if (option.immediate) {
-				update_patient_question_banks(option.question_bank_names, 0)
-			}
-			else {
-				update_patient_question_banks(this.props.question_banks.concat( option.question_bank_names), question_banks_step)
-        update_service_line(option.name)	
-		    move_next_step(this.props.question_step)
-			}
-		}
+    answer_current_question(option.name).then(() => {
+      if (option.question_bank_names.length > 0) {
+        if (option.immediate) {
+          update_patient_question_banks(option.question_bank_names, 0)
+        }
+        else {
+          update_patient_question_banks(this.props.question_banks.concat( option.question_bank_names), question_banks_step)
+          update_service_line(option.name)	
+          move_next_step(this.props.question_step)
+        }
+      }
+    })
   }
 
   did_create_patient = (state) => {
@@ -96,12 +97,12 @@ class QuestionBank extends Component{
   }
 
   submit_and_upload_id = (data, type) => { 
-    const { upload_photo_id, move_next_step, answer_current_question,
+    const { upload_photo_id, move_next_step,
             current_user} = this.props
-    upload_photo_id(current_user.attributes.id, data, type)
-    move_next_step(this.props.question_step)
+    upload_photo_id(current_user.attributes.id, data, type).then(() => {
+      move_next_step(this.props.question_step)
+    })
   }
-
 
 	display_title = (questions, step) =>{
 		if(questions && questions[step]){

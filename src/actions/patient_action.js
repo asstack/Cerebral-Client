@@ -193,6 +193,10 @@ export const get_treatment_dosages = (treatment_id) => (dispatch, getState) => {
   return dispatch(get_with_auth_and_return_just_data(`/api/treatments/${treatment_id}/dosages`))
 }
 
+export const get_treatment_by_name = (treatment_name) => (dispatch, getState) => {
+  return dispatch(get_with_auth_and_return_just_data(`/api/treatments/search?name=${treatment_name}`))
+}
+
 export const create_visit = (line_id) => (dispatch, getState) => {
   
   var user_attr = get_user_attr(getState())
@@ -237,7 +241,7 @@ export const get_with_auth_and_return_just_data = (url) => (dispatch, getState) 
 // given a question name, get the answer for that question in the *current* visit
 export const get_current_answer_by_name = (name) => (dispatch, getState) => {
   return dispatch(get_current_patient_and_visit()).then((resp) => {
-    return dispatch(get_with_auth_and_return_just_data(`/api/patients/${resp.patient.id}/visits/${resp.visit.id}/answers?question.name=${name}`))
+    return dispatch(get_with_auth_and_return_just_data(`/api/patients/${resp.patient.id}/visits/${resp.visit.id}/answers/search?question[name]=${name}`))
   })
 }
 
@@ -245,26 +249,24 @@ export const answer_current_question = (answer) => (dispatch, getState) => {
   
   var user_attr = get_user_attr(getState())
 
-  var {patient, visit} = get_current_patient_and_visit()
-
-  if (patient == null || visit == null) {
-    return Promise.resolve(); 
-  }
-
-  var patient_state = getState().patient_reducer
-
-  var body = {
-    question_bank_id: patient_state.question_bank_id,
-    question_id: patient_state.questions[patient_state.step].id,
-      answer: answer
+  // get_current_patient_and_visit which will create new records if they are needed
+  return dispatch(get_current_patient_and_visit()).then((resp) => {
+    
+    if (resp.patient == null || resp.visit == null) {
+      return Promise.error(`${answer} not recorded`);
     }
+  
+    var patient_state = getState().patient_reducer
+  
+    var body = {
+      question_bank_id: patient_state.question_bank_id,
+      question_id: patient_state.questions[patient_state.step].id,
+        answer: answer
+      }
+  
+    return axios.post(`/api/patients/${resp.patient.id}/visits/${resp.visit.id}/answers`, body, {headers: make_headers(user_attr)})
+  })
 
-  return axios.post(`/api/patients/${patient.id}/visits/${visit.id}/answers`, body, {headers: make_headers(user_attr)})
-    .then(function(resp){
-
-      // TODO: not sure what, if any, state to update here since we don't want to store answers locally
-      return Promise.resolve()
-    })
 }
 
 export const update_patient_state = state => (dispatch, getState) => {
