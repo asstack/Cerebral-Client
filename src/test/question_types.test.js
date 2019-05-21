@@ -50,13 +50,12 @@ describe('Patient Refer testing', () => {
     component.find('#submit_refer').simulate('click') 
     
     expect(result_data).toEqual([{name:"taejun song", email:"taejun@getCerebral.com"},
-      {name:"taejun song", email:"taejun@getCerebral.com"},
-      {name:"taejun song", email:"taejun@getCerebral.com"}])}) 
+      {name:null, email:null},
+      {name:null, email:null}])}) 
 
   it('add patient', ()=> {
     component.find('#add_patient').simulate('click') 
     expect(component.state().total_items).toBe(4)
-    expect(component.state().items.length).toBe(4)
   })
 
 
