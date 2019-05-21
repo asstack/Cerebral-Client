@@ -101,10 +101,10 @@ const set_service_line = ptype => ({
 
 export const update_service_line = name => (dispatch, getState) => {
   return axios.get(`/api/service_lines/search?name=${name}`, {headers: make_headers(get_user_attr(getState()))})
-  .then(function(resp){
-    // TODO: update global store with patient information
-    return dispatch(set_service_line(resp.data))
-  })
+    .then(function(resp){
+      // TODO: update global store with patient information
+      return dispatch(set_service_line(resp.data))
+    })
 }  
 
 export const set_profile_question = () => (dispatch, getState) => {
@@ -209,16 +209,17 @@ export const get_treatment_by_name = (treatment_name) => (dispatch, getState) =>
   return dispatch(get_with_auth_and_return_just_data(`/api/treatments/search?name=${treatment_name}`))
 }
 
-export const create_payment = (full_name, card_number, exp_month, exp_year, cc) => (dispatch, getState) => {
+export const create_payment = (full_name, token) => (dispatch, getState) => {
+// export const create_payment = (full_name, card_number, exp_month, exp_year, cvc) => (dispatch, getState) => {
 
   return dispatch(get_current_patient_and_visit()).then((pv_resp) => {
 
       return dispatch(get_current_treatment_and_dosage()).then((td_resp) => {
         var body = {
-          full_name: full_name, card_number: card_number, exp_month: exp_month, exp_year: exp_year, cc: cc, treatment_id: td_resp.treatment.id, dosage_id: td_resp.dosage.id
+          full_name: full_name, token: token, treatment_id: td_resp.treatment.id, dosage_id: td_resp.dosage.id
         }
     
-        return axios.post(`/api/patients/${pv_resp.patient.id}/visits/${pv_resp.visit.id}`, body, {headers: make_headers(get_user_attr(getState()))})
+        return axios.post(`/api/patients/${pv_resp.patient.id}/visits/${pv_resp.visit.id}/payments`, body, {headers: make_headers(get_user_attr(getState()))})
       })
     })
 }
@@ -251,6 +252,11 @@ export const get_patient_most_recent_visits = (patient) => (dispatch, getState) 
 export const get_current_patient_and_visit = () => (dispatch, getState) => {
   // TODO! Get all this stuff from global state
   var patient = getState().patient_reducer.patient_object
+
+  if (patient == null) {
+    return Promise.resolve({patient: null, visit : null} )
+  }
+
   return dispatch(get_patient_most_recent_visits(patient)).then((visits) => {
     return Promise.resolve({patient: patient, visit : visits[0]} )
   })
@@ -284,7 +290,8 @@ export const answer_current_question = (answer) => (dispatch, getState) => {
   return dispatch(get_current_patient_and_visit()).then((resp) => {
     
     if (resp.patient == null || resp.visit == null) {
-      return Promise.error(`${answer} not recorded`);
+      // this answer does not need to be recorded...
+      return Promise.resolve();
     }
   
     var patient_state = getState().patient_reducer

@@ -76,7 +76,7 @@ class QuestionBank extends Component{
         }
         else {
           update_patient_question_banks(this.props.question_banks.concat( option.question_bank_names), question_banks_step)
-          update_service_line(option.name)	
+          if (option.name) update_service_line(option.name)	
           move_next_step(this.props.question_step)
         }
       }
@@ -98,8 +98,8 @@ class QuestionBank extends Component{
 
   submit_and_upload_id = (data, type) => { 
     const { upload_photo_id, move_next_step,
-            current_user} = this.props
-    upload_photo_id(current_user.attributes.id, data, type).then(() => {
+            current_user, patient_object} = this.props
+    upload_photo_id(patient_object.id, data, type).then(() => {
       move_next_step(this.props.question_step)
     })
   }
@@ -139,7 +139,7 @@ const mapStateToProps = (state) => {
 
   const {
     global_reducer: {app_state, current_user},
-    patient_reducer: {service_line, question_banks,question_banks_step, patient_state, step, question_bank_id, questions, current_bank_name, is_complete}
+    patient_reducer: {patient_object, service_line, question_banks,question_banks_step, patient_state, step, question_bank_id, questions, current_bank_name, is_complete}
   } = state
 
   return {
@@ -149,6 +149,7 @@ const mapStateToProps = (state) => {
     current_user: current_user,
     service_line: service_line,
     patient_state: patient_state,
+    patient_object: patient_object,
     question_step: step,
     question_bank_id: question_bank_id,
     bank_name:current_bank_name,
