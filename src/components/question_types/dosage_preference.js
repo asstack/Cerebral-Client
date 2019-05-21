@@ -24,7 +24,9 @@ class DosagePreference extends QuestionPreference {
         var dosages_with_title = med_pref_resp.dosages.map((dosage) => {
           return{
             ...dosage,
-          title: `${med_pref_resp.name} ${dosage.dosage}mg`}
+          title: `${this.capitalize(med_pref_resp.name)} ${dosage.dosage} milligrams`,
+          image: `/img/${med_pref_resp.service_line.name}/blue/${med_pref_resp.name}.png`,
+          recommended_image: `/img/${med_pref_resp.service_line.name}/purple/${med_pref_resp.name}.png` }
         })
 
         this.setState({
@@ -49,18 +51,18 @@ class DosagePreference extends QuestionPreference {
         style={{visibility: is_recommended ? 'visible' : 'hidden', position: 'relative', left: '10%', top: '8%', width: '200px'}}>Our Recommendation</div>
       <div className='text-middle' style={{position: 'relative', left: '10%', top: '15%', fontWeight: 'bold'}}>{item.title}</div>
       
-      <div className='text-middle' style={{position: 'relative', left: '10%', top: '25%'}}>Blah</div>
-      <div className='text-small' style={{position: 'relative', left: '10%', top: '27%'}}>Blah blah blah</div>
+      <div className='text-middle' style={{position: 'relative', left: '10%', top: '25%'}}>Dosage</div>
+      <div className='text-small' style={{position: 'relative', left: '10%', top: '27%'}}>{item.dosage} milligrams</div>
 
-      <div className='text-middle'style={{position: 'relative', left: '10%', top: '35%'}}>Shah</div>
-      <div className='text-small'style={{position: 'relative', left: '10%', top: '37%'}}>Shah</div>
+      <div className='text-middle'style={{position: 'relative', left: '10%', top: '35%'}}>Price</div>
+      <div className='text-small'style={{position: 'relative', left: '10%', top: '37%'}}>${item.price} per 30 days</div>
       </div>
   )
   }
 
   get_image_for_item = (item, is_recommended) => {
     let color = is_recommended ? 'purple' : 'blue'
-    return `/img/dep_anx/${color}/${item.name}.png`
+    return is_recommended ? item.recommended_image : item.image
   }
 }
 
