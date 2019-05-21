@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {injectStripe} from 'react-stripe-elements'
-import {CardElement } from 'react-stripe-elements'
+import {CardElement,CardNumberElement} from 'react-stripe-elements'
 import * as components from '../question_components/components'
 
 class PaymentElements extends Component {
@@ -26,10 +26,33 @@ class PaymentElements extends Component {
 
   
   render(){
+    const createOptions = (fontSize) => {
+        return {
+          style: {
+            base: {
+            fontSize: `${fontSize}px`,
+            height: '60px',
+            width:  '500px',
+            'border-radius': '2px',
+            'border-style': 'solid',
+            'border-width': '2px',
+            'border-color': 'rgba(37, 0, 68, 1.0)',
+            color: 'black',
+            fontFamily: 'ProximaNova-Bold", Helvetica, Arial',
+            '::placeholder': {
+                color: "#868e96",
+            },
+            },
+            invalid: {
+              color: '#9e2146',
+            },
+          },
+        };
+      }
     return (
       <div className="patient_shipping">
       {components.input_type_autocomplete(this.update_property.bind(this, 'payment_full_name'), "Card Holder Name", 'cc-name')}
-        <CardElement />
+        <CardElement className = "form-control" {...createOptions(20)}/>
         {components.confirm_button_type_1(this.update_handler, "Confirm Payment Information")}
       </div>
     );
