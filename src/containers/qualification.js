@@ -52,8 +52,8 @@ class Qualification extends Component{
 		answer_current_question(option.name).then(() => {
 			if (option.question_bank_names.length > 0) {
 				if (option.immediate) {
-					this.props.history.push("/patient/profile") 
 					update_patient_question_banks(option.question_bank_names, bank_step)
+					this.props.history.push("/patient/profile") 
 				}
 				else {
 					update_patient_question_banks(this.props.question_banks.concat( option.question_bank_names), question_banks_step)
@@ -62,7 +62,7 @@ class Qualification extends Component{
 				}
 			}
 			
-			update_service_line(option.name)	
+			if (option.name) update_service_line(option.name)	
 			move_next_step(this.props.question_step)
 		})
 	}
@@ -75,11 +75,11 @@ class Qualification extends Component{
 
 	//TODO: next step hanlder should be replaced to proper event this
 	did_create_patient = (state) => {
-
+		const service_line = this.props.service_line.id;
 		this.props.register_user(state)
 			.then(() => {return this.props.sign_in(state)})
 				.then(() => { return this.props.create_patient_from_user() })
-					.then( () => {return this.props.create_visit()} )
+					.then( () => {return this.props.create_visit(service_line)} )
 						.then(() => {return this.props.move_next_step(this.props.question_step)})
 	}
 
@@ -118,10 +118,11 @@ class Qualification extends Component{
 const mapStateToProps = (state) => {
 	const{
 		global_reducer: {app_state, current_user},
-		patient_reducer: {question_banks_step, patient_state, step, question_bank_id, question_banks, questions, is_complete}
+		patient_reducer: {service_line, question_banks_step, patient_state, step, question_bank_id, question_banks, questions, is_complete}
 	} = state
 
 	return {
+		service_line: service_line,
 		patient_state: patient_state,
     question_banks_step: question_banks_step,
 		question_step: step,

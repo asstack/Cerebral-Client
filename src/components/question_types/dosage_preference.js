@@ -38,7 +38,7 @@ class DosagePreference extends QuestionPreference {
   submit_btn_handler = e => {
     var selected_dosage = this.state.options[this.state.selected_index]
     //call action from parents with this.state.selected 
-    set_dosage(selected_dosage)
+    this.props.set_dosage(selected_dosage)
     this.props.submit_action(selected_dosage.name)
   }
 
