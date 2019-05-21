@@ -32,7 +32,6 @@ class CheckBoxComponent extends Component {
     this.state.checked_options.forEach((val, idx)=>{
       if(val) info+=this.state.options[idx].name+" ,"
     }) 
-    console.log("rst: ", info.slice(0,-1)) 
     if(info){ 
       this.props.submit_action(info.slice(0, -1))
     }else{

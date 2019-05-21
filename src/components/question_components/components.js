@@ -79,3 +79,26 @@ export const btn_selector = (event_handler, item)=>{
     </div>
   )
 }
+
+export const patient_refer_inputs = (event_handler,item, index, total) => {
+  return(
+    <div key={uuidv1()} className="d-flex flex-row align-content-left">
+      <div className="d-flex align-content-center flex-between">
+        <span>{"Patient"+(index+1)}</span>
+      </div>
+      <div className="d-flex flex-column">
+        <div className="d-flex justify-content-center p-2">
+          <input className="col input-type1" onChange={(e)=> event_handler.update(index, 'name', e)} defaultValue={item.name} type="text" placeholder="name"/>
+        </div>
+        <div className="d-flex justify-content-center p-2">
+          <input className="col input-type1" onChange={(e)=> event_handler.update(index, 'email', e)} defaultValue={item.email} type="email" placeholder="email"/>
+        </div>
+      </div>
+      <div className="d-flex align-content-center flex-between">
+        {(total>3 && index+1==total)?<input onClick={event_handler.remove} type='button' value='remove'/>:<div></div>}
+       </div>
+    </div>
+  )
+}
+
+

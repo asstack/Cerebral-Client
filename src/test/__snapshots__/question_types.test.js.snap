@@ -2,3 +2,4 @@
 
 exports[`Date Component testing matches snapshot 1`] = `ShallowWrapper {}`;
 
+exports[`Patient Refer testing matches snapshot 1`] = `ShallowWrapper {}`;
