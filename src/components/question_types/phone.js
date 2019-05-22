@@ -39,7 +39,7 @@ class Phone extends Component {
 	render(){	
 		return(
 			<div>
-        <div className = "d-flex justify-content-center p-2 text-small-red">{this.state.msg}</div>
+        <div className = "d-flex justify-content-center text-small-red">{this.state.msg}</div>
 				{components.input_type_1(this.phone_number_handler, "Phone number")}
 				<div className="d-flex flex-row justify-content-center">	
 					{components.checkbox_type_1(this.notification_handler, "Text me updates about my prescription deliveries and notifications from my doctor")}	

@@ -68,7 +68,7 @@ class CreateProfile extends Component {
   render(){
     return (
       <div>
-        <div className = "d-flex justify-content-center p-2 text-small-red">{this.state.msg}</div>
+        {this.state.msg? <div className = "d-flex justify-content-center p-2 text-small-red">{this.state.msg}</div> : null}
         {components.input_type_1(this.update_email.bind(this), "Email Address")}
         {components.input_type_1(this.update_firstname.bind(this), "First Name")}
         {components.input_type_1(this.update_lastname.bind(this), "Last Name")}

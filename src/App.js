@@ -85,7 +85,7 @@ class App extends Component{
     let path = this.mapStateToPath(this.state.prv_state)
     
     return (
-      <div className="App">
+      <div className="App container">
         <Route path={path} component={component}/>
       </div>
     );

@@ -4,7 +4,7 @@ import uuidv1 from 'uuid'
 //TODO: replace the components name after get all componenets. some will reuse in different pages
 export const input_type_1 = (event_handler, text) => {
   return(
-    <div className="d-flex justify-content-center p-2">
+    <div className="d-flex justify-content-center input-holder">
 			<input className="col input-type1" onChange={event_handler} defaultValue=""
 				type="text" placeholder={text}/>
     </div>
@@ -22,7 +22,7 @@ export const input_type_autocomplete = (event_handler, text, autocomplete_value)
 
 export const input_password_type_1 = (event_handler, text) => {
   return(
-    <div className="d-flex justify-content-center p-2">
+    <div className="d-flex justify-content-center input-holder">
 			<input className="col input-type1" type="password" defaultValue="" 
 				onChange={event_handler} placeholder={text}/>
     </div>
@@ -31,18 +31,18 @@ export const input_password_type_1 = (event_handler, text) => {
 
 export const checkbox_type_1 = (event_handler, description) => {
   return(
-    <div className="d-flex justify-content-center p-2">
+    <div className="d-flex justify-content-center agree-holder">
       <input className ="checkbox-type1" type="checkbox" onClick={event_handler}/>
-      <label className="text-small">
+      <span className="text-small">
         {description}
-      </label>
+      </span>
     </div>
   )
 }
 
 export const confirm_button_type_1 = (event_handler, description) => {
   return(
-    <div className="d-flex justify-content-center p-2">
+    <div className="d-flex justify-content-center confirm-btn-holder">
       <input className ="col btn-confirm text-btn" onClick={event_handler} type="button" value={description}/>
     </div>
   )
@@ -50,7 +50,7 @@ export const confirm_button_type_1 = (event_handler, description) => {
 
 export const confirm_button_type_2 = (event_handler, description) => {
   return(
-    <div className="d-flex justify-content-center p-2">
+    <div className="d-flex justify-content-center link-btn-holder">
       <input className ="col btn-link btn" onClick={event_handler} type="button" value={description}/>
     </div>
   )
@@ -77,6 +77,13 @@ export const btn_selector = (event_handler, item)=>{
     <div className="p-2 selector-holder" key={uuidv1()}>
       <input className ="col btn-selector" onClick={event_handler} type="button" value={item}/>
     </div>
+  )
+}
+
+export const button_half_size = (event_handler, item) => {
+  return(
+    <input key={uuidv1()} className = "button_two_selector" onClick={e=>event_handler(e, item)} 
+      type="button" value={item}/>
   )
 }
 
