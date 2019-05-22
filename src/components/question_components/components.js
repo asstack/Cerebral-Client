@@ -13,7 +13,7 @@ export const input_type_1 = (event_handler, text) => {
 
 export const input_type_autocomplete = (event_handler, text, autocomplete_value) => {
   return(
-    <div className="d-flex justify-content-center p-2">
+    <div className="d-flex justify-content-center input-holder">
 			<input className="col input-type1" onChange={event_handler} defaultValue=""
 				type="text" placeholder={text} autoComplete={autocomplete_value}/>
     </div>
@@ -33,7 +33,7 @@ export const checkbox_type_1 = (event_handler, description) => {
   return(
     <div className="d-flex justify-content-center agree-holder">
       <input className ="checkbox-type1" type="checkbox" onClick={event_handler}/>
-      <span className="text-small">
+      <span className="checkbox-text">
         {description}
       </span>
     </div>

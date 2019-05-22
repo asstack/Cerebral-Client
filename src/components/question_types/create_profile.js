@@ -74,7 +74,9 @@ class CreateProfile extends Component {
         {components.input_type_1(this.update_lastname.bind(this), "Last Name")}
         {components.input_password_type_1(this.update_password.bind(this), "Create Password")}
         {components.input_password_type_1(this.update_password_confirm.bind(this), "Retype Password")}
+        <div className="d-flex flex-row justify-content-center">
         {components.checkbox_type_1(this.set_concensus.bind(this), 'I consent to Telehealth, terms and privacy policy. All information is strictly confidential and is used to help our professionals provide the best care for you.')}
+        </div>
         {components.confirm_button_type_1(this.update_handler.bind(this), "Sign up for Cerebral Updates")}
         {components.confirm_button_type_2(this.update_handler.bind(this), "I already have a Cerebral account")}
       </div>

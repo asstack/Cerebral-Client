@@ -34,6 +34,10 @@ class HeightWeight extends Component {
     }
   }
 
+  select_option = idx =>{
+    return <option value={idx}>{idx}</option>
+  }
+  
   render(){
      return (
        <div>
@@ -43,10 +47,14 @@ class HeightWeight extends Component {
           <div className ="input-group-prepend text_field_height_weight">
             <span className = "input-group-text span_height_weight">Height</span>
           </div>
-         <input type="text" placeholder="Ft" onChange = {this.update_height_ft_handler} 
-           className="form-control input_height_weight"/>
-         <input type="text" placeholder="In" onChange = {this.update_height_in_handler} 
-           className="form-control input_height_weight"/>
+         <select onChange = {this.update_height_ft_handler} className="custom-select input_height_weight">
+            <option value="" selected>Ft</option>
+            {[...Array(6)].map((e, index)=>(this.select_option(index+2)))}
+          </select>
+         <select onChange = {this.update_height_in_handler} className="custom-select input_height_weight"> 
+            <option value="" selected>In</option>
+            {[...Array(12)].map((e, index)=>(this.select_option(index)))}
+         </select>
        </div>
       {components.confirm_button_type_1(this.submit_btn_handler, "Confirm weight and height")}
       </div>
