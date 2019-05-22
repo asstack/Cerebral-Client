@@ -13,7 +13,7 @@ class YesNoDetails extends Component {
   }
 
   set_type_handler = (e, type) => {
-    if(type=="NO"){
+    if(type=="no"){
       this.setState({view_type:type})
     }else{
       this.props.submit_action(type)
@@ -25,7 +25,7 @@ class YesNoDetails extends Component {
   }
   
   view = () => {
-    if(this.state.view_type === 'YES'){
+    if(this.state.view_type === 'yes'){
       return( 
         <div>
 			    <div className = "d-flex justify-content-start text-small">
@@ -36,10 +36,9 @@ class YesNoDetails extends Component {
       )
     }else{
       return ( 
-       <div className="d-flex flex-row justify-content-between yes-no-component">
-
-          {components.button_half_size(this.set_type_handler, "YES")} 
-          {components.button_half_size(this.set_type_handler, "NO")} 
+       <div className="d-flex flex-row justify-content-between selector-component flex-wrap">
+          {components.btn_selector(this.set_type_handler, "YES", "yes")} 
+          {components.btn_selector(this.set_type_handler, "NO", "no")} 
         </div> 
       )
     } 

@@ -36,21 +36,19 @@ class HeightWeight extends Component {
 
   render(){
      return (
-      <div>
-        <div className = "d-flex justify-content-center p-2 text-small-red">{this.state.msg}</div>
-        {components.input_type_1(this.update_weight_handler, "Weight lbs")}
-        <div className = "p-2">
-           <div className = "input-group input-type1">
-             <div className ="input-group-prepend text_field_height_weight">
-               <span className = "input-group-text span_height_weight">Height</span>
-             </div>
-             <input type="text" placeholder="Ft" onChange = {this.update_height_ft_handler} 
-               className="form-control input_height_weight"/>
-             <input type="text" placeholder="In" onChange = {this.update_height_in_handler} 
-               className="form-control input_height_weight"/>
-           </div>
-         </div>
-        {components.confirm_button_type_1(this.submit_btn_handler, "Confirm weight and height")}
+       <div>
+         {this.state.msg?<div className = "d-flex justify-content-center text-small-red">{this.state.msg}</div>:null}
+         {components.input_type_1(this.update_weight_handler, "Weight lbs")}
+         <div className = "input-group input-type1">
+          <div className ="input-group-prepend text_field_height_weight">
+            <span className = "input-group-text span_height_weight">Height</span>
+          </div>
+         <input type="text" placeholder="Ft" onChange = {this.update_height_ft_handler} 
+           className="form-control input_height_weight"/>
+         <input type="text" placeholder="In" onChange = {this.update_height_in_handler} 
+           className="form-control input_height_weight"/>
+       </div>
+      {components.confirm_button_type_1(this.submit_btn_handler, "Confirm weight and height")}
       </div>
     )
   }

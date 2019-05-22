@@ -30,16 +30,10 @@ class VideoSelector extends Component {
     }else if(this.state.view_type === 'text'){
       return <TextArea submit_action = {this.test_submit_action}/> 
     }else{
-      return (
-        <div className="d-flex flex-row justify-contnet-center">
-          <div className="p-2 selector-holder"> 
-            <input className ="col btn-selector" onClick = {(e) => this.set_type_handler(e,'video')} 
-            type="button" value="I prefer to answer with a VIDEO (2 MIN)"/> 
-          </div>
-          <div className="p-2 selector-holder"> 
-          <input className ="col btn-selector" onClick = {(e) => this.set_type_handler(e,'text')} 
-            type="button" value="I prefer to anser in WRITING"/>
-          </div>
+      return ( 
+       <div className="d-flex flex-row justify-content-between selector-component flex-wrap">
+          {components.btn_selector(this.set_type_handler, "I prefer to answer with a VIDEO (2 MIN)" ,"video")} 
+          {components.btn_selector(this.set_type_handler, "I prefer to anser in WRITING", "text")} 
         </div> 
       )
     } 

@@ -72,11 +72,9 @@ export const text_big_type_1 = text => {
   )
 }
 
-export const btn_selector = (event_handler, item)=>{
+export const btn_selector = (event_handler, item, type)=>{
   return(
-    <div className="p-2 selector-holder" key={uuidv1()}>
-      <input className ="col btn-selector" onClick={event_handler} type="button" value={item}/>
-    </div>
+    <input className ="button-two-selector" onClick={e=>event_handler(e, type) } type="button" value={item}/>
   )
 }
 
