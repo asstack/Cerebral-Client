@@ -13,7 +13,7 @@ class YesNoDetails extends Component {
   }
 
   set_type_handler = (e, type) => {
-    if(type=="no"){
+    if(type=="yes"){
       this.setState({view_type:type})
     }else{
       this.props.submit_action(type)
