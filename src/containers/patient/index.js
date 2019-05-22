@@ -60,7 +60,7 @@ class Patient extends Component{
   progress_menu = (bank_name, index) => {
     return (
       <div key={uuidv1()} className= {this.map_type_to_style_class(this.props.question_banks_step, index)}>
-         {index===0?<img src={process.env.PUBLIC_URL + '/img/arrow.png'} class="arrow-btn"/>:<div></div>}
+         {index===0?<img src={process.env.PUBLIC_URL + '/img/arrow.png'} className="arrow-btn"/>:<div></div>}
          <div className="align-self-end menu-item"> {bank_name} </div>
          <div></div>
       </div>
@@ -109,7 +109,7 @@ class Patient extends Component{
       const question = this.props.questions[this.props.question_step]
       return( 
         <div className="d-flex flex-column">
-          <div class="d-flex justify-content-center flex-row menu-bar">
+          <div className="d-flex justify-content-center flex-row menu-bar">
             {this.props.question_banks.map((item, index) => (this.progress_menu(item, index)))}  
           </div>
           <div className="d-flex flex-column question-container">

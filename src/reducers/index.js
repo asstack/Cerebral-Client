@@ -187,7 +187,7 @@ const appReducer = combineReducers({
 
 const rootReducer = (state, action) => {
 
-  if(action.type=='RESET'){
+  if(action.type==='RESET'){
     state = {global_reducer: init_global_state,
              patient_reducer: init_patient_state}
   }
