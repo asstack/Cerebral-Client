@@ -14,14 +14,24 @@ class Patient extends Component{
   constructor(props){
     super(props)
     this.state = {
-      prev_state:this.props.patient_state
+      prev_state:this.props.patient_state,
+      width: window.innerWidth,
     }
   }
+
+
+
+  update_width_handler = () =>{
+    this.setState({width: window.innerWidth}); 
+  }
+
 
   //TODO: code refactoring for states that sharing redux state (qualification, profile, shipping_payment)
   //TODO: Higher order components for question bank related containers 
   componentDidMount(){ 
     const init_state = this.props.location.pathname.split("/")[2];    
+
+    this.update_width_handler()
     if(!init_state){
       this.props.history.push("/patient/sign_in") 
     }else if(init_state!==this.state.prev_state){  
@@ -37,6 +47,9 @@ class Patient extends Component{
   }
  
 	componentDidUpdate(){	
+    //window.addEventListener("resize", this.update_width_handler.bind(this));
+    
+    window.addEventListener("resize", this.update_width_handler);
     const current_path = this.props.location.pathname
     const new_state = current_path.split("/")[2]
     if(!new_state){  
@@ -44,8 +57,12 @@ class Patient extends Component{
     }else if(new_state!==this.state.prev_state){
       this.setState({prev_state: new_state})
     }
-	}
+ }
 
+  componentWillUnmount(){
+    window.removeEventListener('resize', this.update_width_handler);
+  }
+  
   map_type_to_style_class = (state, target) => {
     //const align = state===0?justify-content-between:justify-content-center;
     if(state === target){
@@ -63,6 +80,15 @@ class Patient extends Component{
          <div className="align-self-end menu-item"> {bank_name} </div>
          <div></div>
       </div>
+    )
+  }
+  single_progress_menu = (bank_name) => {
+    return (
+       <div className= "col d-flex justify-content-between solid-border-bottom text-small menu-bar-item-holder">
+         <img src={process.env.PUBLIC_URL + '/img/arrow.png'} className="arrow-btn"/>
+         <div className="align-self-end menu-item"> {bank_name} </div>
+         <div></div>
+      </div> 
     )
   }
 
@@ -109,7 +135,7 @@ class Patient extends Component{
         <div className="container-progress">
           <div className="d-flex flex-column">
             <div className="d-flex justify-content-center flex-row menu-bar">
-            {this.props.question_banks.map((item, index) => (this.progress_menu(item, index)))}  
+              {this.state.width>820? this.props.question_banks.map((item, index) => (this.progress_menu(item, index))) : this.single_progress_menu(state) }
             </div>
             <div className="d-flex flex-column question-container">
               <div className="d-flex justify-content-left text-middle">QUESTION {this.props.question_step+1} OF {this.props.total_step}</div>
