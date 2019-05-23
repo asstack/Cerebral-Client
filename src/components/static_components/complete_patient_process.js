@@ -16,9 +16,9 @@ class CompleteProcess extends Component{
 
   render(){
      return (
-      <div className="d-flex flex-column">
-        <div className="d-flex justify-content-center text-big">
-          <p>Thanks for choosing Cerebral. </p>
+      <div className="d-flex flex-column justify-content-center container-noprogress align-items-center">
+        <div className="description_noprogress">
+          <h1>Thanks for choosing Cerebral. </h1>
         </div>
         <div className="d-flex justify-content-center text-mid-title">
           <p>What happens now?</p>

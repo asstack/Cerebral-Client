@@ -1,9 +1,8 @@
 import React, {Component} from 'react'
 import {Router, Route, withRouter} from 'react-router-dom'
 import {connect} from 'react-redux'
-import { set_current_question_bank_by_name, update_patient_question_banks, upload_object_for_current_question, update_patient_state, move_next_step, create_patient_from_user,create_visit,update_service_line,answer_current_question } from '../../actions/patient_action'
+import {set_question_banks_step, set_step, set_current_question_bank_by_name, update_patient_question_banks, upload_object_for_current_question, update_patient_state, create_patient_from_user,create_visit,update_service_line,answer_current_question } from '../../actions/patient_action'
 import { register_user, sign_in} from '../../actions/user_auth_action'
-import { update_app_state } from '../../actions/'
 import * as utils from '../../utils/common.js'
 import ReactGA from 'react-ga'
 
@@ -52,26 +51,25 @@ class QuestionBank extends Component{
 
   /*local event this*/
   next_step_handler=(e)=>{
-    const {move_next_step} = this.props
-    move_next_step(this.props.question_step)
+    this.patient_state_transition_helper();
   }
 
   set_selector_handler=(e, option)=>{
-    const {move_next_step, answer_current_question} = this.props
+    const {answer_current_question} = this.props
     answer_current_question({answer: option.name}).then(() => {
-      return move_next_step(this.props.question_step)
+      return this.patient_state_transition_helper();
     })
   }
 
   submit_answer_and_next_step = (ans) => {
     this.props.answer_current_question({answer: ans}).then(() => {
-      return this.props.move_next_step(this.props.question_step)
+      return this.patient_state_transition_helper();
     })
   }
 
   set_bank_selector_handler=(e, option)=>{
 
-		const {question_banks_step, answer_current_question, set_current_question_bank_by_name, move_next_step, update_patient_question_banks, update_service_line} = this.props
+		const {question_banks_step, answer_current_question, set_current_question_bank_by_name, update_patient_question_banks, update_service_line} = this.props
     answer_current_question({answer: option.name}).then(() => {
 
       if (option.question_bank_names.length > 0) {
@@ -83,9 +81,9 @@ class QuestionBank extends Component{
         else {
           update_patient_question_banks(this.props.question_banks.concat( option.question_bank_names), question_banks_step)
           if (option.name) update_service_line(option.name)	
-          move_next_step(this.props.question_step)
+          this.patient_state_transition_helper();
         }
-      }else move_next_step(this.props.question_step)
+      }else this.patient_state_transition_helper();
     })
   }
   
@@ -96,17 +94,31 @@ class QuestionBank extends Component{
       .then(() => {return this.props.sign_in(state)})
         .then(() => { return this.props.create_patient_from_user() })
           .then( () => {return this.props.create_visit(service_line)})
-            .then(() => {return this.props.move_next_step(this.props.question_step)})
+            .then(() => {this.patient_state_transition_helper()})
       .catch((err) => {
         console.log(err)
       })
   }
+   
+  patient_state_transition_helper = () => {
+    const {question_banks, question_banks_step, questions, question_step,
+           set_step, set_question_banks_step} = this.props 
+    if(question_banks.length===question_banks_step+1 && questions.length === question_step+1){ 
+      this.props.history.push("/patient/completed") 
+    }else if(questions.length > question_step+1){ 
+      this.props.set_step(question_step+1)
+    }else{
+      this.props.set_question_banks_step(question_banks_step+1)
+    }
+  }
+
 
   submit_and_upload_data = (data, type) => { 
-    const { upload_object_for_current_question, move_next_step} = this.props
+    const {question_banks, question_banks_step, questions, question_step, 
+           upload_object_for_current_question} = this.props
     
     upload_object_for_current_question(data, type).then(() => {
-      move_next_step(this.props.question_step)
+      this.patient_state_transition_helper()
     })
   }
 
@@ -115,7 +127,6 @@ class QuestionBank extends Component{
 			return questions[step].title
 		}
 	}
-
 
   render(){
     const handlers = {
@@ -164,4 +175,4 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default withRouter(connect(mapStateToProps, {update_patient_question_banks,upload_object_for_current_question, update_app_state, register_user, sign_in, move_next_step, create_patient_from_user, create_visit, update_service_line,answer_current_question, update_patient_state,set_current_question_bank_by_name}) (QuestionBank))
+export default withRouter(connect(mapStateToProps, {set_question_banks_step, set_step, update_patient_question_banks,upload_object_for_current_question, register_user, sign_in, create_patient_from_user, create_visit, update_service_line,answer_current_question, update_patient_state,set_current_question_bank_by_name}) (QuestionBank))

@@ -20,10 +20,8 @@ class PatientsRefer extends Component {
   remove_item_handler = e => {
     
     if(this.state.total_items>3){
-
       const new_items = this.state.items.slice(0,-1);
       const new_num = this.state.total_items-1;
-
       this.setState({total_items: new_num,
                      items:new_items});
       this.forceUpdate();

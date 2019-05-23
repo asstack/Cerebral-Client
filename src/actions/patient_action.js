@@ -27,7 +27,7 @@ const reset_state = () => ({
 })
 
 //TODO: implement middleware for handling api call
-const set_step = (step_num, is_complete) => ({
+export const set_step = (step_num, is_complete) => ({
   type:SET_STEP,
 	step:step_num,
 	is_complete:is_complete
@@ -56,7 +56,7 @@ const set_question_banks = (questions_banks, bank_step=0) => ({
   question_banks_step:bank_step
 })
 
-const set_question_banks_step = (question_banks_step) => ({
+export const set_question_banks_step = (question_banks_step) => ({
   type:SET_QUESTION_BANKS_STEP,
   question_banks_step:question_banks_step
 })
@@ -117,30 +117,6 @@ export const move_patient_sign_in = () => (dispatch, getState) => {
 
 export const move_patient_sign_up = (state) => (dispatch, getState) => {
   return dispatch(set_state_with_step('profile/sign_up', 0))
-}
-
-//TODO: sharing state can be updated by ohters and make side effects, so ,move to react part
-export const move_next_step = (step_num) => (dispatch, getState) => {
-  var is_complete = false
-  var patient = getState().patient_reducer
-  var length = patient.questions.length
-  if (step_num + 1 >= length) {
-    // we are done with the current question bank, move to the next one
-    var banks_length = patient.question_banks.length
-    if (patient.question_banks_step + 1 < banks_length) {
-      return dispatch(set_current_question_bank_by_name(patient.question_banks[patient.question_banks_step + 1])).then (() => {
-        return dispatch(set_question_banks_step(patient.question_banks_step + 1))
-      })
-    } else {
-      // we are done! go to the CompletedPage
-      return dispatch(update_patient_state('completed'));
-    }
-  }
-	else {
-    if (step_num+1 === length)
-      is_complete=true
-    return dispatch(set_step(step_num+1, is_complete))
-  }
 }
 
 export const update_patient_question_banks = (bank_names, step) => (dispatch, getState) => {
