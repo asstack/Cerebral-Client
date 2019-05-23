@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import {Route, withRouter} from "react-router-dom"
 import {connect} from 'react-redux'
 import Patient from './containers/patient'
-import Qualification from './containers/qualification'
 import MainPage from './containers'
 import Identification from './components/question_types/patient_identification'
 import {update_app_state} from './actions'
@@ -22,7 +21,7 @@ class App extends Component{
   }
   
   componentDidMount(){
-    const init_state =  this.mapPathToState(this.props.location.pathname.split("/")[1])   
+    const init_state =  this.props.location.pathname.split("/")[1]  
     if(init_state!=this.state.prv_state){
       this.setState({prv_state:init_state})
       this.props.update_app_state(init_state) 
@@ -44,22 +43,11 @@ class App extends Component{
     }
   }
 
-  mapPathToState = path => {
-    switch(path){
-      case 'start':
-        return 'qualification'
-      default:
-        return path
-    }
-  }
 
   target_component = state => { 
-    console.log(state)
     switch(state) {
       case 'patient':
         return Patient
-      case 'start':
-        return Qualification
       default:
         return MainPage;
     }
@@ -73,8 +61,6 @@ class App extends Component{
         return "/treatment"
       case 'patient':
         return "/patient"
-      case 'start':
-        return "/start"
       default:
         return "/";
     }

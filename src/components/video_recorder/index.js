@@ -1,6 +1,5 @@
 import React, {Component} from 'react'
 import VideoRecorder from 'react-video-recorder'
-import ConcatenateBlobs from 'concatenateblobs/ConcatenateBlobs'
 
 class VideoRecorderComponent extends Component {
 

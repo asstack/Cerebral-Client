@@ -39,7 +39,6 @@ class Patient extends Component{
 	componentDidUpdate(){	
     const current_path = this.props.location.pathname
     const new_state = current_path.split("/")[2]
-    
     if(!new_state){  
       this.props.history.push("/patient/sign_in") 
     }else if(new_state!==this.state.prev_state){
@@ -80,7 +79,6 @@ class Patient extends Component{
   // uses https://reacttraining.com/react-router/web/api/Route
   render_views(state){
     
-
    if(state==="completed"){  
       return(
         <Route path="/patient/completed" component={CompleteProcess}/>
@@ -124,7 +122,7 @@ class Patient extends Component{
       )   
     }else {
       return (  
-        <Route path="/patient/sign_in" component={SignIn}/>
+        <Route path="/patient/:bank_name" component={QuestionBank}/>
       ) 
     }  
   }
