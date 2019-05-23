@@ -31,8 +31,12 @@ h1 {
 }
 
 .container-noprogress {
-  margin: 85px 100px;
-  min-width:604px;
+  margin-top: 85px;
+  max-width:604px;
+}
+
+.container-progress {
+  width:100%;
 }
 
 .header-noprogress {
@@ -80,7 +84,7 @@ h1 {
   font-size: 18px;
   font-weight: bold;
   margin-bottom: 20px;
-  min-width: 604px;
+  width: 100%;
   height: 65px;
   border: 2px solid #250044;
   border-radius: 2px;
@@ -376,7 +380,7 @@ h1 {
 
 .question-container {
   padding-top:50px;
-  width : 604px;
+  max-width : 604px;
   align-self: center;
 }
 
@@ -676,4 +680,19 @@ h1 {
 .add-patient-button:hover{
   cursor:pointer;
 }
- 
+
+
+/*---------------------max-width 820px breaking point ---------------------*/
+@media (max-width:820px){
+
+  .main-noprogress{
+    width:100%; 
+  }
+
+  .button-two-selector{
+    width:100%;   
+    margin-top:20px;
+  }  
+
+}
+

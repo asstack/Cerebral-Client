@@ -108,17 +108,19 @@ class Patient extends Component{
     }else if(this.props.questions && this.props.questions[this.props.question_step]){
       const question = this.props.questions[this.props.question_step]
       return( 
-        <div className="d-flex flex-column">
-          <div className="d-flex justify-content-center flex-row menu-bar">
+        <div className="container-progress">
+          <div className="d-flex flex-column">
+            <div className="d-flex justify-content-center flex-row menu-bar">
             {this.props.question_banks.map((item, index) => (this.progress_menu(item, index)))}  
-          </div>
-          <div className="d-flex flex-column question-container">
-           <div className="d-flex justify-content-left text-middle">QUESTION {this.props.question_step+1} OF {this.props.total_step}</div>
-            <div className="questions-container">
-             <Route path="/patient/:bank_name" component={QuestionBank}/>
             </div>
-          </div>
-        </div>    
+            <div className="d-flex flex-column question-container">
+              <div className="d-flex justify-content-left text-middle">QUESTION {this.props.question_step+1} OF {this.props.total_step}</div>
+              <div className="questions-container">
+                <Route path="/patient/:bank_name" component={QuestionBank}/>
+              </div>
+            </div>
+          </div>    
+        </div>
       )   
     }else {
       return (  
