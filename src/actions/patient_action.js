@@ -128,12 +128,12 @@ export const move_next_step = (step_num) => (dispatch, getState) => {
     // we are done with the current question bank, move to the next one
     var banks_length = patient.question_banks.length
     if (patient.question_banks_step + 1 < banks_length) {
-      dispatch(set_current_question_bank_by_name(patient.question_banks[patient.question_banks_step + 1]))
-      dispatch(set_question_banks_step(patient.question_banks_step + 1))
+      return dispatch(set_current_question_bank_by_name(patient.question_banks[patient.question_banks_step + 1])).then (() => {
+        return dispatch(set_question_banks_step(patient.question_banks_step + 1))
+      })
     } else {
       // we are done! go to the CompletedPage
-      dispatch(update_patient_state('completed'));
-
+      return dispatch(update_patient_state('completed'));
     }
   }
 	else {
@@ -215,6 +215,11 @@ export const create_payment = (full_name, token) => (dispatch, getState) => {
   return dispatch(get_current_patient_and_visit()).then((pv_resp) => {
 
       return dispatch(get_current_treatment_and_dosage()).then((td_resp) => {
+
+        if (!td_resp.treatment || !td_resp.dosage) {
+          return Promise.reject(new Error('Treatment and dosage are not selected yet'))
+        } 
+
         var body = {
           full_name: full_name, token: token, treatment_id: td_resp.treatment.id, dosage_id: td_resp.dosage.id
         }
@@ -297,9 +302,9 @@ export const answer_current_question = (answer) => (dispatch, getState) => {
     var patient_state = getState().patient_reducer
   
     var body = {
+      ...answer,
       question_bank_id: patient_state.question_bank_id,
       question_id: patient_state.questions[patient_state.step].id,
-        answer: answer
       }
   
     return axios.post(`/api/patients/${resp.patient.id}/visits/${resp.visit.id}/answers`, body, {headers: make_headers(user_attr)})
@@ -312,19 +317,18 @@ export const update_patient_state = state => (dispatch, getState) => {
 }
 
 
-export const upload_photo_id = (patient_id, file, file_type) => (dispatch, getState) => {
-  var user_attr = get_user_attr(getState())
-  var option = {headers:
-                {'ContentEncoding': 'base64', 
-                 'Content-Type': file_type}}
-  
-  return axios.post(`/api/patients/${patient_id}/identification`,null,{headers:make_headers(user_attr)})
-    .then(function(resp){
-     axios.put(resp.data.url, file, option)
-        .then(function(resp){
-          return Promise.resolve()
-        })
-    })
+export const upload_object_for_current_question = (file, file_type) => (dispatch, getState) => {
+
+  return dispatch(answer_current_question({upload: true, file_type: file_type})).then((resp) => {
+    var option = {headers:
+                  {'ContentEncoding': 'base64', 
+                  'Content-Type': file_type}}
+    
+      return axios.put(resp.data.object_url, file, option)
+          .then(function(resp){
+            return Promise.resolve()
+          })
+      })
 }
 
 export const sign_out = () => (dispatch, getState) => {

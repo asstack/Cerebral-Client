@@ -18,7 +18,7 @@ class VideoSelector extends Component {
     this.setState({view_type:type})
   }
 
-  test_submit_action =(data) => {
+  text_submit_action =(data) => {
     console.log(data) 
   }
 
@@ -26,14 +26,20 @@ class VideoSelector extends Component {
   
   view = () => {
     if(this.state.view_type === 'video'){
-      return <VideoRecorderComponent submit_action = {this.test_submit_action} /> 
+      return <VideoRecorderComponent submit_action = {this.props.submit_action} /> 
     }else if(this.state.view_type === 'text'){
-      return <TextArea submit_action = {this.test_submit_action}/> 
+      return <TextArea submit_action = {this.text_submit_action}/> 
     }else{
-      return ( 
-       <div className="d-flex flex-row justify-content-between selector-component flex-wrap">
-          {components.btn_selector(this.set_type_handler, "I prefer to answer with a VIDEO (2 MIN)" ,"video")} 
-          {components.btn_selector(this.set_type_handler, "I prefer to anser in WRITING", "text")} 
+      return (
+        <div className="d-flex flex-row justify-contnet-center">
+          <div className="p-2 selector-holder"> 
+            <input className ="col btn-selector" onClick = {(e) => this.set_type_handler(e,'video')} 
+            type="button" value="I prefer to answer with a VIDEO (2 MIN)"/> 
+          </div>
+          <div className="p-2 selector-holder"> 
+          <input className ="col btn-selector" onClick = {(e) => this.set_type_handler(e,'text')} 
+            type="button" value="I prefer to answer in WRITING"/>
+          </div>
         </div> 
       )
     } 
@@ -41,10 +47,7 @@ class VideoSelector extends Component {
   
   render(){
     return (
-      <div>
-        <div className = "d-flex justify-content-start text-big">
-            <p>Tell me us more about why you're seeking out a prescription for antidepressants</p>
-        </div>		
+      <div>	
       {this.view(this.state.view_type)}
       </div>
     );

@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
 import VideoRecorder from 'react-video-recorder'
+import ConcatenateBlobs from 'concatenateblobs/ConcatenateBlobs'
 
 class VideoRecorderComponent extends Component {
 
@@ -16,12 +17,13 @@ class VideoRecorderComponent extends Component {
 		console.log("com update: ", this.refs.recorder)
 	}
 
-	//TODO: make actio for submit video, call api and update into s3
+	//TODO: make action for submit video, call api and update into s3
 	submit_btn_handler = (e) => {
 
-    const data= this.refs.recorder
-    const type ='video/webm;codecs=vp8'
-    this.props.submit_action(data, type)
+		const type ='video/webm;codecs=vp8'
+
+		var blob = new Blob(this.refs.recorder.recordedBlobs, {type : type});
+		this.props.submit_action(blob, type)
 	}
   
   render() {

@@ -16,6 +16,10 @@ class CreateProfile extends Component {
     }
   }
 
+  login_handler = e => {
+    // switch to login instead
+  }
+
   update_handler = e => { 
     const {is_consent, email, first_name, 
       last_name, password, password_confirm} = this.state
@@ -78,7 +82,7 @@ class CreateProfile extends Component {
         {components.checkbox_type_1(this.set_concensus.bind(this), 'I consent to Telehealth, terms and privacy policy. All information is strictly confidential and is used to help our professionals provide the best care for you.')}
         </div>
         {components.confirm_button_type_1(this.update_handler.bind(this), "Sign up for Cerebral Updates")}
-        {components.confirm_button_type_2(this.update_handler.bind(this), "I already have a Cerebral account")}
+        {components.confirm_button_type_2(this.login_handler.bind(this), "I already have a Cerebral account")}
       </div>
     );
   }

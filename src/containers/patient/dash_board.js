@@ -24,6 +24,14 @@ class PatientDashboard extends Component{
     this.props.history.push('/patient/checkout') 
   }
 
+  // TEMP for testing video
+  app_state_video_test_handler = e => {
+    const {update_app_state}=this.props
+    this.props.update_service_line('dep_anx')
+    this.props.update_patient_question_banks(['video_test'], 0)	
+    this.props.history.push("/patient/profile") 
+  }
+
   app_state_treatment_handler = e => {
     const {update_app_state}=this.props
 
@@ -69,6 +77,7 @@ class PatientDashboard extends Component{
                   <div className="main-content-small-card">
                   <input type='button' value='Checkout' onClick={this.app_state_checkout_handler.bind(this)}/>
                   <input type='button' value='Treatment' onClick={this.app_state_treatment_handler.bind(this)}/>
+                  <input type='button' value='Video Test' onClick={this.app_state_video_test_handler.bind(this)}/>
                   </div> 
                   <div className="main-content-small-card">item 2</div> 
                 </div>
