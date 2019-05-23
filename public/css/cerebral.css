@@ -147,6 +147,17 @@ h1 {
   min-height:60px;
 }
 
+.state-selector {
+  background: #FFFFFF;
+  height: 60px;
+  border: 1px solid #250044;
+  border-radius: 2px;
+  font-size: 18px;
+  line-height: 18px;
+  letter-spacing: -0.43px;
+  color: #250044;
+}
+
 /*---------------------------will be removed---------------------------*/
 
 .video-cam-holder {

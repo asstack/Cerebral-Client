@@ -148,7 +148,7 @@ class Patient extends Component{
       )   
     }else {
       return (  
-        <Route path="/patient/:bank_name" component={QuestionBank}/>
+          <Route path="/patient/qualification" component={QuestionBank}/>
       ) 
     }  
   }

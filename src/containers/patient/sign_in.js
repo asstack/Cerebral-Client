@@ -57,23 +57,19 @@ class SignIn extends Component {
 
   render(){
     return (
-      <div className="d-flex flex-column">
-        <div className="d-flex flex-row">
-          <div className="p-2">
-            <div className="btn-arrow link-type1">
-            Cerebral
-            </div>
-          </div>
+      <div className="d-flex flex-column container-noprogress">
+        <div className="d-flex flex-row justify-content-left header-noprogress">
+          <img className="cerebral-logo" src={process.env.PUBLIC_URL + '/img/logo.png'}/>
         </div>
         <div className="d-flex flex-column question-container">
           <div className="d-flex justify-content-center text-big">
             <p>Sign In</p>
           </div>
-             <div className="patient_signin">
+             <div className="main-noprogress">
                 {components.input_type_1(this.update_email.bind(this), "Email Address")}
                 {components.input_password_type_1(this.update_password.bind(this), "Password")}
                 {components.confirm_button_type_1(this.sign_in_handler.bind(this), "Get started with online visit")}
-                {components.text_button_type_1(this.state_update_handler.bind(this), "I don't have an account.")}
+                {components.confirm_button_type_2(this.state_update_handler.bind(this), "I don't have an account.")}
               </div>  
           </div>
       </div>

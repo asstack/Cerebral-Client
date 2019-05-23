@@ -20,7 +20,7 @@ class StateSelector extends Component {
 	render(){	
 		return(
       <div>
-        <select className = "form-control form-control-lg" 
+        <select className = "form-control form-control-lg state-selector" 
           onChange={this.state_selector_handler}>
           <option value="">States</option>
           <option value="AL">Alabama</option>
@@ -76,7 +76,7 @@ class StateSelector extends Component {
           <option value="WY">Wyoming</option>
         </select>	
         <div className="d-flex flex-row justify-content-center">
-          {components.btn_selector(this.confirm_btn_handler, "Confirm")}
+          {components.confirm_button_type_1(this.confirm_btn_handler, "Confirm")}
         </div>
       </div>
 		)
