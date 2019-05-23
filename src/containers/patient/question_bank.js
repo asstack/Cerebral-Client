@@ -73,6 +73,7 @@ class QuestionBank extends Component{
 
 		const {question_banks_step, answer_current_question, set_current_question_bank_by_name, move_next_step, update_patient_question_banks, update_service_line} = this.props
     answer_current_question({answer: option.name}).then(() => {
+
       if (option.question_bank_names.length > 0) {
         if (option.immediate) {
           update_patient_question_banks(option.question_bank_names, 0)
@@ -85,6 +86,7 @@ class QuestionBank extends Component{
           move_next_step(this.props.question_step)
         }
       }
+      move_next_step(this.props.question_step)
     })
   }
   
