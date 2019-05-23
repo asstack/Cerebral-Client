@@ -53,18 +53,18 @@ class PatientsRefer extends Component {
     const event_handlers = {update:this.update_item_handler.bind(this), 
                       remove:this.remove_item_handler.bind(this)}
 		return(
-      <div class="d-flex flex-column therapist-question-container">
-        <div class="d-flex justify-content-left patient-refer-description">
+      <div className="d-flex flex-column therapist-question-container">
+        <div className="d-flex justify-content-start patient-refer-description">
           <span>Please enter patient/s contact information.</span>
         </div>
         {[...Array(this.state.total_items)].map((e, index) => (components.patient_refer_inputs(event_handlers, this.state.items[index], index, this.state.total_items)))}  
-        <div class="d-flex justify-content-end patient-refer-add-btn-holder">
-          <div id='add_patient' class="add-patient-button" onClick={this.add_item_handler}>
-            <image class="remove-button" src='/img/add_patient.png'/> <span class="add_patient_btn_text">Add patient</span>
+        <div className="d-flex justify-content-end patient-refer-add-btn-holder">
+          <div id='add_patient' className="add-patient-button" onClick={this.add_item_handler}>
+            <image className="remove-button" src='/img/add_patient.png'/> <span className="add_patient_btn_text">Add patient</span>
           </div>
         </div>
-        <div class="d-flex patient-refer-submit-btn-holder">
-          <input id='submit_refer'class="patient-refer-submit-btn" onClick={this.submit_item_handler}  type="button" value="Submit and Continue"/>
+        <div className="d-flex patient-refer-submit-btn-holder">
+          <input id='submit_refer' className="patient-refer-submit-btn" onClick={this.submit_item_handler}  type="button" value="Submit and Continue"/>
         </div>
      </div>
 		)

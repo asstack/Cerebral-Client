@@ -4,21 +4,19 @@ import * as components from '../question_components/components'
 
 
 //TODO: move to components after all fixed
-const selector_items = (event_handler, options) => {
+const selector_items = (event_handler, options, class_type) => {
   return options.map((item, index) => (
-    <div className="p-2 selector-holder" key={uuidv1()}>
-      <input className ="col btn-selector" onClick = {(e) => event_handler(e,item)} 
-        type="button" value={item.title}/>
-    </div>
-    //components.btn_selector(event_handler, item)
+    <input key={uuidv1()} className = {class_type} onClick={e=>event_handler(e, item)} 
+      type="button" value={item.title}/> 
   ))
 }
 
 export const selector = (event_handler, question) =>{
+    const class_type = question.options.length>2? "button-multi-selector":"button-two-selector";
     return (
-      <div className="d-flex flex-row justify-content-center">
+      <div className="d-flex flex-row justify-content-between selector-component flex-wrap">
         {
-          selector_items(event_handler, question.options)
+          selector_items(event_handler, question.options, class_type)
         }
       </div>
     )

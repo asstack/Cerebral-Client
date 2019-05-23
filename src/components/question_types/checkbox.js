@@ -41,15 +41,16 @@ class CheckBoxComponent extends Component {
   
   //{(e) => this.check_box_handler(e,item.option_name)}
   map_data_to_checkbox = (item,index) => {
+    const last_item_style = index+1===this.state.options.length?" last-item":"";
     return(
-      <div className="input-group mb-3" key={uuidv1()}>
+      <div className={"input-group group-check-box-item"+last_item_style} key={uuidv1()}>
         <div className="input-group-prepend">
           <div className="input-group-text group-checkbox">
             <input type="checkbox" onChange={(e) => {this.check_box_handler(e,index)}} name={item.title} checked={this.state.checked_options[index]}/>
           </div>
         </div>
         <div className="d-flex justify-content-center form-control group-checkbox-text">
-          <p className="text-small">{item.title}</p>
+          <span className="align-self-center">{item.title}</span>
         </div>
       </div>
       )
@@ -57,10 +58,11 @@ class CheckBoxComponent extends Component {
 
   render(){
     return (
-      <div>    
-
-        <div className = "d-flex justify-content-center p-2 text-small-red">{this.state.msg}</div>
-        {this.state.options.map((item, index) => (this.map_data_to_checkbox(item, index)))}
+      <div className="check-box-question">    
+        {this.state.msg? <div className = "d-flex justify-content-start p-2 text-small-red">{this.state.msg}</div>:null}
+        <div className="check-box-container">
+          {this.state.options.map((item, index) => (this.map_data_to_checkbox(item, index)))}
+        </div>
         <div className="d-flex flex-row justify-content-center">
         {components.confirm_button_type_1(this.submit_btn_handler, "Confirm")}  
         </div>

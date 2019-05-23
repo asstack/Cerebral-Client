@@ -28,9 +28,9 @@ class Date extends Component {
   render(){
     return(
     	<div>
-        
-        <div className = "d-flex justify-content-center p-2 text-small-red">{this.state.msg}</div>
-			  {components.input_type_1(this.input_update_handler, "Date of Birth (mm/dd/yy)")}
+        {this.state.msg? <div className = "d-flex justify-content-start p-2 text-small-red">{this.state.msg}</div>
+: null} 
+        {components.input_type_1(this.input_update_handler, "Date of Birth (mm/dd/yy)")}
 			  {components.confirm_button_type_1(this.confirm_btn_handler, "Confirm date of birth")}
 		  </div>
 	

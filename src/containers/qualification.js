@@ -95,26 +95,24 @@ class Qualification extends Component{
       submit_answer_and_next_step: this.submit_answer_and_next_step.bind(this)
 		}
 
-		return(
-			<div className="d-flex flex-column">
-					<div className="d-flex flex-row">
-						<div className="p-2">
-							<div className="btn-arrow link-type1">
-							Cerebral
-							</div>
-						</div>
-					</div>
-					<div className="d-flex flex-column question-container">
-						<div className="d-flex justify-content-center text-big">
-							<p>{this.display_title(this.props.questions, this.props.question_step)}</p>
-						</div>
-							{utils.map_type_to_component(this.props.questions, this.props.question_step, handlers)}
-						</div>
-				</div>
+		return(     
+      <div className="d-flex flex-column container-noprogress">
+        <div className="d-flex flex-row justify-content-left header-noprogress">
+          <img className="cerebral-logo" src={process.env.PUBLIC_URL + '/img/logo.png'}/>
+        </div>
+        <div className="d-flex flex-column main-noprogress">
+          <div className="description_noprogress">
+            <h1>{this.display_title(this.props.questions, this.props.question_step)}</h1>
+          </div>
+          {utils.map_type_to_component(this.props.questions, this.props.question_step, handlers)}
+       </div>
+      </div>
 		);
 	}
 }
 
+
+    
 const mapStateToProps = (state) => {
 	const{
 		global_reducer: {app_state, current_user},

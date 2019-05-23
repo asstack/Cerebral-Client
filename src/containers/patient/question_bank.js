@@ -120,16 +120,16 @@ class QuestionBank extends Component{
       submit_answer_and_next_step: this.submit_answer_and_next_step.bind(this),
       submit_and_upload_data:this.submit_and_upload_data.bind(this)
     }
+    const question = this.props.questions[this.props.question_step]
     
     return(
-		  <div className="d-flex flex-column">
-        <div className="d-flex flex-column question-container">
-					<div className="d-flex justify-content-center text-big">
-            <p>{this.display_title(this.props.questions, this.props.question_step)}</p>
-          </div>
-					{utils.map_type_to_component(this.props.questions, this.props.question_step, handlers)}
-				</div>
-			</div>
+      <div className="d-flex flex-column main-noprogress">
+        <div className="description_noprogress">
+          <h1>{this.display_title(this.props.questions, this.props.question_step)}</h1>
+              {question.description?<div className="d-flex justify-content-left text_description"> {this.props.questions[this.props.question_step].description}</div>:null} 
+        </div>
+        {utils.map_type_to_component(this.props.questions, this.props.question_step, handlers)}
+     </div> 
     );
   }
 }

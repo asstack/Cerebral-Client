@@ -48,16 +48,25 @@ class Patient extends Component{
 	}
 
   map_type_to_style_class = (state, target) => {
+    //const align = state===0?justify-content-between:justify-content-center;
     if(state === target){
-      return "col d-flex justify-content-center p-2 solid-border-bottom text-small";
+      return "col d-flex justify-content-between solid-border-bottom text-small menu-bar-item-holder";
     }else{
-      return "col d-flex justify-content-center p-2 solid-border-bottom__unselected text-small__unselected";
+      return "col d-flex justify-content-between solid-border-bottom__unselected text-small__unselected menu-bar-item-holder";
     }
   }
 
-  progress_menu = (bank_name, index) => { 
-    return <div key = {uuidv1()} className={this.map_type_to_style_class(this.props.question_banks_step, index)}>{bank_name}</div> 
+  
+  progress_menu = (bank_name, index) => {
+    return (
+      <div key={uuidv1()} className= {this.map_type_to_style_class(this.props.question_banks_step, index)}>
+         {index===0?<img src={process.env.PUBLIC_URL + '/img/arrow.png'} className="arrow-btn"/>:<div></div>}
+         <div className="align-self-end menu-item"> {bank_name} </div>
+         <div></div>
+      </div>
+    )
   }
+
 
   display_title = (questions, step) =>{
 		if(questions[step]){
@@ -89,33 +98,24 @@ class Patient extends Component{
     }else if(this.props.question_banks.length===1){
       //TODO: temporarily hard coded. It is only for selecting type of q banks, this question may be moved to qualification bank 
       return(
-       	<div className="d-flex flex-column">
-					<div className="d-flex flex-row">
-						<div className="p-2">
-							<div className="btn-arrow link-type1">
-							Cerebral
-							</div>
-						</div>
-					</div>
-					<div className="d-flex flex-column question-container">
-              <Route path="/patient/:bank_name" component={QuestionBank}/>
-						</div>
-				</div>
+        <div className="d-flex flex-column container-noprogress">
+            <div className="d-flex flex-row justify-content-left header-noprogress">
+              <img className="cerebral-logo" src={process.env.PUBLIC_URL + '/img/logo.png'}/>
+            </div>
+            <Route path="/patient/:bank_name" component={QuestionBank}/>
+          </div>
       )	 
     }else if(this.props.questions && this.props.questions[this.props.question_step]){
+      const question = this.props.questions[this.props.question_step]
       return( 
         <div className="d-flex flex-column">
-          <div className="d-flex flex-row">
-            <div className="p-2"><div className="btn-arrow"><a className="link-type1" href="">&lt;</a></div></div>
-          </div>
-          <div className="d-flex justify-content-center flex-row">
+          <div className="d-flex justify-content-center flex-row menu-bar">
             {this.props.question_banks.map((item, index) => (this.progress_menu(item, index)))}  
           </div>
           <div className="d-flex flex-column question-container">
            <div className="d-flex justify-content-left text-middle">QUESTION {this.props.question_step+1} OF {this.props.total_step}</div>
             <div className="questions-container">
-              <div className="d-flex justify-content-left text_description"> {this.props.questions[this.props.question_step].description}</div> 
-              <Route path="/patient/:bank_name" component={QuestionBank}/>
+             <Route path="/patient/:bank_name" component={QuestionBank}/>
             </div>
           </div>
         </div>    

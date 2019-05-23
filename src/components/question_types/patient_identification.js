@@ -25,15 +25,9 @@ class Identification extends Component {
       return <WebcamComponent submit_action = {this.props.submit_action}/> 
     }else{
       return (
-        <div className="d-flex flex-row justify-contnet-center">
-          <div className="p-2 selector-holder"> 
-            <input className ="col btn-selector" onClick = {(e) => this.set_type_handler(e,'webcam')} 
-            type="button" value="Take a photo with my webcam"/> 
-          </div>
-          <div className="p-2 selector-holder"> 
-          <input className ="col btn-selector" onClick = {(e) => this.set_type_handler(e,'file')} 
-            type="button" value="Upload a photo of myself"/>
-          </div>
+       <div className="d-flex flex-row justify-content-between selector-component flex-wrap">
+          {components.btn_selector(this.set_type_handler, "Take a photo with my webcam" ,"webcam")} 
+          {components.btn_selector(this.set_type_handler, "Upload a photo of myself", "file")} 
         </div> 
       )
     } 

@@ -25,7 +25,7 @@ class TextArea extends Component {
   render(){ 
     return(
       <div>
-        <div className = "d-flex justify-content-center p-2 text-small-red">{this.state.msg}</div>
+        {this.state.msg?<div className = "d-flex justify-content-start text-small-red">{this.state.msg}</div>:null}
         <div className="form-group">
           <textarea onChange={this.update_text_handler} className="form-control" rows="5" />
         </div>
