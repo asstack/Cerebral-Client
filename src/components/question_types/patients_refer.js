@@ -54,7 +54,7 @@ class PatientsRefer extends Component {
                       remove:this.remove_item_handler.bind(this)}
 		return(
       <div className="d-flex flex-column therapist-question-container">
-        <div className="d-flex justify-content-left patient-refer-description">
+        <div className="d-flex justify-content-start patient-refer-description">
           <span>Please enter patient/s contact information.</span>
         </div>
         {[...Array(this.state.total_items)].map((e, index) => (components.patient_refer_inputs(event_handlers, this.state.items[index], index, this.state.total_items)))}  

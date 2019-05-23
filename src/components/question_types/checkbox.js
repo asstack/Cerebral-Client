@@ -59,7 +59,7 @@ class CheckBoxComponent extends Component {
   render(){
     return (
       <div className="check-box-question">    
-        {this.state.msg? <div className = "d-flex justify-content-center p-2 text-small-red">{this.state.msg}</div>:null}
+        {this.state.msg? <div className = "d-flex justify-content-start p-2 text-small-red">{this.state.msg}</div>:null}
         <div className="check-box-container">
           {this.state.options.map((item, index) => (this.map_data_to_checkbox(item, index)))}
         </div>

@@ -4,7 +4,7 @@ import uuidv1 from 'uuid'
 //TODO: replace the components name after get all componenets. some will reuse in different pages
 export const input_type_1 = (event_handler, text) => {
   return(
-    <div className="d-flex justify-content-center input-holder">
+    <div className="d-flex justify-content-start input-holder">
 			<input className="col input-type1" onChange={event_handler} defaultValue=""
 				type="text" placeholder={text}/>
     </div>
@@ -13,7 +13,7 @@ export const input_type_1 = (event_handler, text) => {
 
 export const input_type_autocomplete = (event_handler, text, autocomplete_value) => {
   return(
-    <div className="d-flex justify-content-center input-holder">
+    <div className="d-flex justify-content-start input-holder">
 			<input className="col input-type1" onChange={event_handler} defaultValue=""
 				type="text" placeholder={text} autoComplete={autocomplete_value}/>
     </div>
@@ -22,7 +22,7 @@ export const input_type_autocomplete = (event_handler, text, autocomplete_value)
 
 export const input_password_type_1 = (event_handler, text) => {
   return(
-    <div className="d-flex justify-content-center input-holder">
+    <div className="d-flex justify-content-start input-holder">
 			<input className="col input-type1" type="password" defaultValue="" 
 				onChange={event_handler} placeholder={text}/>
     </div>
@@ -87,7 +87,7 @@ export const button_half_size = (event_handler, item) => {
 
 export const patient_refer_inputs = (event_handler,item, index, total) => {
   return(
-    <div key={uuidv1()} className="d-flex flex-row justify-content-left patient-refer-items-holder">
+    <div key={uuidv1()} className="d-flex flex-row justify-content-start patient-refer-items-holder">
       <div className="d-flex align-content-center flex-between patient-refer-left-item">
         <span>{"Patient"+ (index+1)}</span>
       </div>

@@ -1,4 +1,5 @@
 import React, {Component} from 'react'
+import uuidv1 from 'uuid'
 import * as components from '../question_components/components'
 import PropTypes from 'prop-types'
 
@@ -34,8 +35,8 @@ class HeightWeight extends Component {
     }
   }
 
-  select_option = idx =>{
-    return <option value={idx}>{idx}</option>
+  select_option =(idx) =>{
+    return <option key={uuidv1()} className="height-select-option" value={idx}>{idx}</option>
   }
   
   render(){
@@ -48,11 +49,11 @@ class HeightWeight extends Component {
             <span className = "input-group-text span_height_weight">Height</span>
           </div>
          <select onChange = {this.update_height_ft_handler} className="custom-select input_height_weight">
-            <option value="" selected>Ft</option>
+           <option className="height-select-option" value="">{this.state.ft?this.state.ft:"Ft"}</option>
             {[...Array(6)].map((e, index)=>(this.select_option(index+2)))}
           </select>
          <select onChange = {this.update_height_in_handler} className="custom-select input_height_weight"> 
-            <option value="" selected>In</option>
+            <option className="height-select-option" value="">{this.state.inch?this.state.inch:"In"}</option>
             {[...Array(12)].map((e, index)=>(this.select_option(index)))}
          </select>
        </div>

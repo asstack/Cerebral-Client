@@ -42,7 +42,7 @@ class VideoSelector extends Component {
   render(){
     return (
       <div>
-        <div className = "d-flex justify-content-center text-big">
+        <div className = "d-flex justify-content-start text-big">
             <p>Tell me us more about why you're seeking out a prescription for antidepressants</p>
         </div>		
       {this.view(this.state.view_type)}
