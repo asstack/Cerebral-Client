@@ -85,8 +85,7 @@ class QuestionBank extends Component{
           if (option.name) update_service_line(option.name)	
           move_next_step(this.props.question_step)
         }
-      }
-      move_next_step(this.props.question_step)
+      }else move_next_step(this.props.question_step)
     })
   }
   
