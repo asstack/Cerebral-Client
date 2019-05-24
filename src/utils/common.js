@@ -22,83 +22,60 @@ import DosagePreference from '../components/question_types/dosage_preference';
 
 
 export const map_type_to_component = (question, handlers) => {
-  
-	if(!question) {return <div> Loading </div>}
-	
-	ReactGA.event({
-		category: 'Questions',
-		action: question.question_type
-	});
+  if(!question) return null
 
-		switch(question.question_type) {
-			case 'selector':
-				return selector(handlers.set_selector_handler, question)
-			case 'create_profile':
-				return <Route path='' render={(props) =>
-						    <CreateProfile
-							    submit_action = {handlers.did_create_patient}/>}/>
-			case 'sign_up':
-				return <Route path='' render={(props) =>
-						    <CreateProfile
-							    submit_action = {handlers.did_create_patient}/>}/>	
-			case 'bank_selector':
-        return selector(handlers.set_bank_selector_handler, 
-          question)
-			case 'phone':
-				return <Route path='' render={(props) => 
-						    <Phone skip_action = {handlers.next_step_handler}
-							         submit_action = {handlers.submit_answer_and_next_step}/>}/>
-			case 'checkboxes':
-				return <Route path='' render={(props) => 
-                <CheckBoxComponent options = {question.options} 
-                                   submit_action = {handlers.submit_answer_and_next_step}/>}/>
-			case 'date':
-        return <Route path='' render={(props) =>
-                <Date submit_action = {handlers.submit_answer_and_next_step}/>}/>   
-			case 'height_weight':
-        return <Route path='' render={(props) =>
-                <HeightWeight submit_action = {handlers.submit_answer_and_next_step}/>}/>   
-			case 'state_selector':
-        return <Route path='' render={(props) =>
-                <StateSelector submit_action = {handlers.submit_answer_and_next_step}/>}/>   	
-			case 'yes_no_details':
-        return <Route path='' render={(props) =>
-                <YesNoDetails
-                  description = {question.options} 
-                  submit_action = {handlers.submit_answer_and_next_step}/>}/>  
-			case 'patient_identification':
-				return <Route path='' render={(props) =>
-								<Identification submit_action = {handlers.submit_and_upload_data}/>}/>  
-			case 'patient_shipping':
-        return <Route path='' render={(props) =>
-								<PatientShipping submit_action = {handlers.submit_answer_and_next_step}/>}/>  
-			case 'patient_payment':
-        return <Route path='' render={(props) =>
-								<PatientPayment submit_action = {handlers.submit_answer_and_next_step}/>}/>  
-			case 'side_effects':
-				return <Route path='' render={(props) =>
-							<SideEffects submit_action = {handlers.submit_answer_and_next_step}/>}/>  
-			case 'medication_preference':
-				return <Route path='' render={(props) =>
-							<MedicationPreference submit_action = {handlers.submit_answer_and_next_step}/>}/>  
-			case 'dosage_preference':
-				return <Route path='' render={(props) =>
-							<DosagePreference submit_action = {handlers.submit_answer_and_next_step}/>}/>  
-			case 'patient_video':
-				return <Route path='' render={(props) =>
-							<VideoSelector submit_action = {handlers.submit_and_upload_data}/>}/>  
-			default:
-				return(
-					<div>
-					<div className='pb-5 d-flex flex-row justify-content-center'>
-						<img src='https://cdn.pixabay.com/photo/2017/06/16/07/26/under-construction-2408060__340.png'/>
-					</div>
-					<div className='d-flex flex-row justify-content-center'>
-						<input className ="col btn-confirm text-btn" type="button" onClick={handlers.next_step_handler.bind(this)} value="Next"/>
-					</div>
-				</div>
-				)
-		}
+  switch(question.question_type) {
+    case 'selector':
+      return selector(handlers.set_selector_handler, question)
+    case 'create_profile':
+      return <CreateProfile
+                submit_action = {handlers.did_create_patient}/>
+    case 'sign_up':
+      return <CreateProfile
+                submit_action = {handlers.did_create_patient}/> 
+    case 'bank_selector':
+      return selector(handlers.set_bank_selector_handler, 
+        question)
+    case 'phone':
+      return <Phone skip_action = {handlers.next_step_handler}
+                     submit_action = {handlers.submit_answer_and_next_step}/>
+    case 'checkboxes':
+      return <CheckBoxComponent options = {question.options} 
+                submit_action = {handlers.submit_answer_and_next_step}/>
+    case 'date':
+      return <Date submit_action = {handlers.submit_answer_and_next_step}/> 
+    case 'height_weight':
+      return <HeightWeight submit_action = {handlers.submit_answer_and_next_step}/>   
+    case 'state_selector':
+      return <StateSelector submit_action = {handlers.submit_answer_and_next_step}/>    
+    case 'yes_no_details':
+      return <YesNoDetails
+                description = {question.options} 
+                submit_action = {handlers.submit_answer_and_next_step}/> 
+    case 'patient_identification':
+      return <Identification submit_action = {handlers.submit_and_upload_data}/>  
+    case 'patient_shipping':
+      return <PatientShipping submit_action = {handlers.submit_answer_and_next_step}/> 
+    case 'patient_payment':
+      return <PatientPayment submit_action = {handlers.submit_answer_and_next_step}/> 
+    case 'side_effects':
+      return <SideEffects submit_action = {handlers.submit_answer_and_next_step}/>  
+    case 'medication_preference':
+      return <MedicationPreference submit_action = {handlers.submit_answer_and_next_step}/>  
+    case 'dosage_preference':
+      return <DosagePreference submit_action = {handlers.submit_answer_and_next_step}/>  
+    case 'patient_video':
+      return <VideoSelector submit_action = {handlers.submit_and_upload_data}/>  
+    default:
+      return(
+        <div>
+        <div className='pb-5 d-flex flex-row justify-content-center'>
+          <img src='https://cdn.pixabay.com/photo/2017/06/16/07/26/under-construction-2408060__340.png'/>
+        </div>
+        <div className='d-flex flex-row justify-content-center'>
+          <input className ="col btn-confirm text-btn" type="button" onClick={handlers.next_step_handler.bind(this)} value="Next"/>
+        </div>
+      </div>)
+   }
  }
-
 

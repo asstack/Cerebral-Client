@@ -3,33 +3,40 @@ import {Router, Route, withRouter} from 'react-router-dom'
 import {connect} from 'react-redux'
 import {set_question_banks_step, set_step, set_current_question_bank_by_name, update_patient_question_banks, upload_object_for_current_question, update_patient_state, create_patient_from_user,create_visit,update_service_line,answer_current_question } from '../../actions/patient_action'
 import { register_user, sign_in} from '../../actions/user_auth_action'
-import * as utils from '../../utils/common.js'
+import * as wrapper from '../../utils/wrapper.js'
+import * as common from '../../utils/common.js'
 import ReactGA from 'react-ga'
 
 
-//TODO: currently this container is only for patient. So, we need to get functions from parent or need to make higher order component 
 class QuestionBank extends Component{
   
   constructor(props){
     super(props)
-    //TODO: not sure if we want to use one container for q-banks or seperate
     this.state = {
-      bank_step:null, 
+      bank_step:this.props.question_banks_step,
+      banks:this.props.question_banks,
+      bank_name:this.props.bank_name,
+      question_step:this.props.question_step
     }
   }
  
+  update_bank_state = () => {
+    this.setState({bank_step:this.props.question_banks_step, 
+                   bank_name:this.props.bank_name,
+                   banks:this.props.question_banks})}
+
   componentDidMount(){
     const {bank_name, question_banks_step, question_banks, patient_state, update_patient_state} = this.props
     const step = this.props.question_banks_step;
     const url_info = this.props.location.pathname.split("/")[2];    
-    if(url_info==='qualification'){ 
+    if(!bank_name || url_info==='qualification'){ 
       this.props.update_patient_question_banks(['qualification'], 0)		
-      this.props.set_current_question_bank_by_name('qualification')	
-      this.props.history.push("/patient/qualification")  
+      this.props.set_current_question_bank_by_name('qualification') 
+      this.update_bank_state() 
+      if(url_info!=='qualification') this.props.history.push("/patient/qualification")
     }else if(bank_name === question_banks[step]){
-      this.setState({bank_step:step})
+      this.update_bank_state()
     }else if(question_banks && question_banks[step]){
-      this.setState({bank_step:step})
       update_patient_state(question_banks[step])
       this.props.set_current_question_bank_by_name(question_banks[step]) 
       this.props.history.push(`/patient/${question_banks[step]}`) 
@@ -41,7 +48,7 @@ class QuestionBank extends Component{
     const {bank_name, question_banks_step, question_banks, update_patient_state} = this.props
 
     if(this.state.bank_step!==question_banks_step){
-      this.setState({bank_step: question_banks_step})
+      this.update_bank_state()
       update_patient_state(question_banks[question_banks_step])
       this.props.set_current_question_bank_by_name(question_banks[question_banks_step]) 
       this.props.history.push("/patient/"+question_banks[question_banks_step]) 
@@ -86,7 +93,6 @@ class QuestionBank extends Component{
     })
   }
   
-  //TODO: IMPORTANT!! - creat profile differ by q-bank (patient qualification, profile, therapist questions) So, MUST get function from parent or make higher order component
   did_create_patient = (state) => {
     const service_line = this.props.service_line.id;
     this.props.register_user(state)
@@ -132,15 +138,11 @@ class QuestionBank extends Component{
       submit_and_upload_data:this.submit_and_upload_data.bind(this)
     }
     const question = this.props.questions[this.props.question_step]
-    
+
+    const component = common.map_type_to_component(question, handlers)
+    const QuestionsWrapper = wrapper.questions_wrapper(component, this.props.questions, this.state) 
     return(
-      <div className="d-flex flex-column main-noprogress">
-        <div className="description_noprogress">
-          <h1>{question?question.title:null}</h1>
-              {(question && question.description)?<div className="d-flex justify-content-left text_description"> {question.description}</div>:null} 
-        </div>
-        {utils.map_type_to_component(question, handlers)}
-     </div> 
+      <QuestionsWrapper/> 
     );
   }
 }

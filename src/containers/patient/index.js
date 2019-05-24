@@ -19,15 +19,10 @@ class Patient extends Component{
     }
   }
 
-
-
   update_width_handler = () =>{
     this.setState({width: window.innerWidth}); 
   }
 
-
-  //TODO: code refactoring for states that sharing redux state (qualification, profile, shipping_payment)
-  //TODO: Higher order components for question bank related containers 
   componentDidMount(){ 
     const init_state = this.props.location.pathname.split("/")[2];    
 
@@ -47,7 +42,6 @@ class Patient extends Component{
   }
  
 	componentDidUpdate(){	
-    //window.addEventListener("resize", this.update_width_handler.bind(this));
     
     window.addEventListener("resize", this.update_width_handler);
     const current_path = this.props.location.pathname
@@ -64,7 +58,6 @@ class Patient extends Component{
   }
   
   map_type_to_style_class = (state, target) => {
-    //const align = state===0?justify-content-between:justify-content-center;
     if(state === target){
       return "col d-flex justify-content-between solid-border-bottom text-small menu-bar-item-holder";
     }else{
@@ -100,8 +93,6 @@ class Patient extends Component{
 	}
 
 
-  //TODO: update dynamic bounding by state
-  //TODO: add redux state for size of questions
   // uses https://reacttraining.com/react-router/web/api/Route
   render_views(state){
     
@@ -120,7 +111,6 @@ class Patient extends Component{
         <Route path="/patient/sign_in" component={SignIn}/>
       )
     }else if(this.props.question_banks.length===1){
-      //TODO: temporarily hard coded. It is only for selecting type of q banks, this question may be moved to qualification bank 
       return(
         <div className="d-flex flex-column container-noprogress">
             <div className="d-flex flex-row justify-content-left header-noprogress">
