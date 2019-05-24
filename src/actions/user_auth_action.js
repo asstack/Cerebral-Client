@@ -10,6 +10,13 @@ const set_user = user_info => ({
   user_attr:user_info
 })
 
+export const reset_password = (email, redirect_url) => (dispatch, getState) =>  {
+
+  // sign in API call here
+  var headers = {'Content-Type': 'application/json'}
+  return axios.post("/api/auth/password" ,{email:email, redirect_url:redirect_url}, {headers: headers})
+}
+
 export const sign_in = user_info => (dispatch, getState) =>  {
 
   const {email, password} = user_info

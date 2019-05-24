@@ -3,6 +3,7 @@ import {Route, withRouter} from "react-router-dom"
 import {connect} from 'react-redux'
 import Patient from './containers/patient'
 import MainPage from './containers'
+import PasswordReset from './containers/user'
 import Identification from './components/question_types/patient_identification'
 import {update_app_state} from './actions'
 import ReactGA from 'react-ga'
@@ -48,6 +49,8 @@ class App extends Component{
     switch(state) {
       case 'patient':
         return Patient
+      case 'user':
+          return PasswordReset
       default:
         return MainPage;
     }
@@ -61,6 +64,8 @@ class App extends Component{
         return "/treatment"
       case 'patient':
         return "/patient"
+      case 'user':
+        return "/user"
       default:
         return "/";
     }
