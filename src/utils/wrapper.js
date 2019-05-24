@@ -4,30 +4,17 @@ import {connect} from 'react-redux'
 
 
 //this container is designed for one question bank. 
-export const questions_wrapper = (WrappedComponent, questions, p_props) => {
+export const questions_wrapper = (WrappedComponent, question, p_props) => {
   return class extends Component{
     constructor(props){
       super(props)
       this.state = {
-        step:p_props.question_step, 
-        questions:questions,
-        bank_name:p_props.bank_name
+        question:question,
       }
-    }
+    } 
     
-    componentDidUpdate(){
-      if(this.state.step!=this.props.question_step){
-        this.setState({step:this.props.question_step}) 
-      }     
-      if(this.state.bank_name!=p_props.bank_name){
-          this.setSate({bank_name:p_props.bank_name,
-            questions:p_props.questions,
-            step:p_props.question_step})
-      }
-    }
- 
     render(){ 
-      const question = this.state.questions[this.state.step]  
+      const question = this.state.question 
       return(
         <div className="d-flex flex-column main-noprogress">
           <div className="description_noprogress">

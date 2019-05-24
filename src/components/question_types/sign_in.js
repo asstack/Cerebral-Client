@@ -27,10 +27,7 @@ class SignIn extends Component {
 
 			
     sign_in_handler = e => {
-      console.log("handler: ", this.state)
       if(this.state.password && this.state.email){
-
-        console.log("inside handler: ", this.state)
         this.props.submit_action(this.state)
       }
    }
