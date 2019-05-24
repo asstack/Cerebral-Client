@@ -48,10 +48,10 @@ export const confirm_button_type_1 = (event_handler, description) => {
   )
 }
 
-export const confirm_button_type_2 = (event_handler, description) => {
+export const confirm_button_type_2 = (event_handler, description, type) => {
   return(
     <div className="d-flex justify-content-center link-btn-holder">
-      <input className ="col btn-link btn" onClick={event_handler} type="button" value={description}/>
+      <input className ="col btn-link btn" onClick={e=>event_handler(e, type)} type="button" value={description}/>
     </div>
   )
 }

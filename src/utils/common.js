@@ -18,7 +18,7 @@ import ReactGA from 'react-ga'
 import SideEffects from '../components/question_types/side_effects';
 import MedicationPreference from '../components/question_types/medication_preference';
 import DosagePreference from '../components/question_types/dosage_preference';
-
+import RegisterManager from '../components/question_types/register_manager'
 
 
 export const map_type_to_component = (question, handlers) => {
@@ -28,8 +28,10 @@ export const map_type_to_component = (question, handlers) => {
     case 'selector':
       return selector(handlers.set_selector_handler, question)
     case 'create_profile':
-      return <CreateProfile
-                submit_action = {handlers.did_create_patient}/>
+      return <RegisterManager
+                type = 'register'
+                signin_submit_action = {handlers.patient_sign_in}
+                register_submit_action = {handlers.did_create_patient}/>
     case 'sign_up':
       return <CreateProfile
                 submit_action = {handlers.did_create_patient}/> 

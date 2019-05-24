@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import {Router, Route, withRouter} from 'react-router-dom'
 import {connect} from 'react-redux'
-import {set_question_banks_step, set_step, set_current_question_bank_by_name, update_patient_question_banks, upload_object_for_current_question, update_patient_state, create_patient_from_user,create_visit,update_service_line,answer_current_question } from '../../actions/patient_action'
+import {set_visit, get_patient_most_recent_visits, set_patient, set_question_banks_step, set_step, set_current_question_bank_by_name, update_patient_question_banks, upload_object_for_current_question, update_patient_state, create_patient_from_user,create_visit,update_service_line,answer_current_question } from '../../actions/patient_action'
 import { register_user, sign_in} from '../../actions/user_auth_action'
 import * as wrapper from '../../utils/wrapper.js'
 import * as common from '../../utils/common.js'
@@ -127,6 +127,18 @@ class QuestionBank extends Component{
       this.patient_state_transition_helper()
     })
   }
+
+  sign_in_and_next = (info) => { 
+    this.props.sign_in(info).then ((resp) => {
+      if (resp.user_attr.patient) {
+        this.props.set_patient(resp.user_attr.patient);
+        this.props.get_patient_most_recent_visits(resp.user_attr.patient).then((visits) => {
+          this.props.set_visit(visits[0])
+          this.patient_state_transition_helper()
+        })
+      }
+    }) 
+  }
   
  
   render(){
@@ -136,7 +148,8 @@ class QuestionBank extends Component{
       set_bank_selector_handler:this.set_bank_selector_handler.bind(this),
       did_create_patient: this.did_create_patient.bind(this),
       submit_answer_and_next_step: this.submit_answer_and_next_step.bind(this),
-      submit_and_upload_data:this.submit_and_upload_data.bind(this)
+      submit_and_upload_data:this.submit_and_upload_data.bind(this),
+      patient_sign_in:this.sign_in_and_next.bind(this)
     }
     const question = this.props.questions[this.props.question_step]
 
@@ -171,4 +184,4 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default withRouter(connect(mapStateToProps, {set_question_banks_step, set_step, update_patient_question_banks,upload_object_for_current_question, register_user, sign_in, create_patient_from_user, create_visit, update_service_line,answer_current_question, update_patient_state,set_current_question_bank_by_name}) (QuestionBank))
+export default withRouter(connect(mapStateToProps, {set_patient, set_visit, get_patient_most_recent_visits, set_question_banks_step, set_step, update_patient_question_banks,upload_object_for_current_question, register_user, sign_in, create_patient_from_user, create_visit, update_service_line,answer_current_question, update_patient_state,set_current_question_bank_by_name}) (QuestionBank))

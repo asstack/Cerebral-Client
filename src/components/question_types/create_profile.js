@@ -12,12 +12,9 @@ class CreateProfile extends Component {
       password:'',
       password_confirm:'',
       msg:'',
-      is_consent:false
+      is_consent:false,
+      state:null
     }
-  }
-
-  login_handler = e => {
-    // switch to login instead
   }
 
   update_handler = e => { 
@@ -39,6 +36,10 @@ class CreateProfile extends Component {
       }
     }
    }
+
+  login_handler = e => {
+    this.setState({state:'sign_in'}) 
+  }
 
   update_email = (e) => {
     const em = e.target.value
@@ -82,7 +83,7 @@ class CreateProfile extends Component {
         {components.checkbox_type_1(this.set_concensus.bind(this), 'I consent to Telehealth, terms and privacy policy. All information is strictly confidential and is used to help our professionals provide the best care for you.')}
         </div>
         {components.confirm_button_type_1(this.update_handler.bind(this), "Sign up for Cerebral Updates")}
-        {components.confirm_button_type_2(this.login_handler.bind(this), "I already have a Cerebral account")}
+        {components.confirm_button_type_2(this.props.state_update, "I already have a Cerebral account", 'create')}
       </div>
     );
   }
