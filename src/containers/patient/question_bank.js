@@ -19,7 +19,6 @@ class QuestionBank extends Component{
   }
  
   componentDidMount(){
-    //TODO: this part should be moved to wrapper and thie component will check only one bank
     const {bank_name, question_banks_step, question_banks, patient_state, update_patient_state} = this.props
     const step = this.props.question_banks_step;
     const url_info = this.props.location.pathname.split("/")[2];    
@@ -121,19 +120,14 @@ class QuestionBank extends Component{
       this.patient_state_transition_helper()
     })
   }
-
-	display_title = (questions, step) =>{
-		if(questions && questions[step]){
-			return questions[step].title
-		}
-	}
-
+  
+ 
   render(){
     const handlers = {
-      next_step_handler:this.next_step_handler,
-      set_selector_handler:this.set_selector_handler,
-      set_bank_selector_handler:this.set_bank_selector_handler,
-      did_create_patient: this.did_create_patient,
+      next_step_handler:this.next_step_handler.bind(this),
+      set_selector_handler:this.set_selector_handler.bind(this),
+      set_bank_selector_handler:this.set_bank_selector_handler.bind(this),
+      did_create_patient: this.did_create_patient.bind(this),
       submit_answer_and_next_step: this.submit_answer_and_next_step.bind(this),
       submit_and_upload_data:this.submit_and_upload_data.bind(this)
     }
@@ -142,10 +136,10 @@ class QuestionBank extends Component{
     return(
       <div className="d-flex flex-column main-noprogress">
         <div className="description_noprogress">
-          <h1>{this.display_title(this.props.questions, this.props.question_step)}</h1>
-              {(question && question.description)?<div className="d-flex justify-content-left text_description"> {this.props.questions[this.props.question_step].description}</div>:null} 
+          <h1>{question?question.title:null}</h1>
+              {(question && question.description)?<div className="d-flex justify-content-left text_description"> {question.description}</div>:null} 
         </div>
-        {utils.map_type_to_component(this.props.questions, this.props.question_step, handlers)}
+        {utils.map_type_to_component(question, handlers)}
      </div> 
     );
   }

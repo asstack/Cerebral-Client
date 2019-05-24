@@ -19,36 +19,38 @@ import SideEffects from '../components/question_types/side_effects';
 import MedicationPreference from '../components/question_types/medication_preference';
 import DosagePreference from '../components/question_types/dosage_preference';
 
-export const map_type_to_component = (questions, step, handlers) => {
+
+
+export const map_type_to_component = (question, handlers) => {
   
-	if(!questions || !questions[step]) {return <div> Loading </div>}
+	if(!question) {return <div> Loading </div>}
 	
 	ReactGA.event({
 		category: 'Questions',
-		action: questions[step].question_type
+		action: question.question_type
 	});
 
-		switch(questions[step].question_type) {
+		switch(question.question_type) {
 			case 'selector':
-				return selector(handlers.set_selector_handler.bind(this), questions[step])
+				return selector(handlers.set_selector_handler, question)
 			case 'create_profile':
 				return <Route path='' render={(props) =>
 						    <CreateProfile
-							    submit_action = {handlers.did_create_patient.bind(this)}/>}/>
+							    submit_action = {handlers.did_create_patient}/>}/>
 			case 'sign_up':
 				return <Route path='' render={(props) =>
 						    <CreateProfile
-							    submit_action = {handlers.did_create_patient.bind(this)}/>}/>	
+							    submit_action = {handlers.did_create_patient}/>}/>	
 			case 'bank_selector':
-        return selector(handlers.set_bank_selector_handler.bind(this), 
-          questions[step])
+        return selector(handlers.set_bank_selector_handler, 
+          question)
 			case 'phone':
 				return <Route path='' render={(props) => 
 						    <Phone skip_action = {handlers.next_step_handler}
 							         submit_action = {handlers.submit_answer_and_next_step}/>}/>
 			case 'checkboxes':
 				return <Route path='' render={(props) => 
-                <CheckBoxComponent options = {questions[step].options} 
+                <CheckBoxComponent options = {question.options} 
                                    submit_action = {handlers.submit_answer_and_next_step}/>}/>
 			case 'date':
         return <Route path='' render={(props) =>
@@ -62,7 +64,7 @@ export const map_type_to_component = (questions, step, handlers) => {
 			case 'yes_no_details':
         return <Route path='' render={(props) =>
                 <YesNoDetails
-                  description = {questions[step].options} 
+                  description = {question.options} 
                   submit_action = {handlers.submit_answer_and_next_step}/>}/>  
 			case 'patient_identification':
 				return <Route path='' render={(props) =>
