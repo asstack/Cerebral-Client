@@ -23,6 +23,7 @@ class QuestionBank extends Component{
   update_bank_state = () => {
     this.setState({bank_step:this.props.question_banks_step, 
                    bank_name:this.props.bank_name,
+                   question_step:this.props.question_step,
                    banks:this.props.question_banks})}
 
   componentDidMount(){
@@ -149,7 +150,6 @@ class QuestionBank extends Component{
 
 //TODO: elaborate to save memory
 const mapStateToProps = (state) => {
-
   const {
     global_reducer: {app_state, current_user},
     patient_reducer: {patient_object, service_line, question_banks,question_banks_step, patient_state, step, question_bank_id, questions, current_bank_name, is_complete}
