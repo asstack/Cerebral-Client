@@ -12,7 +12,6 @@ class SignIn extends Component {
       super(props)
       this.state = {
         email:'',
-        name:'',
         password:''
       }
     }
@@ -26,16 +25,12 @@ class SignIn extends Component {
       this.setState({password:pwd})
     }
 
-    state_update_handler = e => {
-      const {move_patient_sign_up}=this.props
-      move_patient_sign_up()
-    }
 			
     sign_in_handler = e => {
-      this.props.sign_in(this.state).then ((resp) => {
-        console.log(resp)
-      })
-    }
+      if(this.state.password && this.state.email){
+        this.props.submit_action(this.state)
+      }
+   }
 
   //check: Please input your email address ex) yourname@example.com 
     
@@ -45,7 +40,7 @@ class SignIn extends Component {
           {components.input_type_1(this.update_email.bind(this), "Email Address")}
           {components.input_password_type_1(this.update_password.bind(this), "Password")}
           {components.confirm_button_type_1(this.sign_in_handler.bind(this), "Get started with online visit")}
-          {components.text_button_type_1(this.state_update_handler.bind(this), "I don't have an account.")}
+          {components.confirm_button_type_2(this.props.state_update, "I don't have an account.", 'signin')}
         </div>
       );
     }

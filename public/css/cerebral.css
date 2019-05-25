@@ -1,15 +1,16 @@
-@import url('https://fonts.googleapis.com/css?family=Proxima+Nova');
-@import url('https://fonts.googleapis.com/css?family=Montserrat&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Proxima+Nova:regular,600');
+@import url('https://fonts.googleapis.com/css?family=Montserrat:regular,600&display=swap');
 
 body {
-
   font-family: "Montserrat";
+  font-weight: regular;
+  letter-spacing: -1.5px;
 }
 
 h1 {
 
 
-  font-weight: 1000;
+  font-weight: 600;
 
   /*
   font-family: Montserrat;
@@ -19,7 +20,6 @@ h1 {
   font-size: 36px;
   line-height: 50px;
 
-  letter-spacing: -1px;
 
   color: #250044;
 }
@@ -55,6 +55,7 @@ h1 {
 
 .description_noprogress h1 {
    margin-bottom:0px;
+   font-weight: 600;
    color: #250044;
 }
 /*----------------- components ------------------------*/
@@ -64,7 +65,7 @@ h1 {
 
 .button-two-selector {
   font-size: 18px;
-  font-weight: bold;
+  font-weight: 600;
   min-width: 300px;
   height: 65px;
   border: 2px solid #250044;
@@ -82,7 +83,7 @@ h1 {
 
 .button-multi-selector {
   font-size: 18px;
-  font-weight: bold;
+  font-weight: 600;
   margin-bottom: 20px;
   width: 100%;
   height: 65px;
@@ -360,7 +361,7 @@ h1 {
 
 .text-middle {
   font-size: 20px;
-  font-weight: bold;
+  font-weight: 600;
   line-height: 37px;
   letter-spacing: -0.43px;
   color: rgba(37, 0, 68, 1.0);
@@ -676,7 +677,7 @@ h1 {
 }
 
 .menu-item {
-  font-weight:1000;
+  font-weight: 600;
   padding-bottom:10px;
   font-size:16px;
 }

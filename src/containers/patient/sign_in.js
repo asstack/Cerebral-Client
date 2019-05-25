@@ -38,8 +38,7 @@ class SignIn extends Component {
   }
 
   state_update_handler = e => {
-    const {move_patient_sign_up}=this.props
-    move_patient_sign_up()
+    this.props.history.push('/patient/qualification') 
   }
 
   sign_in_handler = e => {
@@ -47,7 +46,6 @@ class SignIn extends Component {
       console.log(resp)
       if (resp.user_attr.patient) {
         this.props.set_patient(resp.user_attr.patient);
-
         this.props.get_patient_most_recent_visits(resp.user_attr.patient).then((visits) => {
           this.props.set_visit(visits[0])
         })
@@ -72,8 +70,7 @@ class SignIn extends Component {
                 {components.confirm_button_type_2(this.state_update_handler.bind(this), "I don't have an account.")}
               </div>  
           </div>
-      </div>
-  
+      </div> 
    );
   }
 }

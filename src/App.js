@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {Route, withRouter} from "react-router-dom"
 import {connect} from 'react-redux'
 import Patient from './containers/patient'
+import Therapist from './containers/therapist'
 import MainPage from './containers'
 import PasswordReset from './containers/user'
 import Identification from './components/question_types/patient_identification'
@@ -51,6 +52,8 @@ class App extends Component{
         return Patient
       case 'user':
           return PasswordReset
+      case 'therapist':
+          return Therapist 
       default:
         return MainPage;
     }
@@ -64,6 +67,8 @@ class App extends Component{
         return "/treatment"
       case 'patient':
         return "/patient"
+      case 'therapist':
+        return "/therapist"
       case 'user':
         return "/user"
       default:
