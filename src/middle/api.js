@@ -53,14 +53,11 @@ export const api_middleware = handleActions({
     };
   },
   [GET_SUCCESS]: (state, action) => {
-    const { title, body } = action.payload.data;
 
     return {
       ...state,
       status: 'SUCCESS',
-      data: {
-          title, body
-      }
+      data: actoin.data 
     };
   },
   [GET_FAILURE]: (state, action) => {
@@ -68,7 +65,7 @@ export const api_middleware = handleActions({
       ...state,
       pending: 'FAILURE',
       error: action.error
-  }
+    }
   }
 }, initial_api);
 
