@@ -4,7 +4,7 @@ import * as app_types from '../actions'
 import * as user_auth_types from '../actions/user_auth_action'
 import * as patient_action_types from '../actions/patient_action'
 import {patient_reducer, init_patient_state} from './patient_reducer'
-
+import {api_middleware} from '../middle/api'
 
 // https://redux.js.org/basics/reducers#designing-the-state-shape
 const init_global_state = {
@@ -54,7 +54,8 @@ const global_reducer = handleActions({
 
 const appReducer = combineReducers({
   patient_reducer,
-  global_reducer
+  global_reducer,
+  api_middleware
 })
 
 const rootReducer = (state, action) => {
