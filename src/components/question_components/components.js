@@ -100,7 +100,7 @@ export const patient_refer_inputs = (event_handler,item, index, total) => {
         </div>
       </div>
       <div className="d-flex align-content-center flex-between patient-refer-right-item">
-        {(total>3 && index+1===total)?<image onClick={event_handler.remove}className="remove-button" src='/img/patient_remove.png' />:<div></div>}
+        {(total>3 && index+1===total)?<img onClick={event_handler.remove}className="remove-button" src='/img/patient_remove.png' />:<div></div>}
       </div>
     </div>
   )

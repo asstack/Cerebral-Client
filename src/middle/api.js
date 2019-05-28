@@ -21,6 +21,7 @@ export const api_call = (url, header, body, type, update_data=null) => dispatch 
 
   return api_axios(url, header, body, type).then(
     (resp) => {
+
       resp.data.data['client'] = resp.headers.client
       resp.data.data['access-token'] = resp.headers['access-token']
          

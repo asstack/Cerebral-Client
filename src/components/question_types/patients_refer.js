@@ -58,7 +58,7 @@ class PatientsRefer extends Component {
         {[...Array(this.state.total_items)].map((e, index) => (components.patient_refer_inputs(event_handlers, this.state.items[index], index, this.state.total_items)))}  
         <div className="d-flex justify-content-end patient-refer-add-btn-holder">
           <div id='add_patient' className="add-patient-button" onClick={this.add_item_handler}>
-            <image className="remove-button" src='/img/add_patient.png'/> <span className="add_patient_btn_text">Add patient</span>
+            <img className="remove-button" src='/img/add_patient.png'/> <span className="add_patient_btn_text">Add patient</span>
           </div>
         </div>
         <div className="d-flex patient-refer-submit-btn-holder">
