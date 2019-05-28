@@ -208,11 +208,24 @@ h1 {
 }
 
 .input-type1 {
-
   background: #FFFFFF;
   border: 1px solid #250044;
   border-radius: 2px;
   height: 60px;
+}
+
+.small-holder {
+  height: 40px;
+  width: 360px;
+  padding: 9px 0px 9px 32px;
+}
+
+.small-holder::placeholder {
+  font-size: 18px;
+  line-height: 21px;
+  letter-spacing: -1.5px;
+
+  color: #250044;
 }
 
 .input_height_weight {
@@ -253,6 +266,14 @@ h1 {
 .checkbox-type1{
   max-width: 20px;
   height: 30px;
+  border-radius: 4px;
+  border-style: solid;
+  border-width: 2px;
+  border-color: rgba(37, 0, 68, 1.0);
+}
+
+.checkbox-type-small{
+  max-width: 20px;
   border-radius: 4px;
   border-style: solid;
   border-width: 2px;
@@ -331,13 +352,26 @@ h1 {
 }
 
 .checkbox-text {
-  padding-left:15px;
+  padding-left:30px;
   font-size: 16px;
   line-height: 30px;
   letter-spacing: -0.344px;
   color: #444444;
-
 }
+
+
+.checkbox-small-text {
+  font-size: 18px;
+  line-height: 22px;
+  letter-spacing: -0.43px;
+  color: #250044;
+  padding-left:15px;
+}
+
+.checkbox-vertical-holder {
+  margin-bottom: 20px;
+}
+
 
 .text-small-2 {
 
@@ -587,7 +621,6 @@ h1 {
 
 .patient-refer-items-holder {
   margin-top:30px;
-
 }
 
 .patient-refer-input-holder {
@@ -693,6 +726,87 @@ h1 {
 
 .add-patient-button:hover{
   cursor:pointer;
+}
+
+
+.patient-info-items-holder {
+  margin-top:50px;
+}
+
+.patient-info-left-item {
+  width: 167px;
+  font-size: 18px;
+  line-height: 18px;
+  letter-spacing: -1.5px;
+  color: #9b9b9b;
+}
+
+.patient-info-text-item {
+  font-size: 18px;
+  line-height: 18px;
+  letter-spacing: -1.5px;
+  color: #9B9B9B;
+}
+
+.patient-info-radio-item {
+  font-size: 18px;
+  width: 490px;
+  font-size: 18px;
+  line-height: 18px;
+  letter-spacing: -1.5px;
+  margin-right:15px;
+  color: #9b9b9b;
+
+}
+
+.patient-info-submit-btn-holder {
+  margin-top: 50px;
+  padding-left:160px;
+  padding-right:40px;
+}
+
+
+/*custom selector for patient info*/
+
+.custom-selector {
+  width: 414px;
+  height: 60px;
+  background: #250044;
+  border-radius: 2px;
+  font-size: 18px;
+  line-height: 18px;
+  text-align: center;
+  letter-spacing: -0.43px;
+  color: #FFFFFF;
+}
+
+.custom-selector::hover {
+  cursor:pointer;
+}
+
+.custom-options-holder {
+  margin-top:17px; 
+  width: 414px;
+  box-shadow: 0px 1px 4px #9B9B9B;
+  border-radius: 0px 2px 0px 0px;
+}
+
+.custom-options-holder::hover {
+  cursor:pointer;
+}
+
+.option-not-selected {
+  width: 414px;
+  height: 60px;
+  font-size: 18px;
+  line-height: 18px;
+  text-align: center;
+  letter-spacing: -0.43px;
+}
+
+.patient-info-textarea {
+
+  margin-top:40px;
 }
 
 

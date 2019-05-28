@@ -3,6 +3,7 @@ import {Router, Route, withRouter} from 'react-router-dom'
 import { connect } from 'react-redux'
 import Account from './account'
 import PatientsRefer from '../../components/question_types/patients_refer' 
+import PatientInfo from '../../components/question_types/patient_info' 
 
 class Therapist extends Component{
   constructor(props){
@@ -22,6 +23,8 @@ class Therapist extends Component{
         <input type='button' value='refer patient' onClick={e=>this.type_change_handler('refer')}/>
         <input type='button' value='login for patient'/>
         <input type='button' value='temp refer component' onClick={e=>this.type_change_handler('temp_refer')} />
+        <input type='button' value='temp refer component' onClick={e=>this.type_change_handler('temp_info')} />
+
       </div>
     )
   }
@@ -34,6 +37,8 @@ class Therapist extends Component{
         return <Account /> 
       case 'temp_refer':
         return <PatientsRefer />
+      case 'temp_info':
+        return <PatientInfo />
       default: 
         return this.cover_page() 
     }
