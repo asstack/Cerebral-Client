@@ -57,7 +57,7 @@ export const api_middleware = handleActions({
     return {
       ...state,
       status: 'SUCCESS',
-      data: actoin.data 
+      data: action.data 
     };
   },
   [GET_FAILURE]: (state, action) => {

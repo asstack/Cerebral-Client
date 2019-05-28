@@ -1,0 +1,29 @@
+import * as global_actions from '../../actions/user_auth_action'
+import { register_user } from './user_auth_action';
+
+export const SET_THERAPIST = 'patient/SET_THERAPIST'
+
+export const set_therapist = (therapist_object) => ({
+    type:SET_THERAPIST,
+    therapist_object: therapist_object
+  })
+
+
+  export const refer_patient = (patient_info) => (dispatch, getState) => {
+
+    // create a user for the patient first
+    // TODO: what happens if the user already exists here?
+    return dispatch(global_actions.register_user(patient_info)).then ((patient_user_info) => {
+
+        var user_attr = get_user_attr(getState())
+        var therapist = getState().therapist_reducer.therapist_object
+
+        var body = {user_id: patient_user_info.id}
+    
+        return axios.post(`/api/therapists/${therapist.id}/patients`, body, {headers: make_headers(user_attr)})
+        .then(function(resp){
+            // TODO: update global store with patient information
+            dispatch(set_patient(resp.data))
+            })
+        })
+  }

@@ -101,7 +101,7 @@ class QuestionBank extends Component{
   did_create_patient = (state) => {
     const service_line = this.props.service_line.id;
     const {patient_actions, global_actions}=this.props
-    global_actions.register_user(state)
+    global_actions.register_and_set_user(state)
       .then(() => {return global_actions.sign_in(state)})
         .then(() => { return patient_actions.create_patient_from_user() })
           .then( () => {return patient_actions.create_visit(service_line)})

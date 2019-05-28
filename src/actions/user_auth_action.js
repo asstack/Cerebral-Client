@@ -44,13 +44,15 @@ export const sign_in = user_info => (dispatch, getState) =>  {
 
 export const register_user = user_info => (dispatch, getState)=>{
 
-  const {first_name, last_name, email, password, password_confirm} = user_info
+  const {first_name, last_name, email, password, password_confirm, skip_password_validation} = user_info
+
+  // NOTE: you can pass in both skip_password_validation and password+password_confirm but the server will basically ignore the password
 
   // register API call here
   var headers = {'Content-Type': 'application/json'}
-    if(first_name && last_name && email && (password && password_confirm)){
+    if(first_name && last_name && email && ((password && password_confirm) || skip_password_validation)){
       return axios.post("/api/users",
-        {first_name:first_name, last_name:last_name, email:email, password:password, password_confirmation: password_confirm}, 
+        {first_name:first_name, last_name:last_name, email:email, password:password, password_confirmation: password_confirm, skip_password_validation: skip_password_validation}, 
         {headers: headers})
         .then(function(resp){
           var attr = { id: resp.data.id,
@@ -60,10 +62,16 @@ export const register_user = user_info => (dispatch, getState)=>{
                         last_name:resp.data.last_name
                       }
 
-          return dispatch(set_user(attr))
+          return Promise.resolve(attr)
         })
     }
     else {
-      return Promise.resolve()
+      return Promise.reject(new Error('Please provide first_name, last_name, email, password+password_confirm or skip_password_validation'))
     }
+}
+
+export const register_and_set_user = user_info => (dispatch, getState)=>{
+  return dispatch(register_user(user_info)).then((resp) => {
+    return dispatch(set_user(resp))
+  })
 }
