@@ -1,4 +1,6 @@
 import axios from 'axios'
+import { get_user_attr, make_headers } from './user_auth_action';
+
 
 export const SET_STEP = 'patient/SET_STEP'
 export const RESET_STATE = 'RESET'
@@ -142,19 +144,6 @@ export const update_patient_questions = (bank_id, bank_name) => (dispatch, getSt
 
 export const delete_patient_questions = () => (dispatch, getState) => {
 	return dispatch(remove_patient_questions())
-}
-
-const  get_user_attr = (state) => {
-  return  state.global_reducer.current_user.attributes
-}
-
-const make_headers = (user_attr) => {
-  return {
-    'Content-Type': 'application/json', 
-    'access-token': user_attr['access-token'], 
-    'client': user_attr.client, 
-    'uid':user_attr.uid
-  }
 }
 
 export const create_patient_from_user = () => (dispatch, getState) => {

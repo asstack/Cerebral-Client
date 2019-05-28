@@ -75,3 +75,16 @@ export const register_and_set_user = user_info => (dispatch, getState)=>{
     return dispatch(set_user(resp))
   })
 }
+
+export const  get_user_attr = (state) => {
+  return  state.global_reducer.current_user.attributes
+}
+
+export const make_headers = (user_attr) => {
+  return {
+    'Content-Type': 'application/json', 
+    'access-token': user_attr['access-token'], 
+    'client': user_attr.client, 
+    'uid':user_attr.uid
+  }
+}

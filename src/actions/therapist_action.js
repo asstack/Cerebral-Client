@@ -1,5 +1,5 @@
 import * as global_actions from '../../actions/user_auth_action'
-import { register_user } from './user_auth_action';
+import { register_user, get_user_attr, make_headers } from './user_auth_action';
 
 export const SET_THERAPIST = 'patient/SET_THERAPIST'
 
@@ -28,3 +28,14 @@ export const refer_patient = (patient_info) => (dispatch, getState) => {
       })
 }
 
+export const create_therapist_from_user = () => (dispatch, getState) => {
+
+    var user_attr = get_user_attr(getState())
+    var body = {user_id: user_attr.id}
+
+    return axios.post(`/api/therapists`, body, {headers: make_headers(user_attr)})
+        .then(function(resp){
+        // TODO: update global store with patient information
+        dispatch(set_therapist(resp.data))
+        })
+}
