@@ -80,6 +80,7 @@ class App extends Component{
     let component = this.target_component(this.state.prv_state)
     let path = this.mapStateToPath(this.state.prv_state)
     
+    console.log(path, ",", this.state.prv_state)
     return (
       <div className="App d-flex justify-content-center container">
         <Route path={path} component={component}/>

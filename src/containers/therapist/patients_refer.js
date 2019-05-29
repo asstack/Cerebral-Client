@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import * as components from '../question_components/components'
+import * as components from '../../components/question_components/components'
 
 
 //get submit and skip handler

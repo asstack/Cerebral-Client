@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
-import * as components from '../question_components/components'
-import CustomSelector from './custom_selector'
-import RadioDetails from './radio_details'
+import * as components from '../../components/question_components/components'
+import CustomSelector from '../../components/question_types/custom_selector'
+import RadioDetails from '../../components/question_types/radio_details'
 
 
 //get submit and skip handler

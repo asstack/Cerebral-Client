@@ -1,12 +1,23 @@
-import * as global_actions from '../../actions/user_auth_action'
+import * as global_actions from './user_auth_action'
 import { register_user, get_user_attr, make_headers } from './user_auth_action';
+import axios from 'axios'
 
 export const SET_THERAPIST = 'patient/SET_THERAPIST'
+export const SET_THERAPIST_STATE = 'patient/SET_THERAPIST_STATE'
 
 export const set_therapist = (therapist_object) => ({
     type:SET_THERAPIST,
     therapist_object: therapist_object
   })
+
+export const set_therapist_state = state =>({
+  type:SET_THERAPIST_STATE,
+  state: state
+})
+
+export const update_therapist_state = state => (dispatch) => {
+  return dispatch(set_therapist_state(state))
+}
 
 //TODO: update to use api middleware
 export const refer_patient = (patient_info) => (dispatch, getState) => {
@@ -23,7 +34,7 @@ export const refer_patient = (patient_info) => (dispatch, getState) => {
       return axios.post(`/api/therapists/${therapist.id}/patients`, body, {headers: make_headers(user_attr)})
       .then(function(resp){
           // TODO: update global store with patient information
-          dispatch(set_patient(resp.data))
+          //dispatch(set_patient(resp.data))
           })
       })
 }

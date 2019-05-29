@@ -17,7 +17,6 @@ class RadioDetails extends Component {
     return false
   }
 
-
   set_option_handler = option => { 
     this.setState({active:option}) 
     //this.props.update_answer()

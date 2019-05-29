@@ -9,11 +9,17 @@ export const init_therapist_state = {
 
 export const therapist_reducer = handleActions({
 
-  [patient_action_types.SET_THERAPIST]: (state, action) => {
+  [therapist_action_types.SET_THERAPIST]: (state, action) => {
     return{
       ...state,
       therapist_object: action.therapist_object
     }
+  },
+  [therapist_action_types.SET_THERAPIST_STATE]: (state, action) => {
+    return{
+      ...state,
+      therapist_state:action.state
+    } 
   }
 }, init_therapist_state)
 
