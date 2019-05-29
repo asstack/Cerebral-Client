@@ -1,6 +1,5 @@
 import React, {Component} from 'react'
 import { connect } from 'react-redux'
-import axios from 'axios'
 import { sign_in } from '../../actions/user_auth_action'
 import { set_visit, get_patient_most_recent_visits, update_patient_state, move_patient_sign_up, set_profile_question, set_patient } from '../../actions/patient_action'
 import * as components from '../../components/question_components/components'

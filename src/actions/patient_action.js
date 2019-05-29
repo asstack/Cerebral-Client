@@ -253,6 +253,7 @@ export const get_current_answer_by_name = (name) => (dispatch, getState) => {
 }
 
 export const answer_current_question = (answer) => (dispatch, getState) => {
+
   
   var user_attr = get_user_attr(getState())
 
@@ -260,16 +261,21 @@ export const answer_current_question = (answer) => (dispatch, getState) => {
   return dispatch(get_current_patient_and_visit()).then((resp) => {
     
     if (resp.patient == null || resp.visit == null) {
-      // this answer does not need to be recorded...
+      // this answer does not need to be recorded because there is no current patient or visit
       return Promise.resolve();
     }
   
     var patient_state = getState().patient_reducer
+
+    var current_question = patient_state.questions[patient_state.step]
+
+    // this answer does not need to be recorded because we have been explicitly told not to do so 
+    if (current_question == null || !current_question.save_answer) return Promise.resolve();
   
     var body = {
       ...answer,
       question_bank_id: patient_state.question_bank_id,
-      question_id: patient_state.questions[patient_state.step].id,
+      question_id: current_question.id,
       }
   
     return axios.post(`/api/patients/${resp.patient.id}/visits/${resp.visit.id}/answers`, body, {headers: make_headers(user_attr)})

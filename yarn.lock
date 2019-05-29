@@ -1576,10 +1576,10 @@ airbnb-prop-types@^2.13.2:
     prop-types-exact "^1.2.0"
     react-is "^16.8.6"
 
-airbrake-js@^1.6.7:
-  version "1.6.7"
-  resolved "https://registry.yarnpkg.com/airbrake-js/-/airbrake-js-1.6.7.tgz#96a029de94687fa3c1cf3063bb8f1493f338d6a6"
-  integrity sha512-KDOLboqC1VfNkj6f23rYQLNhJD4KO6MrnL6ePEJycPOpHQjRtx92jIT3fZidKLGEmc3BMix3NRZ85+MJt+ioRA==
+airbrake-js@^1.6.8:
+  version "1.6.8"
+  resolved "https://registry.yarnpkg.com/airbrake-js/-/airbrake-js-1.6.8.tgz#a2b7e7587ebd8b578bce8cb5214b060b385c66fc"
+  integrity sha512-ru2A1lyXv1cqAPbN3T27cUT4HphH0eFQzp0xDVzXpiaUy3pMEBU6i06cGueHavK4CyEEhL6mKQrIshcNsIqwlg==
 
 ajv-errors@^1.0.0:
   version "1.0.1"
@@ -2932,6 +2932,14 @@ create-react-context@^0.2.2:
   dependencies:
     fbjs "^0.8.0"
     gud "^1.0.0"
+
+cross-fetch@^3.0.3:
+  version "3.0.3"
+  resolved "https://registry.yarnpkg.com/cross-fetch/-/cross-fetch-3.0.3.tgz#b988beab275939cb77ad4e362c873f7fa8a221a5"
+  integrity sha512-mplYkc4CopHu+AdHK8wxjJcPskUxp5CvPTdtDij3MUgVNBa0xOb9CQqbbn1zO23qISM4WLxIBociyEVQL7WQAg==
+  dependencies:
+    node-fetch "2.6.0"
+    whatwg-fetch "3.0.0"
 
 cross-spawn@6.0.5, cross-spawn@^6.0.0, cross-spawn@^6.0.5:
   version "6.0.5"
@@ -6694,6 +6702,11 @@ no-case@^2.2.0:
   integrity sha512-rmTZ9kz+f3rCvK2TD1Ue/oZlns7OGoIWP4fc3llxxRXlOkHKoWPPWJOfFYpITabSow43QJbRIoHQXtt10VldyQ==
   dependencies:
     lower-case "^1.1.1"
+
+node-fetch@2.6.0:
+  version "2.6.0"
+  resolved "https://registry.yarnpkg.com/node-fetch/-/node-fetch-2.6.0.tgz#e633456386d4aa55863f676a7ab0daa8fdecb0fd"
+  integrity sha512-8dG4H5ujfvFiqDmVu9fQ5bOHUC15JMjMY/Zumv26oOvvVJjM67KF8koCWIabKQ1GJIa9r2mMZscBq/TbdOcmNA==
 
 node-fetch@^1.0.1:
   version "1.7.3"
