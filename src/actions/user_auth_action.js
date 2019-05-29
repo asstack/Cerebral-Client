@@ -1,6 +1,7 @@
 import axios from 'axios'
 
 export const SIGN_IN = 'SIGN_IN'
+export const REMOVE_TOKEN = 'REMOVE_TOKEN'
 export const REGISTER = 'REGISTER'
 export const SET_USER = "SET_USER"
 export const SET_QUESTIONS = "SET_QUESTIONS"
@@ -9,6 +10,10 @@ export const SET_QUESTIONS = "SET_QUESTIONS"
 const set_user = user_info => ({
   type:SET_USER,
   user_attr:user_info
+})
+
+export const remove_token = () => ({
+  type:REMOVE_TOKEN
 })
 
 export const reset_password = (email, redirect_url) => (dispatch, getState) =>  {
@@ -52,6 +57,7 @@ export const register_user = user_info => (dispatch, getState)=>{
   // register API call here
   var headers = {'Content-Type': 'application/json'}
     if(first_name && last_name && email && ((password && password_confirm) || skip_password_validation)){
+      
       return axios.post("/api/users",
         {first_name:first_name, last_name:last_name, email:email, password:password, password_confirmation: password_confirm, skip_password_validation: skip_password_validation}, 
         {headers: headers})

@@ -21,7 +21,7 @@ class PasswordReset extends Component{
   }
 
   reset_handler = e => {
-    // do reset here
+    // TODO: get env variable for hostname
     this.props.reset_password(this.state.email, 'http://localhost:3006/user/confirmation').then((resp) => {
         console.log(`reset_handler: ${resp.data}`)
     })

@@ -1,4 +1,6 @@
 import axios from 'axios'
+import {api_call} from '../middle/api'
+
 import { get_user_attr, make_headers } from './user_auth_action';
 
 
@@ -278,7 +280,8 @@ export const answer_current_question = (answer) => (dispatch, getState) => {
       question_id: current_question.id,
       }
   
-    return axios.post(`/api/patients/${resp.patient.id}/visits/${resp.visit.id}/answers`, body, {headers: make_headers(user_attr)})
+    return dispatch(api_call('POST', `/api/patients/${resp.patient.id}/visits/${resp.visit.id}/answers`, {headers: make_headers(user_attr)}, body))
+    // return axios.post(`/api/patients/${resp.patient.id}/visits/${resp.visit.id}/answers`, body, {headers: make_headers(user_attr)})
   })
 
 }

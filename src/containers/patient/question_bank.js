@@ -4,6 +4,7 @@ import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
 import * as patient_actions from '../../actions/patient_action'
 import * as global_actions from '../../actions/user_auth_action'
+import * as api_actions from '../../middle/api'
 import * as wrapper from '../../utils/wrapper.js'
 import * as common from '../../utils/common.js'
 import ReactGA from 'react-ga'
@@ -19,13 +20,15 @@ class QuestionBank extends Component{
       bank_name:this.props.bank_name,
       question_step:this.props.question_step
     }
+    props.api_actions.api_reset()
   }
  
   update_bank_state = () => {
     this.setState({bank_step:this.props.question_banks_step, 
                    bank_name:this.props.bank_name,
                    question_step:this.props.question_step,
-                   banks:this.props.question_banks})}
+                   banks:this.props.question_banks})
+                }
 
   componentDidMount(){
     const {bank_name, question_banks_step, question_banks, patient_state, patient_actions} = this.props
@@ -113,7 +116,12 @@ class QuestionBank extends Component{
    
   patient_state_transition_helper = () => {
     const {question_banks, question_banks_step, questions, question_step, patient_actions} = this.props 
-    if(question_banks.length===question_banks_step+1 && questions.length === question_step+1){ 
+
+    if (this.props.api_middleware.status == 'REAUTH') {
+      this.props.global_actions.remove_token()
+      this.props.history.push("/patient/sign_in") 
+    }
+    else if(question_banks.length===question_banks_step+1 && questions.length === question_step+1){ 
       this.props.history.push("/patient/completed") 
     }else if(questions.length > question_step+1){ 
       patient_actions.set_step(question_step+1)
@@ -169,12 +177,14 @@ class QuestionBank extends Component{
 //TODO: elaborate to save memory
 const mapStateToProps = (state) => {
   const {
+    api_middleware: api_middleware,
     global_reducer: {app_state, current_user},
     patient_reducer: {patient_object, service_line, question_banks,question_banks_step, patient_state, step, question_bank_id, questions, current_bank_name, is_complete}
   } = state
 
   return {
     app_state: app_state,
+    api_middleware: api_middleware,
 		question_banks: question_banks,
     question_banks_step: question_banks_step,
     current_user: current_user,
@@ -192,7 +202,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     patient_actions: bindActionCreators(patient_actions, dispatch),
-    global_actions: bindActionCreators(global_actions, dispatch)
+    global_actions: bindActionCreators(global_actions, dispatch),
+    api_actions: bindActionCreators(api_actions, dispatch)
   }
 }
 

@@ -1,59 +1,75 @@
 import axios from 'axios'
 import { handleActions } from 'redux-actions'
 
-const GET_PENDING = 'API_PENDING';
-const GET_SUCCESS = 'API_SUCCESS';
-const GET_FAILURE = 'API_FAILURE';
-
+export const API_IDLE  = 'API_IDLE';
+export const API_PENDING = 'API_PENDING';
+export const API_SUCCESS = 'API_SUCCESS';
+export const API_FAILURE = 'API_FAILURE';
+export const API_REAUTH  = 'API_REAUTH';
 
 const api_axios = (url, header, body, type) => {
   if(type==='GET'){
     return axios.get(url, header) 
   }else if(type === 'POST'){
     return axios.post(url, body, header) 
+  } else{
+    throw "Unimplemented REST type in api middleware"
   }
 }
 
+export const api_reset = () => dispatch => {
+  dispatch({
+    type: API_IDLE
+  });
+}
 
-export const api_call = (url, header, body, type, update_data=null) => dispatch => {
+export const api_call = (type, url, header, body = null, update_data=null) => dispatch => {
   console.log("check api call:", body) 
-  dispatch({type: GET_PENDING});
+  dispatch({type: API_PENDING});
 
   return api_axios(url, header, body, type).then(
     (resp) => {
 
-      resp.data.data['client'] = resp.headers.client
-      resp.data.data['access-token'] = resp.headers['access-token']
+      // resp.data.data['client'] = resp.headers.client
+      // resp.data.data['access-token'] = resp.headers['access-token']
          
       dispatch({
-        type: GET_SUCCESS,
+        type: API_SUCCESS,
         data: resp.data
       })
       if(update_data) dispatch(update_data(resp.data))
     }
   ).catch(error => {
-    dispatch({
-      type: GET_FAILURE,
-      error: error.data
-    });
+
+    if (error.response.status == 401) {
+      dispatch({
+        type: API_REAUTH,
+        error: error.data
+      });
+    } else {
+      dispatch({
+        type: API_FAILURE,
+        error: error.data
+      });
+    }
   })
 }
 
-const initial_api = {
+export const initial_api = {
   status: false,
   error: false,
   data: null,
 }
 
 export const api_middleware = handleActions({
-  [GET_PENDING]: (state, action) => {
+  [API_PENDING]: (state, action) => {
     return {
       ...state,
       status: 'PENDING',
       error: false
     };
   },
-  [GET_SUCCESS]: (state, action) => {
+  [API_SUCCESS]: (state, action) => {
 
     return {
       ...state,
@@ -61,11 +77,25 @@ export const api_middleware = handleActions({
       data: action.data 
     };
   },
-  [GET_FAILURE]: (state, action) => {
+  [API_FAILURE]: (state, action) => {
     return {
       ...state,
-      pending: 'FAILURE',
+      status: 'FAILURE',
       error: action.error
+    }
+  },
+  [API_REAUTH]: (state, action) => {
+    return {
+      ...state,
+      status: 'REAUTH',
+      error: action.error
+    }
+  },
+  [API_IDLE]: (state, action) => {
+    return {
+      ...state,
+      status: 'IDLE',
+      error: false
     }
   }
 }, initial_api);

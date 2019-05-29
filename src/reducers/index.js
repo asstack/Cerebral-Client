@@ -36,10 +36,10 @@ const global_reducer = handleActions({
     return {
       // https://redux.js.org/recipes/using-object-spread-operator
       ...state,
-      app_state:'',
+      // app_state:'',
       current_user: {
         ...state.current_user,
-        user_type: '',
+        // user_type: '',
         is_loading: true,
         is_signedIn: true,
         attributes : action.user_attr
@@ -51,6 +51,20 @@ const global_reducer = handleActions({
       ...state,
       app_state:action.new_app_state
     }
+  },
+  [user_auth_types.REMOVE_TOKEN]: (state, action) => {
+    return{
+      ...state,
+      current_user: {
+        ...state.current_user,
+        is_signedIn: false,
+        attributes : {
+          ...state.current_user.attributes,
+          'access-token': null,
+          client: null
+        }
+    }
+  }
   }
 }, init_global_state)
 
@@ -66,7 +80,8 @@ const rootReducer = (state, action) => {
   if(action.type==='RESET'){
     state = {global_reducer: init_global_state,
              patient_reducer: init_patient_state,
-             therapist_reducer: init_therapist_state}
+             therapist_reducer: init_therapist_state,
+              api_middleware: initial_api}
   }
   return appReducer(state, action)
 } 
