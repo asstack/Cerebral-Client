@@ -3,9 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "airbrake-js": "^1.6.7",
+    "airbrake-js": "^1.6.8",
     "axios": "^0.18.0",
     "babel": "^6.23.0",
+    "cross-fetch": "^3.0.3",
     "dotenv": "^8.0.0",
     "enzyme": "^3.9.0",
     "enzyme-adapter-react-16": "^1.12.1",

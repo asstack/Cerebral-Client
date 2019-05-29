@@ -8,7 +8,7 @@ import PasswordReset from './containers/user'
 import Identification from './components/question_types/patient_identification'
 import {update_app_state} from './actions'
 import ReactGA from 'react-ga'
-// import ErrorBoundary from './error_boundary'
+import ErrorBoundary from './error_boundary'
 
 class App extends Component{
 
@@ -83,7 +83,9 @@ class App extends Component{
     console.log(path, ",", this.state.prv_state)
     return (
       <div className="App d-flex justify-content-center container">
-        <Route path={path} component={component}/>
+        <ErrorBoundary>
+          <Route path={path} component={component}/>
+        </ErrorBoundary>
       </div>
     );
   }
