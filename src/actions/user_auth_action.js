@@ -3,6 +3,7 @@ import axios from 'axios'
 export const SIGN_IN = 'SIGN_IN'
 export const REGISTER = 'REGISTER'
 export const SET_USER = "SET_USER"
+export const SET_QUESTIONS = "SET_QUESTIONS"
 
 // set_user will update global state with information corresponding to the User object in the database
 const set_user = user_info => ({
@@ -88,3 +89,4 @@ export const make_headers = (user_attr) => {
     'uid':user_attr.uid
   }
 }
+

@@ -6,7 +6,7 @@ import * as patient_action_types from '../actions/patient_action'
 import * as therapist_action_types from '../actions/therapist_action'
 import {patient_reducer, init_patient_state} from './patient_reducer'
 import {therapist_reducer, init_therapist_state} from './therapist_reducer'
-import {api_middleware} from '../middle/api'
+import {api_middleware, initial_api} from '../middle/api'
 
 // https://redux.js.org/basics/reducers#designing-the-state-shape
 const init_global_state = {

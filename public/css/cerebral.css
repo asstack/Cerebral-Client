@@ -804,6 +804,21 @@ h1 {
   letter-spacing: -0.43px;
 }
 
+.option-selected {
+  width: 414px;
+  height: 60px;
+  font-size: 18px;
+  line-height: 18px;
+  text-align: center;
+  letter-spacing: -0.43px;
+  background: #F6F6F6;
+  box-shadow: 0px 1px 4px #9B9B9B;
+  border-left: solid 2px #250044;
+}
+
+
+
+
 .patient-info-textarea {
 
   margin-top:40px;

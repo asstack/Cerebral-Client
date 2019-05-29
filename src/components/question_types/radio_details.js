@@ -8,9 +8,16 @@ class RadioDetails extends Component {
   constructor(props){
     super(props)
     this.state = {
+      ref_id:this.props.ref_id,
+      p_id:this.props.p_id, 
       active:false,   
       details:"", 
     }
+  }
+ 
+  componentWillReceiveProps = (next_props) => { 
+    this.setState({ref_id:next_props.ref_id, p_id:next_props.p_id, active:false, details:""})
+    this.forceUpdate() 
   }
 
   shouldComponentUpdate=()=>{
@@ -43,7 +50,7 @@ class RadioDetails extends Component {
       <div key={uuidv1()} className="d-flex flex-column justify-content-start patient-info-items-holder">
         <div className="d-flex flex-row justify-content-start">
           <div className="d-flex align-content-start align-items-center patient-info-radio-item">
-            <span>Does the patient have a support network?</span>
+            <span>{this.props.question.title}</span>
           </div>
           <input className ="checkbox-type-small" type="radio"  onChange={e => this.set_option_handler(true) } checked={this.state.active}/>
           <div className="d-flex align-items-start checkbox-small-text">

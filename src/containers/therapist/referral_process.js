@@ -15,7 +15,7 @@ class ReferralProcess extends Component{
     super(props) 
     this.state = {
       view_type:null, 
-      patient:null,
+      patients:null,
     }
   }
 
@@ -65,7 +65,7 @@ class ReferralProcess extends Component{
       case 'temp_refer':
         return <PatientsRefer submit_action = {this.patient_refer_handler}/>
       case 'temp_info':
-        return <PatientInfo patient_info = {null} />
+        return <PatientInfo patients_info = {this.state.patients}/>
       default: 
         return this.cover_page() 
     }

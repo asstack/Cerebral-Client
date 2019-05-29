@@ -2,8 +2,9 @@ import * as global_actions from './user_auth_action'
 import { register_user, get_user_attr, make_headers } from './user_auth_action';
 import axios from 'axios'
 
-export const SET_THERAPIST = 'patient/SET_THERAPIST'
-export const SET_THERAPIST_STATE = 'patient/SET_THERAPIST_STATE'
+export const SET_THERAPIST = 'SET_THERAPIST'
+export const SET_THERAPIST_STATE = 'SET_THERAPIST_STATE'
+export const SET_QUESTIONS = "SET_QUESTIONS"
 
 export const set_therapist = (therapist_object) => ({
     type:SET_THERAPIST,
@@ -50,3 +51,17 @@ export const create_therapist_from_user = () => (dispatch, getState) => {
         dispatch(set_therapist(resp.data))
         })
 }
+
+
+
+
+const set_therapist_questions = data => ({
+  type:SET_QUESTIONS,
+  questions:data
+})
+
+export const get_patient_info_questions = (bank_id) => (dispatch) => {
+  return axios.get(`/api/question_banks/${bank_id}/questions`)
+    .then(resp=>dispatch(set_therapist_questions(resp.data)))  
+}
+

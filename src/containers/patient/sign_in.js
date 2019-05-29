@@ -43,7 +43,6 @@ class SignIn extends Component {
 
   sign_in_handler = e => {
     this.props.sign_in(this.state).then ((resp) => {
-      console.log(resp)
       if (resp.user_attr.patient) {
         this.props.set_patient(resp.user_attr.patient);
         this.props.get_patient_most_recent_visits(resp.user_attr.patient).then((visits) => {

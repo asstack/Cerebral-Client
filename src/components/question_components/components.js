@@ -121,50 +121,14 @@ export const patient_info_text = (title, content)=> {
 }
 
 
-export const patient_info_input = (title, content)=> {
+export const patient_info_input = (title, content, handler)=> {
   return( 
     <div key={uuidv1()} className="d-flex flex-row justify-content-start patient-info-items-holder">
       <div className="d-flex align-content-start align-items-center patient-info-left-item">
         <span>{title}</span>
       </div>
       <div className="d-flex patient-info-text-item">
-        <input className="input-type1 small-holder" type='text' placeholder = {content}/>
-      </div>
-  </div>
-  )
-}
-
-
-//TODO: change it as class (need to control checkbox checked)
-export const patient_info_checkbox = (title, content, index, event_handler)=> {
-  return( 
-    <div key={uuidv1()} className="d-flex flex-row justify-content-start patient-info-items-holder">
-      <div className="d-flex align-content-start align-items-start patient-info-left-item">
-        <span>{title}</span>
-      </div>
-      <div className="d-flex flex-column patient-info-text-item"> 
-
-        <div className="d-flex flex-row checkbox-vertical-holder">
-          <input className ="checkbox-type-small" type="checkbox"/>
-          <div className="d-flex align-items-start checkbox-small-text">
-            Depression
-          </div>
-        </div>
-
-        <div className="d-flex flex-row checkbox-vertical-holder">
-          <input className ="checkbox-type-small" type="checkbox"/>
-          <div className="d-flex align-items-start checkbox-small-text">
-            Anxiety
-          </div>
-        </div>
-
-        <div className="d-flex flex-row checkbox-vertical-holder">
-          <input className ="checkbox-type-small" type="checkbox"/>
-          <div className="d-flex align-items-start checkbox-small-text">
-            Insomnia
-          </div>
-        </div>
-
+        <input className="input-type1 small-holder" type='text' onChange={e=>handler(e.target.value)} placeholder = {content}/>
       </div>
   </div>
   )

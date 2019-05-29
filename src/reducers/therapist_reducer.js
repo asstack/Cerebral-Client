@@ -4,7 +4,8 @@ import { handleActions } from 'redux-actions'
 export const init_therapist_state = {
   
   therapist_state: '',
-  therapist_object: null
+  therapist_object: null,
+  questions:null
 }
 
 export const therapist_reducer = handleActions({
@@ -20,6 +21,12 @@ export const therapist_reducer = handleActions({
       ...state,
       therapist_state:action.state
     } 
+  },
+  [therapist_action_types.SET_QUESTIONS] : (state, action) => {
+    return{
+      ...state,
+      questions:action.questions
+    }
   }
 }, init_therapist_state)
 

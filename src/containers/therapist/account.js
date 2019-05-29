@@ -16,8 +16,12 @@ class Account extends Component {
   
   //check info and if exists, push to next
   componentDidMount(){
-  
+    if(this.state.login_info){ 
+      this.props.history.push(this.props.next_url) 
+    }  
   } 
+
+
 
   //if got something from parent, go there
   page_update_helper = () => {
@@ -46,7 +50,6 @@ class Account extends Component {
    );
   }
 }
-
 
 const mapStateToProps = (state) => ({
   login_info : state.global_reducer.current_user

@@ -40,7 +40,6 @@ class Therapist extends Component{
   }
   
   render_view = state => {
-    console.log("view state", state)
     if(state==="member"){
       return <div>signin</div> 
     }else if(state==="dashboard"){
