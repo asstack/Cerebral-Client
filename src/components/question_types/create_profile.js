@@ -20,7 +20,7 @@ class CreateProfile extends Component {
   update_handler = e => { 
     const {is_consent, email, first_name, 
       last_name, password, password_confirm} = this.state
-    if(is_consent && email && first_name && last_name && password.length > 6 &&(password===password_confirm)){
+    if(is_consent && email && first_name && last_name && password.length >= 6 &&(password===password_confirm)){
       this.props.submit_action(this.state) 
     }else{
       if(!email || !first_name || !last_name || !password || !password_confirm){ 
