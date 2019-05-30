@@ -121,14 +121,14 @@ export const patient_info_text = (title, content)=> {
 }
 
 
-export const patient_info_input = (title, content, handler)=> {
+export const patient_info_input = (title, content, event_handler)=> {
   return( 
     <div key={uuidv1()} className="d-flex flex-row justify-content-start patient-info-items-holder">
       <div className="d-flex align-content-start align-items-center patient-info-left-item">
         <span>{title}</span>
       </div>
       <div className="d-flex patient-info-text-item">
-        <input className="input-type1 small-holder" type='text' onChange={e=>handler(e.target.value)} placeholder = {content}/>
+        <input className="input-type1 small-holder" type='text' onChange={e=>event_handler(e)} placeholder = {content}/>
       </div>
   </div>
   )

@@ -9,14 +9,14 @@ class RadioDetails extends Component {
     super(props)
     this.state = {
       ref_id:this.props.ref_id,
-      p_id:this.props.p_id, 
+      q_id:this.props.q_id, 
       active:false,   
       details:"", 
     }
   }
  
   componentWillReceiveProps = (next_props) => { 
-    this.setState({ref_id:next_props.ref_id, p_id:next_props.p_id, active:false, details:""})
+    this.setState({ref_id:next_props.ref_id, q_id:next_props.q_id, active:false, details:""})
     this.forceUpdate() 
   }
 
@@ -26,13 +26,13 @@ class RadioDetails extends Component {
 
   set_option_handler = option => { 
     this.setState({active:option}) 
-    //this.props.update_answer()
+    if(!option) this.props.submit_action("NO", this.state.q_id)
     this.forceUpdate();
   } 
 
   update_text_handler = e => {
     this.setState({details:e.target.value}) 
-    //this.props.update_answer()
+    this.props.submit_action(e.target.value, this.props.q_id)
   }
   
   textarea_view = () => {

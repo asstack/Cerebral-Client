@@ -8,7 +8,7 @@ class CustomSelector extends Component {
     super(props)
     this.state = {
       ref_id:this.props.ref_id,
-      p_id:this.props.p_id, 
+      q_id:this.props.q_id, 
       active:false, 
       items:this.props.items,
       selected:"",
@@ -22,19 +22,19 @@ class CustomSelector extends Component {
 
 
   componentWillReceiveProps = (next_props) => { 
-    this.setState({ref_id:next_props.ref_id, p_id:next_props.p_id, active:false, items:next_props.items, selected:"", option_index:null})}
+    this.setState({ref_id:next_props.ref_id, q_id:next_props.q_id, active:false, items:next_props.items, selected:"", option_index:null})}
 
 
   
   update_selected_item = (item, index) => {
-    this.setState({selected:item, option_index:index})
-    //this.props.submit_action(item, this.props.q_index)  
+    this.setState({selected:item, option_index:index, active:false})
+    this.props.submit_action(item, this.state.q_id)  
   }
   
   select_option = (item, index) => {
     const style = index === this.state.option_index? "option-selected":"option-not-selected" 
     return(
-      <div className={"d-flex justify-content-center align-items-center "+style} onClick={e => this.update_selected_item(item.title, index)}>{item.title}</div>      
+      <div key={uuidv1()} className={"d-flex justify-content-center align-items-center "+style} onClick={e => this.update_selected_item(item.title, index)}>{item.title}</div>      
     )  
   }
   

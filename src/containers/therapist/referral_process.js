@@ -7,6 +7,7 @@ import * as global_actions from '../../actions/user_auth_action'
 import Account from './account'
 import PatientsRefer from './patients_refer' 
 import PatientInfo from './patient_info' 
+import ReferralComplete from './referral_complete' 
 
 //TODO: implement with local state first, than update to use redux (minimize complexity by using redux/actions)
 
@@ -39,6 +40,10 @@ class ReferralProcess extends Component{
     }) 
   }
 
+  update_type_handler = (type) => {
+      this.setState({view_type:type}) 
+  }
+
   //NOTE: don't know why we use multiple steps for registraion, worry about data redundancy and inconsistany in server side by errors
   register_handler = info => {
 
@@ -61,11 +66,14 @@ class ReferralProcess extends Component{
   type_to_view = () => {
     switch(this.state.view_type){
       case 'account':
-        return <Account next_url = "/therapist/refer" default_type="register" sign_in_handler = {this.sign_in_handler} register_handler={this.register_handler}/> 
+        return <Account next_url = "/therapist/refer" default_type="register" sign_in_handler = {this.sign_in_handler} skip_handler = {this.update_type_handler}  register_handler={this.register_handler}/> 
       case 'temp_refer':
         return <PatientsRefer submit_action = {this.patient_refer_handler}/>
       case 'temp_info':
-        return <PatientInfo patients_info = {this.state.patients}/>
+        return <PatientInfo patients_info = {this.state.patients}
+                            complete_action = {this.update_type_handler}/>
+      case 'complete':
+        return <ReferralComplete />
       default: 
         return this.cover_page() 
     }

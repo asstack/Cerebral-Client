@@ -7,7 +7,7 @@ class TherapistCheckbox extends Component{
     super(props)
     this.state={
       ref_id:this.props.ref_id,
-      p_id:this.props.p_id,
+      q_id:this.props.q_id,
       index:null,
       value:null
     }
@@ -16,13 +16,13 @@ class TherapistCheckbox extends Component{
 
 
  componentWillReceiveProps = (next_props) => { 
-    this.setState({ref_id:next_props.ref_id, p_id:next_props.p_id, index:null, value:null})}
+    this.setState({ref_id:next_props.ref_id, q_id:next_props.q_id, index:null, value:null})}
 
 
   update_info_handler = (index, value) =>{ 
     if(index!== this.state.index){
       this.setState({index:index, value:value})
-      this.props.submit_action(this.state.value, this.state.p_id) 
+      this.props.submit_action(value, this.state.q_id) 
     }
   }
   
@@ -30,7 +30,7 @@ class TherapistCheckbox extends Component{
 
   checkbox_view = (val, index) => {
     return(
-      <div className="d-flex flex-row checkbox-vertical-holder">
+      <div key={uuidv1()} className="d-flex flex-row checkbox-vertical-holder">
         <input className ="checkbox-type-small" type="checkbox" checked={index===this.state.index}
           onChange={e => this.update_info_handler(index, val.name)}/>
         <div className="d-flex align-items-start checkbox-small-text">

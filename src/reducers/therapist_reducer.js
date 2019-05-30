@@ -23,6 +23,7 @@ export const therapist_reducer = handleActions({
     } 
   },
   [therapist_action_types.SET_QUESTIONS] : (state, action) => {
+    console.log("actions: ", action)
     return{
       ...state,
       questions:action.questions

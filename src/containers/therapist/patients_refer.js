@@ -1,7 +1,6 @@
 import React, {Component} from 'react'
 import * as components from '../../components/question_components/components'
 
-
 //get submit and skip handler
 class PatientsRefer extends Component {
 	constructor(props){
@@ -9,7 +8,8 @@ class PatientsRefer extends Component {
 		this.state = {
       update:false,
       total_items:3,
-      items: [{email:null, name:null}, {email:null, name:null}, {email:null, name:null}]
+      items: [{email:null, name:null}, {email:null, name:null}, {email:null, name:null}],
+      incomplete:[]
 		}
 	}
  
@@ -44,17 +44,37 @@ class PatientsRefer extends Component {
   }
 
   submit_item_handler = () => {
-    this.props.submit_action(this.state.items); 
+    let patients = []
+    let incomplete = []
+    const items = this.state.items
+    var i;
+    for(i=0; i < items.length;i++){ 
+      if(items[i].email && items[i].name){
+        patients.push(items[i]) 
+      }else if(items[i].email || items[i].name){
+        incomplete.push(i)
+      } 
+    }
+
+    if(incomplete.length==0 && patients.length>0){ 
+      this.props.submit_action(patients); 
+    }else{
+      this.setState({incomplete:incomplete})
+      console.log(this.state)
+    }
   } 
 
 	render(){	
     const event_handlers = {update:this.update_item_handler.bind(this), 
                       remove:this.remove_item_handler.bind(this)}
+    console.log(this.state.incomplete)
 		return(
       <div className="d-flex flex-column therapist-question-container">
         <div className="d-flex justify-content-start patient-refer-description">
           <span>Please enter patient/s contact information.</span>
         </div>
+        {this.state.incomplete.length==0?null:"Please fill "+this.state.incomplete}
+        
         {[...Array(this.state.total_items)].map((e, index) => (components.patient_refer_inputs(event_handlers, this.state.items[index], index, this.state.total_items)))}  
         <div className="d-flex justify-content-end patient-refer-add-btn-holder">
           <div id='add_patient' className="add-patient-button" onClick={this.add_item_handler}>

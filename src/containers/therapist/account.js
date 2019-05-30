@@ -15,11 +15,10 @@ class Account extends Component {
   
   //check info and if exists, push to next
   componentDidMount(){
-    if(this.state.login_info){ 
-      this.props.history.push(this.props.next_url) 
+    if(this.props.login_info.attributes.therapist){ 
+      this.props.skip_handler('temp_refer')
     }  
   } 
-
 
 
   //if got something from parent, go there
