@@ -6,7 +6,7 @@ import CustomSelector from '../../components/question_types/custom_selector'
 import RadioDetails from '../../components/question_types/radio_details'
 import TherapistPatientsInfo from '../../components/question_types/therapist_patients_info'
 import TherapistCheckbox from '../../components/question_types/therapist_checkbox'
-import { get_patient_info_questions } from '../../actions/therapist_action' 
+import { refer_patient, get_patient_info_questions } from '../../actions/therapist_action' 
 
 //get submit and skip handler
 class PatientInfo extends Component {
@@ -55,11 +55,16 @@ class PatientInfo extends Component {
   }
 
   submit_item_handler = () =>{
+
+    const answers = this.state.answers
+    let patient = this.state.items[this.state.ref_index]
+    patient.skip_password_validation=true
+    this.props.refer_patient(patient, answers)
+    this.clean_up_answers() 
+   
     if(this.state.ref_index===this.state.items.length-1){
       this.props.complete_action("complete")
     }else{
-      const answers = this.state.answers
-      this.clean_up_answers() 
       this.setState({ref_index:this.state.ref_index+1})  
       this.forceUpdate()
     }
@@ -118,4 +123,4 @@ const mapStateToProps = state => {
   }
 }
 
-export default connect(mapStateToProps, {get_patient_info_questions}) (PatientInfo)
+export default connect(mapStateToProps, {refer_patient, get_patient_info_questions}) (PatientInfo)

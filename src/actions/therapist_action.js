@@ -21,16 +21,18 @@ export const update_therapist_state = state => (dispatch) => {
 }
 
 //TODO: update to use api middleware
-export const refer_patient = (patient_info) => (dispatch, getState) => {
+export const refer_patient = (patient_info, answers) => (dispatch, getState) => {
 
   // create a user for the patient first
   // TODO: what happens if the user already exists here?
+  
+  
   return dispatch(global_actions.register_user(patient_info)).then ((patient_user_info) => {
 
       var user_attr = get_user_attr(getState())
       var therapist = getState().therapist_reducer.therapist_object
 
-      var body = {user_id: patient_user_info.id}
+      var body = {user_id: patient_user_info.id, answers: answers}
   
       return axios.post(`/api/therapists/${therapist.id}/patients`, body, {headers: make_headers(user_attr)})
       .then(function(resp){

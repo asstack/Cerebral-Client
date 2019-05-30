@@ -94,10 +94,13 @@ export const patient_refer_inputs = (event_handler,item, index, total) => {
       </div>
       <div className="d-flex flex-column patient-refer-input-holder">
         <div className="d-flex justify-content-center patient-refer-input-item ">
-          <input className="col patient-refer-input" onChange={(e)=>event_handler.update(index, "name", e)} defaultValue={item.name} type="text" placeholder="name"/>
+          <input className="col patient-refer-input" autocomplete="off" onChange={(e)=>event_handler.update(index, "first_name", e)} defaultValue={item.fisrt_name} type="text" placeholder="first_name"/>
+        </div> 
+        <div className="d-flex justify-content-center patient-refer-input-item ">
+          <input className="col patient-refer-input"  autocomplete="off" onChange={(e)=>event_handler.update(index, "last_name", e)} defaultValue={item.last_name} type="text" placeholder="last_name"/>
         </div>
         <div className="d-flex justify-content-center patient-refer-input-item ">
-          <input className="col patient-refer-input" onChange={(e)=>event_handler.update(index, "email", e)} defaultValue={item.email} type="email" placeholder="email"/>
+          <input className="col patient-refer-input"  autocomplete="off" onChange={(e)=>event_handler.update(index, "email", e)} defaultValue={item.email} type="email" placeholder="email"/>
         </div>
       </div>
       <div className="d-flex align-content-center flex-between patient-refer-right-item">

@@ -8,7 +8,7 @@ class PatientsRefer extends Component {
 		this.state = {
       update:false,
       total_items:3,
-      items: [{email:null, name:null}, {email:null, name:null}, {email:null, name:null}],
+      items: [{email:null, first_name:null, last_name:null}, {email:null, first_name:null, last_name:null}, {email:null, first_name:null, last_name:null}],
       incomplete:[]
 		}
 	}
@@ -31,7 +31,7 @@ class PatientsRefer extends Component {
   //TODO: should find a way not to use forceUpdate
   add_item_handler = ()  =>{
     const new_items = this.state.items;
-    new_items.push({email:null, name:null});
+    new_items.push({email:null, first_name:null, last_name:null});
     this.setState({total_items: this.state.total_items+1,
                    items: new_items}); 
     this.forceUpdate();
@@ -43,15 +43,17 @@ class PatientsRefer extends Component {
     this.setState({items: new_items});
   }
 
+
+  //now only allow complete items. if we want a warning message for missing fields, we can use incomplete state that contains incomplete item 
   submit_item_handler = () => {
     let patients = []
     let incomplete = []
     const items = this.state.items
     var i;
     for(i=0; i < items.length;i++){ 
-      if(items[i].email && items[i].name){
+      if(items[i].email && items[i].first_name && items[i].last_name){
         patients.push(items[i]) 
-      }else if(items[i].email || items[i].name){
+      }else if(items[i].email || items[i].first_name || items[i].last_name){
         incomplete.push(i)
       } 
     }
@@ -59,22 +61,19 @@ class PatientsRefer extends Component {
     if(incomplete.length==0 && patients.length>0){ 
       this.props.submit_action(patients); 
     }else{
+      this.props.submit_action(patients); 
       this.setState({incomplete:incomplete})
-      console.log(this.state)
     }
   } 
 
 	render(){	
     const event_handlers = {update:this.update_item_handler.bind(this), 
                       remove:this.remove_item_handler.bind(this)}
-    console.log(this.state.incomplete)
 		return(
       <div className="d-flex flex-column therapist-question-container">
         <div className="d-flex justify-content-start patient-refer-description">
           <span>Please enter patient/s contact information.</span>
-        </div>
-        {this.state.incomplete.length==0?null:"Please fill "+this.state.incomplete}
-        
+        </div> 
         {[...Array(this.state.total_items)].map((e, index) => (components.patient_refer_inputs(event_handlers, this.state.items[index], index, this.state.total_items)))}  
         <div className="d-flex justify-content-end patient-refer-add-btn-holder">
           <div id='add_patient' className="add-patient-button" onClick={this.add_item_handler}>
