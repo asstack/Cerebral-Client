@@ -17,18 +17,13 @@ class VideoSelector extends Component {
     console.log(type)
     this.setState({view_type:type})
   }
-
-  text_submit_action =(data) => {
-    console.log(data) 
-  }
-
-  //submit_action = {this.props.submit_action}
   
+
   view = () => {
     if(this.state.view_type === 'video'){
-      return <VideoRecorderComponent submit_action = {this.props.submit_action} /> 
+      return <VideoRecorderComponent submit_action = {this.props.submit_video_action} /> 
     }else if(this.state.view_type === 'text'){
-      return <TextArea submit_action = {this.text_submit_action}/> 
+      return <TextArea submit_action = {this.props.submit_text_action}/> 
     }else{
       return (
         <div className="d-flex flex-row justify-contnet-center">
