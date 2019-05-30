@@ -48,7 +48,7 @@ class RadioDetails extends Component {
   render(){  
     return (
       <div key={uuidv1()} className="d-flex flex-column justify-content-start patient-info-items-holder">
-        <div className="d-flex flex-row justify-content-start">
+        <div className="d-flex flex-row justify-content-between">
           <div className="d-flex align-content-start align-items-center patient-info-radio-item">
             <span>{this.props.question.title}</span>
           </div>

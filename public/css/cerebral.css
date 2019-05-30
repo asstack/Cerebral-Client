@@ -759,7 +759,7 @@ h1 {
 
 .patient-info-radio-item {
   font-size: 18px;
-  width: 490px;
+  width: 65%;
   font-size: 18px;
   line-height: 18px;
   letter-spacing: -0.43px;
@@ -835,6 +835,7 @@ h1 {
   font-size: 20px;
   line-height: 20px;
   text-transform: uppercase;
+  font-weight: 600;
   color: #250044;
   margin-top:50px;
 }
@@ -863,13 +864,13 @@ h1 {
   padding-left:100px;
   padding-right:100px;
   padding-bottom:100px;
-  width : 940px;
+  max-width : 940px;
   align-self: center;
   background-color:#FFFFFF;
 }
 
 .radio-holder {
-  width:247px;
+  width:35%;
 }
 
 
