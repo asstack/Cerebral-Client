@@ -17,7 +17,7 @@ render(
   <Provider store={store}>
     <PersistGate loading={null} persistor={persistor}>
       <Router>
-        <App />
+        <App env={process.env}/>
       </Router>
     </PersistGate>
   </Provider>,

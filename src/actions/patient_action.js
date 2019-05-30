@@ -294,11 +294,12 @@ export const update_patient_state = state => (dispatch, getState) => {
 export const upload_object_for_current_question = (file, file_type) => (dispatch, getState) => {
 
   return dispatch(answer_current_question({upload: true, file_type: file_type})).then((resp) => {
+
     var option = {headers:
                   {'ContentEncoding': 'base64', 
                   'Content-Type': file_type}}
     
-      return axios.put(resp.data.object_url, file, option)
+      return axios.put(resp.object_url, file, option)
           .then(function(resp){
             return Promise.resolve()
           })
