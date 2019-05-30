@@ -7,6 +7,8 @@ import * as components from '../../components/question_components/components'
 import { createModal } from 'react-modal-promise'
 import { Modal } from 'react-bootstrap'
 
+import Alert from 'react-s-alert'
+
 const MyModal = ({ open, close, message}) => (
   <Modal show={open} onHide={() => close()}>
     <Modal.Header closeButton>
@@ -27,6 +29,7 @@ const MyModal = ({ open, close, message}) => (
 const myPromiseModal = createModal(MyModal)
 
 class SignIn extends Component {
+  
 
   constructor(props){
     super(props)
@@ -77,7 +80,7 @@ class SignIn extends Component {
         return myPromiseModal({ open: true , message:'Insomnia' }).then(value => {
           if (value) {
             // redirect to patient qualification
-            this.props.history.push(this.props.patient_reducer.question_banks[this.props.patient_reducer.question_banks_step]) 
+            this.props.history.push(`${this.props.patient_reducer.question_banks[this.props.patient_reducer.question_banks_step]}`) 
           }
           else {
             // wipe out question_bank stuff
@@ -92,8 +95,8 @@ class SignIn extends Component {
 
   sign_in_handler = e => {
 
-    this.handle_patient_previous_state().then(() => {
-      this.props.sign_in(this.state).then ((resp) => {
+      this.props.sign_in(this.state).then((resp) => {
+        this.handle_patient_previous_state().then(() => {
         if (resp.user_attr.patient) {
           this.props.set_patient(resp.user_attr.patient);
           this.props.get_patient_most_recent_visits(resp.user_attr.patient).then((visits) => {
@@ -101,9 +104,9 @@ class SignIn extends Component {
           })
         }
       })
+    }).catch((error) => {
+      Alert.error(error.message)
     })
-
-    
   }
 
   render(){

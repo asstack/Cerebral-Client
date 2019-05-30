@@ -44,7 +44,7 @@ export const sign_in = user_info => (dispatch, getState) =>  {
         })
     }
     else {
-      return Promise.resolve()
+      return Promise.reject(new Error('Please provide an email address and password'))
     }
 }
 
