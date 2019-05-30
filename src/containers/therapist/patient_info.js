@@ -96,23 +96,48 @@ class PatientInfo extends Component {
     } 
   }
 
+  view = (patient, questions) => {
+    return (
+      <div className="container-progress">
+        <div className="d-flex flex-column patient-info-background">
+          <div className="d-flex justify-content-center flex-row menu-bar">
+            <div className= "col d-flex justify-content-between solid-border-bottom__unselected text-small__unselected menu-bar-item-holder">
+              <img src={process.env.PUBLIC_URL + '/img/arrow.png'} className="arrow-btn"/>
+              <div className="align-self-end menu-item">  Therapist Information </div>
+              <div></div>
+            </div>      
+            <div className= "col d-flex justify-content-between solid-border-bottom text-small menu-bar-item-holder">
+              <div></div>
+              <div className="align-self-end menu-item">  Patient Information </div>
+              <div></div>
+            </div>       
+          </div>
+        <div className="d-flex justify-content-start patient-info-title">{"PATIENT "+ (this.state.ref_index+1) +" of "+ this.state.items.length} </div>
+        <div className="d-flex flex-column therapist-info-container">
+          <div className="d-flex justify-content-start patient-info-description">
+            <span>Patient Profile Information:</span>
+          </div>
+          {questions?questions.map((item, index)=> (this.map_question_to_view(item, index, patient)) ):null}
+         <div className="d-flex patient-info-submit-btn-holder">
+            <input id='submit_refer' className="patient-refer-submit-btn" onClick={this.submit_item_handler}  type="button" value="Submit and Continue"/>
+          </div>
+       </div>	
+      </div>    
+     </div>
+    )
+  }
+
+
+
+
 
   //TODO: change wording to title 
   render(){	
     const patient = this.state.items[this.state.ref_index]
     const questions = this.props.questions
  	  return(
-      <div className="d-flex flex-column therapist-question-container">
-        <h1> {this.state.ref_index+1} of {this.state.items.length} </h1>
-        <div className="d-flex justify-content-start patient-refer-description">
-          <span>Patient Profile Information:</span>
-        </div>
-        {questions?questions.map((item, index)=> (this.map_question_to_view(item, index, patient)) ):null}
-       <div className="d-flex patient-info-submit-btn-holder">
-          <input id='submit_refer' className="patient-refer-submit-btn" onClick={this.submit_item_handler}  type="button" value="Submit and Continue"/>
-        </div>
-     </div>
-		)
+      this.view(patient, questions) 
+    )
 	}
 }
 

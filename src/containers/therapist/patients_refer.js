@@ -60,31 +60,56 @@ class PatientsRefer extends Component {
 
     if(incomplete.length==0 && patients.length>0){ 
       this.props.submit_action(patients); 
+    }else if(patients.length==0){
+      //warning msg no items 
     }else{
       this.props.submit_action(patients); 
       this.setState({incomplete:incomplete})
     }
   } 
 
+
+  view = (event_handlers) => {
+    return (
+      <div className="container-progress">
+        <div className="d-flex flex-column">
+          <div className="d-flex justify-content-center flex-row menu-bar">
+            <div className= "col d-flex justify-content-between solid-border-bottom__unselected text-small__unselected menu-bar-item-holder">
+              <img src={process.env.PUBLIC_URL + '/img/arrow.png'} className="arrow-btn"/>
+              <div className="align-self-end menu-item">  Therapist Information </div>
+              <div></div>
+            </div>      
+            <div className= "col d-flex justify-content-between solid-border-bottom text-small menu-bar-item-holder">
+              <div></div>
+              <div className="align-self-end menu-item">  Patient Information </div>
+              <div></div>
+            </div>      
+         
+          </div>
+          <div className="d-flex flex-column therapist-question-container">
+            <div className="d-flex justify-content-start patient-refer-description">
+              <span>Please enter patient/s contact information.</span>
+            </div> 
+            {[...Array(this.state.total_items)].map((e, index) => (components.patient_refer_inputs(event_handlers, this.state.items[index], index, this.state.total_items)))}  
+            <div className="d-flex justify-content-end patient-refer-add-btn-holder">
+              <div id='add_patient' className="add-patient-button" onClick={this.add_item_handler}>
+                <img className="remove-button" src='/img/add_patient.png'/> <span className="add_patient_btn_text">Add patient</span>
+              </div>
+            </div>
+            <div className="d-flex patient-refer-submit-btn-holder">
+              <input id='submit_refer' className="patient-refer-submit-btn" onClick={this.submit_item_handler}  type="button" value="Submit and Continue"/>
+            </div>
+         </div>
+       </div>    
+     </div>
+    )
+  }
+
+
 	render(){	
     const event_handlers = {update:this.update_item_handler.bind(this), 
                       remove:this.remove_item_handler.bind(this)}
-		return(
-      <div className="d-flex flex-column therapist-question-container">
-        <div className="d-flex justify-content-start patient-refer-description">
-          <span>Please enter patient/s contact information.</span>
-        </div> 
-        {[...Array(this.state.total_items)].map((e, index) => (components.patient_refer_inputs(event_handlers, this.state.items[index], index, this.state.total_items)))}  
-        <div className="d-flex justify-content-end patient-refer-add-btn-holder">
-          <div id='add_patient' className="add-patient-button" onClick={this.add_item_handler}>
-            <img className="remove-button" src='/img/add_patient.png'/> <span className="add_patient_btn_text">Add patient</span>
-          </div>
-        </div>
-        <div className="d-flex patient-refer-submit-btn-holder">
-          <input id='submit_refer' className="patient-refer-submit-btn" onClick={this.submit_item_handler}  type="button" value="Submit and Continue"/>
-        </div>
-     </div>
-		)
+    return(this.view(event_handlers))
 	}
 }
 

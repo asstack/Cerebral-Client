@@ -52,13 +52,19 @@ class RadioDetails extends Component {
           <div className="d-flex align-content-start align-items-center patient-info-radio-item">
             <span>{this.props.question.title}</span>
           </div>
-          <input className ="checkbox-type-small" type="radio"  onChange={e => this.set_option_handler(true) } checked={this.state.active}/>
-          <div className="d-flex align-items-start checkbox-small-text">
-            Yes
-          </div>
-          <input className ="checkbox-type-small" type="radio" onChange={e => this.set_option_handler(false)} checked={!this.state.active}/>
-          <div className="d-flex align-items-start checkbox-small-text" checked={!this.state.active}>
-            No
+          <div className="d-flex flex-row justify-content-between radio-holder">
+            <div className="d-flex flex-row">
+              <input className ="checkbox-type-small" type="radio"  onChange={e => this.set_option_handler(true) } checked={this.state.active}/>
+              <div className="d-flex align-items-start checkbox-small-text">
+                Yes
+              </div>
+            </div>
+            <div className="d-flex flex-row">
+              <input className ="checkbox-type-small" type="radio" onChange={e => this.set_option_handler(false)} checked={!this.state.active}/>
+              <div className="d-flex align-items-start checkbox-small-text" checked={!this.state.active}>
+                No
+              </div>
+            </div>
           </div>
         </div>
         {this.state.active?this.textarea_view():null}

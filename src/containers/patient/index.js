@@ -75,6 +75,7 @@ class Patient extends Component{
       </div>
     )
   }
+
   single_progress_menu = (bank_name) => {
     return (
        <div className= "col d-flex justify-content-between solid-border-bottom text-small menu-bar-item-holder">

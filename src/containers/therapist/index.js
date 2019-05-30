@@ -52,9 +52,7 @@ class Therapist extends Component{
 
   render(){
     return(
-      <div>
-        {this.render_view(this.state.prv_state)}
-      </div>
+      this.render_view(this.state.prv_state)
     )
   }
 }

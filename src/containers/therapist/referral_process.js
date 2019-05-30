@@ -81,9 +81,7 @@ class ReferralProcess extends Component{
 
   render(){
     return(
-      <div>
-        {this.type_to_view()}
-      </div> 
+      this.type_to_view()
     )
   }
 }

@@ -30,23 +30,40 @@ class Account extends Component {
     } 
   }
 
-  render(){
-    return (
-      <div className="d-flex flex-column container-noprogress">
-        <div className="d-flex flex-row justify-content-left header-noprogress">
-          <img className="cerebral-logo" src={process.env.PUBLIC_URL + '/img/logo.png'}/>
-        </div>
-        <div className="d-flex flex-column question-container">
-          <div className="d-flex flex-column main-noprogress">
-            <div className="description_noprogress">
-              <h1>Create or Sign in an account to refer patient</h1>
-            </div>
-            <RegisterManager signin_submit_action = {this.props.sign_in_handler} register_submit_action = {this.props.register_handler} view_type={this.props.default_type}/>
+  view = () => { 
+    return(
+      <div className="container-progress">
+        <div className="d-flex flex-column">
+          <div className="d-flex justify-content-center flex-row menu-bar">
+            <div className= "col d-flex justify-content-between solid-border-bottom text-small menu-bar-item-holder">
+              <img src={process.env.PUBLIC_URL + '/img/arrow.png'} className="arrow-btn"/>
+              <div className="align-self-end menu-item">  Therapist Information </div>
+              <div></div>
+            </div>      
+            <div className= "col d-flex justify-content-between solid-border-bottom__unselected text-small__unselected  menu-bar-item-holder">
+              <div></div>
+              <div className="align-self-end menu-item">  Patient Information </div>
+              <div></div>
+            </div>      
+         
+          </div>
+          <div className="d-flex flex-column question-container">
+            <div className="d-flex flex-column main-noprogress">
+              <div className="description_noprogress">
+                <h1>Create or Sign in an account to refer patient</h1>
+              </div>
+              <RegisterManager signin_submit_action = {this.props.sign_in_handler} register_submit_action = {this.props.register_handler} view_type={this.props.default_type}/>
+            </div> 
           </div> 
-        </div> 
-       </div> 
-   );
+
+       </div>    
+     </div>
+    ) 
   }
+
+  render(){
+    return (this.view())
+ }
 }
 
 const mapStateToProps = (state) => ({
