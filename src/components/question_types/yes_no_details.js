@@ -29,7 +29,7 @@ class YesNoDetails extends Component {
       return( 
         <div>
 			    <div className = "d-flex justify-content-start text-small">
-            <p>{this.props.description[0].title}</p>
+            <p>{this.props.title}</p>
 				  </div>	
           <TextArea submit_action = {this.submit_description_action}/> 
         </div>
