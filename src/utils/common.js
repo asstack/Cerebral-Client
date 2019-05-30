@@ -67,7 +67,9 @@ export const map_type_to_component = (question, handlers) => {
     case 'dosage_preference':
       return <DosagePreference submit_action = {handlers.submit_answer_and_next_step}/>  
     case 'patient_video':
-      return <VideoSelector submit_action = {handlers.submit_and_upload_data}/>  
+      return <VideoSelector 
+              submit_text_action = {handlers.submit_answer_and_next_step}
+              submit_video_action = {handlers.submit_and_upload_data}/>  
     default:
       return(
         <div>
