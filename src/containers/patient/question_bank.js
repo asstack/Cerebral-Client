@@ -9,7 +9,6 @@ import * as wrapper from '../../utils/wrapper.js'
 import * as common from '../../utils/common.js'
 import ReactGA from 'react-ga'
 
-
 class QuestionBank extends Component{
   
   constructor(props){

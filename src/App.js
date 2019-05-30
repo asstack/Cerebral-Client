@@ -9,6 +9,7 @@ import Identification from './components/question_types/patient_identification'
 import {update_app_state, set_env} from './actions'
 import ReactGA from 'react-ga'
 import ErrorBoundary from './error_boundary'
+import ModalContainer from 'react-modal-promise'
 
 class App extends Component {
 
@@ -84,6 +85,7 @@ class App extends Component {
     console.log(path, ",", this.state.prv_state)
     return (
       <div className="App d-flex justify-content-center container">
+        <ModalContainer />
         <ErrorBoundary airbrake_project={process.env.REACT_APP_AIRBRAKE_PROJECT_ID} airbrake_key={process.env.REACT_APP_AIRBRAKE_API_KEY}>
           <Route path={path} component={component} />
         </ErrorBoundary>

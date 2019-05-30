@@ -4,6 +4,27 @@ import { sign_in } from '../../actions/user_auth_action'
 import { set_visit, get_patient_most_recent_visits, update_patient_state, move_patient_sign_up, set_profile_question, set_patient } from '../../actions/patient_action'
 import * as components from '../../components/question_components/components'
 
+import { createModal } from 'react-modal-promise'
+import { Modal } from 'react-bootstrap'
+
+const MyModal = ({ open, close, message}) => (
+  <Modal show={open} onHide={() => close()}>
+    <Modal.Header closeButton>
+            <Modal.Title>Resume Assessment</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>It looks like you were in the process of completing an assessment when you were logged out. Would you like to begin where you left off?</Modal.Body>
+    <Modal.Footer>
+      <button variant="secondary" onClick={() => close(false)}>
+        No
+      </button>
+      <button variant="primary" onClick={() => close(true)}>
+        Yes
+      </button>
+    </Modal.Footer>
+  </Modal>
+)
+
+const myPromiseModal = createModal(MyModal)
 
 class SignIn extends Component {
 
@@ -12,16 +33,25 @@ class SignIn extends Component {
     this.state = {
       email:'',
       name:'',
-      password:''
+      password:'',
+      message: ''
     }
   }
 
   componentDidMount(){
+    
     if(this.props.login_info.attributes['access-token']){    
       this.props.history.push('/patient/dashboard') 
     } 
   } 
+
+  componentWillUpdate() {
+    if (this.props.api_middleware.status == 'REAUTH') { 
+      this.state.message = 'You have been logged out for security reasons, please log back in to continue'
+    }
+  }
   componentDidUpdate(){
+    
     if(this.props.login_info.attributes['access-token']){    
       this.props.history.push('/patient/dashboard') 
     } 
@@ -40,15 +70,40 @@ class SignIn extends Component {
     this.props.history.push('/patient/qualification') 
   }
 
-  sign_in_handler = e => {
-    this.props.sign_in(this.state).then ((resp) => {
-      if (resp.user_attr.patient) {
-        this.props.set_patient(resp.user_attr.patient);
-        this.props.get_patient_most_recent_visits(resp.user_attr.patient).then((visits) => {
-          this.props.set_visit(visits[0])
+  handle_patient_previous_state = () => {
+    // check to see if patient was in the middle of answering questions by checking patient state
+    if (this.props.patient_reducer.question_banks.length > 0 && this.props.patient_reducer.question_banks_step < this.props.patient_reducer.question_banks.length
+      & this.props.patient_reducer.step < this.props.patient_reducer.total_step) {
+        return myPromiseModal({ open: true , message:'Insomnia' }).then(value => {
+          if (value) {
+            // redirect to patient qualification
+            this.props.history.push(this.props.patient_reducer.question_banks[this.props.patient_reducer.question_banks_step]) 
+          }
+          else {
+            // wipe out question_bank stuff
+          }
         })
       }
+      else {
+        // nothing to see here
+        return Promise.resolve()
+      }
+  }
+
+  sign_in_handler = e => {
+
+    this.handle_patient_previous_state().then(() => {
+      this.props.sign_in(this.state).then ((resp) => {
+        if (resp.user_attr.patient) {
+          this.props.set_patient(resp.user_attr.patient);
+          this.props.get_patient_most_recent_visits(resp.user_attr.patient).then((visits) => {
+            this.props.set_visit(visits[0])
+          })
+        }
+      })
     })
+
+    
   }
 
   render(){
@@ -61,6 +116,7 @@ class SignIn extends Component {
           <div className="d-flex justify-content-center text-big">
             <p>Sign In</p>
           </div>
+          <div className="d-flex justify-content-center">{this.state.message}</div>
              <div className="main-noprogress">
                 {components.input_type_1(this.update_email.bind(this), "Email Address")}
                 {components.input_password_type_1(this.update_password.bind(this), "Password")}
@@ -74,7 +130,9 @@ class SignIn extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  login_info : state.global_reducer.current_user
+  login_info : state.global_reducer.current_user,
+  patient_reducer: state.patient_reducer,
+  api_middleware: state.api_middleware
 })
 
 export default connect(mapStateToProps, {set_visit, get_patient_most_recent_visits, set_patient, update_patient_state, sign_in,set_profile_question, move_patient_sign_up},)(SignIn)
