@@ -38,6 +38,8 @@ export const api_call = (type, url, header, body = null, update_data=null) => di
         data: resp.data
       })
       if(update_data) dispatch(update_data(resp.data))
+
+      return resp.data
     }
   ).catch(error => {
 
