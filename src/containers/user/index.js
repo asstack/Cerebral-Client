@@ -22,7 +22,7 @@ class PasswordReset extends Component{
 
   reset_handler = e => {
     // TODO: get env variable for hostname
-    this.props.reset_password(this.state.email, 'http://localhost:3006/user/confirmation').then((resp) => {
+    this.props.reset_password(this.state.email, `${this.props.env.REACT_APP_BASE_URL}/user/confirmation`).then((resp) => {
         console.log(`reset_handler: ${resp.data}`)
     })
   }
@@ -57,6 +57,10 @@ class PasswordReset extends Component{
   }
 }
 
+const mapStateToProps = (state) => {
+  const {global_reducer: {env}} = state
+  return {env: env}
+}
 
 
-export default withRouter(connect(null, {reset_password}) (PasswordReset))
+export default withRouter(connect(mapStateToProps, {reset_password}) (PasswordReset))

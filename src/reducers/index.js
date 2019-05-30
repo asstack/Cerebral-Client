@@ -26,6 +26,7 @@ const init_global_state = {
     },
   },
   app_state: '',
+  env: ''
 }
 
 //global state storage, it will have user account information and current global state
@@ -50,6 +51,12 @@ const global_reducer = handleActions({
     return{
       ...state,
       app_state:action.new_app_state
+    }
+  },
+  [app_types.SET_ENV]: (state, action) => {
+    return{
+      ...state,
+      env:action.env
     }
   },
   [user_auth_types.REMOVE_TOKEN]: (state, action) => {

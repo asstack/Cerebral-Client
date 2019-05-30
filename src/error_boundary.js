@@ -5,10 +5,10 @@ class ErrorBoundary extends React.Component {
   constructor(props) {
     super(props);
     this.state = { hasError: false };
-    if (process.env.AIRBRAKE_PROJECT_ID && process.env.AIRBRAKE_API_KEY) {
+    if (props.airbrake_project && props.airbrake_key) {
       this.airbrake = new AirbrakeClient({
-        projectId: process.env.AIRBRAKE_PROJECT_ID,
-        projectKey: process.env.AIRBRAKE_API_KEY
+        projectId: props.airbrake_project,
+        projectKey: props.airbrake_key
       });
     }
     else {

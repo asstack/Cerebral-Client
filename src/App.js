@@ -6,16 +6,17 @@ import Therapist from './containers/therapist'
 import MainPage from './containers'
 import PasswordReset from './containers/user'
 import Identification from './components/question_types/patient_identification'
-import {update_app_state} from './actions'
+import {update_app_state, set_env} from './actions'
 import ReactGA from 'react-ga'
 import ErrorBoundary from './error_boundary'
 
-class App extends Component{
+class App extends Component {
 
   //Todo: get state before compoenet mounting
   //Routing : [/, patinet, therapist]
   constructor(props){
     super(props)
+    props.set_env(props.env)
     this.state = {
       prv_state:this.props.app_state, 
       prv_path:"/"
@@ -83,8 +84,8 @@ class App extends Component{
     console.log(path, ",", this.state.prv_state)
     return (
       <div className="App d-flex justify-content-center container">
-        <ErrorBoundary>
-          <Route path={path} component={component}/>
+        <ErrorBoundary airbrake_project={process.env.REACT_APP_AIRBRAKE_PROJECT_ID} airbrake_key={process.env.REACT_APP_AIRBRAKE_API_KEY}>
+          <Route path={path} component={component} />
         </ErrorBoundary>
       </div>
     );
@@ -96,4 +97,4 @@ const mapStateToProps = (state) => {
   return {app_state: app_state}
 }
 
-export default withRouter(connect(mapStateToProps,{update_app_state}) (App))
+export default withRouter(connect(mapStateToProps,{update_app_state, set_env}) (App))
