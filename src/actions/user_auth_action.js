@@ -5,6 +5,8 @@ export const REMOVE_TOKEN = 'REMOVE_TOKEN'
 export const REGISTER = 'REGISTER'
 export const SET_USER = "SET_USER"
 export const SET_QUESTIONS = "SET_QUESTIONS"
+export const SET_PATIENT = "SET_USER_PATIENT"
+export const SET_THERAPIST = "SET_USER_THERAPIST"
 
 // set_user will update global state with information corresponding to the User object in the database
 const set_user = user_info => ({
@@ -96,3 +98,10 @@ export const make_headers = (user_attr) => {
   }
 }
 
+export const set_patient = patient => (dispatch, getState) => {
+  return dispatch({type:SET_PATIENT, patient:patient})
+}
+
+export const set_therapist = therapist => (dispatch, getState) => {
+  return dispatch({type:SET_THERAPIST, therapist:therapist})
+}

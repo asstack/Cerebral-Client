@@ -70,9 +70,35 @@ const global_reducer = handleActions({
           'access-token': null,
           client: null
         }
+      }
     }
-  }
-  }
+  },
+  [user_auth_types.SET_PATIENT]: (state, action) => {
+    return{
+      ...state,
+      current_user: {
+        ...state.current_user,
+        attributes : {
+          ...state.current_user.attributes,
+          patient: action.patient
+        }
+      }
+    }
+  },
+  [user_auth_types.SET_THERAPIST]: (state, action) => {
+    console.log("set therapist here:", action.therapist)
+    return{
+      ...state,
+      current_user: {
+        ...state.current_user,
+        attributes : {
+          ...state.current_user.attributes,
+          therapist: action.therapist
+        }
+      }
+    }
+  },
+
 }, init_global_state)
 
 const appReducer = combineReducers({

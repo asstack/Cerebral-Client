@@ -1,6 +1,6 @@
 import axios from 'axios'
 import {api_call} from '../middle/api'
-
+import * as global_actions from './user_auth_action'
 import { get_user_attr, make_headers } from './user_auth_action';
 
 
@@ -157,6 +157,7 @@ export const create_patient_from_user = () => (dispatch, getState) => {
     .then(function(resp){
       // TODO: update global store with patient information
       dispatch(set_patient(resp.data))
+      dispatch(global_actions.set_patient(resp.data))
     })
 }
 

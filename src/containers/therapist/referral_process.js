@@ -36,9 +36,16 @@ class ReferralProcess extends Component{
       this.setState({view_type:type}) 
   }
 
+  componentDidMount(){ 
+     
+  }
+
   componentDidUpdate(){ 
     const url = this.props.location.pathname.split("/")[2];    
-    if(this.state.view_type && url!==this.state.view_type){
+    if(this.state.view_type !=='patient_refer' && this.state.view_type!=='account' && (!this.state.patients || this.state.ref_index >= this.state.patients)){
+      this.setState({view_type:'account'})
+      this.props.history.push("/therapist/account") 
+    }else if(this.state.view_type && url!==this.state.view_type){
       this.props.history.push("/therapist/"+this.state.view_type) 
     }
   }

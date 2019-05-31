@@ -149,7 +149,6 @@ class PatientInfo extends Component {
   render(){	
     const patient = this.state.items[this.state.ref_index]
     const questions = this.state.questions
-    console.log("questions in view: ", questions)
  	  return(
       this.view(patient, questions) 
     )

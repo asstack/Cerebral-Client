@@ -75,7 +75,7 @@ export const create_therapist_from_user = () => (dispatch, getState) => {
 
     return axios.post(`/api/therapists`, body, {headers: make_headers(user_attr)})
         .then(function(resp){
-        // TODO: update global store with patient information
+        dispatch(global_actions.set_therapist(resp.data))
         dispatch(set_therapist(resp.data))
         })
 }
