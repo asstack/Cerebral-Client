@@ -8,9 +8,9 @@ import * as utils from '../../utils/common'
 const MyModal = ({ open, close, message}) => (
   <Modal show={open} onHide={() => close()}>
     <Modal.Header closeButton>
-            <Modal.Title>Resume Assessment</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>It looks like you were in the process of completing an patient info when you were logged out. Would you like to begin where you left off?</Modal.Body>
+      <Modal.Title>Resume Assessment</Modal.Title>
+    </Modal.Header>
+    <Modal.Body>It looks like you were in the process of completing an patient info when you were logged out. Would you like to begin where you left off?</Modal.Body>
     <Modal.Footer>
       <button variant="secondary" onClick={() => close(false)}>
         No
@@ -91,20 +91,20 @@ class PatientsRefer extends Component {
   }
 
 
-  //now only allow complete items. if we want a warning message for missing fields, we can use incomplete state that contains incomplete item 
+  //TODO: elaborate error message
   submit_item_handler = () => {
     let patients = []
     let incomplete = []
     let warning_msg=null
     const items = this.state.items
 
-    var i;
+    let i;
     for(i=0; i < items.length;i++){ 
       if(items[i].email && items[i].first_name && items[i].last_name){
         if(utils.email_validation(items[i].email)){
           patients.push(items[i]) 
         }else{
-          warning_msg="please input valid email address" 
+          warning_msg="Please input valid email address" 
           break;
         }
       }else if(items[i].email || items[i].first_name || items[i].last_name){
@@ -116,14 +116,12 @@ class PatientsRefer extends Component {
     if(incomplete.length==0 && patients.length>0){ 
       this.props.submit_action(patients); 
       this.props.update_ref_patients(patients)
-    }else if(patients.length==0){
+    }else if(!warning_msg && patients.length==0){
       //warning msg no items 
+      warning_msg="Please fill at least 1 patient information"
       this.setState({incomplete:incomplete, msg:warning_msg})
       this.forceUpdate();
     }else{
-      //currently allow, but will add new features to controll incomplete fields
-      //this.props.submit_action(patients); 
-      //this.props.update_ref_patients(patients)
       this.setState({incomplete:incomplete, msg:warning_msg})
       this.forceUpdate();
     }
@@ -152,7 +150,9 @@ class PatientsRefer extends Component {
             <div className="d-flex justify-content-start patient-refer-description">
               <span>Please enter patient/s contact information.</span>
             </div> 
-            <span>{this.state.msg?this.state.msg:null}</span>
+            {this.state.msg?
+              <div className="d-flex justify-content-center text-small-red">
+                {this.state.msg}</div>:null}
             {[...Array(this.state.total_items)].map((e, index) => (components.patient_refer_inputs(event_handlers, this.state.items[index], index, this.state.total_items)))}  
             <div className="d-flex justify-content-end patient-refer-add-btn-holder">
               <div id='add_patient' className="add-patient-button" onClick={this.add_item_handler}>

@@ -135,7 +135,9 @@ class PatientInfo extends Component {
           </div>
           {questions?questions.map((item, index)=> (this.map_question_to_view(item, index, patient)) ):null}
           <div className="d-flex flex-column patient-info-submit-btn-holder">
-            <span>{this.state.msg?this.state.msg:null}</span>
+            {this.state.msg?
+              <div className="d-flex justify-content-center text-small-red">
+                {this.state.msg}</div>:null}
             <input id='submit_refer' className="patient-refer-submit-btn" onClick={this.submit_item_handler}  type="button" value="Submit and Continue"/>
           </div>
        </div>	
