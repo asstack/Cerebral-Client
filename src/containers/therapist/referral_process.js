@@ -17,6 +17,7 @@ class ReferralProcess extends Component{
     this.state = {
       view_type:null, 
       patients:null,
+      ref_index:0,
     }
   }
 
@@ -48,9 +49,9 @@ class ReferralProcess extends Component{
       })
   }
  
-  patient_refer_handler = infos => {
+  patient_refer_handler = (infos, idx=0) => {
     //here save data both client and backend 
-    this.setState({patients:infos, view_type:'patient_info'})
+    this.setState({patients:infos, view_type:'patient_info', ref_index:idx})
     //redux action to update patient infos
   }
 
@@ -104,6 +105,7 @@ class ReferralProcess extends Component{
                               update_ref_patients = {actions.update_refer_patients}/>
       case 'patient_info':
         return <PatientInfo patients_info = {this.state.patients}
+                            ref_index = {this.state.ref_index}
                             actions = {actions}
                             complete_action = {this.update_type_handler}/>
       case 'complete':
@@ -120,8 +122,6 @@ class ReferralProcess extends Component{
     )
   }
 }
-
-
 
 const mapDispatchToProps = (dispatch) => {
   return {

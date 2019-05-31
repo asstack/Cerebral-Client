@@ -1,5 +1,27 @@
 import React, {Component} from 'react'
+import { connect } from 'react-redux'
 import * as components from '../../components/question_components/components'
+import { createModal } from 'react-modal-promise'
+import { Modal } from 'react-bootstrap'
+
+const MyModal = ({ open, close, message}) => (
+  <Modal show={open} onHide={() => close()}>
+    <Modal.Header closeButton>
+            <Modal.Title>Resume Assessment</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>It looks like you were in the process of completing an patient info when you were logged out. Would you like to begin where you left off?</Modal.Body>
+    <Modal.Footer>
+      <button variant="secondary" onClick={() => close(false)}>
+        No
+      </button>
+      <button variant="primary" onClick={() => close(true)}>
+        Yes
+      </button>
+    </Modal.Footer>
+  </Modal>
+)
+
+const myPromiseModal = createModal(MyModal)
 
 //get submit and skip handler
 class PatientsRefer extends Component {
@@ -16,6 +38,29 @@ class PatientsRefer extends Component {
   shouldComponentUpdate=()=>{
     return this.state.update
   }
+
+  componentDidMount(){
+    const index =this.props.ref_index;
+    const patients = this.props.ref_patients
+   if(patients && index < patients.length){
+     //this.props.submit_action(this.props.ref_patients, this.props.ref_index); 
+     return myPromiseModal({open:true}).then(value=>{
+      if(value){ 
+        this.props.submit_action(this.props.ref_patients, this.props.ref_index); 
+      }
+     })
+      this.forceUpdate()   
+    }
+  }
+  
+  componentWillReceiveProps = (next_props) => { 
+    if(next_props.ref_index && next_props.ref_patients && next_props.ref_index < next_props.ref_patients.length){
+      this.props.submit_action(next_props.ref_patients, next_props.ref_index); 
+      this.forceUpdate() 
+    }
+  }
+
+ 
 
   remove_item_handler = e => {
     
@@ -116,4 +161,18 @@ class PatientsRefer extends Component {
 	}
 }
 
-export default PatientsRefer
+
+const mapStateToProps = state => { 
+  const {
+    therapist_reducer: {ref_patients, ref_index} 
+  }=state;
+
+  return {
+    ref_patients:ref_patients,
+    ref_index:ref_index
+  }
+}
+
+
+export default connect(mapStateToProps, null) (PatientsRefer)
+

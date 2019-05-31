@@ -13,7 +13,7 @@ class PatientInfo extends Component {
 		super(props)
 		this.state = {
       items: this.props.patients_info,
-      ref_index:0,
+      ref_index:this.props.ref_index,
       answers:[],
       questions:this.props.questions
 		}
