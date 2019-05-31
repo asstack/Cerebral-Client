@@ -130,13 +130,14 @@ class PatientsRefer extends Component {
   } 
 
 
+
   view = (event_handlers) => {
     return (
       <div className="container-progress">
         <div className="d-flex flex-column">
           <div className="d-flex justify-content-center flex-row menu-bar">
             <div className= "col d-flex justify-content-between solid-border-bottom__unselected text-small__unselected menu-bar-item-holder">
-              <img src={process.env.PUBLIC_URL + '/img/arrow.png'} className="arrow-btn"/>
+              <img src={process.env.PUBLIC_URL + '/img/arrow.png'} onClick={e=>this.props.update_type_handler('cover')} className="arrow-btn"/>
               <div className="align-self-end menu-item">  Therapist Information </div>
               <div></div>
             </div>      
@@ -171,23 +172,10 @@ class PatientsRefer extends Component {
 	render(){	
     const event_handlers = {update:this.update_item_handler.bind(this), 
                       remove:this.remove_item_handler.bind(this)}
-    console.log("msg: ", this.state.msg)
     return(this.view(event_handlers))
 	}
 }
 
 
-const mapStateToProps = state => { 
-  const {
-    therapist_reducer: {ref_patients, ref_index} 
-  }=state;
-
-  return {
-    ref_patients:ref_patients,
-    ref_index:ref_index
-  }
-}
-
-
-export default connect(mapStateToProps, null) (PatientsRefer)
+export default PatientsRefer
 

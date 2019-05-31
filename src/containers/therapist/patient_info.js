@@ -118,7 +118,7 @@ class PatientInfo extends Component {
         <div className="d-flex flex-column patient-info-background">
           <div className="d-flex justify-content-center flex-row menu-bar">
             <div className= "col d-flex justify-content-between solid-border-bottom__unselected text-small__unselected menu-bar-item-holder">
-              <img src={process.env.PUBLIC_URL + '/img/arrow.png'} className="arrow-btn"/>
+              <img src={process.env.PUBLIC_URL + '/img/arrow.png'} onClick={e => this.props.update_type_handler('cover')} className="arrow-btn"/>
               <div className="align-self-end menu-item">  Therapist Information </div>
               <div></div>
             </div>      

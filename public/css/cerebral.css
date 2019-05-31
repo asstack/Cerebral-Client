@@ -290,6 +290,10 @@ h1 {
   color: rgba(37, 0, 68, 1.0);
 }
 
+.btn-arrow:hover {
+  cursor:pointer;
+}
+
 .btn-confirm {
   background-color: rgba(37, 0, 68, 1.0);
   height: 60px;
@@ -729,7 +733,14 @@ h1 {
 .arrow-btn{
   width:15px;
   height:15px;
+  cursor:pointer;
 }
+
+.arrow-btn:hover {
+  cursor:pointer;
+}
+
+
 
 .add-patient-button {
   align-items: center;

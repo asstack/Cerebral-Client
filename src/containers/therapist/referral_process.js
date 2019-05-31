@@ -15,13 +15,13 @@ class ReferralProcess extends Component{
   constructor(props){
     super(props) 
     this.state = {
-      view_type:null, 
+      view_type:'cover', 
       patients:null,
       ref_index:0,
     }
   }
 
-  type_change_handler = (type) => {
+  update_type_handler = (type) => {
     this.setState({view_type:type}) 
   }
 
@@ -32,19 +32,22 @@ class ReferralProcess extends Component{
     }) 
   }
 
-  update_type_handler = (type) => {
-      this.setState({view_type:type}) 
-  }
+  
 
   componentDidMount(){ 
-     
+    const index =this.props.ref_index;
+    const patients = this.props.ref_patients
+    const url = this.props.location.pathname.split("/")[2];    
+    if(url==='patient_info' && patients && index < patients.length){
+      this.patient_refer_handler(this.props.ref_patients, this.props.ref_index); 
+    }  
   }
 
   componentDidUpdate(){ 
     const url = this.props.location.pathname.split("/")[2];    
-    if(this.state.view_type !=='patient_refer' && this.state.view_type!=='account' && (!this.state.patients || this.state.ref_index >= this.state.patients)){
-      this.setState({view_type:'account'})
-      this.props.history.push("/therapist/account") 
+    if(this.state.view_type !== 'cover' && this.state.view_type !=='patient_refer' && this.state.view_type!=='account' && (!this.state.patients || this.state.ref_index >= this.state.patients)){
+      this.setState({view_type:'cover'})
+      this.props.history.push("/therapist/cover") 
     }else if(this.state.view_type && url!==this.state.view_type){
       this.props.history.push("/therapist/"+this.state.view_type) 
     }
@@ -97,10 +100,10 @@ class ReferralProcess extends Component{
             </div>
           </div>
           <div className="d-flex justify-content-center confirm-btn-holder">
-            <input className ="col btn-confirm text-btn"  onClick={e=>this.type_change_handler('account')} type="button" value='Refer Patient'/>
+            <input className ="col btn-confirm text-btn"  onClick={e=>this.update_type_handler('account')} type="button" value='Refer Patient'/>
           </div>
           <div className="d-flex justify-content-center link-btn-holder">
-            <input className ="col btn-link btn"  onClick={e=>this.type_change_handler('signin')} type="button" value='Login to my account'/>
+            <input className ="col btn-link btn"  onClick={e=>this.update_type_handler('signin')} type="button" value='Login to my account'/>
           </div>  
         </div>
       </div>
@@ -115,15 +118,19 @@ class ReferralProcess extends Component{
         return <Account next_url = "/therapist/patient_refer" default_type="register" sign_in_handler = {this.sign_in_handler} skip_handler = {this.update_type_handler}  register_handler={this.register_handler}/> 
       case 'patient_refer':
         return <PatientsRefer submit_action = {this.patient_refer_handler}
+                              ref_patients = {this.props.ref_patients}
+                              ref_index = {this.props.ref_index}
+                              update_type_handler = {this.update_type_handler}
                               update_ref_patients = {actions.update_refer_patients}/>
       case 'patient_info':
         return <PatientInfo patients_info = {this.state.patients}
+                            update_type_handler = {this.update_type_handler}
                             ref_index = {this.state.ref_index}
                             actions = {actions}
                             complete_action = {this.update_type_handler}/>
       case 'complete':
         return <ReferralComplete />
-      default: 
+      case 'cover': 
         return this.cover_page() 
     }
   }
@@ -136,6 +143,17 @@ class ReferralProcess extends Component{
   }
 }
 
+const mapStateToProps = state => { 
+  const {
+    therapist_reducer: {ref_patients, ref_index} 
+  }=state;
+
+  return {
+    ref_patients:ref_patients,
+    ref_index:ref_index
+  }
+}
+
 const mapDispatchToProps = (dispatch) => {
   return {
     therapist_actions: bindActionCreators(therapist_actions, dispatch),
@@ -143,6 +161,6 @@ const mapDispatchToProps = (dispatch) => {
   }
 }
 
-export default withRouter(connect(null, mapDispatchToProps) (ReferralProcess))
+export default withRouter(connect(mapStateToProps, mapDispatchToProps) (ReferralProcess))
 
 
