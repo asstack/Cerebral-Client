@@ -6,7 +6,6 @@ import CustomSelector from '../../components/question_types/custom_selector'
 import RadioDetails from '../../components/question_types/radio_details'
 import TherapistPatientsInfo from '../../components/question_types/therapist_patients_info'
 import TherapistCheckbox from '../../components/question_types/therapist_checkbox'
-import { refer_patient, get_patient_info_questions } from '../../actions/therapist_action' 
 
 //get submit and skip handler
 class PatientInfo extends Component {
@@ -40,7 +39,7 @@ class PatientInfo extends Component {
     if(!this.state.items){
       //redirect to somewhere
     }
-    this.props.get_patient_info_questions(4)
+    this.props.actions.get_patient_info_questions(4)
   }
   
  componentWillReceiveProps = (next_props) => { 
@@ -48,13 +47,12 @@ class PatientInfo extends Component {
    this.forceUpdate() 
  }
 
-
-
   update_answer_handler = (value, index)=>{
     let prv_answer = this.state.answers
     prv_answer[index].answers = value
 
     this.setState({answers:prv_answer})
+    this.props.actions.update_refer_answers(prv_answer)
   }
 
   submit_item_handler = () =>{
@@ -62,16 +60,18 @@ class PatientInfo extends Component {
     const answers = this.state.answers
     let patient = this.state.items[this.state.ref_index]
     patient.skip_password_validation=true
-    this.props.refer_patient(patient, answers)
+    this.props.actions.refer_patient(patient, answers)
     this.clean_up_answers() 
    
     if(this.state.ref_index===this.state.items.length-1){
+      this.props.actions.clean_refer_data()
       this.props.complete_action("complete")
     }else{
       this.setState({ref_index:this.state.ref_index+1})  
+      this.props.actions.update_refer_index(this.state.ref_index+1)
+      this.props.actions.update_refer_answers(null)
       this.forceUpdate()
-    }
-  
+    } 
   }
 
 
@@ -131,9 +131,6 @@ class PatientInfo extends Component {
   }
 
 
-
-
-
   //TODO: change wording to title 
   render(){	
     const patient = this.state.items[this.state.ref_index]
@@ -152,4 +149,4 @@ const mapStateToProps = state => {
   }
 }
 
-export default connect(mapStateToProps, {refer_patient, get_patient_info_questions}) (PatientInfo)
+export default connect(mapStateToProps, null) (PatientInfo)

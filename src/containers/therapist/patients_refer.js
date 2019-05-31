@@ -60,11 +60,14 @@ class PatientsRefer extends Component {
 
     if(incomplete.length==0 && patients.length>0){ 
       this.props.submit_action(patients); 
+      this.props.update_ref_patients(patients)
     }else if(patients.length==0){
       //warning msg no items 
     }else{
+      //currently allow, but will add new features to controll incomplete fields
       this.props.submit_action(patients); 
       this.setState({incomplete:incomplete})
+      this.props.update_ref_patients(patients)
     }
   } 
 

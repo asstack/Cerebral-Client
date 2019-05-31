@@ -16,7 +16,7 @@ class Account extends Component {
   //check info and if exists, push to next
   componentDidMount(){
     if(this.props.login_info.attributes.therapist){ 
-      this.props.skip_handler('temp_refer')
+      this.props.skip_handler('patient_refer')
     }  
   } 
 
