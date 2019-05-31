@@ -21,6 +21,15 @@ import DosagePreference from '../components/question_types/dosage_preference';
 import RegisterManager from '../components/question_types/register_manager'
 
 
+
+export const email_validation = email => {
+  let format = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+  if(email.match(format)){
+    return true;
+  }else{
+    return false;
+  }
+}
 export const map_type_to_component = (question, handlers) => {
   if(!question) return null
 

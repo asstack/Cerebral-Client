@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import * as components from '../../components/question_components/components'
 import { createModal } from 'react-modal-promise'
 import { Modal } from 'react-bootstrap'
+import * as utils from '../../utils/common'
 
 const MyModal = ({ open, close, message}) => (
   <Modal show={open} onHide={() => close()}>
@@ -28,6 +29,7 @@ class PatientsRefer extends Component {
 	constructor(props){
 		super(props)
 		this.state = {
+      msg:null,
       update:false,
       total_items:3,
       items: [{email:null, first_name:null, last_name:null}, {email:null, first_name:null, last_name:null}, {email:null, first_name:null, last_name:null}],
@@ -93,13 +95,21 @@ class PatientsRefer extends Component {
   submit_item_handler = () => {
     let patients = []
     let incomplete = []
+    let warning_msg=null
     const items = this.state.items
+
     var i;
     for(i=0; i < items.length;i++){ 
       if(items[i].email && items[i].first_name && items[i].last_name){
-        patients.push(items[i]) 
+        if(utils.email_validation(items[i].email)){
+          patients.push(items[i]) 
+        }else{
+          warning_msg="please input valid email address" 
+          break;
+        }
       }else if(items[i].email || items[i].first_name || items[i].last_name){
         incomplete.push(i)
+        warning_msg="Please fill missing field(s)"
       } 
     }
 
@@ -108,11 +118,14 @@ class PatientsRefer extends Component {
       this.props.update_ref_patients(patients)
     }else if(patients.length==0){
       //warning msg no items 
+      this.setState({incomplete:incomplete, msg:warning_msg})
+      this.forceUpdate();
     }else{
       //currently allow, but will add new features to controll incomplete fields
-      this.props.submit_action(patients); 
-      this.setState({incomplete:incomplete})
-      this.props.update_ref_patients(patients)
+      //this.props.submit_action(patients); 
+      //this.props.update_ref_patients(patients)
+      this.setState({incomplete:incomplete, msg:warning_msg})
+      this.forceUpdate();
     }
   } 
 
@@ -138,6 +151,7 @@ class PatientsRefer extends Component {
             <div className="d-flex justify-content-start patient-refer-description">
               <span>Please enter patient/s contact information.</span>
             </div> 
+            <span>{this.state.msg?this.state.msg:null}</span>
             {[...Array(this.state.total_items)].map((e, index) => (components.patient_refer_inputs(event_handlers, this.state.items[index], index, this.state.total_items)))}  
             <div className="d-flex justify-content-end patient-refer-add-btn-holder">
               <div id='add_patient' className="add-patient-button" onClick={this.add_item_handler}>
@@ -157,6 +171,7 @@ class PatientsRefer extends Component {
 	render(){	
     const event_handlers = {update:this.update_item_handler.bind(this), 
                       remove:this.remove_item_handler.bind(this)}
+    console.log("msg: ", this.state.msg)
     return(this.view(event_handlers))
 	}
 }

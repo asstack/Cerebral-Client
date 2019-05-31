@@ -12,6 +12,7 @@ class PatientInfo extends Component {
 	constructor(props){
 		super(props)
 		this.state = {
+      msg:null,
       items: this.props.patients_info,
       ref_index:this.props.ref_index,
       answers:[],
@@ -59,21 +60,33 @@ class PatientInfo extends Component {
 
     const answers = this.state.answers
     let patient = this.state.items[this.state.ref_index]
-    patient.skip_password_validation=true
-    this.props.actions.refer_patient(patient, answers)
-    this.clean_up_answers() 
-   
-    if(this.state.ref_index===this.state.items.length-1){
-      this.props.actions.clean_refer_data()
-      this.props.complete_action("complete")
-    }else{
-      this.setState({ref_index:this.state.ref_index+1})  
-      this.props.actions.update_refer_index(this.state.ref_index+1)
-      this.props.actions.update_refer_answers(null)
+    let warning_msg=null
+    let i =0;
+    for(i = 0; i < answers.length; i++){
+      if(answers[i].answers===null)(
+        warning_msg="Please answer all questions" 
+      ) 
+    }
+  
+    if(warning_msg){
+      this.setState({msg:warning_msg}) 
       this.forceUpdate()
-    } 
+    }else{
+      patient.skip_password_validation=true
+      this.props.actions.refer_patient(patient, answers)
+      this.clean_up_answers() 
+     
+      if(this.state.ref_index===this.state.items.length-1){
+        this.props.actions.clean_refer_data()
+        this.props.complete_action("complete")
+      }else{
+        this.setState({ref_index:this.state.ref_index+1})  
+        this.props.actions.update_refer_index(this.state.ref_index+1)
+        this.props.actions.update_refer_answers(null)
+        this.forceUpdate()
+      } 
+    }
   }
-
 
   //TODO: we can use wrapped components since they have same props
   map_question_to_view = (item, index, patient) =>{
@@ -121,7 +134,8 @@ class PatientInfo extends Component {
             <span>Patient Profile Information:</span>
           </div>
           {questions?questions.map((item, index)=> (this.map_question_to_view(item, index, patient)) ):null}
-         <div className="d-flex patient-info-submit-btn-holder">
+          <div className="d-flex flex-column patient-info-submit-btn-holder">
+            <span>{this.state.msg?this.state.msg:null}</span>
             <input id='submit_refer' className="patient-refer-submit-btn" onClick={this.submit_item_handler}  type="button" value="Submit and Continue"/>
           </div>
        </div>	
