@@ -15,7 +15,8 @@ class PatientInfo extends Component {
 		this.state = {
       items: this.props.patients_info,
       ref_index:0,
-      answers:[]
+      answers:[],
+      questions:this.props.questions
 		}
 	}
 
@@ -42,16 +43,18 @@ class PatientInfo extends Component {
     this.props.get_patient_info_questions(4)
   }
   
-  componentDidUpdate(){
-  
-  }
+ componentWillReceiveProps = (next_props) => { 
+   this.setState({questions:next_props.questions}) 
+   this.forceUpdate() 
+ }
+
+
 
   update_answer_handler = (value, index)=>{
     let prv_answer = this.state.answers
     prv_answer[index].answers = value
 
     this.setState({answers:prv_answer})
-    console.log("answers: ", this.state.answers)
   }
 
   submit_item_handler = () =>{
@@ -134,7 +137,8 @@ class PatientInfo extends Component {
   //TODO: change wording to title 
   render(){	
     const patient = this.state.items[this.state.ref_index]
-    const questions = this.props.questions
+    const questions = this.state.questions
+    console.log("questions in view: ", questions)
  	  return(
       this.view(patient, questions) 
     )
