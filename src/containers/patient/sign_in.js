@@ -9,24 +9,7 @@ import { Modal } from 'react-bootstrap'
 
 import Alert from 'react-s-alert'
 
-const MyModal = ({ open, close, message}) => (
-  <Modal show={open} onHide={() => close()}>
-    <Modal.Header closeButton>
-            <Modal.Title>Resume Assessment</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>It looks like you were in the process of completing an assessment when you were logged out. Would you like to begin where you left off?</Modal.Body>
-    <Modal.Footer>
-      <button variant="secondary" onClick={() => close(false)}>
-        No
-      </button>
-      <button variant="primary" onClick={() => close(true)}>
-        Yes
-      </button>
-    </Modal.Footer>
-  </Modal>
-)
-
-const myPromiseModal = createModal(MyModal)
+import promiseModal from '../../utils/modal_dialog'
 
 class SignIn extends Component {
   
@@ -42,17 +25,14 @@ class SignIn extends Component {
   }
 
   componentDidMount(){
-    
+    if (this.props.api_middleware.status == 'REAUTH') { 
+      Alert.info('You have been logged out for security reasons, please log back in to continue')
+    }
     if(this.props.login_info.attributes['access-token']){    
       this.props.history.push('/patient/dashboard') 
     } 
   } 
 
-  componentWillUpdate() {
-    if (this.props.api_middleware.status == 'REAUTH') { 
-      this.state.message = 'You have been logged out for security reasons, please log back in to continue'
-    }
-  }
   componentDidUpdate(){
     
     if(this.props.login_info.attributes['access-token']){    
@@ -77,7 +57,7 @@ class SignIn extends Component {
     // check to see if patient was in the middle of answering questions by checking patient state
     if (this.props.patient_reducer.question_banks.length > 0 && this.props.patient_reducer.question_banks_step < this.props.patient_reducer.question_banks.length
       & this.props.patient_reducer.step < this.props.patient_reducer.total_step) {
-        return myPromiseModal({ open: true , message:'Insomnia' }).then(value => {
+        return promiseModal({ open: true , title: 'Resume Assessment', message:'It looks like you were in the process of completing an assessment when you were logged out. Would you like to begin where you left off?' }).then(value => {
           if (value) {
             // redirect to patient qualification
             this.props.history.push(`${this.props.patient_reducer.question_banks[this.props.patient_reducer.question_banks_step]}`) 
