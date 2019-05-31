@@ -86,7 +86,7 @@ export const button_half_size = (event_handler, item) => {
 }
 
 /*therapist components - one line label and item*/
-export const patient_refer_inputs = (event_handler,item, index, total) => {
+export const patient_refer_inputs = (event_handler, item, index, total) => {
   return(
     <div key={uuidv1()} className="d-flex flex-row justify-content-start patient-refer-items-holder">
       <div className="d-flex align-content-center flex-between patient-refer-left-item">
@@ -95,19 +95,19 @@ export const patient_refer_inputs = (event_handler,item, index, total) => {
       <div className="d-flex flex-column patient-refer-input-holder">
         <div className="d-flex flex-row">
           <div className="d-flex justify-content-center patient-refer-input-item ">
-            <input className="col patient-refer-input" autocomplete="off" onChange={(e)=>event_handler.update(index, "first_name", e)} defaultValue={item.fisrt_name} type="text" placeholder="first_name"/>
+            <input className="col patient-refer-input" name={"fname"+index} onChange={(e)=>event_handler.update(index, "first_name", e)} defaultValue={item.first_name} type="text" placeholder="first_name"/>
           </div> 
           <div className="gap-5"></div>
           <div className="d-flex justify-content-center patient-refer-input-item ">
-            <input className="col patient-refer-input"  autocomplete="off" onChange={(e)=>event_handler.update(index, "last_name", e)} defaultValue={item.last_name} type="text" placeholder="last_name"/>
+            <input className="col patient-refer-input" name={"lname"+index} onChange={(e)=>event_handler.update(index, "last_name", e)} defaultValue={item.last_name} type="text" placeholder="last_name"/>
           </div>
         </div>
         <div className="d-flex justify-content-center patient-refer-input-item ">
-          <input className="col patient-refer-input"  autocomplete="off" onChange={(e)=>event_handler.update(index, "email", e)} defaultValue={item.email} type="email" placeholder="email"/>
+          <input className="col patient-refer-input" name={"email"+index} onChange={(e)=>event_handler.update(index, "email", e)} defaultValue={item.email} type="email" placeholder="email"/>
         </div>
       </div>
       <div className="d-flex align-content-center flex-between patient-refer-right-item">
-        {(total>3 && index+1===total)?<img onClick={event_handler.remove}className="remove-button" src='/img/patient_remove.png' />:<div></div>}
+        {(total>3 && index+1===total)?<img onClick={event_handler.remove} className="remove-button" src='/img/patient_remove.png' />:<div></div>}
       </div>
     </div>
   )
