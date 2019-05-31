@@ -11,6 +11,9 @@ import ReactGA from 'react-ga'
 import ErrorBoundary from './error_boundary'
 import ModalContainer from 'react-modal-promise'
 
+import 'react-s-alert/dist/s-alert-default.css'
+import Alert from 'react-s-alert'
+
 class App extends Component {
 
   //Todo: get state before compoenet mounting
@@ -88,6 +91,7 @@ class App extends Component {
         <ModalContainer />
         <ErrorBoundary airbrake_project={process.env.REACT_APP_AIRBRAKE_PROJECT_ID} airbrake_key={process.env.REACT_APP_AIRBRAKE_API_KEY}>
           <Route path={path} component={component} />
+          <Alert stack={{limit: 3}} />
         </ErrorBoundary>
       </div>
     );
