@@ -36,9 +36,15 @@ class ReferralProcess extends Component{
       this.setState({view_type:type}) 
   }
 
+  componentDidUpdate(){ 
+    const url = this.props.location.pathname.split("/")[2];    
+    if(this.state.view_type && url!==this.state.view_type){
+      this.props.history.push("/therapist/"+this.state.view_type) 
+    }
+  }
+
   //NOTE: don't know why we use multiple steps for registraion, worry about data redundancy and inconsistany in server side by errors
   register_handler = info => {
-
     const {therapist_actions, global_actions}=this.props
     global_actions.register_and_set_user(info)
       .then(() => {return global_actions.sign_in(info)})
