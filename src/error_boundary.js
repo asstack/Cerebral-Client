@@ -1,4 +1,4 @@
-import React, {Component} from 'react'
+import React from 'react'
 import AirbrakeClient from 'airbrake-js'
 
 class ErrorBoundary extends React.Component {

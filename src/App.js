@@ -21,6 +21,7 @@ class App extends Component {
   constructor(props){
     super(props)
     props.set_env(props.env)
+    if (props.env.REACT_APP_GA_KEY) ReactGA.initialize(props.env.REACT_APP_GA_KEY);
     this.state = {
       prv_state:this.props.app_state, 
       prv_path:"/"
@@ -41,8 +42,9 @@ class App extends Component {
     const new_state = current_path.split("/")[1]
 
     if(current_path!==this.state.prv_path){
-      ReactGA.initialize('UA-139974495-1');
-		  ReactGA.pageview(current_path);
+
+      if (this.props.env.REACT_APP_GA_KEY) ReactGA.pageview(current_path);
+      
       this.setState({prv_path:current_path});  
     }
     if(new_state!==this.state.prv_state){
