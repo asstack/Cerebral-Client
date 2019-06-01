@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {Router, Route, withRouter} from 'react-router-dom'
 import { connect } from 'react-redux'
 import Account from './account'
+import TherapistDashboard from './dash_board'
 import ReferralProcess from './referral_process'
 import {update_therapist_state} from '../../actions/therapist_action'
 
@@ -10,7 +11,6 @@ class Therapist extends Component{
     super(props) 
     this.state = {
       prv_state:this.props.therapist_state,
-      view_type:null, 
     }
   }
   
@@ -25,25 +25,30 @@ class Therapist extends Component{
   }
 
 	componentDidUpdate(){	
-    
+        
     const current_path = this.props.location.pathname
     const new_state = current_path.split("/")[2]
+
     if(!new_state){  
       this.props.history.push("/therapist/cover") 
     }else if(new_state!==this.state.prv_state){
+      this.props.history.push("/therapist/" + new_state)
       this.setState({prv_state: new_state})
     }
  }
  
-  type_change_handler = (type) => {
-    this.setState({view_type:type}) 
+  update_type_handler = (type) => {
+    this.props.history.push("/therapist/"+type) 
   }
   
   render_view = state => {
     if(state==="member"){
-      return <div>signin</div> 
+      return <Route path = "/therapist/member" render = {props => 
+          <Account next_type = "dashboard" default_type="signin"
+            update_type_handler = {this.update_type_handler}/>}/> 
     }else if(state==="dashboard"){
-      return <div>working on</div> 
+      return <Route path = "/therapist/dashboard" render = {props=>
+          <TherapistDashboard user = {this.props.user}/>}/> 
     }else{
       return <Route path = "/therapist/:state" render = {(props)=>
           <ReferralProcess user={this.props.user}/>}/>
@@ -68,7 +73,5 @@ const mapStateToProps = state => {
     therapist_state:therapist_state,
   }
 }
-
-
 
 export default withRouter(connect(mapStateToProps, {update_therapist_state}) (Therapist))

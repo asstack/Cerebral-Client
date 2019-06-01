@@ -25,15 +25,6 @@ class ReferralProcess extends Component{
     this.setState({view_type:type}) 
   }
 
-  sign_in_handler = info => { 
-    const {global_actions} = this.props
-    global_actions.sign_in(info).then ((resp) => {
-      this.setState({view_type:'patient_refer'})
-    }) 
-  }
-
-  
-
   componentDidMount(){ 
     const index =this.props.ref_index;
     const patients = this.props.ref_patients
@@ -45,7 +36,7 @@ class ReferralProcess extends Component{
 
   componentDidUpdate(){ 
     const url = this.props.location.pathname.split("/")[2];    
-    if(this.state.view_type !== 'cover' && this.state.view_type !=='patient_refer' && this.state.view_type!=='account' && (!this.state.patients || this.state.ref_index >= this.state.patients)){
+    if(this.state.view_type==='patient_info' && (!this.state.patients || this.state.ref_index >= this.state.patients)){
       this.setState({view_type:'cover'})
       this.props.history.push("/therapist/cover") 
     }else if(this.state.view_type && url!==this.state.view_type){
@@ -53,30 +44,19 @@ class ReferralProcess extends Component{
     }
   }
 
-  //NOTE: don't know why we use multiple steps for registraion, worry about data redundancy and inconsistany in server side by errors
-  register_handler = info => {
-    const {therapist_actions, global_actions}=this.props
-    global_actions.register_and_set_user(info)
-      .then(() => {return global_actions.sign_in(info)})
-        .then(() => { return therapist_actions.create_therapist_from_user() })
-          .then(() => {this.setState({view_type:'patient_refer'})})
-      .catch((err) => {
-        console.log(err)
-      })
-  }
- 
   patient_refer_handler = (infos, idx=0) => {
-    //here save data both client and backend 
     this.setState({patients:infos, view_type:'patient_info', ref_index:idx})
-    //redux action to update patient infos
   }
 
+  redirect_url = (url) => {
+    this.props.history.push(url)
+  }
   cover_page = () => {  
     return (
       <div className="d-flex flex-column therapist-noprogress">
         <div className="d-flex flex-row justify-content-between align-items-center therapist-header">
           <img className="cerebral-logo" src={process.env.PUBLIC_URL + '/img/logo.png'}/>
-          <div className="therapist-cover-top-menu">Member Login</div>
+          <div className="therapist-cover-top-menu" onClick={e=>this.redirect_url("/therapist/member") }>Member Login</div>
         </div>
         <div className="d-flex flex-column justify-content-center align-self-center therapist-cover-main">
           <div className="therapist-cover-title">
@@ -115,7 +95,11 @@ class ReferralProcess extends Component{
   type_to_view = (actions) => {
     switch(this.state.view_type){
       case 'account':
-        return <Account next_url = "/therapist/patient_refer" default_type="register" sign_in_handler = {this.sign_in_handler} skip_handler = {this.update_type_handler}  register_handler={this.register_handler}/> 
+        return <Account next_type = "patient_refer" default_type="register" 
+                        update_type_handler = {this.update_type_handler}/> 
+      case 'signin':
+        return <Account next_type = "patient_refer" default_type="signin" 
+                        update_type_handler = {this.update_type_handler}/>  
       case 'patient_refer':
         return <PatientsRefer submit_action = {this.patient_refer_handler}
                               ref_patients = {this.props.ref_patients}
@@ -132,6 +116,8 @@ class ReferralProcess extends Component{
         return <ReferralComplete />
       case 'cover': 
         return this.cover_page() 
+      default:
+        return "Invalid URL"
     }
   }
 
@@ -162,5 +148,4 @@ const mapDispatchToProps = (dispatch) => {
 }
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps) (ReferralProcess))
-
 

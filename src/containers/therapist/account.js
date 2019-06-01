@@ -1,8 +1,11 @@
 import React, {Component} from 'react'
 import {Router, Route, withRouter} from 'react-router-dom'
+import {bindActionCreators} from 'redux'
 import { connect } from 'react-redux'
 import * as components from '../../components/question_components/components'
 import RegisterManager from '../../components/question_types/register_manager'
+import * as therapist_actions from '../../actions/therapist_action'
+import * as global_actions from '../../actions/user_auth_action'
 
 class Account extends Component {
 
@@ -16,18 +19,26 @@ class Account extends Component {
   //check info and if exists, push to next
   componentDidMount(){
     if(this.props.login_info.attributes.therapist){ 
-      this.props.skip_handler('patient_refer')
+      this.props.update_type_handler(this.props.next_type)
     }  
   } 
+  
+  sign_in_handler = info => { 
+    const {global_actions} = this.props
+    global_actions.sign_in(info).then ((resp) => {
+      this.props.update_type_handler(this.props.next_type)
+    }) 
+  } 
 
-
-  //if got something from parent, go there
-  page_update_helper = () => {
-    if(this.props.next_url){
-      this.props.history.push(this.props.next_url) 
-    }else{
-      this.props.history.push('/therapist/dashboard')
-    } 
+  register_handler = info => {
+    const {therapist_actions, global_actions}=this.props
+    global_actions.register_and_set_user(info)
+      .then(() => {return global_actions.sign_in(info)})
+        .then(() => { return therapist_actions.create_therapist_from_user() })
+          .then(() => {this.props.update_type_handler(this.props.next_type)})
+      .catch((err) => {
+        console.log(err)
+      })
   }
 
   view = () => { 
@@ -52,7 +63,7 @@ class Account extends Component {
               <div className="description_noprogress">
                 <h1>Create or Sign in an account to refer patient</h1>
               </div>
-              <RegisterManager signin_submit_action = {this.props.sign_in_handler} register_submit_action = {this.props.register_handler} view_type={this.props.default_type}/>
+              <RegisterManager signin_submit_action = {this.sign_in_handler} register_submit_action = {this.register_handler} view_type={this.props.default_type}/>
             </div> 
           </div> 
 
@@ -70,4 +81,12 @@ const mapStateToProps = (state) => ({
   login_info : state.global_reducer.current_user
 })
 
-export default withRouter(connect(mapStateToProps, {}) (Account)) 
+const mapDispatchToProps = (dispatch) => {
+  return {
+    therapist_actions: bindActionCreators(therapist_actions, dispatch),
+    global_actions: bindActionCreators(global_actions, dispatch)
+  }
+}
+
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps) (Account)) 
