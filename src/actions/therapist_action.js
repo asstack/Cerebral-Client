@@ -63,7 +63,6 @@ export const refer_patient = (patient_info, answers) => (dispatch, getState) => 
       return axios.post(`/api/therapists/${therapist.id}/patients`, body, {headers: make_headers(user_attr)})
       .then(function(resp){
           // TODO: update global store with patient information
-          //dispatch(set_patient(resp.data))
           })
       })
 }

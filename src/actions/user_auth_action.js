@@ -8,6 +8,8 @@ export const SET_QUESTIONS = "SET_QUESTIONS"
 export const SET_PATIENT = "SET_USER_PATIENT"
 export const SET_THERAPIST = "SET_USER_THERAPIST"
 
+const proxy = require('http-proxy-middleware');
+
 // set_user will update global state with information corresponding to the User object in the database
 const set_user = user_info => ({
   type:SET_USER,
@@ -23,6 +25,24 @@ export const reset_password = (email, redirect_url) => (dispatch, getState) =>  
   // sign in API call here
   var headers = {'Content-Type': 'application/json'}
   return axios.post("/api/auth/password" ,{email:email, redirect_url:redirect_url}, {headers: headers})
+}
+
+export const change_password = (token, password, password_confirmation, redirect_url_base) => (dispatch, getState) =>  {
+
+  var headers = {'Content-Type': 'application/json'}
+
+  return axios.get(`/api/auth/password/edit?reset_password_token=${token}&redirect_url=${redirect_url_base}/api/auth/validate_token`, {headers: headers}).then((resp) => {
+    console.info(resp)
+
+    resp.data.data['client'] = resp.headers.client
+    resp.data.data['access-token'] = resp.headers['access-token']
+
+    console.log("sign_in data", resp.data.data)
+                            
+    dispatch(set_user(resp.data.data))
+
+    return axios.put('/api/auth/password', {password: password, password_confirmation: password_confirmation}, {headers: make_headers(resp.data.data)})
+  })
 }
 
 export const sign_in = user_info => (dispatch, getState) =>  {
