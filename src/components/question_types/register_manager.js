@@ -2,6 +2,11 @@ import React, {Component} from 'react';
 import * as components from '../question_components/components'
 import CreateProfile from './create_profile'
 import SignIn from './sign_in'
+import {withRouter} from "react-router-dom"
+import {connect} from 'react-redux'
+
+import { is_signed_in } from '../../actions/user_auth_action'
+import Alert from 'react-s-alert'
 
 class RegisterManager extends Component {
 
@@ -10,6 +15,16 @@ class RegisterManager extends Component {
     this.state = {
       view_type:this.props.view_type
     }
+  }
+
+  componentDidMount = () => {
+    this.props.is_signed_in().then((resp) => {
+      if (resp) {
+        this.props.skip_action()
+        Alert.info('You are already signed in')
+      }
+    })
+    
   }
 
   state_update=(e, type)=>{
@@ -32,4 +47,4 @@ class RegisterManager extends Component {
   }
 }
 
-export default RegisterManager
+export default withRouter(connect(null, {is_signed_in}) (RegisterManager)) 

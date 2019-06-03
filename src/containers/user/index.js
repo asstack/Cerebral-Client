@@ -19,6 +19,8 @@ class PasswordReset extends Component{
         email:'',
         mode: path_parts.slice(-1)[0],
         reset_password_token: parsed.reset_password_token,
+        user_confirmation_token: parsed.user_confirmation_token,
+        landing_page: parsed.landing_page,
         password: null,
         confirm_password: null
     }
@@ -27,15 +29,15 @@ class PasswordReset extends Component{
   componentDidMount(){
     console.log("PasswordReset")
 
-    if (this.state.reset_password_token) {
-
+    if (this.state.mode == 'confirmation') {
+      // TODO: pass user_confirmation_token into the api
     }
   }
 
   reset_handler = e => {
     // TODO: get env variable for hostname
     this.props.reset_password(this.state.email, `${this.props.env.REACT_APP_BASE_URL}/user/change_password`).then((resp) => {
-      this.setState({mode:'confirmation'})
+      this.setState({mode:'did_reset'})
       console.log(`reset_handler: ${resp.data}`)
     }).catch((error) => {
       Alert.error(error.response.data.errors[0])
@@ -57,7 +59,8 @@ class PasswordReset extends Component{
     else {
       this.props.change_password(this.state.reset_password_token, this.state.password, this.state.confirm_password, this.props.env.REACT_APP_API_SERVER_URL).then(() =>{
         // TODO: what if this is a therapist instead?
-        this.props.history.push('/patient/dashboard')
+        const landing_page = this.state.landing_page | '/patient/dashboard'
+        this.props.history.push(landing_page)
       }
       ).catch((error) => {
         
@@ -100,7 +103,17 @@ class PasswordReset extends Component{
                   {components.confirm_button_type_1(this.new_password_handler.bind(this), "Save new password")}
                 </div>  
       </div>}
-        {this.state.mode == 'confirmation' &&
+      {this.state.mode == 'confirmation' &&
+          <div className="d-flex flex-column question-container">
+            <div className="d-flex justify-content-center text-big">
+              <p>Email confirmation</p>
+            </div>
+            <div className="d-flex justify-content-center">
+              <p>Your email address has been confirmed.</p>
+            </div> 
+          </div>
+        }
+        {this.state.mode == 'did_reset' &&
           <div className="d-flex flex-column question-container">
             <div className="d-flex justify-content-center text-big">
               <p>Check Your Email</p>

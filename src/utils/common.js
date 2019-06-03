@@ -40,7 +40,8 @@ export const map_type_to_component = (question, handlers) => {
       return <RegisterManager
                 type = 'register'
                 signin_submit_action = {handlers.patient_sign_in}
-                register_submit_action = {handlers.did_create_patient}/>
+                register_submit_action = {handlers.did_create_patient} 
+                skip_action = {handlers.next_step_handler}/>
     case 'sign_up':
       return <CreateProfile
                 submit_action = {handlers.did_create_patient}/> 
