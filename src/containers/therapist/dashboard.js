@@ -72,7 +72,9 @@ class TherapistDashboard extends Component{
               <div className={type==='message'?last_menu_css+' item-selected':last_menu_css} onClick={e => this.update_type_handler('message')}>
                 Messages
               </div> 
-              {components.confirm_button_type_1(this.redirect_to_refer, "Refer patients")}  
+              <div className="d-flex justify-content-center confirm-btn-holder">
+                <input className ="col dashboard-side-btn text-btn" onClick={this.redirect_to_refer} type="button" value="Refer patients"/>
+              </div>
           </div>                
         </div>
 
