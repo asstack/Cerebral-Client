@@ -18,20 +18,20 @@ export const dashboard_wide_card =()=>{
   return (
     <div class="main-content-wide-card">
       <div class="d-flex flex-column card-items-container">
-        <div class="small-card-title">MY RECENT SUBSCRIPTIONS</div>
+        <div class="small-card-title">my recent subscriptions</div>
         <div class="d-flex flex-row wide-card-blocks-holder">
           <div class="align-self-center wide-card-block">  
-            Image Here
+            image here
           </div>
           <div class="wide-card-block">  
-            <div class="small-card-item">Buproprion</div>
-            <div class="small-card-item">Dosage: 75 milligrams</div>
-            <div class="small-card-item">Price: $38.00</div> 
-            <div class="small-card-btn">EDIT</div> 
+            <div class="small-card-item">buproprion</div>
+            <div class="small-card-item">dosage: 75 milligrams</div>
+            <div class="small-card-item">price: $38.00</div> 
+            <div class="small-card-btn">edit</div> 
           </div>
           <div class="wide-card-block">  
-            <div class="small-card-item">Perscription status</div>
-            <div class="small-card-item">In progress</div>
+            <div class="small-card-item">perscription status</div>
+            <div class="small-card-item">in progress</div>
           </div>
         </div>
      </div>   

@@ -52,11 +52,12 @@ class ReferralProcess extends Component{
     this.props.history.push(url)
   }
   cover_page = () => {  
+    const id = this.props.user.attributes.id
     return (
       <div className="d-flex flex-column therapist-noprogress">
         <div className="d-flex flex-row justify-content-between align-items-center therapist-header">
           <img className="cerebral-logo" src={process.env.PUBLIC_URL + '/img/logo.png'}/>
-          <div className="therapist-cover-top-menu" onClick={e=>this.redirect_url("/therapist/member") }>Member Login</div>
+          <div className="therapist-cover-top-menu" onClick={e=>this.redirect_url("/therapist/member") }>{id?"Dashboard":"Member Login"}</div>
         </div>
         <div className="d-flex flex-column justify-content-center align-self-center therapist-cover-main">
           <div className="therapist-cover-title">
@@ -83,7 +84,7 @@ class ReferralProcess extends Component{
             <input className ="col btn-confirm text-btn"  onClick={e=>this.update_type_handler('account')} type="button" value='Refer Patient'/>
           </div>
           <div className="d-flex justify-content-center link-btn-holder">
-            <input className ="col btn-link btn"  onClick={e=>this.update_type_handler('signin')} type="button" value='Login to my account'/>
+            {id?null:<input className ="col btn-link btn"  onClick={e=>this.update_type_handler('signin')} type="button" value='Login to my account'/>}
           </div>  
         </div>
       </div>

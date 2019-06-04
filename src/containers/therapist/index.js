@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {Router, Route, withRouter} from 'react-router-dom'
 import { connect } from 'react-redux'
 import Account from './account'
-import TherapistDashboard from './dash_board'
+import TherapistDashboard from './dashboard'
 import ReferralProcess from './referral_process'
 import {update_therapist_state} from '../../actions/therapist_action'
 
@@ -13,7 +13,7 @@ class Therapist extends Component{
       prv_state:this.props.therapist_state,
     }
   }
-  
+   
   componentDidMount(){ 
     const init_state = this.props.location.pathname.split("/")[2];    
     if(!init_state){

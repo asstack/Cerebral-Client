@@ -456,7 +456,7 @@ h1 {
 }
 
 .profile-main-holder {
-  width:80%;
+  /*width:80%;*/
   height:1000px;
   background-color:#F6F6F6;
 }
@@ -464,7 +464,8 @@ h1 {
 .profile-main-container {
   width:100%;
   height:100%;
-  padding:30px;
+  padding:75px;
+  padding-top:50px;
 }
 
 .profile-main-content {
@@ -495,12 +496,27 @@ h1 {
 
 }
 
-.profile-side-item {
+.profile-side-title-holder{
+  padding-bottom:50px;
+  text-align: center;
+}
 
-  font-size: 22px;
+.profile-side-title {
+  font-size: 20px;
+  text-transform: uppercase;
+  font-weight:600;
+  color: #250044;
+}
+
+.profile-side-item {
+  cursor:pointer;
+  height:60px;
+  font-size: 18px;
+  font-weight:600;
   text-align: center;
   color: #250044;
-  border-top: 1px solid #D3DBF8;
+  border: 1px solid #D3DBF8;
+  border-bottom: 0px;
 }
 
 .profile-side-item:hover{
@@ -508,14 +524,24 @@ h1 {
   background: #250044;
 }
 
+.profile-side-btn-holder{
+  padding-left:50px;
+  padding-right:50px;
+}
 
 .profile-side-item-last {
-
-  font-size: 22px;
+  cursor:pointer;
+  height:60px;
+  font-size: 18px;
+  font-weight:600;
   text-align: center;
   color: #250044;
-  border-top: 1px solid #D3DBF8;
-  border-bottom: 1px solid #D3DBF8;
+  border: 1px solid #D3DBF8;
+}
+
+.item-selected {
+  color: #FFFFFF;
+  background: #250044;
 }
 
 .profile-side-item-last:hover {
@@ -523,23 +549,38 @@ h1 {
   background: #250044;
 }
 
+.profile-side-items-holder{
+  margin-top:120px;
+}
+
 .profile-logo {
-  font-family: "Kepler-Std";
   font-size: 50px;
+  margin-top: 50px;
   color: #250044;
 }
 
-.profile-side-items-holder{
-  padding-top:40px;
+.profile-top-menu {
+  font-size: 22px;
+  line-height: 22px;
+  font-weight:600;
+  color: #250044;
 }
 
 .text-logout {
   font-size: 22px;
   color: #250044;
+  border-left:2px solid #250044;
+  padding-left:40px;
+}
+
+.text-logout:hover {
+  cursor:pointer;
+  color: #3E0370;
 }
 
 .text-main-title{
   font-size:20px;
+  font-weight:600;
   color: #250044;
 }
 
@@ -549,7 +590,7 @@ h1 {
 
 .main-content-small-card {
   background:#FFFFFF;
-  width: 45%;
+  min-width:450px;
 }
 
 .small-card-main-area {
@@ -560,43 +601,53 @@ h1 {
 
 .card-items-container {
   padding:50px;
-  padding-left:19px;
-  padding-right:19px;
+ /*padding-left:75px;
+  padding-right:19px;*/
 }
 
 .small-card-title {
   font-size: 20px;
+  font-weight: 600;
   color: #250044;
   line-height: 20px;
   letter-spacing: -0.43px;
   text-transform: uppercase;
+  margin-bottom:25px;
 }
 
 .small-card-item {
   font-size: 18px;
+  font-weight:600;
   color:#250044;
   line-height: 18px;
   letter-spacing: -0.43px;
-  padding-top:24px;
+  margin-top:25px;
 }
 
 
 .small-card-item input {
-  border: 2px solid #250044;
+  border: 1px solid #250044;
   width: 100%;
   height: 60px;
 }
 
-.small-card-item input::placeholder{
+.small-card-item input:disabled {
+  cursor: not-allowed;
+  border: 1px solid #B9B8BA;
+}
+
+.small-card-item input:placeholder{
   color: #B9B8BA;
 }
 
 .small-card-btn {
+  cursor:pointer;
+  width:45px;
   font-size: 18px;
   color:#250044; 
   line-height: 18px;
   letter-spacing: -0.43px;
-  padding-top:50px;
+  margin-top:50px;
 }
 
 
@@ -609,6 +660,76 @@ h1 {
 .wide-card-block {
   width:33%;
 }
+
+.patients-list-item-container-nb {
+  background: #F6F6F6;
+  padding-top:98px;
+  padding-bottom:25px;
+}
+
+.main-content-column {
+  min-width:960px;
+}
+
+.search-bar-holder {
+  width: 430px;
+  height: 40px;
+  padding-left:20px;
+  padding-right:10px;
+  background: #FFFFFF;
+  border: 1px solid #D3DBF8;
+  box-sizing: border-box;
+  border-radius: 40px;
+}
+
+.search-bar-holder input {
+  min-width:300px;
+  margin:2px;
+  border:None;
+}
+
+.search-bar-holder input:focus{
+  outline: none;
+  border: none;
+}
+
+.search-img {
+  width:19px;
+  height:19px;
+}
+
+.table-item-col-1 {
+  min-width: 70px;
+}
+
+.table-item-col-2 {
+  min-width: 280px;
+}
+
+.table-item-col-3 {
+  min-width: 260px;
+}
+
+.table-item-col-4 {
+  min-width: 260px;
+}
+
+
+.table-item-col-5 {
+  max-width: 72px;
+}
+
+.table-item-head {
+  height:60px;
+  background: #A3A3A3;
+  border-radius: 4px 4px 0px 0px;
+  color: #FFFFFF;
+  font-size: 18px;
+  font-weight:600;
+}
+
+
+
 
 
 
