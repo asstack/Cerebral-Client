@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {Router, Route, withRouter} from 'react-router-dom'
 import { connect } from 'react-redux'
 import QuestionBank from './question_bank'
-import PatientDashboard from './dash_board'
+import PatientDashboard from './dashboard'
 import SignIn from './sign_in'
 import {update_patient_state, update_patient_questions, delete_patient_questions} from '../../actions/patient_action'
 import CompleteProcess from '../../components/static_components/complete_patient_process'
