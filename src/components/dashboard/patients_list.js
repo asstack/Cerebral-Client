@@ -10,6 +10,56 @@ class PatientsList extends Component {
     }
   }
 
+  prescription_status = type => {
+    switch(type){
+      case 'approved':
+        return "Patient has not completed assessment"
+      case 'pending':
+        return "Prescription pending doctor’s approval"
+      case 'approved':
+        return "Prescription approved"
+      case 'denied':
+        return "Prescription denied"
+    } 
+  }
+
+  warning_icon_src = type => {
+    switch(type){
+      case 'ready':
+        return process.env.PUBLIC_URL + '/img/approved.png'
+      case 'pending':
+        return process.env.PUBLIC_URL + '/img/pending.png'
+      case 'approved':
+        return process.env.PUBLIC_URL + '/img/approved.png'
+      case 'denied':
+        return process.env.PUBLIC_URL + '/img/denied.png'
+    }  
+  }
+
+  
+
+  row_item = (css_style) => (
+    <div className={"d-flex flex-row justify-content-start "+css_style}>
+      <div className="d-flex justify-content-center align-items-center table-item-col-1"> <input type='checkbox'/> </div>
+      <div className="d-flex justify-content-center align-items-center table-item-col-2">Name</div>
+      <div className="d-flex justify-content-start align-items-center table-item-col-3">Referred for</div> 
+      <div className="d-flex justify-content-start align-items-center table-item-col-4">Prescription status</div>
+      <div className="d-flex justify-content-center align-items-center table-item-col-5"> 
+        <img className="detail-btn" src={process.env.PUBLIC_URL + '/img/detail.png'}/>
+      </div>
+    </div> 
+  )
+
+  row_header = () => (
+   <div className="d-flex flex-row justify-content-start table-item-head">
+     <div className="d-flex justify-content-center align-items-center table-item-col-1"><input type='checkbox'/> </div>
+      <div className="d-flex justify-content-center align-items-center table-item-col-2">Patient name</div>
+      <div className="d-flex justify-content-start align-items-center table-item-col-3">Reason for referral</div> 
+      <div className="d-flex justify-content-start align-items-center table-item-col-4">Patient Prescription status</div>
+      <div className="d-flex justify-content-center align-items-center table-item-col-5"></div>
+    </div> 
+  )
+
   view= () => (
     <div className="main-content-wide-card">
       <div className="patients-list-item-container-nb">
@@ -21,13 +71,9 @@ class PatientsList extends Component {
         </div>
       </div> 
       <div className="d-flex flex-column">
-        <div className="d-flex flex-row justify-content-start table-item-head">
-          <div className="d-flex justify-content-center align-items-center table-item-col-1">c</div>
-          <div className="d-flex justify-content-center align-items-center table-item-col-2">Name</div>
-          <div className="d-flex justify-content-start align-items-center table-item-col-3">Referred for</div> 
-          <div className="d-flex justify-content-start align-items-center table-item-col-4">Prescription status</div>
-          <div className="d-flex justify-content-center align-items-center table-item-col-5"></div>
-        </div> 
+        {this.row_header()}
+        {this.row_item("table-item")}
+        {this.row_item("table-item-last")}
       </div>
     </div> 
   )
