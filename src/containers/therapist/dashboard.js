@@ -1,9 +1,11 @@
 import React, {Component} from 'react';
 import {Route, withRouter } from "react-router-dom"
 import {connect} from 'react-redux'
+import {bindActionCreators} from 'redux'
 import * as components from '../../components/question_components/components'
 import DashboardContents from './dashboard.contents' 
-
+import * as therapist_actions from '../../actions/therapist_action'
+import * as global_actions from '../../actions/user_auth_action'
 
 
 class TherapistDashboard extends Component{
@@ -40,6 +42,11 @@ class TherapistDashboard extends Component{
     this.props.history.push("/therapist/patient_refer") 
   }
 
+  logout_handler = () => {
+    this.props.global_actions.reset_state()
+    this.props.history.push("/therapist/cover") 
+  }
+
 
   render(){ 
     const type = this.state.view_type
@@ -72,7 +79,7 @@ class TherapistDashboard extends Component{
         <div className="d-flex flex-column profile-main-holder">
           <div className = "profile-main-container">
             <div className=" d-flex justify-content-end profile-top-menu">
-              <div className = "log-out-holder text-logout">Logout</div>
+              <div className = "log-out-holder text-logout" onClick={e=>this.logout_handler()}>Logout</div>
             </div>
             {this.type_to_view()}            
          </div>
@@ -82,4 +89,12 @@ class TherapistDashboard extends Component{
   } 
 }
 
-export default withRouter(TherapistDashboard)
+const mapDispatchToProps = (dispatch) => {
+  return {
+    therapist_actions: bindActionCreators(therapist_actions, dispatch),
+    global_actions: bindActionCreators(global_actions, dispatch)
+  }
+}
+
+
+export default withRouter(connect(null, mapDispatchToProps) (TherapistDashboard))

@@ -21,6 +21,8 @@ const init_global_state = {
       email: null,
       first_name: null,
       last_name: null,
+      patient:null,
+      therapist:null,
       'access-token': null,
       client: null
     },

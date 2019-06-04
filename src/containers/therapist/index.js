@@ -5,6 +5,8 @@ import Account from './account'
 import TherapistDashboard from './dashboard'
 import ReferralProcess from './referral_process'
 import {update_therapist_state} from '../../actions/therapist_action'
+import {reset_state, is_signed_in} from '../../actions/user_auth_action'
+
 
 class Therapist extends Component{
   constructor(props){
@@ -16,6 +18,18 @@ class Therapist extends Component{
    
   componentDidMount(){ 
     const init_state = this.props.location.pathname.split("/")[2];    
+    const user = this.props.user.attributes 
+    
+    //clean up if user is not therapist or token is not valid 
+    if(user.patient){
+      this.props.reset_state()      
+    }
+    if(user["access-token"]){
+      this.props.is_signed_in().then((resp) => {
+        if(!resp) this.props.reset_state()
+      }) 
+    } 
+
     if(!init_state){
       this.props.history.push("/therapist/cover") 
     }else if(init_state!==this.state.prv_state){  
@@ -74,4 +88,4 @@ const mapStateToProps = state => {
   }
 }
 
-export default withRouter(connect(mapStateToProps, {update_therapist_state}) (Therapist))
+export default withRouter(connect(mapStateToProps, {is_signed_in, reset_state, update_therapist_state}) (Therapist))

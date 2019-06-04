@@ -1,5 +1,7 @@
 import axios from 'axios'
 
+
+export const RESET_STATE = 'RESET'
 export const SIGN_IN = 'SIGN_IN'
 export const REMOVE_TOKEN = 'REMOVE_TOKEN'
 export const REGISTER = 'REGISTER'
@@ -132,4 +134,8 @@ export const set_patient = patient => (dispatch, getState) => {
 
 export const set_therapist = therapist => (dispatch, getState) => {
   return dispatch({type:SET_THERAPIST, therapist:therapist})
+}
+
+export const reset_state = () => (dispatch, getState) => {
+  return dispatch({type:RESET_STATE})
 }
