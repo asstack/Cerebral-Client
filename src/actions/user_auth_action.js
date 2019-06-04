@@ -45,6 +45,14 @@ export const change_password = (token, password, password_confirmation, redirect
   })
 }
 
+export const is_signed_in = () => (dispatch, getState) =>  {
+  return axios.get('/api/auth/validate_token', {headers: make_headers(get_user_attr(getState()))}).then((resp) => {
+    return Promise.resolve(true)
+  }).catch ((error) => {
+    return Promise.resolve(false)
+  })
+}
+
 export const sign_in = user_info => (dispatch, getState) =>  {
 
   const {email, password} = user_info

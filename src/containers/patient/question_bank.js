@@ -83,30 +83,26 @@ class QuestionBank extends Component{
   set_bank_selector_handler=(e, option)=>{
 
 		const {question_banks_step, patient_actions} = this.props
-    patient_actions.answer_current_question({answer: option.name}).then(() => {
 
-      if (option.question_bank_names.length > 0) {
-        if (option.immediate) {
-          patient_actions.update_patient_question_banks(option.question_bank_names, 0)
-          this.state.bank_step=null
-          this.props.history.push("/patient/"+option.question_bank_names[0]) 
-        }
-        else {
-          patient_actions.update_patient_question_banks(this.props.question_banks.concat( option.question_bank_names), question_banks_step)
-          if (option.name) patient_actions.update_service_line(option.name)	
-          this.patient_state_transition_helper();
-        }
-      }else this.patient_state_transition_helper();
-    })
+    if (option.question_bank_names.length > 0) {
+      if (option.immediate) {
+        patient_actions.update_patient_question_banks(option.question_bank_names, 0)
+        this.state.bank_step=null
+        this.props.history.push("/patient/"+option.question_bank_names[0]) 
+      }
+      else {
+        patient_actions.update_patient_question_banks(this.props.question_banks.concat( option.question_bank_names), question_banks_step)
+        if (option.name) patient_actions.update_service_line(option.name)	
+        this.patient_state_transition_helper();
+      }
+    }else this.patient_state_transition_helper();
   }
   
   did_create_patient = (state) => {
-    const service_line = this.props.service_line.id;
     const {patient_actions, global_actions}=this.props
     global_actions.register_and_set_user(state)
       .then(() => {return global_actions.sign_in(state)})
         .then(() => { return patient_actions.create_patient_from_user() })
-          .then( () => {return patient_actions.create_visit(service_line)})
             .then(() => {this.patient_state_transition_helper()})
       .catch((err) => {
         console.log(err)
@@ -141,11 +137,12 @@ class QuestionBank extends Component{
 
   sign_in_and_next = (info) => { 
     const {patient_actions, global_actions} = this.props
+    const service_line = this.props.service_line;
+
     global_actions.sign_in(info).then ((resp) => {
       if (resp.user_attr.patient) {
         patient_actions.set_patient(resp.user_attr.patient);
-        patient_actions.get_patient_most_recent_visits(resp.user_attr.patient).then((visits) => {
-          patient_actions.set_visit(visits[0])
+        patient_actions.ensure_visit(resp.user_attr.patient, service_line).then((visit) => {
           this.patient_state_transition_helper()
         })
       }
@@ -178,7 +175,7 @@ const mapStateToProps = (state) => {
   const {
     api_middleware: api_middleware,
     global_reducer: {app_state, current_user},
-    patient_reducer: {patient_object, service_line, question_banks,question_banks_step, patient_state, step, question_bank_id, questions, current_bank_name, is_complete}
+    patient_reducer: {patient_object, service_line, question_banks,question_banks_step, patient_state, step, question_bank_id, questions, current_bank_name}
   } = state
 
   return {
@@ -193,8 +190,7 @@ const mapStateToProps = (state) => {
     question_step: step,
     question_bank_id: question_bank_id,
     bank_name:current_bank_name,
-    questions: questions,
-    is_complete: is_complete
+    questions: questions
   }
 }
 

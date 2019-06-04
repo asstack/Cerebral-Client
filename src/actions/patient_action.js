@@ -124,6 +124,7 @@ export const move_patient_sign_up = (state) => (dispatch, getState) => {
 }
 
 export const update_patient_question_banks = (bank_names, step) => (dispatch, getState) => {
+  // TODO: fetch all the question bank information using search...
   dispatch(set_question_banks(bank_names, step))
 }
 
@@ -197,41 +198,46 @@ export const create_payment = (full_name, token) => (dispatch, getState) => {
     })
 }
 
-export const create_visit = (line_id) => (dispatch, getState) => {
+export const create_visit = (service_line_id) => (dispatch, getState) => {
   
   var user_attr = get_user_attr(getState())
 
   var patient = getState().patient_reducer.patient_object
-  var body = {patient_id: patient.id, service_line_id: line_id}
+  var body = {patient_id: patient.id, service_line_id: service_line_id}
 
   return axios.post(`/api/patients/${patient.id}/visits`, body, {headers: make_headers(user_attr)})
     .then(function(resp){
-      // TODO: update global store with visit information
-      return dispatch(set_visit(resp.data))
+      dispatch(set_visit(resp.data))
+      return Promise.resolve(resp.data)
     })
 }
 
-export const get_patient_most_recent_visits = (patient) => (dispatch, getState) => {
+export const ensure_visit = (patient, service_line) => (dispatch, getState) => {
   
-  // the visit in app_state SHOULD BE the most recent visit
   var visit = getState().patient_reducer.visit_object
-  if (visit) {
-    return Promise.resolve([visit])
+
+  // TODO: we could also check to make sure the visit is not expired
+  if (visit && service_line.id == visit.service_line_id) {
+    return Promise.resolve(visit)
   }
-  // TODO and NOTE: the first visit is always the most recent visit
-  return dispatch(get_with_auth_and_return_just_data(`/api/patients/${patient.id}/visits`))
+  // NOTE: the server will take care of creating a new visit or giving us back an existing visit if needed
+  return dispatch(create_visit(service_line.id))
 }
 
 export const get_current_patient_and_visit = () => (dispatch, getState) => {
-  // TODO! Get all this stuff from global state
+  
   var patient = getState().patient_reducer.patient_object
+
+  // TODO: if there is not patient in current state, we could get the patient object using user_id
 
   if (patient == null) {
     return Promise.resolve({patient: null, visit : null} )
   }
 
-  return dispatch(get_patient_most_recent_visits(patient)).then((visits) => {
-    return Promise.resolve({patient: patient, visit : visits[0]} )
+  var service_line = getState().patient_reducer.service_line
+
+  return dispatch(ensure_visit(patient, service_line)).then((visit) => {
+    return Promise.resolve({patient: patient, visit : visit} )
   })
 }
 
@@ -255,10 +261,23 @@ export const get_current_answer_by_name = (name) => (dispatch, getState) => {
   })
 }
 
+export const complete_current_visit = () => (dispatch, getState) => {
+  return dispatch(get_current_patient_and_visit()).then((resp) => {
+    var user_attr = get_user_attr(getState())
+    return dispatch(api_call('PUT', `/api/patients/${resp.patient.id}/visits/${resp.visit.id}`, {headers: make_headers(user_attr)}, {is_complete: true}))
+  })
+}
+
 export const answer_current_question = (answer) => (dispatch, getState) => {
 
-  
   var user_attr = get_user_attr(getState())
+
+  var patient_state = getState().patient_reducer
+
+  var current_question = patient_state.questions[patient_state.step]
+
+  // this answer does not need to be recorded because we have been explicitly told not to do so 
+  if (current_question == null || !current_question.save_answer) return Promise.resolve();
 
   // get_current_patient_and_visit which will create new records if they are needed
   return dispatch(get_current_patient_and_visit()).then((resp) => {
@@ -267,13 +286,6 @@ export const answer_current_question = (answer) => (dispatch, getState) => {
       // this answer does not need to be recorded because there is no current patient or visit
       return Promise.resolve();
     }
-  
-    var patient_state = getState().patient_reducer
-
-    var current_question = patient_state.questions[patient_state.step]
-
-    // this answer does not need to be recorded because we have been explicitly told not to do so 
-    if (current_question == null || !current_question.save_answer) return Promise.resolve();
   
     var body = {
       ...answer,

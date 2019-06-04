@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import { connect } from 'react-redux'
 import { sign_in } from '../../actions/user_auth_action'
-import { set_visit, get_patient_most_recent_visits, update_patient_state, move_patient_sign_up, set_profile_question, set_patient } from '../../actions/patient_action'
+import { set_visit, ensure_visit, update_patient_state, move_patient_sign_up, set_profile_question, set_patient } from '../../actions/patient_action'
 import * as components from '../../components/question_components/components'
 
 import { createModal } from 'react-modal-promise'
@@ -79,7 +79,7 @@ class SignIn extends Component {
         this.handle_patient_previous_state().then(() => {
         if (resp.user_attr.patient) {
           this.props.set_patient(resp.user_attr.patient);
-          this.props.get_patient_most_recent_visits(resp.user_attr.patient).then((visits) => {
+          this.props.ensure_visit(resp.user_attr.patient, this.props.patient_reducer.service_line).then((visits) => {
             this.props.set_visit(visits[0])
           })
         }
@@ -118,4 +118,4 @@ const mapStateToProps = (state) => ({
   api_middleware: state.api_middleware
 })
 
-export default connect(mapStateToProps, {set_visit, get_patient_most_recent_visits, set_patient, update_patient_state, sign_in,set_profile_question, move_patient_sign_up},)(SignIn)
+export default connect(mapStateToProps, {set_visit, ensure_visit, set_patient, update_patient_state, sign_in,set_profile_question, move_patient_sign_up},)(SignIn)
