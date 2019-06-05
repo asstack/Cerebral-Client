@@ -938,8 +938,7 @@ h1 {
   margin-top: 50px;
   padding-left:320px;
 }
-
-
+ 
 /*custom selector for patient info*/
 
 .custom-selector {
@@ -1003,6 +1002,14 @@ h1 {
   font-weight: 600;
   color: #250044;
   margin-top:50px;
+}
+
+.patient-info-indicator {
+  padding-left:10px; 
+  font-size:16px;
+  font-weight:normal;
+  line-height: 25px;
+
 }
 
 .patient-info-description {

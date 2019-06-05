@@ -6,6 +6,7 @@ import TherapistDashboard from './dashboard'
 import ReferralProcess from './referral_process'
 import {update_therapist_state} from '../../actions/therapist_action'
 import {reset_state, is_signed_in} from '../../actions/user_auth_action'
+import Alert from 'react-s-alert'
 
 
 class Therapist extends Component{
@@ -21,8 +22,9 @@ class Therapist extends Component{
     const user = this.props.user.attributes 
     
     //clean up if user is not therapist or token is not valid 
-    if(user.patient){
+    if(user.patient && !user.therapist){
       this.props.reset_state()      
+      Alert.info("Please sign in by using therapist account.") 
     }
     if(user["access-token"]){
       this.props.is_signed_in().then((resp) => {
@@ -50,6 +52,18 @@ class Therapist extends Component{
       this.setState({prv_state: new_state})
     }
  }
+
+  componentWillReceiveProps = (next_props) => { 
+    const user = next_props.user.attributes 
+    console.log("therapist index:", user)
+    if(user.patient && !user.therapist){
+      this.props.reset_state()
+      Alert.info("Please sign in by using therapist account.") 
+      this.props.history.push("/therapist/member") 
+    }
+  }
+
+
  
   update_type_handler = (type) => {
     this.props.history.push("/therapist/"+type) 

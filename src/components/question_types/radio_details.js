@@ -26,23 +26,25 @@ class RadioDetails extends Component {
 
   set_option_handler = option => { 
     this.setState({active:option}) 
-    if(!option) this.props.submit_action("NO", this.state.q_id)
+    const ans = option?"NO":"YES"
+    if(this.state.details) ans=ans+", "+this.state.details 
+    this.props.submit_action(ans, this.state.q_id)
+
     this.forceUpdate();
   } 
 
   update_text_handler = e => {
     this.setState({details:e.target.value}) 
-    this.props.submit_action(e.target.value, this.props.q_id)
+    const ans = (this.state.active?"YES, ":"NO, ")+e.target.value
+    this.props.submit_action(ans, this.props.q_id)
   }
   
   textarea_view = () => {
-    if(this.state.active){
-      return (
-        <div className="d-flex flex-column patient-info-textarea">    
-          <textarea onChange={this.update_text_handler} className="form-control" rows="5" defaultValue={this.state.details}/>
-        </div>
-      )
-    }else return null
+    return (
+      <div className="d-flex flex-column patient-info-textarea">    
+        <textarea onChange={this.update_text_handler} className="form-control" rows="5" defaultValue={this.state.details}/>
+      </div>
+    )
   }
 
   render(){  
@@ -67,7 +69,7 @@ class RadioDetails extends Component {
             </div>
           </div>
         </div>
-        {this.state.active?this.textarea_view():null}
+        {(this.state.active||this.state.q_id===3)?this.textarea_view():null}
       </div>
     );
   }

@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import uuidv1 from  'uuid/v1';
 
+//TODO: required indicator is hardcoded. we need to add an option in question
 class TherapistCheckbox extends Component{
 
   constructor(props){
@@ -26,8 +27,6 @@ class TherapistCheckbox extends Component{
     }
   }
   
-
-
   checkbox_view = (val, index) => {
     return(
       <div key={uuidv1()} className="d-flex flex-row checkbox-vertical-holder">
@@ -44,7 +43,7 @@ class TherapistCheckbox extends Component{
     return(
        <div key={uuidv1()} className="d-flex flex-row justify-content-start patient-info-items-holder">
           <div className="d-flex align-content-start align-items-start patient-info-left-item">
-            <span>{this.props.question.title}</span>
+            <span>{'* '+this.props.question.title}</span>
           </div>
           <div className="d-flex flex-column patient-info-text-item"> 
             {this.props.question.options.map((val, index) => (this.checkbox_view(val,index)))} 

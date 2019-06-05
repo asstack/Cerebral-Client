@@ -6,6 +6,7 @@ import CustomSelector from '../../components/question_types/custom_selector'
 import RadioDetails from '../../components/question_types/radio_details'
 import TherapistPatientsInfo from '../../components/question_types/therapist_patients_info'
 import TherapistCheckbox from '../../components/question_types/therapist_checkbox'
+import Alert from 'react-s-alert'
 
 //get submit and skip handler
 class PatientInfo extends Component {
@@ -43,10 +44,10 @@ class PatientInfo extends Component {
     this.props.actions.get_patient_info_questions(4)
   }
   
- componentWillReceiveProps = (next_props) => { 
-   this.setState({questions:next_props.questions}) 
-   this.forceUpdate() 
- }
+  componentWillReceiveProps = (next_props) => { 
+    this.setState({questions:next_props.questions}) 
+    this.forceUpdate() 
+  }
 
   update_answer_handler = (value, index)=>{
     let prv_answer = this.state.answers
@@ -62,15 +63,16 @@ class PatientInfo extends Component {
     let patient = this.state.items[this.state.ref_index]
     let warning_msg=null
     let i =0;
+    //TODO: temporarily use this code for checking required answers. However, we need to add req option in question object and update code
     for(i = 0; i < answers.length; i++){
-      if(answers[i].answers===null)(
-        warning_msg="Please answer all questions" 
+      if((answers[i].name==='referral_reason' || answers[i].name==='referral_how_long') && answers[i].answers===null)(
+        warning_msg="Please answer all required questions" 
       ) 
     }
   
     if(warning_msg){
       this.setState({msg:warning_msg}) 
-      this.forceUpdate()
+      Alert.info(warning_msg) 
     }else{
       patient.skip_password_validation=true
       this.props.actions.refer_patient(patient, answers)
@@ -128,7 +130,11 @@ class PatientInfo extends Component {
               <div></div>
             </div>       
           </div>
-        <div className="d-flex justify-content-start patient-info-title">{"PATIENT "+ (this.state.ref_index+1) +" of "+ this.state.items.length} </div>
+          <div className="d-flex flex-row justify-content-start patient-info-title">
+            {"PATIENT "+ (this.state.ref_index+1) +" of "+ this.state.items.length} 
+            <span className="patient-info-indicator"> *Indicates required information</span>
+        </div>
+
         <div className="d-flex flex-column therapist-info-container">
           <div className="d-flex justify-content-start patient-info-description">
             <span>Patient Profile Information:</span>

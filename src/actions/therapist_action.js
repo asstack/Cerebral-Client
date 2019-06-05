@@ -56,8 +56,7 @@ export const refer_patient = (patient_info, answers) => (dispatch, getState) => 
   return dispatch(global_actions.register_user(patient_info)).then ((patient_user_info) => {
 
       var user_attr = get_user_attr(getState())
-      var therapist = getState().therapist_reducer.therapist_object
-
+      var therapist = user_attr.therapist
       var body = {user_id: patient_user_info.id, answers: answers}
   
       return axios.post(`/api/therapists/${therapist.id}/patients`, body, {headers: make_headers(user_attr)})
