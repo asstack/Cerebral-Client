@@ -18,8 +18,9 @@ export const questions_wrapper = (WrappedComponent, question, p_props) => {
       return(
         <div className="d-flex flex-column main-noprogress">
           <div className="description_noprogress">
-            <h1>{question?question.title:null}</h1>
             {(question && question.description)?<div className="d-flex justify-content-left text_description"> {question.description}</div>:null} 
+            <h1>{question?question.title:null}</h1>
+            {(question && question.subscript)?<div className="d-flex justify-content-left text-subscript"> {question.subscript}</div>:null} 
           </div>
           {WrappedComponent}
        </div> 

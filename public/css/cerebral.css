@@ -62,6 +62,10 @@ h1 {
    font-weight: 600;
    color: #250044;
 }
+
+
+
+
 /*----------------- components ------------------------*/
 .selector-component {
 
@@ -347,6 +351,15 @@ h1 {
 
 .text_description {
   
+  font-size: 18px;
+  line-height: 25px;
+  letter-spacing: -0.375px;
+  color: #9998D6;
+  padding-bottom:50px;
+  /* or 167% */
+}
+
+.text-subscript { 
   font-size: 16px;
   line-height: 25px;
   letter-spacing: -0.375px;
@@ -355,6 +368,8 @@ h1 {
   padding-top:20px;
   /* or 167% */
 }
+
+
 
 .text-small {
   font-size: 16.0px;

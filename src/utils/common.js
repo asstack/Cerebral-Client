@@ -53,7 +53,12 @@ export const map_type_to_component = (question, handlers) => {
                      submit_action = {handlers.submit_answer_and_next_step}/>
     case 'checkboxes':
       return <CheckBoxComponent options = {question.options} 
-                submit_action = {handlers.submit_answer_and_next_step}/>
+                submit_action = {handlers.submit_answer_and_next_step}
+                details = 'false'/>
+    case 'checkbox_details':
+      return <CheckBoxComponent options = {question.options} 
+                submit_action = {handlers.submit_answer_and_next_step}
+                details = 'true'/> 
     case 'date':
       return <Date submit_action = {handlers.submit_answer_and_next_step}/> 
     case 'height_weight':
