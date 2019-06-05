@@ -2,18 +2,18 @@ import React, {Component} from 'react';
 import * as components from '../question_components/components'
 
 //not sure patient and therapist can share this component
-class EditProfile extends Component {
+class ShippingInformation extends Component {
 
   constructor(props){
     super(props) 
     this.state = {
       type:'read',
-      email:this.props.attr.email,
-      first_name:this.props.attr.first_name,
-      last_name:this.props.attr.last_name,
-      new_email:'',
-      new_first_name:'',
-      new_last_name:''
+      street:this.props.attr.street,
+      city:this.props.attr.city,
+      zipcode:this.props.attr.zipcode,
+      new_street:'',
+      new_city:'',
+      new_zipcode:''
     }
   }
 
@@ -22,14 +22,14 @@ class EditProfile extends Component {
     else this.setState({type:'read'})
   } 
 
-  //TODO: practics: california -> where get and set this info
+  //TODO: Need address validation 
   read_view = () =>(
     <div className="align-self-start main-content-small-card">
       <div className="d-flex flex-column card-items-container">
-        <div className="small-card-title">MY PROFILE</div>
-        <div className="small-card-item">{this.state.first_name}</div>
-        <div className="small-card-item">{this.state.last_name}</div>
-        <div className="small-card-item">{this.state.email}</div>
+        <div className="small-card-title">SHIPPING INFORMATION</div>
+        <div className="small-card-item">{this.state.street}</div>
+        <div className="small-card-item">{this.state.city}</div>
+        <div className="small-card-item">{this.state.zipcode}</div>
         <div className="small-card-btn" onClick={e=>this.edit_btn_handler('read')}>EDIT</div>
       </div> 
     </div> 
@@ -38,16 +38,16 @@ class EditProfile extends Component {
   write_view = () =>(
     <div className="align-self-start main-content-small-card">
       <div className="d-flex flex-column card-items-container">
-        <div className="small-card-title">MY PROFILE</div>
+        <div className="small-card-title">SHIPPING INFORMATION</div>
 
         <div className="small-card-item">
-          <input type="text" placeholder="First Name" defaultValue={this.state.first_name}/>
+          <input type="text" placeholder="street" defaultValue={this.state.first_name}/>
         </div>
         <div className="small-card-item">
-          <input type="text" placeholder='Last Name' defaultValue={this.state.last_name}/>
+          <input type="text" placeholder='city' defaultValue={this.state.last_name}/>
         </div>
         <div className="small-card-item">
-          <input type="email" placeholder='Email' defaultValue={this.state.email}/>
+          <input type="email" placeholder='zipcode' defaultValue={this.state.email}/>
         </div>
         <div className="d-flex flex-row justify-content-between">
           <div className="small-card-btn" onClick={e=>this.edit_btn_handler('write')}>Submit</div>
@@ -65,5 +65,4 @@ class EditProfile extends Component {
 
 }
 
-
-export default EditProfile
+export default ShippingInformation

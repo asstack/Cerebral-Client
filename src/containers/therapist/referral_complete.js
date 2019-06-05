@@ -13,7 +13,7 @@ class ReferralComplete extends Component {
   }
 
   btn_handler = () => { 
-    //this.props.history.push("/therapist/dashboard") 
+    this.props.history.push("/therapist/dashboard") 
   }
 
   //TODO: reuse component in components/static_components/ change name and pass the function to move proper url 
@@ -40,4 +40,4 @@ class ReferralComplete extends Component {
   }
 }
 
-export default ReferralComplete
+export default withRouter(ReferralComplete)

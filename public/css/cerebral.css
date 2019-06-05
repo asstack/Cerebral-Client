@@ -467,12 +467,12 @@ h1 {
 
 .profile-side-bar-holder {
   width:25%;
-  height:1000px;
+  min-height:1000px;
 }
 
 .profile-main-holder {
   /*width:80%;*/
-  height:1000px;
+  min-width:1080px;
   background-color:#F6F6F6;
 }
 
@@ -485,7 +485,6 @@ h1 {
 
 .profile-main-content {
   margin-top:50px;
-  height:600px;
 }
 
 .log-out-divider {
@@ -937,8 +936,7 @@ h1 {
 
 .patient-info-submit-btn-holder {
   margin-top: 50px;
-  padding-left:160px;
-  padding-right:40px;
+  padding-left:320px;
 }
 
 
@@ -952,7 +950,7 @@ h1 {
   font-size: 18px;
   line-height: 18px;
   text-align: center;
-  letter-spacing: -0.43px;
+  letter-spacing: -1.5px;
   color: #FFFFFF;
 }
 

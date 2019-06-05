@@ -20,14 +20,19 @@ class TherapistDashboard extends Component{
 
   //therapist info check in here
   componentDidMount(){
-    console.log("user: ", this.state.user)
     const user_info = this.props.user.attributes
     if(user_info.id===null || user_info.therapist===null){
       this.props.history.push("/therapist/member") 
     } 
   }
 
-  //TODO:receive props will update user
+  //don't need to check token in here. will check at entry point  
+  componentWillReceiveProps = (next_props) => { 
+    if(next_props.user.id===null || next_props.user.therapist===null){
+      this.props.history.push("/therapist/member") 
+    }
+    this.setState({user:next_props.user}) 
+  }
 
   update_type_handler = (type) => {
     this.setState({view_type:type}) 

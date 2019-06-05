@@ -78,12 +78,9 @@ class PatientsList extends Component {
     </div> 
   )
   
-
   render(){
     return this.view() 
   }
-
-
 }
 
 
