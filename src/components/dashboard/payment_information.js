@@ -10,7 +10,7 @@ class PaymentInformation extends Component {
       provider:this.props.attr.provider,
       number:this.props.attr.number,
       exp:this.props.attr.exp,
-      cvc:this.props.attr.number,
+      cvc:this.props.attr.cvc,
       new_provider:"",
       new_number:"",
       new_exp:"",

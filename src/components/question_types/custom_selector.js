@@ -20,10 +20,8 @@ class CustomSelector extends Component {
     this.setState({active:!this.state.active}) 
   }
 
-
   componentWillReceiveProps = (next_props) => { 
     this.setState({ref_id:next_props.ref_id, q_id:next_props.q_id, active:false, items:next_props.items, selected:"", option_index:null})}
-
 
   
   update_selected_item = (item, index) => {
@@ -53,6 +51,7 @@ class CustomSelector extends Component {
       <div key={uuidv1()} className="d-flex flex-column justify-content-start patient-info-items-holder">
         <div className="d-flex justify-content-center align-items-center custom-selector" onClick = {e=>this.activate_options_handler()}>
           {this.state.selected?this.state.selected:this.props.question.title}
+          <img src={process.env.PUBLIC_URL + '/img/dropdown_icon.png'} />
         </div>
         {this.select_option_view()}
       </div>
