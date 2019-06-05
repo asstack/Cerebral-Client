@@ -49,7 +49,6 @@ class DashboardContents extends Component{
 
 
   type_to_view = (type) => {
-    console.log(type)
     switch(type){
       case 'profile_info':
         return this.patient_info_view()

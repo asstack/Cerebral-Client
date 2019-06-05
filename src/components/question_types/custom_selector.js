@@ -2,6 +2,8 @@ import React, {Component} from 'react';
 import uuidv1 from 'uuid'
 import * as components from '../question_components/components'
 
+
+//TODO: required indicator is hardcoded. we need to add an option in question
 class CustomSelector extends Component {
 
   constructor(props){
@@ -50,7 +52,7 @@ class CustomSelector extends Component {
     return (
       <div key={uuidv1()} className="d-flex flex-column justify-content-start patient-info-items-holder">
         <div className="d-flex justify-content-center align-items-center custom-selector" onClick = {e=>this.activate_options_handler()}>
-          {this.state.selected?this.state.selected:this.props.question.title}
+          {this.state.selected?this.state.selected:'* '+this.props.question.title}
           <img src={process.env.PUBLIC_URL + '/img/dropdown_icon.png'} />
         </div>
         {this.select_option_view()}

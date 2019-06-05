@@ -6,6 +6,7 @@ import * as components from '../../components/question_components/components'
 import RegisterManager from '../../components/question_types/register_manager'
 import * as therapist_actions from '../../actions/therapist_action'
 import * as global_actions from '../../actions/user_auth_action'
+import Alert from 'react-s-alert'
 
 class Account extends Component {
 
@@ -27,7 +28,9 @@ class Account extends Component {
     const {global_actions} = this.props
     global_actions.sign_in(info).then ((resp) => {
       this.props.update_type_handler(this.props.next_type)
-    }) 
+    })
+      .catch((err)=> { Alert.error(err.message) })
+
   } 
 
   register_handler = info => {
@@ -37,7 +40,7 @@ class Account extends Component {
         .then(() => { return therapist_actions.create_therapist_from_user() })
           .then(() => {this.props.update_type_handler(this.props.next_type)})
       .catch((err) => {
-        console.log(err)
+        Alert.error(err.message)
       })
   }
 
