@@ -6,6 +6,7 @@ import EditProfile from '../../components/dashboard/edit_profile'
 import EditPassword from '../../components/dashboard/edit_password'
 import ShippingInformation from '../../components/dashboard/shipping_information'
 import PaymentInformation from '../../components/dashboard/payment_information'
+import MessageProcessManager from '../../components/dashboard/message_process_manager'
 
 
 //TODO: will use it as wrapper 
@@ -53,7 +54,7 @@ class DashboardContents extends Component{
       case 'subscription_info':
         return <div>subscription info</div>
       case 'message':
-        return <div> message under the construction </div>
+        return <MessageProcessManager user={this.state.user}/>
       case 'result':
         return <div> message under the construction </div>
       default:

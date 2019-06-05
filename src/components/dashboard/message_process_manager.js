@@ -1,0 +1,68 @@
+import React, {Component} from 'react';
+import * as components from '../question_components/components'
+import TherapistMessageList from './therapist_message_list'
+import NewMessage from './new_message'
+
+
+//shared by patient and therapist, need to pass proper function to send message
+//we should get data from the parent to make  pure function
+class MessageProcessManager extends Component {
+
+  constructor(props){
+    super(props) 
+    this.state = {
+      view_type:null,
+      user:this.props.user,
+    }
+  }
+
+  update_state_handler = state => {
+    this.setState({view_type:state})
+  }
+
+  default_view = () => {
+    return (  
+      <div className="d-flex flex-column profile-main-content">
+        <div className="d-flex justify-content-end text-main-title">Inbox</div>
+        <div className="d-flex flex-column main-content-row">
+           <div className="align-self-start main-content-wide-card">
+            <div className="d-flex flex-column card-items-container">
+              <div className="wide-card-title">MY MESSAGES</div>
+              <div className="wide-card-description">You have no new messages</div>
+              <div className="d-flex flex-column justify-content-center wide-card-item">
+                <input className="wide-card-selector align-self-center" type="button" value="Message support" onClick={e=>this.update_state_handler('support')}/>
+                <input className="wide-card-selector align-self-center" type="button" value="Message the doctor" onClick={e=>this.update_state_handler('doctor')}/>
+              </div>
+            </div> 
+          </div>           
+        </div>
+      </div> 
+    ) 
+  }
+
+
+ 
+  //temp: view_type -> default, list, new, done
+  type_to_view = () => {
+    const type=this.state.view_type;
+    if(type==='support'){
+      return <div>support</div> 
+    }else if(type==='doctor'){
+      return <TherapistMessageList update_state_handler = {this.update_state_handler}/>
+    }else if(type==='write_message'){
+      return <NewMessage /> 
+    }else{
+      return this.default_view()
+    }      
+  }
+
+  render(){
+    return(
+      this.type_to_view()
+    ) 
+  }
+  
+}
+
+export default MessageProcessManager
+

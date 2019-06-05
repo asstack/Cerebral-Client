@@ -8,7 +8,7 @@ import {update_therapist_state} from '../../actions/therapist_action'
 import {reset_state, is_signed_in} from '../../actions/user_auth_action'
 import Alert from 'react-s-alert'
 
-
+//TODO: types should be defined as static
 class Therapist extends Component{
   constructor(props){
     super(props) 

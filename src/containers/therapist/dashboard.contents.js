@@ -5,6 +5,7 @@ import * as components from '../../components/question_components/components'
 import EditProfile from '../../components/dashboard/edit_profile'
 import EditPassword from '../../components/dashboard/edit_password'
 import PatientsList from '../../components/dashboard/patients_list'
+import MessageProcessManager from '../../components/dashboard/message_process_manager'
 
 
 //TODO: will use it as wrapper 
@@ -15,7 +16,7 @@ class DashboardContents extends Component{
     this.state = {
       user:this.props.user,
       type:this.props.type,
-      patients_list:this.props.patients_list
+      patients_list:this.props.patients_list,
     }
   }
 
@@ -26,26 +27,30 @@ class DashboardContents extends Component{
 
 
   //move xxx_view into common area and pass as parameter
-  patient_info_view = () =>(
+  patient_info_view = () =>{
+    return(
       <div className="d-flex flex-column profile-main-content">
         <div className="d-flex justify-content-end text-main-title">Profile Information</div>
-        <div className="d-flex flex-column main-content-column">
+        <div className="d-flex flex-column">
           <div className="d-flex flex-row justify-content-between main-content-row flex-wrap">
             <EditProfile attr={this.state.user.attributes}/>
             <EditPassword attr={this.state.user.attributes}/>
           </div>
         </div>
       </div>
-  )
+    )
+  }
 
-  patient_list_view = () => (
-     <div className="d-flex flex-column profile-main-content">
+  patient_list_view = () => {
+    return( 
+      <div className="d-flex flex-column profile-main-content">
         <div className="d-flex justify-content-end text-main-title">Profile Information</div>
-        <div className="d-flex flex-column main-content-column">
+        <div className="d-flex flex-column">
           <PatientsList attr={this.state.user.attributes}/>           
         </div>
       </div>  
-  )
+    )
+  }
 
 
   type_to_view = (type) => {
@@ -55,7 +60,7 @@ class DashboardContents extends Component{
       case 'patients_list':
         return this.patient_list_view()
       case 'message':
-        return <div> message under the construction </div>
+        return <MessageProcessManager user={this.state.user}/>
       default:
         return "Invalid url"
     } 
