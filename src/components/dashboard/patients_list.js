@@ -49,7 +49,7 @@ class PatientsList extends Component {
   
 
   row_item = (css_style, patient) => (
-    <div key={uuidv1} className={"d-flex flex-row justify-content-start "+css_style}>
+    <div key={uuidv1()} className={"d-flex flex-row justify-content-start "+css_style}>
       <div className="d-flex justify-content-center align-items-center table-item-col-1"> <input type='checkbox'/> </div>
       <div className="d-flex justify-content-center align-items-center table-item-col-2">{patient.user.first_name}</div>
       <div className="d-flex justify-content-start align-items-center table-item-col-3">Referred for</div> 
