@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import * as components from '../question_components/components'
-import TherapistMessageList from './therapist_message_list'
+import MessageList from './message_list'
 import Messenger from './messenger'
 
 
@@ -53,9 +53,9 @@ class MessageProcessManager extends Component {
     if(type==='support'){
       return <div>support</div> 
     }else if(type==='inbox'){
-      return <TherapistMessageList update_state_handler = {this.update_state_handler}/>
+      return <MessageList user={this.state.user} update_state_handler = {this.update_state_handler}/>
     }else if(type==='write_message'){
-      return <Messenger back_btn_handler = {this.update_state_handler} prv_state="inbox" /> 
+      return <Messenger user={this.state.user} back_btn_handler = {this.update_state_handler} prv_state="inbox" /> 
     }else if(type==="messenger"){
       return <div></div>
     }else{
