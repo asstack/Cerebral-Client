@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import * as components from '../question_components/components'
 
-//not sure patient and therapist can share this component
 class MessageList extends Component {
 
   constructor(props){
@@ -59,8 +58,9 @@ class MessageList extends Component {
             <img className="search-img" src={process.env.PUBLIC_URL + '/img/search.png'}/>
           </div> 
         </div>
-        <div>
-          <input className="dashboard-side-btn text-btn-2" onClick={this.new_msg_handler} type="button" value="New Message"/>
+        <div className="d-flex flex-row add-patient-button">
+          <img className="remove-button" src={process.env.PUBLIC_URL+'/img/add_patient.png'}/> 
+          <div className="add_patient_btn_text" onClick={this.new_msg_handler}>New Message</div>
         </div>
       </div> 
       <div className="d-flex flex-column">
