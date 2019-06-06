@@ -1,20 +1,26 @@
 import React, {Component} from 'react';
 import * as components from '../question_components/components'
 import TherapistMessageList from './therapist_message_list'
-import NewMessage from './new_message'
+import Messenger from './messenger'
 
 
 //shared by patient and therapist, need to pass proper function to send message
-//we should get data from the parent to make  pure function
+//use data in props if we already got data in parent
+
 class MessageProcessManager extends Component {
 
   constructor(props){
     super(props) 
     this.state = {
-      view_type:null,
+      view_type:props.view_type,
       user:this.props.user,
     }
   }
+
+  componentWillReceiveProps = (next_props) => { 
+    this.setState({user:next_props.user, view_type:next_props.view_type}) 
+  }
+
 
   update_state_handler = state => {
     this.setState({view_type:state})
@@ -23,7 +29,7 @@ class MessageProcessManager extends Component {
   default_view = () => {
     return (  
       <div className="d-flex flex-column profile-main-content">
-        <div className="d-flex justify-content-end text-main-title">Inbox</div>
+        <div className="d-flex justify-content-end text-main-title">INBOX</div>
         <div className="d-flex flex-column main-content-row">
            <div className="align-self-start main-content-wide-card">
             <div className="d-flex flex-column card-items-container">
@@ -31,7 +37,7 @@ class MessageProcessManager extends Component {
               <div className="wide-card-description">You have no new messages</div>
               <div className="d-flex flex-column justify-content-center wide-card-item">
                 <input className="wide-card-selector align-self-center" type="button" value="Message support" onClick={e=>this.update_state_handler('support')}/>
-                <input className="wide-card-selector align-self-center" type="button" value="Message the doctor" onClick={e=>this.update_state_handler('doctor')}/>
+                <input className="wide-card-selector align-self-center" type="button" value="Message the doctor" onClick={e=>this.update_state_handler('inbox')}/>
               </div>
             </div> 
           </div>           
@@ -41,16 +47,17 @@ class MessageProcessManager extends Component {
   }
 
 
- 
   //temp: view_type -> default, list, new, done
   type_to_view = () => {
     const type=this.state.view_type;
     if(type==='support'){
       return <div>support</div> 
-    }else if(type==='doctor'){
+    }else if(type==='inbox'){
       return <TherapistMessageList update_state_handler = {this.update_state_handler}/>
     }else if(type==='write_message'){
-      return <NewMessage /> 
+      return <Messenger back_btn_handler = {this.update_state_handler} prv_state="inbox" /> 
+    }else if(type==="messenger"){
+      return <div></div>
     }else{
       return this.default_view()
     }      

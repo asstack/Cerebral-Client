@@ -54,7 +54,7 @@ class DashboardContents extends Component{
       case 'subscription_info':
         return <div>subscription info</div>
       case 'message':
-        return <MessageProcessManager user={this.state.user}/>
+        return <MessageProcessManager user={this.state.user} view_type="message_box"/>
       case 'result':
         return <div> message under the construction </div>
       default:

@@ -60,7 +60,7 @@ class DashboardContents extends Component{
       case 'patients_list':
         return this.patient_list_view()
       case 'message':
-        return <MessageProcessManager user={this.state.user}/>
+        return <MessageProcessManager user={this.state.user} view_type="message_box"/>
       default:
         return "Invalid url"
     } 

@@ -10,7 +10,7 @@ class TherapistMessageList extends Component {
 
     }
   }
-
+ 
   new_msg_handler = () => {
     if(this.props.update_state_handler){
       this.props.update_state_handler("write_message")

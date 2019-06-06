@@ -1194,7 +1194,11 @@ h1 {
   border-radius: 28.5px;
 }
 
-
+/*message area*/
+.message-item-area {
+  overflow-y: auto;
+  max-height: 200px;
+}
 
 /*---------------------max-width 820px breaking point ---------------------*/
 @media (max-width:820px){
