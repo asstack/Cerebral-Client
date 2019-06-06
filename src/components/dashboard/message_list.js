@@ -11,22 +11,30 @@ class MessageList extends Component {
     }
   }
  
-  new_msg_handler = () => {
+  new_msg_handler = (e) => {
+
+    e.stopPropagation() 
     if(this.props.update_state_handler){
-      this.props.update_state_handler("write_message")
+      //it should pass the id of message
+      this.props.update_state_handler("messenger")
     } 
   }
-  
+
+  delete_msg_handler = (e) => {
+    e.stopPropagation() 
+    console.log("delete message here")
+  }
+ 
 
   row_item = (css_style) => (
-    <div className={"d-flex flex-row justify-content-start "+css_style}>
+    <div className={"d-flex flex-row justify-content-start "+css_style} onClick={this.new_msg_handler}>
       <div className="d-flex justify-content-center align-items-center message-item-col-1"> <input type='checkbox'/> </div>
       <div className="d-flex justify-content-start align-items-center message-item-col-2">Doctor's Name</div>
       <div className="d-flex justify-content-start align-items-center message-item-col-3">{this.state.user.attributes.patient?"Prescription Status":"Patient name"}</div> 
       <div className="d-flex justify-content-start align-items-center message-item-col-4">Message Subject</div>
       <div className="d-flex justify-content-start align-items-center message-item-col-5">Date</div>
       <div className="d-flex justify-content-center align-items-center message-item-col-6"> 
-        <img className="detail-btn" src={process.env.PUBLIC_URL + '/img/trashcan.png'}/>
+        <img className="detail-btn" onClick={this.delete_msg_handler} src={process.env.PUBLIC_URL + '/img/trashcan.png'}/>
       </div>
     </div> 
   )
@@ -52,7 +60,7 @@ class MessageList extends Component {
           </div> 
         </div>
         <div>
-          <input className="dashboard-side-btn text-btn-2" onClick={e=>this.new_msg_handler()} type="button" value="New Message"/>
+          <input className="dashboard-side-btn text-btn-2" onClick={this.new_msg_handler} type="button" value="New Message"/>
         </div>
       </div> 
       <div className="d-flex flex-column">
@@ -64,6 +72,7 @@ class MessageList extends Component {
   )
   
   render(){
+    console.log("patient: ",this.state.user.attributes)
     return this.view() 
   }
 }

@@ -38,7 +38,7 @@ class TherapistDashboard extends Component{
     this.setState({view_type:type}) 
   }
   
-  //3 types for main manu 
+  //TODO: update url in router ex) dashboard/message 
   type_to_view = () => {
     return <DashboardContents user={this.state.user} type={this.state.view_type} patients_list = {null}/>      
   }
