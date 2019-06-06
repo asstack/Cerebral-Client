@@ -722,6 +722,7 @@ h1 {
 .wide-card-selector:focus{
   outline: none;
 }
+
 .wide-card-selector:hover {
   background: #3e0370;
   color:white;
@@ -1195,10 +1196,75 @@ h1 {
 }
 
 /*message area*/
+.message-header-area {
+  background: #EAE6E6;
+  padding:12px 40px 12px 40px;
+}
+
 .message-item-area {
   overflow-y: auto;
   max-height: 200px;
+  padding:30px;
 }
+
+.message-input-area{
+  height:60px;
+  background: #FFFFFF;
+  border: 1px solid #D3DBF8;
+  box-sizing: border-box;
+  border-radius: 55px;
+  margin-left:30px;
+  margin-right:30px;
+  padding-left:30px;
+  padding-right:30px;
+}
+
+.message-item-left {
+  max-width:740px;
+  min-width:200px;
+  background: #E1E5F5;
+  border-radius: 2px;
+  padding:20px;
+  font-size: 16px;
+  font-weight:normal;
+  line-height: 30px;
+}
+
+.message-item-right {
+  max-width:740px;
+  min-width:200px;
+  background: #D2EFF6;
+  border-radius: 2px;
+  padding:20px;
+  font-size: 16px;
+  font-weight:normal;
+  line-height: 30px;
+}
+
+.message-title {
+  font-size: 14px;
+  font-weight:600;
+  line-height: 18px;
+  color: #333333;
+}
+
+.message-input {
+  border:None;
+}
+
+.message-input:focus{
+  outline: none;
+}
+
+.message-submit {
+  cursor:pointer;
+  padding-top: 5px;
+  width:45px;
+  height:45px;
+}
+
+
+
 
 /*---------------------max-width 820px breaking point ---------------------*/
 @media (max-width:820px){

@@ -2,12 +2,12 @@ import React, {Component} from 'react';
 import * as components from '../question_components/components'
 
 //not sure patient and therapist can share this component
-class TherapistMessageList extends Component {
+class MessageList extends Component {
 
   constructor(props){
     super(props) 
     this.state = {
-
+      user:this.props.user
     }
   }
  
@@ -22,11 +22,11 @@ class TherapistMessageList extends Component {
     <div className={"d-flex flex-row justify-content-start "+css_style}>
       <div className="d-flex justify-content-center align-items-center message-item-col-1"> <input type='checkbox'/> </div>
       <div className="d-flex justify-content-start align-items-center message-item-col-2">Doctor's Name</div>
-      <div className="d-flex justify-content-start align-items-center message-item-col-3">Patient name</div> 
+      <div className="d-flex justify-content-start align-items-center message-item-col-3">{this.state.user.attributes.patient?"Prescription Status":"Patient name"}</div> 
       <div className="d-flex justify-content-start align-items-center message-item-col-4">Message Subject</div>
       <div className="d-flex justify-content-start align-items-center message-item-col-5">Date</div>
       <div className="d-flex justify-content-center align-items-center message-item-col-6"> 
-        <img className="detail-btn" src={process.env.PUBLIC_URL + '/img/detail.png'}/>
+        <img className="detail-btn" src={process.env.PUBLIC_URL + '/img/trashcan.png'}/>
       </div>
     </div> 
   )
@@ -35,7 +35,7 @@ class TherapistMessageList extends Component {
    <div className="d-flex flex-row justify-content-start table-item-head">
      <div className="d-flex justify-content-center align-items-center message-item-col-1"><input type='checkbox'/> </div>
       <div className="d-flex justify-content-start align-items-center message-item-col-2">Doctor's name</div>
-      <div className="d-flex justify-content-start align-items-center message-item-col-3">Patient name</div> 
+      <div className="d-flex justify-content-start align-items-center message-item-col-3"> {this.state.user.attributes.patient?"Prescription Status":"Patient name"}</div> 
       <div className="d-flex justify-content-start align-items-center message-item-col-4">Message Subject</div>
       <div className="d-flex justify-content-start align-items-center message-item-col-5">Date</div>
       <div className="d-flex justify-content-center align-items-center message-item-col-6"></div>
@@ -69,4 +69,4 @@ class TherapistMessageList extends Component {
 }
 
 
-export default TherapistMessageList
+export default MessageList
