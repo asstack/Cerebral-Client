@@ -6,8 +6,10 @@ import PatientDashboard from './dashboard'
 import SignIn from './sign_in'
 import {update_patient_state, update_patient_questions, delete_patient_questions} from '../../actions/patient_action'
 import CompleteProcess from '../../components/static_components/complete_patient_process'
+import {reset_state, is_signed_in} from '../../actions/user_auth_action'
 import uuidv1 from 'uuid'
 import ReactGA from 'react-ga'
+import Alert from 'react-s-alert'
 
 class Patient extends Component{
   
@@ -25,8 +27,19 @@ class Patient extends Component{
 
   componentDidMount(){ 
     const init_state = this.props.location.pathname.split("/")[2];    
-
+    const user = this.props.user.attributes;
     this.update_width_handler()
+    if(!user.patient && user.therapist){
+      this.props.reset_state()      
+      Alert.info("Please sign in by using patient account.") 
+    }
+
+    if(user["access-token"]){
+      this.props.is_signed_in().then((resp) => {
+        if(!resp) this.props.reset_state()
+      }) 
+    }  
+
     if(!init_state){
       this.props.history.push("/patient/sign_in") 
     }else if(init_state!==this.state.prev_state){  
@@ -52,6 +65,17 @@ class Patient extends Component{
       this.setState({prev_state: new_state})
     }
  }
+  componentWillReceiveProps = (next_props) => { 
+    const user = next_props.user.attributes 
+    if(!user.patient && user.therapist){
+      this.props.reset_state()
+      Alert.info("Please sign in by using patient account.") 
+      this.props.history.push("/patient/sign_in") 
+    }
+  }
+
+
+
 
   componentWillUnmount(){
     window.removeEventListener('resize', this.update_width_handler);
@@ -172,5 +196,5 @@ const mapStateToProps = state => {
 
 
 // https://react-redux.js.org/introduction/basic-tutorial#connecting-the-components
-export default withRouter(connect(mapStateToProps, { update_patient_state, update_patient_questions, delete_patient_questions}) (Patient))
+export default withRouter(connect(mapStateToProps, {is_signed_in, reset_state, update_patient_state, update_patient_questions, delete_patient_questions}) (Patient))
 

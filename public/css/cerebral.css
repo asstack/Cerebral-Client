@@ -801,6 +801,7 @@ h1 {
 }
 
 .table-item {
+  cursor:pointer;
   height:60px;
   box-shadow: 0px 1px 1px #D3DBF8;
   font-size: 18px;
@@ -808,6 +809,7 @@ h1 {
 }
 
 .table-item-last {
+  cursor:pointer;
   height:60px;
   box-shadow: 0px 2px 2px #D3DBF8;
   border-radius: 4px;

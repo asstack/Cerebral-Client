@@ -21,7 +21,7 @@ class MessageProcessManager extends Component {
     this.setState({user:next_props.user, view_type:next_props.view_type}) 
   }
 
-
+  //messenger -> better to get initial data in here to get all data before rendering the view and get correct scroll position
   update_state_handler = state => {
     this.setState({view_type:state})
   }
@@ -47,17 +47,15 @@ class MessageProcessManager extends Component {
   }
 
 
-  //temp: view_type -> default, list, new, done
+  //TODO: update url based on the type
   type_to_view = () => {
     const type=this.state.view_type;
     if(type==='support'){
       return <div>support</div> 
     }else if(type==='inbox'){
       return <MessageList user={this.state.user} update_state_handler = {this.update_state_handler}/>
-    }else if(type==='write_message'){
-      return <Messenger user={this.state.user} back_btn_handler = {this.update_state_handler} prv_state="inbox" /> 
-    }else if(type==="messenger"){
-      return <div></div>
+    }else if(type==='messenger'){
+      return <Messenger user={this.state.user} back_btn_handler = {this.update_state_handler} prv_state="inbox" msg_id=""/> 
     }else{
       return this.default_view()
     }      

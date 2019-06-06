@@ -8,17 +8,19 @@ class Messenger extends Component {
     super(props) 
     this.state = {
       user:this.props.user,
+      msg_id:this.props.msg_id,
       msg:"",
       messages:[],
       is_last:false,
     }
   }
 
+  //we will get initial data in message_process_manager
   componentDidMount=()=>{
     this.set_scroll_bottom() 
   }
 
-  //TODO: when get more messages (from stocket or by request)
+  //TODO: when get more messages (from stocket or by request with index?)
   componentWillReceiveProps = (next_props) => { 
   }
 
