@@ -78,6 +78,12 @@ export const create_therapist_from_user = () => (dispatch, getState) => {
         })
 }
 
+export const get_patients_for_therapist = () => (dispatch, getState) => {
+  var user_attr = get_user_attr(getState())
+  var therapist = user_attr.therapist
+  return axios.get(`/api/therapists/${therapist.id}/patients`, {headers: make_headers(user_attr)})
+}
+
 export const get_patient_info_questions = (bank_id) => (dispatch) => {
   return axios.get(`/api/question_banks/${bank_id}/questions`)
     .then(resp=>dispatch(set_therapist_questions(resp.data)))  

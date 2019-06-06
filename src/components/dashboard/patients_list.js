@@ -1,5 +1,7 @@
-import React, {Component} from 'react';
+import React, {Component} from 'react'
+import { connect } from 'react-redux'
 import * as components from '../question_components/components'
+import {get_patients_for_therapist} from "../../actions/therapist_action"
 
 //not sure patient and therapist can share this component
 class PatientsList extends Component {
@@ -7,7 +9,14 @@ class PatientsList extends Component {
   constructor(props){
     super(props) 
     this.state = {
+      patients: []
     }
+  }
+
+  componentDidMount = () => {
+    this.props.get_patients_for_therapist().then((resp) => {
+      this.state.patients = resp.data
+    })
   }
 
   prescription_status = type => {
@@ -38,7 +47,7 @@ class PatientsList extends Component {
 
   
 
-  row_item = (css_style) => (
+  row_item = (css_style, patient) => (
     <div className={"d-flex flex-row justify-content-start "+css_style}>
       <div className="d-flex justify-content-center align-items-center table-item-col-1"> <input type='checkbox'/> </div>
       <div className="d-flex justify-content-center align-items-center table-item-col-2">Name</div>
@@ -72,8 +81,10 @@ class PatientsList extends Component {
       </div> 
       <div className="d-flex flex-column">
         {this.row_header()}
-        {this.row_item("table-item")}
-        {this.row_item("table-item-last")}
+        {
+          this.state.patients.map((value, index) => {
+            return this.row_item("table-item", value)
+        })}
       </div>
     </div> 
   )
@@ -83,5 +94,4 @@ class PatientsList extends Component {
   }
 }
 
-
-export default PatientsList
+export default connect(null, {get_patients_for_therapist}) (PatientsList)
