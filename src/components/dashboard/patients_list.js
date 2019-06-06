@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import { connect } from 'react-redux'
 import * as components from '../question_components/components'
 import {get_patients_for_therapist} from "../../actions/therapist_action"
+import uuidv1 from 'uuid'
 
 //not sure patient and therapist can share this component
 class PatientsList extends Component {
@@ -15,7 +16,7 @@ class PatientsList extends Component {
 
   componentDidMount = () => {
     this.props.get_patients_for_therapist().then((resp) => {
-      this.state.patients = resp.data
+      this.setState({patients:resp.data})
     })
   }
 
@@ -48,9 +49,9 @@ class PatientsList extends Component {
   
 
   row_item = (css_style, patient) => (
-    <div className={"d-flex flex-row justify-content-start "+css_style}>
+    <div key={uuidv1} className={"d-flex flex-row justify-content-start "+css_style}>
       <div className="d-flex justify-content-center align-items-center table-item-col-1"> <input type='checkbox'/> </div>
-      <div className="d-flex justify-content-center align-items-center table-item-col-2">Name</div>
+      <div className="d-flex justify-content-center align-items-center table-item-col-2">{patient.user.first_name}</div>
       <div className="d-flex justify-content-start align-items-center table-item-col-3">Referred for</div> 
       <div className="d-flex justify-content-start align-items-center table-item-col-4">Prescription status</div>
       <div className="d-flex justify-content-center align-items-center table-item-col-5"> 
