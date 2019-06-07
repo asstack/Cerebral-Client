@@ -139,3 +139,25 @@ export const set_therapist = therapist => (dispatch, getState) => {
 export const reset_state = () => (dispatch, getState) => {
   return dispatch({type:RESET_STATE})
 }
+
+export const get_message_threads_for_current_user = () => (dispatch, getState) => {
+  var user_attr = get_user_attr(getState())
+  return axios.get(`/api/users/${user_attr.id}/message_threads`, {headers: make_headers(user_attr)})
+}
+
+export const create_message_thread = (recipient_id) => (dispatch, getState) => {
+  var user_attr = get_user_attr(getState())
+  var body = {recipient_id: recipient_id}
+  return axios.post(`/api/users/${user_attr.id}/message_threads`, body, {headers: make_headers(user_attr)})
+}
+
+export const create_message = (thread_id, message) => (dispatch, getState) => {
+  var user_attr = get_user_attr(getState())
+  var body = {message: message}
+  return axios.post(`/api/message_threads/${thread_id}/messages`, body, {headers: make_headers(user_attr)})
+}
+
+export const get_messages_for_thread = (thread_id) => (dispatch, getState) => {
+  var user_attr = get_user_attr(getState())
+  return axios.get(`/api/message_threads/${thread_id}/messages`, {headers: make_headers(user_attr)})
+}
