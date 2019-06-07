@@ -25,10 +25,8 @@ class RadioDetails extends Component {
   }
 
   set_option_handler = option => { 
-    this.setState({active:option}) 
-    let ans = option?"NO":"YES"
-    if(this.state.details) ans=ans+", "+this.state.details 
-    this.props.submit_action(ans, this.state.q_id)
+    this.setState({active:option, details:""}) 
+    this.props.submit_action(option, this.state.q_id)
 
     this.forceUpdate();
   } 

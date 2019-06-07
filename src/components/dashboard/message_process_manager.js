@@ -13,6 +13,7 @@ class MessageProcessManager extends Component {
     super(props) 
     this.state = {
       view_type:props.view_type,
+      thread:null,
       user:this.props.user,
     }
   }
@@ -22,8 +23,8 @@ class MessageProcessManager extends Component {
   }
 
   //messenger -> better to get initial data in here to get all data before rendering the view and get correct scroll position
-  update_state_handler = state => {
-    this.setState({view_type:state})
+  update_state_handler = (state,thread=null) => {
+    this.setState({view_type:state, thread:thread})
   }
 
   default_view = () => {
@@ -55,7 +56,7 @@ class MessageProcessManager extends Component {
     }else if(type==='inbox'){
       return <MessageList user={this.state.user} update_state_handler = {this.update_state_handler}/>
     }else if(type==='messenger'){
-      return <Messenger user={this.state.user} back_btn_handler = {this.update_state_handler} prv_state="inbox" msg_id=""/> 
+      return <Messenger user={this.state.user} back_btn_handler = {this.update_state_handler} prv_state="inbox" thread={this.state.thread}/> 
     }else{
       return this.default_view()
     }      

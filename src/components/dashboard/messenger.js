@@ -1,6 +1,9 @@
 import React, {Component} from 'react';
 import * as components from '../question_components/components'
 import ReactDOM from 'react-dom'
+import { connect } from 'react-redux'
+import {get_patients_for_therapist} from "../../actions/therapist_action"
+import {create_message_thread, create_message, get_messages_for_thread, get_message_threads_for_current_user} from "../../actions/user_auth_action"
 import uuidv1 from 'uuid'
 
 //not sure patient and therapist can share this component
@@ -9,10 +12,13 @@ class Messenger extends Component {
     super(props) 
     this.state = {
       user:this.props.user,
-      msg_id:this.props.msg_id,
+      thread:this.props.thread,
       msg:"",
       messages:[],
+      //for new messages
+      to_lists:[],
       is_last:false,
+      target:null,
       update_scroll:false,
     }
   }
@@ -20,9 +26,25 @@ class Messenger extends Component {
   //we will get initial data in message_process_manager
   componentDidMount=()=>{
     this.set_scroll_bottom() 
+    //means it's new message  
+    if(!this.state.thread){ 
+      //if therapists -> will get patients list and doctors list
+      if(this.state.user.attributes.therapist){
+        this.props.get_patients_for_therapist().then((resp) => {
+          this.setState({to_lists:resp.data})
+        }) 
+      }else if(this.state.user.attributes.patient){
+        //will get therapist and doctor list 
+      }
+    }else{
+      //exists thread
+      this.props.get_messages_for_thread(this.state.thread.id).then(resp => {
+        this.setState({messages:resp.data}) 
+      })
+    }
   }
 
-  
+
   componentDidUpdate=(prevProps, prevState)=>{ 
     if(this.state.update_scroll){
       this.set_scroll_bottom() 
@@ -51,7 +73,6 @@ class Messenger extends Component {
     const offsetTop  = e.target.getBoundingClientRect(); 
 
     if(e.target.scrollTop===0 && !this.state.is_last){
-      console.log("it is top")
       //get more message 
     }
   }
@@ -61,21 +82,44 @@ class Messenger extends Component {
     this.setState({msg:text})
   }
 
-  send_msg_handler=(e)=>{
-    //send msg and if success, good, not option to resend it 
+  create_message_helper = (user_id, thread_id, r_id, msg) => {
+    let msg_object = {message:msg, user_id: user_id}
     let msgs = this.state.messages;
-    if(this.state.msg){
-      msgs.push({msg:this.state.msg, type:"sent"})
+    this.props.create_message(thread_id,r_id, msg).then((resp) => {
+      msgs.push(msg_object)
       this.setState({messages:msgs, msg:"", update_scroll:true})
-      this.refs.msg_input.value=""
-    } 
+      this.refs.msg_input.value="" 
+      }) 
   }
 
+  send_msg_handler=(e)=>{
+    //send msg and if success, good, not option to resend it 
+    let msg = this.state.msg;
+    let thread_id = this.state.thread?this.state.thread.id:null;
+    let user_id = this.state.user.attributes.id
+    console.log("send_message",this.state.thread)
+    if(!thread_id && msg && this.state.target){
+      let recipient_id = this.state.target.user.id
+      this.props.create_message_thread(recipient_id).then((resp) => {
+        this.setState({thread:resp.data}) 
+        thread_id = resp.data.id 
+        this.create_message_helper(user_id, thread_id, recipient_id, msg)
+      })  
+    }else if(msg && thread_id){
+      this.create_message_helper(user_id,thread_id,this.state.thread.recipient_id,msg)
+    }  
+    
+  }
+
+  set_to_target = (e) => {
+    let index = e.target.value; 
+    this.setState({target:this.state.to_lists[index]}) 
+  }
 
   received_message_item = (val, idx) => {
     return(
       <div key={uuidv1()} className="d-flex justify-content-start message-item-holder">
-        <div className="message-item-left">{val.msg} </div>
+        <div className="message-item-left">{val.message} </div>
       </div> 
     )  
   }
@@ -83,14 +127,29 @@ class Messenger extends Component {
   sent_message_item = (val, idx) => {
     return(
       <div key={uuidv1()} className="d-flex justify-content-end message-item-holder">
-        <div className="message-item-right"> {val.msg} </div>
+        <div className="message-item-right"> {val.message} </div>
       </div> 
     ) 
   }
 
-  mount_message_item = (val, idx)=>{
-    if(val.type==='sent') return this.sent_message_item(val, idx) 
-    else return this.received_message_item(val, idx)
+  mount_message_item = (item, idx)=>{
+    if(item.user_id===this.state.user.attributes.id) return this.sent_message_item(item, idx) 
+    else return this.received_message_item(item, idx)
+  }
+
+  to_option =(val, index)=>{
+    return(
+      <option key={uuidv1()} value={index}>{val.user.email}</option>
+    )
+  }
+
+  to_list= () => {
+    return(
+      <select onChange = {this.set_to_target}>
+        <option value={null}>select from list</option>
+        {this.state.to_lists.map((val,index)=>this.to_option(val,index))} 
+      </select>   
+    )
   }
 
   view= () => {
@@ -107,9 +166,16 @@ class Messenger extends Component {
           <div className="align-self-start main-content-wide-card">
             <div className="d-flex flex-column">
               <div className="d-flex flex-column message-header-area">
-                <div className="d-flex message-title"> To:</div>
-                {this.state.user.attributes.therapist?<div className="d-flex message-title"> Patient Name:</div>:null}
-                <div className="d-flex message-title  message-title-end"> Subject: </div>
+                <div className="d-flex message-title">
+                  <div className="message-title-left">To:</div> 
+                  {this.state.thread?"name will be there":this.to_list()}
+                </div>
+                {this.state.user.attributes.therapist && this.state.target==='doctor' 
+                    ?<div className="d-flex message-title"> Patient Name:</div>
+                    :null}
+                <div className="d-flex message-title  message-title-end"> 
+                  <div className="message-title-left">Subject:</div> 
+                </div>
               </div>
               <div ref="chatbox" onScroll={(e)=>this.on_scroll(e)} className="d-flex flex-column message-item-area">
                 {this.state.messages.map((val,idx)=>this.mount_message_item(val,idx))}
@@ -131,4 +197,5 @@ class Messenger extends Component {
 
 }
 
-export default Messenger
+export default connect(null, { create_message_thread, create_message, get_messages_for_thread, get_message_threads_for_current_user, get_patients_for_therapist}) (Messenger)
+

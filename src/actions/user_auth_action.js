@@ -151,9 +151,9 @@ export const create_message_thread = (recipient_id) => (dispatch, getState) => {
   return axios.post(`/api/users/${user_attr.id}/message_threads`, body, {headers: make_headers(user_attr)})
 }
 
-export const create_message = (thread_id, message) => (dispatch, getState) => {
+export const create_message = (thread_id, recipient_id, message) => (dispatch, getState) => {
   var user_attr = get_user_attr(getState())
-  var body = {message: message}
+  var body = {message: message, recipient_id}
   return axios.post(`/api/message_threads/${thread_id}/messages`, body, {headers: make_headers(user_attr)})
 }
 

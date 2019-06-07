@@ -1261,6 +1261,14 @@ h1 {
   padding-bottom:10px;
   color: #333333;
 }
+
+.message-title-left {
+  min-width:90px;
+}
+
+
+
+
 .message-title-end {
   padding-bottom:none;
 }
