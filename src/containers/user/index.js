@@ -59,7 +59,7 @@ class PasswordReset extends Component{
     else {
       this.props.change_password(this.state.reset_password_token, this.state.password, this.state.confirm_password, this.props.env.REACT_APP_API_SERVER_URL).then(() =>{
         // TODO: what if this is a therapist instead?
-        const landing_page = this.state.landing_page | '/patient/dashboard'
+        const landing_page = this.state.landing_page || '/patient/dashboard'
         this.props.history.push(landing_page)
       }
       ).catch((error) => {
