@@ -26,7 +26,7 @@ class RadioDetails extends Component {
 
   set_option_handler = option => { 
     this.setState({active:option}) 
-    const ans = option?"NO":"YES"
+    let ans = option?"NO":"YES"
     if(this.state.details) ans=ans+", "+this.state.details 
     this.props.submit_action(ans, this.state.q_id)
 
@@ -35,7 +35,7 @@ class RadioDetails extends Component {
 
   update_text_handler = e => {
     this.setState({details:e.target.value}) 
-    const ans = (this.state.active?"YES, ":"NO, ")+e.target.value
+    let ans = (this.state.active?"YES, ":"NO, ")+e.target.value
     this.props.submit_action(ans, this.props.q_id)
   }
   
