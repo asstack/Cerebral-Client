@@ -97,8 +97,10 @@ class Messenger extends Component {
     return (
       <div className="main-content-wide-card">
         <div className="d-flex flex-row justify-content-between  patients-list-item-container-nb">
-          <div>
-            <input className="dashboard-side-btn text-btn-2" onClick={e=>this.back_btn_handler()} type="button" value="< Back to Inbox"/>
+          <div className="d-flex flex-row message-button-holder">
+            <div className="message-button" onClick={e=>this.back_btn_handler()}>
+              {"< Back to Inbox"}
+            </div>
           </div>
         </div> 
         <div className="d-flex flex-column">
@@ -107,7 +109,7 @@ class Messenger extends Component {
               <div className="d-flex flex-column message-header-area">
                 <div className="d-flex message-title"> To:</div>
                 {this.state.user.attributes.therapist?<div className="d-flex message-title"> Patient Name:</div>:null}
-                <div className="d-flex message-title"> Subject: </div>
+                <div className="d-flex message-title  message-title-end"> Subject: </div>
               </div>
               <div ref="chatbox" onScroll={(e)=>this.on_scroll(e)} className="d-flex flex-column message-item-area">
                 {this.state.messages.map((val,idx)=>this.mount_message_item(val,idx))}
