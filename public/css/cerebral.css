@@ -49,6 +49,7 @@ h1 {
 
 .main-noprogress {
   width:604px;
+  margin-bottom:50px;
   align-self: center;
 }
 
@@ -317,11 +318,19 @@ h1 {
 
 
 .btn-selector {
-  height:90%;
+  word-wrap: break-word;
+  white-space: normal;
+  height:65px;
   background-color: rgba(0,0,0,0);
   border-style: solid;
   border-width: 2px;
   border-color: rgba(37, 0, 68, 1.0);
+
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 18px;
+  text-align: center;
+  color: #250044;
 }
 
 .text-recommendation {
@@ -1327,6 +1336,7 @@ h1 {
 
   .main-noprogress{
     width:100%; 
+    margin-bottom:50px;
   }
 
   .button-two-selector{
