@@ -34,11 +34,12 @@ class SignIn extends Component {
   //check: Please input your email address ex) yourname@example.com 
     
     render(){
+      let btn_wording = this.props.user_type==='therapist'?'Log in to refer patients':'Get started with online visit'
       return (
         <div className="patient_signin">
           {components.input_type_1(this.update_email.bind(this), "Email Address")}
           {components.input_password_type_1(this.update_password.bind(this), "Password")}
-          {components.confirm_button_type_1(this.sign_in_handler.bind(this), "Get started with online visit")}
+          {components.confirm_button_type_1(this.sign_in_handler.bind(this), btn_wording)}
           {components.confirm_button_type_2(this.props.state_update, "I don't have an account.", 'signin')}
         </div>
       );
