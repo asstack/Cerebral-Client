@@ -18,7 +18,6 @@ class QuestionBank extends Component{
       banks:this.props.question_banks,
       bank_name:this.props.bank_name,
       question_step:this.props.question_step,
-      back_flag:false,
     }
     props.api_actions.api_reset()
   }
@@ -53,15 +52,15 @@ class QuestionBank extends Component{
   componentDidUpdate(){
     const {bank_name, question_banks_step, question_banks, patient_actions} = this.props
 
-    if(this.state.bank_step!==question_banks_step){
+    if(this.state.bank_step < question_banks_step){
       this.update_bank_state()
       patient_actions.update_patient_state(question_banks[question_banks_step])
-      patient_actions.set_current_question_bank_by_name(question_banks[question_banks_step]).then((resp) => {
-        if(this.state.back_flag){
-          patient_actions.set_step(0)
-          this.setState({back_flag:false}) 
-        } 
-      }) 
+      patient_actions.set_current_question_bank_by_name(question_banks[question_banks_step])
+      this.props.history.push("/patient/"+question_banks[question_banks_step]) 
+    }else if(this.state.bank_step > question_banks_step){
+      this.update_bank_state()
+      patient_actions.update_patient_state(question_banks[question_banks_step])
+      patient_actions.set_current_question_bank_by_name(question_banks[question_banks_step], true)
       this.props.history.push("/patient/"+question_banks[question_banks_step]) 
     }
   }
@@ -131,19 +130,7 @@ class QuestionBank extends Component{
     }
   }
 
-  back_btn_handler = () => {
-    const {question_banks, question_banks_step, questions, question_step, patient_actions} = this.props 
-    if(question_step > 0){
-      //just change the step  
-      patient_actions.set_step(question_step-1)
-    }else if(question_step === 0 && question_banks_step > 0){
-      patient_actions.set_question_banks_step(question_banks_step+1)
-        
-      //set previous bank with last index
-    }
-  }
-
-
+  
   submit_and_upload_data = (data, type) => { 
     const {question_banks, question_banks_step, questions, question_step, 
            patient_actions} = this.props
@@ -176,7 +163,6 @@ class QuestionBank extends Component{
       did_create_patient: this.did_create_patient.bind(this),
       submit_answer_and_next_step: this.submit_answer_and_next_step.bind(this),
       submit_and_upload_data:this.submit_and_upload_data.bind(this),
-      back_btn_handler:this.back_btn_handler.bind(this),
       patient_sign_in:this.sign_in_and_next.bind(this)
     }
     const question = this.props.questions[this.props.question_step]

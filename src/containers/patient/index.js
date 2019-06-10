@@ -1,12 +1,14 @@
 import React, {Component} from 'react';
 import {Router, Route, withRouter} from 'react-router-dom'
 import { connect } from 'react-redux'
+import {bindActionCreators} from 'redux'
 import QuestionBank from './question_bank'
 import PatientDashboard from './dashboard'
 import SignIn from './sign_in'
-import {update_patient_state, update_patient_questions, delete_patient_questions} from '../../actions/patient_action'
 import CompleteProcess from '../../components/static_components/complete_patient_process'
-import {reset_state, is_signed_in} from '../../actions/user_auth_action'
+
+import * as patient_actions from '../../actions/patient_action'
+import * as global_actions from '../../actions/user_auth_action'
 import uuidv1 from 'uuid'
 import ReactGA from 'react-ga'
 import Alert from 'react-s-alert'
@@ -25,18 +27,31 @@ class Patient extends Component{
     this.setState({width: window.innerWidth}); 
   }
 
+  back_btn_handler = () => {
+    const {question_banks_step, question_step, patient_actions} = this.props 
+    if(question_step > 0){
+      //just change the step  
+      patient_actions.set_step(question_step-1)
+    }else if(question_step === 0 && question_banks_step > 0){
+      patient_actions.set_question_banks_step(question_banks_step-1)       
+    }
+  }
+
+
   componentDidMount(){ 
+
+    const {patient_actions, global_actions} = this.props
     const init_state = this.props.location.pathname.split("/")[2];    
     const user = this.props.user.attributes;
     this.update_width_handler()
     if(!user.patient && user.therapist){
-      this.props.reset_state()      
+      global_actions.reset_state()      
       Alert.info("Please sign in by using patient account.") 
     }
 
     if(user["access-token"]){
-      this.props.is_signed_in().then((resp) => {
-        if(!resp) this.props.reset_state()
+      global_actions.is_signed_in().then((resp) => {
+        if(!resp) this.global_actions.reset_state()
       }) 
     }  
 
@@ -44,7 +59,9 @@ class Patient extends Component{
       this.props.history.push("/patient/sign_in") 
     }else if(init_state!==this.state.prev_state){  
       this.setState({prev_state:init_state})
-      update_patient_state(init_state)
+      console.log("patient actions :", patient_actions)
+      console.log("patient actions :", global_actions)
+      patient_actions.update_patient_state(init_state)
     }
 
     /*
@@ -65,16 +82,16 @@ class Patient extends Component{
       this.setState({prev_state: new_state})
     }
  }
+
   componentWillReceiveProps = (next_props) => { 
     const user = next_props.user.attributes 
+    const {global_actions} = this.props
     if(!user.patient && user.therapist){
-      this.props.reset_state()
+      global_actions.reset_state()
       Alert.info("Please sign in by using patient account.") 
       this.props.history.push("/patient/sign_in") 
     }
   }
-
-
 
 
   componentWillUnmount(){
@@ -93,7 +110,7 @@ class Patient extends Component{
   progress_menu = (bank_name, index) => {
     return (
       <div key={uuidv1()} className= {this.map_type_to_style_class(this.props.question_banks_step, index)}>
-         {index===0?<img src={process.env.PUBLIC_URL + '/img/arrow.png'} className="arrow-btn"/>:<div></div>}
+         {index===0?<img src={process.env.PUBLIC_URL + '/img/arrow.png'} className="arrow-btn" onClick={this.back_btn_handler}/>:<div></div>}
          <div className="align-self-end menu-item"> {bank_name} </div>
          <div></div>
       </div>
@@ -103,7 +120,7 @@ class Patient extends Component{
   single_progress_menu = (bank_name) => {
     return (
        <div className= "col d-flex justify-content-between solid-border-bottom text-small menu-bar-item-holder">
-         <img src={process.env.PUBLIC_URL + '/img/arrow.png'} className="arrow-btn"/>
+         <img src={process.env.PUBLIC_URL + '/img/arrow.png'} onClick={this.back_btn_handler} className="arrow-btn"/>
          <div className="align-self-end menu-item"> {bank_name} </div>
          <div></div>
       </div> 
@@ -182,9 +199,9 @@ const mapStateToProps = state => {
     patient_reducer: {service_line, patient_state, step, total_step, questions, question_banks, question_banks_step}
   } = state
   return {
+    app_state:app_state,
     user:current_user,
     service_line:service_line,
-    app_state:app_state,
     patient_state:patient_state,
 		questions:questions,
     question_banks:question_banks,
@@ -194,7 +211,14 @@ const mapStateToProps = state => {
   }
 }
 
+const mapDispatchToProps = (dispatch) => {
+  return {
+    patient_actions: bindActionCreators(patient_actions, dispatch),
+    global_actions: bindActionCreators(global_actions, dispatch),
+  }
+}
+
 
 // https://react-redux.js.org/introduction/basic-tutorial#connecting-the-components
-export default withRouter(connect(mapStateToProps, {is_signed_in, reset_state, update_patient_state, update_patient_questions, delete_patient_questions}) (Patient))
+export default withRouter(connect(mapStateToProps, mapDispatchToProps) (Patient))
 

@@ -75,7 +75,7 @@ export const patient_reducer = handleActions({
   [patient_action_types.SET_PATIENT_QUESTIONS]:(state, action) => {
     return{
       ...state,
-      step:0,
+      step:action.q_id,
       question_bank_id : action.bank_id,
       current_bank_name : action.bank_name,
       questions : action.questions,
