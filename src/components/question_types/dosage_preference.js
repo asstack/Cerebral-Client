@@ -40,6 +40,9 @@ class DosagePreference extends QuestionPreference {
   submit_btn_handler = e => {
     var selected_dosage = this.state.options[this.state.selected_index]
     //call action from parents with this.state.selected 
+    if (!selected_dosage) {
+      selected_dosage = this.state.options[0]
+    }
     this.props.set_dosage(selected_dosage)
     this.props.submit_action(selected_dosage.name)
   }
@@ -49,13 +52,13 @@ class DosagePreference extends QuestionPreference {
       <div style={{width: '100%', height: '100%'}}>
       <div className='text-recommendation' 
         style={{visibility: is_recommended ? 'visible' : 'hidden', position: 'relative', left: '10%', top: '8%', width: '200px'}}>Our Recommendation</div>
-      <div className='text-middle' style={{position: 'relative', left: '10%', top: '15%', fontWeight: 'bold'}}>{item.title}</div>
+      <div className='text-left' style={{position: 'relative', left: '10%', top: '15%', fontWeight: 'bold'}}>{item.title}</div>
       
-      <div className='text-middle' style={{position: 'relative', left: '10%', top: '25%'}}>Dosage</div>
-      <div className='text-small' style={{position: 'relative', left: '10%', top: '27%'}}>{item.dosage} milligrams</div>
+      <div className='text-left' style={{position: 'relative', left: '10%', top: '25%'}}>Dosage</div>
+      <div className='text-small text-left' style={{position: 'relative', left: '10%', top: '27%'}}>{item.dosage} milligrams</div>
 
-      <div className='text-middle'style={{position: 'relative', left: '10%', top: '35%'}}>Price</div>
-      <div className='text-small'style={{position: 'relative', left: '10%', top: '37%'}}>${item.price} per 30 days</div>
+      <div className='text-left'style={{position: 'relative', left: '10%', top: '35%'}}>Price</div>
+      <div className='text-small text-left'style={{position: 'relative', left: '10%', top: '37%'}}>${item.price} per 30 days</div>
       </div>
   )
   }
