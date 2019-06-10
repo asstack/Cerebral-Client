@@ -98,10 +98,13 @@ class QuestionBank extends Component{
         })
       }
       else{
-        if(!this.props.question_banks.includes(option.question_bank_names[0])) patient_actions.update_patient_question_banks(this.props.question_banks.concat( option.question_bank_names), question_banks_step)
-        if (option.name) patient_actions.update_service_line(option.name)	
-        this.patient_state_transition_helper();
-      }
+        if(!this.props.question_banks.includes(option.question_bank_names[0])){
+          patient_actions.update_patient_question_banks(this.props.question_banks.concat( option.question_bank_names), question_banks_step).then(()=>{
+            if (option.name) patient_actions.update_service_line(option.name)	
+            this.patient_state_transition_helper(); 
+          })
+        }
+     }
     }else this.patient_state_transition_helper();
   }
   
@@ -126,6 +129,8 @@ class QuestionBank extends Component{
     else if(question_banks.length===question_banks_step+1 && questions.length === question_step+1){ 
       this.props.history.push("/patient/completed") 
     }else if(questions.length > question_step+1){ 
+
+      console.log("update step:", questions.length, ", ",question_step)
       patient_actions.set_step(question_step+1)
     }else{
       patient_actions.set_question_banks_step(question_banks_step+1)
