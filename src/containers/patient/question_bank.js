@@ -35,9 +35,11 @@ class QuestionBank extends Component{
     const url_info = this.props.location.pathname.split("/")[2];    
     
     if(!bank_name || url_info==='qualification'){ 
-      patient_actions.update_patient_question_banks(['qualification'], 0)		
-      patient_actions.set_current_question_bank_by_name('qualification') 
-      this.update_bank_state() 
+      patient_actions.update_patient_question_banks(['qualification'], 0).then(() => {
+        patient_actions.set_current_question_bank_by_name('qualification') 
+        this.update_bank_state() 
+      })	
+      
       if(url_info!=='qualification') this.props.history.push("/patient/qualification")
     }else if(bank_name === question_banks[step]){
       this.update_bank_state()
@@ -90,9 +92,10 @@ class QuestionBank extends Component{
 
     if (option.question_bank_names.length > 0) {
       if (option.immediate) {
-        patient_actions.update_patient_question_banks(option.question_bank_names, 0)
-        this.setState({bank_step:-1})
-        this.props.history.push("/patient/"+option.question_bank_names[0]) 
+        patient_actions.update_patient_question_banks(option.question_bank_names, 0).then(() => {
+          this.setState({bank_step:-1})
+          this.props.history.push("/patient/"+option.question_bank_names[0]) 
+        })
       }
       else{
         if(!this.props.question_banks.includes(option.question_bank_names[0])) patient_actions.update_patient_question_banks(this.props.question_banks.concat( option.question_bank_names), question_banks_step)

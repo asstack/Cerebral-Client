@@ -55,8 +55,9 @@ const set_patient_questions = (questions, bank_id, bank_name, q_id) => ({
   q_id:q_id
 })
 
-const set_question_banks = (questions_banks, bank_step=0) => ({
+const set_question_banks = (question_bank_objects, questions_banks, bank_step=0) => ({
   type:SET_QUESTION_BANKS,
+  question_bank_objects: question_bank_objects,
   question_banks:questions_banks,
   question_banks_step:bank_step
 })
@@ -125,8 +126,17 @@ export const move_patient_sign_up = (state) => (dispatch, getState) => {
 }
 
 export const update_patient_question_banks = (bank_names, step) => (dispatch, getState) => {
-  // TODO: fetch all the question bank information using search...
-  dispatch(set_question_banks(bank_names, step))
+
+  var header = {'Content-Type': 'application/json'}
+  return axios.get(`/api/question_banks`)
+    .then(function(resp){
+
+      // TODO: right now we are fetching and saving all of the question banks information because
+      // it's just as easy to get all of it
+      // dispatch(set_question_bank_objects(resp.data))
+      dispatch(set_question_banks(resp.data, bank_names, step))
+      return Promise.resolve()
+    })
 }
 
 export const set_current_question_bank_by_name = (bank_name, flag=false) => (dispatch, getState) => {

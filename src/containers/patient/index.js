@@ -105,13 +105,18 @@ class Patient extends Component{
       return "col d-flex justify-content-between solid-border-bottom__unselected text-small__unselected menu-bar-item-holder";
     }
   }
-
+  
+  // TODO: I could not get this to show up here with this.question_bank_title.bind below?!?!?
+  question_bank_title = (that, bank_name) => {
+    // look up question bank title in that.props.question_bank_objects
+    return that.props.question_bank_objects.filter(qbo => qbo.name == bank_name)[0].title
+  }
   
   progress_menu = (bank_name, index) => {
     return (
       <div key={uuidv1()} className= {this.map_type_to_style_class(this.props.question_banks_step, index)}>
-         {index===0?<img src={process.env.PUBLIC_URL + '/img/arrow.png'} className="arrow-btn" onClick={this.back_btn_handler}/>:<div></div>}
-         <div className="align-self-end menu-item"> {bank_name} </div>
+         {index===0?<img src={process.env.PUBLIC_URL + '/img/arrow.png'} className="arrow-btn"/>:<div></div>}
+         <div className="align-self-end menu-item"> {this.question_bank_title(this, bank_name)} </div>
          <div></div>
       </div>
     )
@@ -120,13 +125,12 @@ class Patient extends Component{
   single_progress_menu = (bank_name) => {
     return (
        <div className= "col d-flex justify-content-between solid-border-bottom text-small menu-bar-item-holder">
-         <img src={process.env.PUBLIC_URL + '/img/arrow.png'} onClick={this.back_btn_handler} className="arrow-btn"/>
-         <div className="align-self-end menu-item"> {bank_name} </div>
+         <img src={process.env.PUBLIC_URL + '/img/arrow.png'} className="arrow-btn"/>
+         <div className="align-self-end menu-item"> {this.question_bank_title(this, bank_name)} </div>
          <div></div>
       </div> 
     )
   }
-
 
   display_title = (questions, step) =>{
 		if(questions[step]){
@@ -196,7 +200,7 @@ class Patient extends Component{
 const mapStateToProps = state => {
   const{
     global_reducer: {app_state, current_user},
-    patient_reducer: {service_line, patient_state, step, total_step, questions, question_banks, question_banks_step}
+    patient_reducer: {service_line, patient_state, step, total_step, questions, question_banks, question_bank_objects, question_banks_step}
   } = state
   return {
     app_state:app_state,
@@ -206,6 +210,7 @@ const mapStateToProps = state => {
 		questions:questions,
     question_banks:question_banks,
     question_banks_step:question_banks_step,
+    question_bank_objects: question_bank_objects,
     question_step:step,
     total_step:total_step
   }

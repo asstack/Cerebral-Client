@@ -35,8 +35,9 @@ class PatientDashboard extends Component{
 
   app_state_checkout_handler = e => {
     const {update_app_state}=this.props
-		this.props.update_patient_question_banks(['checkout'], 0)		
-    this.props.history.push('/patient/checkout') 
+		this.props.update_patient_question_banks(['checkout'], 0).then(() => {
+      this.props.history.push('/patient/checkout') 
+    })
   }
 
   sign_out_handler = e => {

@@ -23,7 +23,7 @@ class RegisterManager extends Component {
       this.props.is_signed_in().then((resp) => {
         if (resp) {
           this.props.skip_action()
-          Alert.info('You are already signed in')
+          // Alert.info('You are already signed in')
         }
       })
     }    

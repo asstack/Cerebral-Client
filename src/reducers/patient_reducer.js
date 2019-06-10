@@ -6,7 +6,11 @@ export const init_patient_state = {
   service_line: '',
   patient_state: '',
 
-  // all of the question_banks for the current user
+  // this is a cache of all of the question bank information, used so we can draw the correct
+  // title for the question bank at the top of screen
+  question_bank_objects: null,
+
+  // all of the question_bank names for the current user
   question_banks: [],
   // which question bank the user is currently looking at 
   question_banks_step: 0,
@@ -87,6 +91,7 @@ export const patient_reducer = handleActions({
       ...state,
       question_banks : action.question_banks,
       question_banks_step : action.question_banks_step,
+      question_bank_objects: action.question_bank_objects,
       step:0
     }
   },
