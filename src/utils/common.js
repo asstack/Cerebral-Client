@@ -30,7 +30,8 @@ export const email_validation = email => {
     return false;
   }
 }
-export const map_type_to_component = (question, handlers) => {
+
+export const map_type_to_component = (question, handlers, user) => {
   if(!question) return null
 
   switch(question.question_type) {
@@ -39,6 +40,7 @@ export const map_type_to_component = (question, handlers) => {
     case 'create_profile':
       return <RegisterManager
                 type = 'register'
+                user = {user} 
                 signin_submit_action = {handlers.patient_sign_in}
                 register_submit_action = {handlers.did_create_patient} 
                 skip_action = {handlers.next_step_handler}/>

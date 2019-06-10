@@ -13,7 +13,6 @@ import promiseModal from '../../utils/modal_dialog'
 
 class SignIn extends Component {
   
-
   constructor(props){
     super(props)
     this.state = {

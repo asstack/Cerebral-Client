@@ -18,15 +18,10 @@ class RegisterManager extends Component {
   }
 
   componentDidMount = () => {
-    //TODO: it can make error when we use it for general signin flow (shared by general signin and question bank). so, it will be better to check user_info in container
-    if(this.props.skip_action){
-      this.props.is_signed_in().then((resp) => {
-        if (resp) {
-          this.props.skip_action()
-          // Alert.info('You are already signed in')
-        }
-      })
-    }    
+
+    if(this.props.user.attributes.id && this.props.skip_action){
+      this.props.skip_action() 
+    }
   }
 
   state_update=(e, type)=>{

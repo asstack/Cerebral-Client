@@ -113,7 +113,8 @@ class QuestionBank extends Component{
     global_actions.register_and_set_user(state)
       .then(() => {return global_actions.sign_in(state)})
         .then(() => { return patient_actions.create_patient_from_user() })
-            .then(() => {this.patient_state_transition_helper()})
+      .then(() => {//this.patient_state_transition_helper()
+      })
       .catch((err) => {
         console.log(err)
       })
@@ -121,7 +122,6 @@ class QuestionBank extends Component{
    
   patient_state_transition_helper = () => {
     const {question_banks, question_banks_step, questions, question_step, patient_actions} = this.props 
-
     if (this.props.api_middleware.status == 'REAUTH') {
       this.props.global_actions.remove_token()
       this.props.history.push("/patient/sign_in") 
@@ -129,8 +129,6 @@ class QuestionBank extends Component{
     else if(question_banks.length===question_banks_step+1 && questions.length === question_step+1){ 
       this.props.history.push("/patient/completed") 
     }else if(questions.length > question_step+1){ 
-
-      console.log("update step:", questions.length, ", ",question_step)
       patient_actions.set_step(question_step+1)
     }else{
       patient_actions.set_question_banks_step(question_banks_step+1)
@@ -155,7 +153,7 @@ class QuestionBank extends Component{
       if (resp.user_attr.patient) {
         patient_actions.set_patient(resp.user_attr.patient);
         patient_actions.ensure_visit(resp.user_attr.patient, service_line).then((visit) => {
-          this.patient_state_transition_helper()
+          //this.patient_state_transition_helper()
         })
       }
     }) 
@@ -174,7 +172,7 @@ class QuestionBank extends Component{
     }
     const question = this.props.questions[this.props.question_step]
 
-    const component = common.map_type_to_component(question, handlers)
+    const component = common.map_type_to_component(question, handlers, this.props.user)
     const QuestionsWrapper = wrapper.questions_wrapper(component, question, this.state) 
     return(
       <QuestionsWrapper/> 
@@ -191,6 +189,7 @@ const mapStateToProps = (state) => {
   } = state
 
   return {
+    user: current_user,
     app_state: app_state,
     api_middleware: api_middleware,
 		question_banks: question_banks,

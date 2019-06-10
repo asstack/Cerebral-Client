@@ -22,7 +22,7 @@ export const questions_wrapper = (WrappedComponent, question, p_props) => {
             <h1>{question?question.title:null}</h1>
             {(question && question.subscript)?<div className="d-flex justify-content-left text-subscript"> {question.subscript}</div>:null} 
           </div>
-          {WrappedComponent}
+          {WrappedComponent} 
        </div> 
       );
     } 
