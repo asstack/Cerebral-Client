@@ -19,14 +19,20 @@ class RegisterManager extends Component {
 
   componentDidMount = () => {
 
-    if(this.props.user.attributes.id && this.props.skip_action){
+    if(this.props.user && this.props.user.attributes.id && this.props.skip_action){
       this.props.skip_action() 
     }
   }
 
   state_update=(e, type)=>{
-    if(type==='signin') this.setState({view_type:'register'});
-    else this.setState({view_type:'signin'});
+    if(type==='signin'){
+      if(this.props.update_type) this.props.update_type('register')
+      this.setState({view_type:'register'});
+    }
+    else {
+      if(this.props.update_type) this.props.update_type('signin')
+      this.setState({view_type:'signin'});
+    }
   }
 
   target_view = () => {

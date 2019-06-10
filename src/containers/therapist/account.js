@@ -13,7 +13,7 @@ class Account extends Component {
   constructor(props){
     super(props)
     this.state = {
-    
+      type: this.props.default_type   
     }
   }
   
@@ -44,7 +44,13 @@ class Account extends Component {
       })
   }
 
+  update_type_handler = (type) => {
+    this.setState({type:type}) 
+  }
+
+
   view = () => { 
+    let wording = this.state.type==='register'?"Create an account to refer patients":"Sign in to refer patients"
     return(
       <div className="container-progress">
         <div className="d-flex flex-column">
@@ -64,9 +70,10 @@ class Account extends Component {
           <div className="d-flex flex-column question-container">
             <div className="d-flex flex-column main-noprogress">
               <div className="description_noprogress">
-                <h1>Create an account or Login in to refer patient</h1>
+                <h1>{ this.state.type==='register'?"Create an account to refer patients":"Sign in to refer patients"
+}</h1>
               </div>
-              <RegisterManager user_type = "therapist" signin_submit_action = {this.sign_in_handler} register_submit_action = {this.register_handler} view_type={this.props.default_type}/>
+              <RegisterManager update_type = {this.update_type_handler} user_type = "therapist" signin_submit_action = {this.sign_in_handler} register_submit_action = {this.register_handler} view_type={this.props.default_type}/>
             </div> 
           </div> 
 

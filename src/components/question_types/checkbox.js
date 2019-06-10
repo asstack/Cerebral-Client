@@ -26,11 +26,13 @@ class CheckBoxComponent extends Component {
   //NOTE: exception for None apply is hardcorded. 
   check_box_handler = (e, idx) => {
     let option_name = this.state.options[idx].name
-    let list = this.state.details==='true'||option_name==='None apply'?new Array(this.props.options.length).fill(false):this.state.checked_options 
+    let list = option_name==='None apply'?new Array(this.props.options.length).fill(false):this.state.checked_options 
     list[idx]=e.target.checked
+
     if(option_name!=='None apply' && this.state.options.slice(-1)[0].name==='None apply'){
       list[list.length-1]=false;
     }
+    
     this.setState({checked_options:list}) 
  }
 
