@@ -15,7 +15,7 @@ class PatientShipping extends Component {
   }
 
   update_handler = (e) => { 
-      this.props.submit_action(this.state) 
+      this.props.submit_action(JSON.stringify(this.state)) 
    }
 
    update_property = (which, e) => {

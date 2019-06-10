@@ -12,6 +12,9 @@ const api_axios = (url, header, body, type) => {
     return axios.get(url, header) 
   }else if(type === 'POST'){
     return axios.post(url, body, header) 
+  }
+  else if(type === 'PUT'){
+    return axios.put(url, body, header) 
   } else{
     throw "Unimplemented REST type in api middleware"
   }
