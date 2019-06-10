@@ -13,6 +13,7 @@ import PatientPayment from '../components/question_types/patient_payment'
 import PatientShipping from '../components/question_types/patient_shipping' 
 import YesNoDetails from '../components/question_types/yes_no_details' 
 import VideoSelector from "../components/question_types/video_selector"
+import EmergencyContact from "../components/question_types/emergency_contact"
 
 import ReactGA from 'react-ga'
 import SideEffects from '../components/question_types/side_effects';
@@ -37,6 +38,8 @@ export const map_type_to_component = (question, handlers, user) => {
   switch(question.question_type) {
     case 'selector':
       return selector(handlers.set_selector_handler, question)
+    case 'emergency_contact':
+      return <EmergencyContact sumit_action = {handlers.submit_answer_and_next_step}/>
     case 'create_profile':
       return <RegisterManager
                 type = 'register'

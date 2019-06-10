@@ -208,9 +208,9 @@ h1 {
   font-size: 18px;
   line-height: 18px;
   letter-spacing: -0.43px;
-
+  min-width:298px;
   color: #250044;
-  margin-bottom:20px;
+  margin-bottom:10px;
 }
 
 .input-type1::placeholder  {
