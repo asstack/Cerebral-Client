@@ -115,7 +115,7 @@ class Patient extends Component{
   progress_menu = (bank_name, index) => {
     return (
       <div key={uuidv1()} className= {this.map_type_to_style_class(this.props.question_banks_step, index)}>
-         {index===0?<img src={process.env.PUBLIC_URL + '/img/arrow.png'} className="arrow-btn"/>:<div></div>}
+         {index===0?<img src={process.env.PUBLIC_URL + '/img/arrow.png'} className="arrow-btn" onClick={this.back_btn_handler}/>:<div></div>}
          <div className="align-self-end menu-item"> {this.question_bank_title(this, bank_name)} </div>
          <div></div>
       </div>
@@ -125,7 +125,7 @@ class Patient extends Component{
   single_progress_menu = (bank_name) => {
     return (
        <div className= "col d-flex justify-content-between solid-border-bottom text-small menu-bar-item-holder">
-         <img src={process.env.PUBLIC_URL + '/img/arrow.png'} className="arrow-btn"/>
+         <img src={process.env.PUBLIC_URL + '/img/arrow.png'} className="arrow-btn" onClick={this.back_btn_handler}/>
          <div className="align-self-end menu-item"> {this.question_bank_title(this, bank_name)} </div>
          <div></div>
       </div> 
