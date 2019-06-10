@@ -94,8 +94,8 @@ class QuestionBank extends Component{
         this.setState({bank_step:-1})
         this.props.history.push("/patient/"+option.question_bank_names[0]) 
       }
-      else {
-        patient_actions.update_patient_question_banks(this.props.question_banks.concat( option.question_bank_names), question_banks_step)
+      else{
+        if(!this.props.question_banks.includes(option.question_bank_names[0])) patient_actions.update_patient_question_banks(this.props.question_banks.concat( option.question_bank_names), question_banks_step)
         if (option.name) patient_actions.update_service_line(option.name)	
         this.patient_state_transition_helper();
       }
