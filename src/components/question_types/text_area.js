@@ -27,7 +27,7 @@ class TextArea extends Component {
       <div>
         {this.state.msg?<div className = "d-flex justify-content-start text-small-red">{this.state.msg}</div>:null}
         <div className="form-group">
-          <textarea onChange={this.update_text_handler} placeholder = "Please elaborate your answer: " className="form-control" rows="5" />
+          <textarea onChange={this.update_text_handler} placeholder = "Please elaborate on your answer: " className="form-control" rows="5" />
         </div>
         {components.confirm_button_type_1(this.submit_btn_handler, "Confirm your answer")}  
       </div>

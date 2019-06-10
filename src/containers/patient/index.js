@@ -51,7 +51,7 @@ class Patient extends Component{
 
     if(user["access-token"]){
       global_actions.is_signed_in().then((resp) => {
-        if(!resp) this.global_actions.reset_state()
+        if(!resp) global_actions.reset_state()
       }) 
     }  
 
