@@ -79,7 +79,6 @@ class QuestionBank extends Component{
 
   submit_answer_and_next_step = (ans) => {
     const {patient_actions} = this.props
-    console.log("submit_answer",patient_actions)
     patient_actions.answer_current_question({answer: ans}).then(() => {
       return this.patient_state_transition_helper();
     })
@@ -92,7 +91,7 @@ class QuestionBank extends Component{
     if (option.question_bank_names.length > 0) {
       if (option.immediate) {
         patient_actions.update_patient_question_banks(option.question_bank_names, 0)
-        this.state.bank_step=null
+        this.setState({bank_step:-1})
         this.props.history.push("/patient/"+option.question_bank_names[0]) 
       }
       else {
