@@ -1,13 +1,21 @@
 import React, {Component} from 'react'
 import logo from './complete_patient.png';
 import {withRouter} from "react-router-dom"
+import {connect} from 'react-redux'
 import * as components from '../../components/question_components/components'
-
+import { complete_current_visit } from '../../actions/patient_action'
 
 class CompleteProcess extends Component{
 
   constructor(props){
     super(props)
+  }
+
+  componentDidMount = () => {
+
+    const {complete_current_visit} = this.props
+
+    this.props.complete_current_visit()
   }
   
   btn_handler = () => {
@@ -40,5 +48,4 @@ class CompleteProcess extends Component{
   }
 }
 
-export default withRouter(CompleteProcess)
-
+export default connect(null, {complete_current_visit}) (CompleteProcess)
