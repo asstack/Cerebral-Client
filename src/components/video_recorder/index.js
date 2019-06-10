@@ -32,9 +32,9 @@ class VideoRecorderComponent extends Component {
 					<p>(approximately 2 minutes)</p>
 				</div>
 				<div className = "video-cam-holder">
-          <VideoRecorder ref='recorder'/>
+          <VideoRecorder ref='recorder' timeLimit={120000}/>
 				</div>
-				<div className = "d-flex justify-content-center">	
+				<div className = "d-flex justify-content-center p-2">	
 
           <input className="col btn-confirm text-btn" type="button" onClick={this.submit_btn_handler} value="Submit Video"/>
 				</div>

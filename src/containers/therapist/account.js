@@ -64,9 +64,9 @@ class Account extends Component {
           <div className="d-flex flex-column question-container">
             <div className="d-flex flex-column main-noprogress">
               <div className="description_noprogress">
-                <h1>Create an account or Login in to refer patient</h1>
+                <h1>Create or Sign in an account to refer patient</h1>
               </div>
-              <RegisterManager user_type = "therapist" signin_submit_action = {this.sign_in_handler} register_submit_action = {this.register_handler} view_type={this.props.default_type}/>
+              <RegisterManager signin_submit_action = {this.sign_in_handler} register_submit_action = {this.register_handler} view_type={this.props.default_type}/>
             </div> 
           </div> 
 
