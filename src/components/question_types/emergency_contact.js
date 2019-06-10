@@ -57,7 +57,7 @@ class EmergencyContact extends Component {
         </div>
         {components.input_type_1(this.update_phone.bind(this), "Phone #")}
         <div className="d-flex flex-row justify-content-start">
-        {components.checkbox_type_1(this.set_concensus.bind(this), 'I consent to Telehealth, terms and privacy policy. All information is strictly confidential and is used to help our professionals provide the best care for you.')}
+        {components.checkbox_type_1(this.set_concensus.bind(this), 'I’ve read the No harm agreement and have made the commitment to not harm myself or anyone else in any way. I will not attempt suicide, or any other self injury. ')}
         </div>
         {components.confirm_button_type_1(this.update_handler.bind(this), btn_wording)}
       </div>
