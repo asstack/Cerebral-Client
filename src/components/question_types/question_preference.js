@@ -70,8 +70,8 @@ export class QuestionPreference extends Component {
         return(
           <div style={{width: '100%', height: '100%'}}>
           <div className='text-recommendation' style={{ position: 'relative', left: '10%', top: '8%', width: '200px'}}>No Preference</div>          
-          <div className='text-middle'style={{position: 'relative', left: '10%', top: '35%'}}>I don't have a preference</div>
-          <div className='text-small'style={{position: 'relative', left: '10%', top: '37%'}}>Your doctor will decide on a treatment plan based on your online visit answers.</div>
+          <div className='text-left'style={{position: 'relative', left: '10%', top: '35%'}}>I don't have a preference</div>
+          <div className='text-small text-left'style={{position: 'relative', left: '10%', top: '37%'}}>Your doctor will decide on a treatment plan based on your online visit answers.</div>
           </div>
       )
       })

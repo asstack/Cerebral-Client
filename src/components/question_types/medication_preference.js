@@ -24,6 +24,11 @@ class MedicationPreference extends QuestionPreference {
 
   submit_btn_handler = e => {
     var selected_treatment = this.state.options[this.state.selected_index]
+
+    if (!selected_treatment) {
+      selected_treatment = this.state.options[0]
+    }
+
     this.props.set_treatment(selected_treatment)
     this.props.submit_action(selected_treatment.name)
   }
@@ -38,13 +43,13 @@ class MedicationPreference extends QuestionPreference {
       <div style={{width: '100%', height: '100%'}}>
       <div className='text-recommendation' 
         style={{visibility: is_recommended ? 'visible' : 'hidden', position: 'relative', left: '10%', top: '8%', width: '200px'}}>Our Recommendation</div>
-      <div className='text-middle' style={{position: 'relative', left: '10%', top: '15%', fontWeight: 'bold'}}>{this.capitalize(item.name)}</div>
+      <div className='text-left' style={{position: 'relative', left: '10%', top: '15%', fontWeight: 'bold'}}>{this.capitalize(item.name)}</div>
       
-      <div className='text-middle' style={{position: 'relative', left: '10%', top: '25%'}}>Used To Treat</div>
-      <div className='text-small' style={{position: 'relative', left: '10%', top: '27%'}}>{item.service_line.title}</div>
+      <div className='text-left' style={{position: 'relative', left: '10%', top: '25%'}}>Used To Treat</div>
+      <div className='text-small text-left' style={{position: 'relative', left: '10%', top: '27%'}}>{item.service_line.title}</div>
 
-      <div className='text-middle' style={{position: 'relative', left: '10%', top: '35%'}}>Side Effects</div>
-      <div className='text-small' style={{position: 'relative', left: '10%', top: '37%'}}>{item.side_effects.map(e => e.title).join(", ")}</div>
+      <div className='text-left' style={{position: 'relative', left: '10%', top: '35%'}}>Side Effects</div>
+      <div className='text-small text-left' style={{position: 'relative', left: '10%', top: '37%'}}>{item.side_effects.map(e => e.title).join(", ")}</div>
       </div>
     )
   }
