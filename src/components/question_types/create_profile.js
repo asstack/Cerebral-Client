@@ -76,8 +76,10 @@ class CreateProfile extends Component {
       <div>
         {this.state.msg? <div className = "d-flex justify-content-center p-2 text-small-red">{this.state.msg}</div> : null}
         {components.input_type_1(this.update_email.bind(this), "Email Address")}
-        {components.input_type_1(this.update_firstname.bind(this), "First Name")}
-        {components.input_type_1(this.update_lastname.bind(this), "Last Name")}
+        <div className='d-flex flex-row justify-content-between'>
+          {components.input_type_1(this.update_firstname.bind(this), "First Name")}
+          {components.input_type_1(this.update_lastname.bind(this), "Last Name")}
+        </div>
         {components.input_password_type_1(this.update_password.bind(this), "Create Password")}
         {components.input_password_type_1(this.update_password_confirm.bind(this), "Retype Password")}
         <div className="d-flex flex-row justify-content-start">

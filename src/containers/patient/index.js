@@ -59,8 +59,6 @@ class Patient extends Component{
       this.props.history.push("/patient/sign_in") 
     }else if(init_state!==this.state.prev_state){  
       this.setState({prev_state:init_state})
-      console.log("patient actions :", patient_actions)
-      console.log("patient actions :", global_actions)
       patient_actions.update_patient_state(init_state)
     }
 

@@ -69,8 +69,6 @@ export const sign_in = user_info => (dispatch, getState) =>  {
 
           resp.data.data['client'] = resp.headers.client
           resp.data.data['access-token'] = resp.headers['access-token']
-
-          console.log("sign_in data", resp.data.data)
                                   
           return dispatch(set_user(resp.data.data))
         })

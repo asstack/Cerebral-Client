@@ -11,6 +11,19 @@ export const input_type_1 = (event_handler, text) => {
   )
 }
 
+export const input_type_half = (event_handler, text) => {
+  return(
+    <div className="d-flex justify-content-start input-holder">
+			<input className="col input-type1" onChange={event_handler} defaultValue=""
+				type="text" placeholder={text}/>
+    </div>
+  )
+}
+
+
+
+
+
 export const input_type_autocomplete = (event_handler, text, autocomplete_value) => {
   return(
     <div className="d-flex justify-content-start input-holder">
