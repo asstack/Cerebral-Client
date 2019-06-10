@@ -43,10 +43,10 @@ class MedicationPreference extends QuestionPreference {
       <div className='text-middle' style={{position: 'relative', left: '10%', top: '25%'}}>Used To Treat</div>
       <div className='text-small' style={{position: 'relative', left: '10%', top: '27%'}}>{item.service_line.title}</div>
 
-      <div className='text-middle'style={{position: 'relative', left: '10%', top: '35%'}}>Side Effects</div>
-      <div className='text-small'style={{position: 'relative', left: '10%', top: '37%'}}>{item.side_effects.map(e => e.title).join(", ")}</div>
+      <div className='text-middle' style={{position: 'relative', left: '10%', top: '35%'}}>Side Effects</div>
+      <div className='text-small' style={{position: 'relative', left: '10%', top: '37%'}}>{item.side_effects.map(e => e.title).join(", ")}</div>
       </div>
-  )
+    )
   }
 }
 
