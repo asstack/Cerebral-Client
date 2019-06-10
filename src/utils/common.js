@@ -39,7 +39,7 @@ export const map_type_to_component = (question, handlers, user) => {
     case 'selector':
       return selector(handlers.set_selector_handler, question)
     case 'emergency_contact':
-      return <EmergencyContact sumit_action = {handlers.submit_answer_and_next_step}/>
+      return <EmergencyContact submit_action = {handlers.submit_answer_and_next_step}/>
     case 'create_profile':
       return <RegisterManager
                 type = 'register'
