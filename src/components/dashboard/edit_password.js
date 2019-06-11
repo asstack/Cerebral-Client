@@ -23,7 +23,7 @@ class EditPassword extends Component {
   read_view = () =>(
     <div className="align-self-start main-content-small-card">
       <div className="d-flex flex-column card-items-container">
-        <div className="small-card-title">MY PROFILE</div>
+        <div className="small-card-title">Change password</div>
         <div className="small-card-item">
           <input type="text" placeholder="Password" disabled={true}/>
         </div>
@@ -38,7 +38,7 @@ class EditPassword extends Component {
   write_view = () =>(
     <div className="align-self-start main-content-small-card">
       <div className="d-flex flex-column card-items-container">
-        <div className="small-card-title">MY PROFILE</div>
+        <div className="small-card-title">Change password</div>
 
         <div className="small-card-item">
           <input type="text" placeholder="Password"/>
