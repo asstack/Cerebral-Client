@@ -142,9 +142,13 @@ class QuestionBank extends Component{
     const {question_banks, question_banks_step, questions, question_step, 
            patient_actions} = this.props
     
-    patient_actions.upload_object_for_current_question(data, type).then(() => {
+    patient_actions.upload_object_for_current_question(data, type).then((resp) => {
       this.patient_state_transition_helper()
     })
+      .catch((err) => {
+        console.log(err) 
+        this.patient_state_transition_helper()
+      })
   }
 
   sign_in_and_next = (info) => { 
