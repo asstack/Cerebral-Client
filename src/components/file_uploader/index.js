@@ -55,10 +55,8 @@ class FileUploader extends Component {
           <div className="id-image-holder"> 
             <img className="id-image" src={this.state.file}/>
           </div>
-			    <div className="d-flex flex-row justify-content-center">
-            {components.confirm_button_type_2(this.clear_data_handler, "Upload again")}
             {components.confirm_button_type_1(this.confirm_btn_handler, "Confirm Image")}
-          </div>	
+            {components.confirm_button_type_2(this.clear_data_handler, "Upload again")}
         </div>
       ) 
     }else{

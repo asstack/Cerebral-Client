@@ -20,6 +20,7 @@ import SideEffects from '../components/question_types/side_effects';
 import MedicationPreference from '../components/question_types/medication_preference';
 import DosagePreference from '../components/question_types/dosage_preference';
 import RegisterManager from '../components/question_types/register_manager'
+import IdentificationCover from '../components/question_types/identification_cover'
 
 
 
@@ -36,9 +37,11 @@ export const map_type_to_component = (question, handlers, user, subscript_ref) =
   if(!question) return null
 
   switch(question.question_type) {
+    case 'emergency_contact':
+      return <IdentificationCover submit_action = {handlers.next_step_handler}/>
     case 'selector':
       return selector(handlers.set_selector_handler, question)
-    case 'emergency_contact':
+    case 'emergency_contactq':
       return <EmergencyContact submit_action = {handlers.submit_answer_and_next_step}/>
     case 'create_profile':
       return <RegisterManager

@@ -1,4 +1,5 @@
 import React, {Component} from 'react'
+import * as components from '../question_components/components'
 import Webcam from "react-webcam"
 
 class WebcamComponent extends Component {
@@ -17,8 +18,8 @@ class WebcamComponent extends Component {
 		this.setState({screenshot:screenshot, cam_state:'display'})
 	}
 
-	camera_turn_on_hanlder = () => {
-		this.setState({screenshot:null, cam_state:'camera'})
+	camera_turn_on_handler = (e, type) => {
+		this.setState({screenshot:null, cam_state:type})
 	}
 
 	//TODO: make action for confirm and Continue to Shopping, need api and s3 call to save image
@@ -33,14 +34,10 @@ class WebcamComponent extends Component {
 		if(state==="camera"){
 			return (
 				<div>
-					<div className = "d-flex justify-content-center text-big">
-						<p>Take a photo of yourself.</p>
-					</div>
           <Webcam className = {"d-flex justify-content-center p-2"} width={'100%'} 
             height={'100%'} ref='webcam' screenshotFormat="image/jpeg"/>
-					<div className = "d-flex justify-content-center p-2">	
-						<input className="col btn-confirm text-btn" type="button" value="Take the picture" onClick={this.screenshot_handler}/>
-					</div>
+          
+          {components.confirm_button_type_1(this.screenshot_handler, 'Take the picture')}
 				</div>		
 			)
 		}else{
@@ -52,15 +49,9 @@ class WebcamComponent extends Component {
 					<div className="d-flex justify-content-center p-2">
 						{this.state.screenshot ? <img src={this.state.screenshot} /> : null}
 					</div>
-					<div className = "d-flex justify-content-center p-2">	
-						<input className="col btn-confirm text-btn" onClick={this.confirm_handler} type="button" 
-							value="Confirm and Continue to Shopping"/>	
-					</div>
-				
-					<div className = "d-flex justify-content-center p-2">	
-						<input className="col btn-confirm text-btn" type="button" value="Try Again" 
-							onClick={this.camera_turn_on_hanlder}/>	
-					</div>
+          {components.confirm_button_type_1(this.confirm_handler, 'Confirm and Continue to Shopping')}
+
+          {components.confirm_button_type_2(this.camera_turn_on_handler, "Try Again", 'camera')}
 				</div>			
 			)
 		}
