@@ -148,6 +148,7 @@ h1 {
 .group-checkbox-text{
   padding-right:52px;
   font-size: 18px;
+  font-weight:600;
   line-height: 18px;
   /* identical to box height, or 100% */
 

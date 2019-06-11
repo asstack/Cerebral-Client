@@ -89,7 +89,7 @@ class CheckBoxComponent extends Component {
       </div> 
       )
     }else{
-      return <TextArea submit_action = {this.submit_with_text_handler}/> 
+      return <TextArea flag_title={this.props.flag_title} submit_action = {this.submit_with_text_handler}/> 
     } 
   }
 
