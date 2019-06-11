@@ -28,9 +28,6 @@ class VideoRecorderComponent extends Component {
   render() {
     return (
 			<div>
-			  <div className = "d-flex justify-content-center text-small">
-					<p>(approximately 2 minutes)</p>
-				</div>
 				<div className = "video-cam-holder">
           <VideoRecorder ref='recorder'/>
 				</div>
