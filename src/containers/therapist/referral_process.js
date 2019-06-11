@@ -68,7 +68,7 @@ class ReferralProcess extends Component{
           </div>
           <div className="d-flex flex-row justify-content-between align-items-start"> 
             <div className="d-flex flex-column justify-content-center">
-              <img className="therapist-cover-img align-self-center" src={process.env.PUBLIC_URL + '/img/group.png'}/> 
+              <img className="therapist-cover-img align-self-center" src={process.env.PUBLIC_URL + '/img/patient.png'}/> 
               <span className="therapist-cover-img-desc">Refer patients</span>
             </div>
             <div className="d-flex flex-column justify-content-center">
