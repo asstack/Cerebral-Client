@@ -7,6 +7,10 @@ body {
   letter-spacing: -1.5px;
 }
 
+.q-textarea::placeholder {
+  color:#9B9B9B;
+}
+
 h1 {
 
   font-weight: 600;
@@ -49,13 +53,13 @@ h1 {
 
 .main-noprogress {
   width:604px;
-  margin-bottom:50px;
+  margin-bottom:30px;
   align-self: center;
 }
 
 .description_noprogress{
-  margin-top:40px;
-  margin-bottom:50px;
+  margin-top:20px;
+  margin-bottom:30px;
 }
 
 .description_noprogress h1 {
@@ -93,7 +97,7 @@ h1 {
 .button-multi-selector {
   font-size: 18px;
   font-weight: 600;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
   width: 100%;
   height: 65px;
   border: 2px solid #250044;
@@ -116,7 +120,7 @@ h1 {
 }
 
 .confirm-btn-holder {
-  margin-top:50px;
+  margin-top:30px;
 }
 
 .link-btn-holder {
@@ -381,7 +385,7 @@ h1 {
   line-height: 25px;
   letter-spacing: -0.375px;
   color: #9998D6;
-  padding-bottom:50px;
+  padding-bottom:30px;
   /* or 167% */
 }
 
@@ -392,7 +396,7 @@ h1 {
   color: #250044;
 
   color: #9B9B9B;
-  padding-top:40px;
+  padding-top:30px;
   /* or 167% */
 }
 
@@ -477,7 +481,7 @@ h1 {
 }
 
 .question-container {
-  padding-top:50px;
+  padding-top:40px;
   max-width : 604px;
   align-self: center;
 }
@@ -1115,7 +1119,7 @@ h1 {
 }
 
 .patient-info-description {
-  padding-top:50px;
+  padding-top:30px;
   font-size: 20px;
   line-height: 20px;
   letter-spacing: -1.5px;
