@@ -1,4 +1,5 @@
 import React, {Component} from 'react'
+import ReactDOM from 'react-dom'
 import * as components from '../question_components/components'
 
 class TextArea extends Component {
@@ -7,6 +8,13 @@ class TextArea extends Component {
     this.state = {
       text:'',
       msg:''
+    }
+  }
+
+  componentDidMount = () => {
+    console.log("subscript dom:", this.props.subscript_ref) 
+    if(this.props.subscript_ref){
+      this.props.subscript_ref.current.innerText = ""
     }
   }
 

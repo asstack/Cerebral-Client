@@ -20,6 +20,8 @@ class QuestionBank extends Component{
       question_step:this.props.question_step,
     }
     props.api_actions.api_reset()
+    this.subscript_ref = React.createRef();
+    
   }
  
   update_bank_state = () => {
@@ -172,8 +174,8 @@ class QuestionBank extends Component{
     }
     const question = this.props.questions[this.props.question_step]
 
-    const component = common.map_type_to_component(question, handlers, this.props.user)
-    const QuestionsWrapper = wrapper.questions_wrapper(component, question, this.state) 
+    const component = common.map_type_to_component(question, handlers, this.props.user, this.subscript_ref)
+    const QuestionsWrapper = wrapper.questions_wrapper(component, question, this.state, this.subscript_ref) 
     return(
       <QuestionsWrapper/> 
     );
