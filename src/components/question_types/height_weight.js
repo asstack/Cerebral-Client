@@ -43,7 +43,10 @@ class HeightWeight extends Component {
      return (
        <div>
          {this.state.msg?<div className = "d-flex justify-content-center text-small-red">{this.state.msg}</div>:null}
-         {components.input_type_1(this.update_weight_handler, "Weight lbs")}
+         <div className = "d-flex flex-row justify-content-between weight-holder">
+          <span className = "input-group-text span_height_weight">Weight</span>
+          {components.input_type_no_border(this.update_weight_handler, "lbs")}
+         </div>
          <div className = "input-group input-type1">
           <div className ="input-group-prepend text_field_height_weight">
             <span className = "input-group-text span_height_weight">Height</span>

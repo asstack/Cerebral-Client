@@ -244,6 +244,34 @@ h3 {
   height: 60px;
 }
 
+.input-no-border::placeholder {
+
+  font-size: 18px;
+  line-height: 18px;
+  font-weight:600;
+  color: #979797;
+  text-align:right;
+}
+
+.input-no-border {
+  border:none;
+}
+
+.input-no-border-holder { 
+  width:207px;
+}
+
+
+.weight-holder {
+  background: #FFFFFF;
+  border: 1px solid #250044;
+  border-radius: 2px;
+  height: 60px;
+  margin-bottom:10px;
+}
+
+
+
 .small-holder {
   height: 40px;
   width: 360px;
@@ -261,7 +289,11 @@ h3 {
 .input_height_weight {
   height: 100%;
   border: 0;
-  border-left: 1px solid #250044;
+  border-left: 1px solid #250044; 
+  font-size: 18px;
+  font-weight:600;
+  line-height: 18px;
+  color: #979797;
 }
 
 .text_field_height_weight{
@@ -275,7 +307,7 @@ h3 {
   font-family: Montserrat;
   font-size: 18px;
   line-height: 18px;
-
+  font-weight:600;
   letter-spacing: -0.43px;
 
   color: #250044;
