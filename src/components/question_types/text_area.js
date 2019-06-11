@@ -13,8 +13,10 @@ class TextArea extends Component {
 
   componentDidMount = () => {
     console.log("subscript dom:", this.props.subscript_ref) 
-    if(this.props.subscript_ref){
+    if(this.props.subscript_ref && this.props.subscript_ref.current){
       this.props.subscript_ref.current.innerText = ""
+      this.props.subscript_ref.current.style.padding = "0"
+
     }
   }
 
