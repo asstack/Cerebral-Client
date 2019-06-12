@@ -46,7 +46,7 @@ class Phone extends Component {
 				</div>
 				<div className="d-flex flex-row justify-content-center">	
 
-					{components.confirm_button_type_1(this.confirm_btn_handler, "Confirm Phone Number")}	
+					{components.confirm_button_type_1(this.confirm_btn_handler, "Confirm phone number")}	
 					</div>
 			</div>
 		)

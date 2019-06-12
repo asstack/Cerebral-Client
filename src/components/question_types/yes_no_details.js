@@ -37,8 +37,8 @@ class YesNoDetails extends Component {
     }else{
       return ( 
        <div className="d-flex flex-row justify-content-between selector-component flex-wrap">
-          {components.btn_selector(this.set_type_handler, "YES", "yes")} 
-          {components.btn_selector(this.set_type_handler, "NO", "no")} 
+          {components.btn_selector(this.set_type_handler, "Yes", "yes")} 
+          {components.btn_selector(this.set_type_handler, "No", "no")} 
         </div> 
       )
     } 

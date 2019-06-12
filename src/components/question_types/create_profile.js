@@ -71,7 +71,7 @@ class CreateProfile extends Component {
   }
 
   render(){
-    let btn_wording = this.props.user_type==='therapist'?'Sign up to refer patients':'Sign up for Cerebral Updates'
+    let btn_wording = this.props.user_type==='therapist'?'Sign up to refer patients':'Get started with your online visit'
     return (
       <div>
         {this.state.msg? <div className = "d-flex justify-content-center p-2 text-small-red">{this.state.msg}</div> : null}
