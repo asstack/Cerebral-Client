@@ -7,10 +7,12 @@ import * as global_actions from '../../actions/user_auth_action'
 import * as api_actions from '../../middle/api'
 import * as wrapper from '../../utils/wrapper.js'
 import * as common from '../../utils/common.js'
+import { Modal } from 'react-bootstrap'
 import ReactGA from 'react-ga'
 
 import Alert from 'react-s-alert'
 
+//TODO: temporarily use modal for loading but may change to react component
 class QuestionBank extends Component{
   
   constructor(props){
@@ -20,6 +22,7 @@ class QuestionBank extends Component{
       banks:this.props.question_banks,
       bank_name:this.props.bank_name,
       question_step:this.props.question_step,
+      is_loading:false
     }
     props.api_actions.api_reset()
     this.subscript_ref = React.createRef();
@@ -143,12 +146,14 @@ class QuestionBank extends Component{
   submit_and_upload_data = (data, type) => { 
     const {question_banks, question_banks_step, questions, question_step, 
            patient_actions} = this.props
-    
+  
+    this.setState({is_loading:true}) 
     patient_actions.upload_object_for_current_question(data, type).then((resp) => {
+      this.setState({is_loading:false}) 
       this.patient_state_transition_helper()
     })
       .catch((err) => {
-        console.log(err) 
+        this.setState({is_loading:false}) 
         this.patient_state_transition_helper()
       })
   }
@@ -167,6 +172,27 @@ class QuestionBank extends Component{
       Alert.error(err.message)
     })
   }
+
+
+  modal = ({ open, close, message}) => (
+    <Modal className="loading-modal" show={open} onHide={() => console.log("cannot close")}>
+          <Modal.Body className="loading-modal-body">
+            <img className = "loading-icon" src= {process.env.PUBLIC_URL + '/img/loading_icon.png'}/> 
+          </Modal.Body>
+    </Modal>
+  )
+
+  modal2 = () => { 
+    return <div className="modal" tabIndex="-1" role="dialog">
+      <div className="modal-dialog">
+        <div className="modal-content loading-modal">
+          <div className="modal-body">
+            <img className="loading-icon" src={process.env.PUBLIC_URL+'/img/loading_icon.png'}/>
+          </div>
+        </div>
+      </div>
+    </div>
+  } 
   
  
   render(){
@@ -184,7 +210,10 @@ class QuestionBank extends Component{
     const component = common.map_type_to_component(question, handlers, this.props.user, this.subscript_ref)
     const QuestionsWrapper = wrapper.questions_wrapper(component, question, this.state, this.subscript_ref) 
     return(
-      <QuestionsWrapper/> 
+      <div>
+        <QuestionsWrapper/>  
+        {this.state.is_loading?this.modal({open:true}):null}
+      </div>
     );
   }
 }
