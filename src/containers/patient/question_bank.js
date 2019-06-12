@@ -202,7 +202,7 @@ class QuestionBank extends Component{
     return(
       <div>
         <QuestionsWrapper/>  
-        {this.state.is_loading?this.modal({open:true}): this.modal({open:true})}
+        {this.state.is_loading?this.modal({open:true}): null}
       </div>
     );
   }
