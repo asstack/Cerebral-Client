@@ -255,6 +255,10 @@ h3 {
 
 .input-no-border {
   border:none;
+  font-size: 18px;
+  font-weight:600;
+  line-height: 18px;
+  color: #979797;
 }
 
 .input-no-border-holder { 
