@@ -81,7 +81,7 @@ class ReferralProcess extends Component{
             </div>
           </div>
           <div className="d-flex justify-content-center confirm-btn-holder">
-            <input className ="col btn-confirm text-btn"  onClick={e=>this.update_type_handler('account')} type="button" value='Refer Patient'/>
+            <input className ="col btn-confirm text-btn"  onClick={e=>this.update_type_handler('account')} type="button" value='Refer Patients'/>
           </div>
           <div className="d-flex justify-content-center link-btn-holder">
             {id?null:<input className ="col btn-link btn"  onClick={e=>this.update_type_handler('signin')} type="button" value='Login to my account'/>}

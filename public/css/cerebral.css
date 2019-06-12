@@ -982,14 +982,14 @@ h3 {
 }
 
 .patient-refer-input-holder {
-  width:450px;
+  width:430px;
   padding-left:90px
 }
 
 .patient-refer-left-item {
   align-items: center;
   font-weight: 600;
-  width: 70px;
+  min-width: 90px;
   font-size: 18px;
   line-height: 18px;
   letter-spacing: -1.5px;
@@ -1022,6 +1022,14 @@ h3 {
   border-width: 2px;
   border-color: rgba(37, 0, 68, 1.0);
 }
+
+.patient-refer-input::placeholder {
+  font-size: 18px;
+  line-height: 18px;
+  font-weight:600;
+  color: #250044;
+}
+
 
 .patient-refer-add-btn-holder {
   margin-right:40px;

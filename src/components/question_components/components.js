@@ -114,15 +114,15 @@ export const patient_refer_inputs = (event_handler, item, index, total) => {
       <div className="d-flex flex-column patient-refer-input-holder">
         <div className="d-flex flex-row">
           <div className="d-flex justify-content-center patient-refer-input-item ">
-            <input className="col patient-refer-input" name={"fname"+index} onChange={(e)=>event_handler.update(index, "first_name", e)} defaultValue={item.first_name} type="text" placeholder="first_name"/>
+            <input className="col patient-refer-input" name={"fname"+index} onChange={(e)=>event_handler.update(index, "first_name", e)} defaultValue={item.first_name} type="text" placeholder="First name"/>
           </div> 
           <div className="gap-5"></div>
           <div className="d-flex justify-content-center patient-refer-input-item ">
-            <input className="col patient-refer-input" name={"lname"+index} onChange={(e)=>event_handler.update(index, "last_name", e)} defaultValue={item.last_name} type="text" placeholder="last_name"/>
+            <input className="col patient-refer-input" name={"lname"+index} onChange={(e)=>event_handler.update(index, "last_name", e)} defaultValue={item.last_name} type="text" placeholder="Last Name"/>
           </div>
         </div>
         <div className="d-flex justify-content-center patient-refer-input-item ">
-          <input className="col patient-refer-input" name={"email"+index} onChange={(e)=>event_handler.update(index, "email", e)} defaultValue={item.email} type="email" placeholder="email"/>
+          <input className="col patient-refer-input" name={"email"+index} onChange={(e)=>event_handler.update(index, "email", e)} defaultValue={item.email} type="email" placeholder="Email"/>
         </div>
       </div>
       <div className="d-flex align-content-center flex-between patient-refer-right-item">
