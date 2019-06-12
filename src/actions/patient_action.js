@@ -258,7 +258,7 @@ export const ensure_visit = (force) => (dispatch, getState) => {
   })
 }
 
-const get_current_patient = ()  => (dispatch, getState) => {
+export const get_current_patient = ()  => (dispatch, getState) => {
   var patient = getState().patient_reducer.patient_object
   
   // TODO: why is this necessary? the patient object should be set after register or login

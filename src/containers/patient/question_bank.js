@@ -117,7 +117,7 @@ class QuestionBank extends Component{
     global_actions.register_and_set_user(state)
       .then(() => {return global_actions.sign_in(state)})
         .then(() => { return patient_actions.create_patient_from_user() })
-      .then(() => {//this.patient_state_transition_helper()
+      .then(() => { this.patient_state_transition_helper()
       })
       .catch((err) => {
         console.log(err)
@@ -160,7 +160,7 @@ class QuestionBank extends Component{
       if (resp.user_attr.patient) {
         patient_actions.set_patient(resp.user_attr.patient);
         patient_actions.ensure_visit(true).then((visit) => {
-          //this.patient_state_transition_helper()
+          this.patient_state_transition_helper()
         })
       }
     }).catch((err) => {

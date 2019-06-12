@@ -5,7 +5,7 @@ import SignIn from './sign_in'
 import {withRouter} from "react-router-dom"
 import {connect} from 'react-redux'
 
-import { ensure_visit } from '../../actions/patient_action'
+import { ensure_visit, get_current_patient } from '../../actions/patient_action'
 import Alert from 'react-s-alert'
 
 class RegisterManager extends Component {
@@ -19,11 +19,13 @@ class RegisterManager extends Component {
 
   componentDidMount = () => {
 
-    if(this.props.user && this.props.user.attributes.id && this.props.skip_action){
+    /*
+    if(this.props.get_current_patient() && this.props.skip_action){
       this.props.ensure_visit(true).then(() => {
         this.props.skip_action() 
       })
     }
+    */
   }
 
   state_update=(e, type)=>{
@@ -52,4 +54,4 @@ class RegisterManager extends Component {
   }
 }
 
-export default withRouter(connect(null, {ensure_visit}) (RegisterManager)) 
+export default withRouter(connect(null, {ensure_visit, get_current_patient}) (RegisterManager)) 
