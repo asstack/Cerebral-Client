@@ -65,13 +65,13 @@ export class QuestionPreference extends Component {
         height: '340px',
         backgroundSize: '200px',
         backgroundRepeat: 'no-repeat',
-        backgroundPosition: '70% 40%',
+        backgroundPosition: '90% 50%',
       }, (item) => {
         return(
           <div style={{width: '100%', height: '100%'}}>
-          <div className='text-recommendation' style={{ position: 'relative', left: '10%', top: '8%', width: '200px'}}>No Preference</div>          
-          <div className='text-left'style={{position: 'relative', left: '10%', top: '35%'}}>I don't have a preference</div>
-          <div className='text-small text-left'style={{position: 'relative', left: '10%', top: '37%'}}>Your doctor will decide on a treatment plan based on your online visit answers.</div>
+          <div className='text-recommendation' style={{ position: 'relative', left: '0', top: '8%', width: '245px', height:'42px',paddingTop:'10px'}}>No Preference</div>          
+          <div className='text-pref-title' style={{position: 'relative', left: '0', top: '28%', paddingBottom:'30px' }}>I don't have a preference</div>
+          <div className='text-small text-pref-left' style={{position: 'relative', left: '0', top: '25%', width:'344px'}}>Your doctor will decide on a treatment plan based on your online visit answers.</div>
           </div>
       )
       })

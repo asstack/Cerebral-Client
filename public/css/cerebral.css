@@ -47,6 +47,22 @@ h3 {
   width:5px;
 }
 
+.text-pref-title {
+  text-align:left;
+  font-size: 18px;
+  font-weight:600;
+  line-height: 37px;
+  color: #250044;
+}
+
+.text-pref-left {
+  text-align:left;
+  font-size: 16px;
+  font-weight:500;
+  line-height: 35px;
+  color: #250044;
+}
+
 /*------------Container with no progress bar -----------*/
 
 .cerebral-logo{
