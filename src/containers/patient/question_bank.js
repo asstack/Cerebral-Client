@@ -177,23 +177,13 @@ class QuestionBank extends Component{
   modal = ({ open, close, message}) => (
     <Modal className="loading-modal" show={open} onHide={() => console.log("cannot close")}>
           <Modal.Body className="loading-modal-body">
-            <img className = "loading-icon" src= {process.env.PUBLIC_URL + '/img/loading_icon.png'}/> 
+            <div class="spinner-border loading-icon-color" role="status">
+              <span class="sr-only">Loading...</span>
+            </div>
           </Modal.Body>
     </Modal>
   )
-
-  modal2 = () => { 
-    return <div className="modal" tabIndex="-1" role="dialog">
-      <div className="modal-dialog">
-        <div className="modal-content loading-modal">
-          <div className="modal-body">
-            <img className="loading-icon" src={process.env.PUBLIC_URL+'/img/loading_icon.png'}/>
-          </div>
-        </div>
-      </div>
-    </div>
-  } 
-  
+ 
  
   render(){
     const handlers = {
@@ -212,7 +202,7 @@ class QuestionBank extends Component{
     return(
       <div>
         <QuestionsWrapper/>  
-        {this.state.is_loading?this.modal({open:true}):null}
+        {this.state.is_loading?this.modal({open:true}): this.modal({open:true})}
       </div>
     );
   }

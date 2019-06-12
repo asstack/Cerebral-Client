@@ -1435,6 +1435,10 @@ h3 {
 
 /*--------------------- loading modal ---------------------*/
 
+.loading-icon-color {
+  color: #9FB3FF!important;
+}
+
 .loading-modal .modal-content {
   border:None;
   background-color:transparent;
