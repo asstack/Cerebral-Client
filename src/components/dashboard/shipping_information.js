@@ -27,13 +27,15 @@ class ShippingInformation extends Component {
 
   componentDidMount = () => {
     this.props.get_patient_shipping_address().then((data) => {
-      this.setState({
-        address_1: data[0].address_1,
-        address_2: data[0].address_2,
-        city: data[0].city,
-        region: data[0].region,
-        postal_code: data[0].postal_code
-      })
+      if (data && data.length > 0) {
+        this.setState({
+          address_1: data[0].address_1,
+          address_2: data[0].address_2,
+          city: data[0].city,
+          region: data[0].region,
+          postal_code: data[0].postal_code
+        })
+      }
     })
   }  
 
