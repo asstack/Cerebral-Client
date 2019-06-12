@@ -43,13 +43,13 @@ class WebcamComponent extends Component {
 		}else{
 			return (
 				<div>
-					<div className = "d-flex justify-content-center text-big">
-						<p>Review your image.</p>
+					<div className = "d-flex justify-content-start">
+						<h2>Review your image.</h2>
 					</div>
-					<div className="d-flex justify-content-center p-2">
+					<div className="d-flex justify-content-center">
 						{this.state.screenshot ? <img src={this.state.screenshot} /> : null}
 					</div>
-          {components.confirm_button_type_1(this.confirm_handler, 'Confirm and Continue to Shopping')}
+          {components.confirm_button_type_1(this.confirm_handler, 'Confirm image')}
 
           {components.confirm_button_type_2(this.camera_turn_on_handler, "Try Again", 'camera')}
 				</div>			

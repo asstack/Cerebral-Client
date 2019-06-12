@@ -27,7 +27,7 @@ class Identification extends Component {
       return (
        <div className="d-flex flex-row justify-content-between selector-component flex-wrap">
           {components.btn_selector(this.set_type_handler, "Take a photo with my webcam" ,"webcam")} 
-          {components.btn_selector(this.set_type_handler, "Upload a photo of myself", "file")} 
+          {components.btn_selector(this.set_type_handler, "Upload a photo", "file")} 
         </div> 
       )
     } 
