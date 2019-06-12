@@ -2,6 +2,7 @@ import axios from 'axios'
 import {api_call} from '../middle/api'
 import * as global_actions from './user_auth_action'
 import { get_user_attr, make_headers } from './user_auth_action';
+import PromiseModal from 'react-modal-promise';
 
 
 export const SET_STEP = 'patient/SET_STEP'
@@ -191,6 +192,18 @@ export const get_treatment_by_name = (treatment_name) => (dispatch, getState) =>
   return dispatch(get_with_auth_and_return_just_data(`/api/treatments/search?name=${treatment_name}`))
 }
 
+export const get_patient_payments = () => (dispatch, getState) => {
+  var patient = dispatch(get_current_patient())
+
+  return dispatch(get_with_auth_and_return_just_data(`/api/patients/${patient.id}/payments`))
+}
+
+export const get_patient_shipping_address = () => (dispatch, getState) => {
+  var patient = dispatch(get_current_patient())
+
+  return dispatch(get_with_auth_and_return_just_data(`/api/patients/${patient.id}/shipping_addresses`))
+}
+
 export const create_payment = (full_name, token) => (dispatch, getState) => {
 // export const create_payment = (full_name, card_number, exp_month, exp_year, cvc) => (dispatch, getState) => {
 
@@ -203,10 +216,14 @@ export const create_payment = (full_name, token) => (dispatch, getState) => {
         } 
 
         var body = {
-          full_name: full_name, token: token, treatment_id: td_resp.treatment.id, dosage_id: td_resp.dosage.id
+          full_name: full_name,
+          token: token,
+          treatment_id: td_resp.treatment.id,
+          dosage_id: td_resp.dosage.id,
+          visit_id: pv_resp.visit.id
         }
     
-        return axios.post(`/api/patients/${pv_resp.patient.id}/visits/${pv_resp.visit.id}/payments`, body, {headers: make_headers(get_user_attr(getState()))})
+        return axios.post(`/api/patients/${pv_resp.patient.id}/payments`, body, {headers: make_headers(get_user_attr(getState()))})
       })
     })
 }
@@ -215,7 +232,7 @@ export const create_visit = (service_line_id) => (dispatch, getState) => {
   
   var user_attr = get_user_attr(getState())
 
-  var patient = getState().patient_reducer.patient_object
+  var patient = dispatch(get_current_patient())
   var body = {patient_id: patient.id, service_line_id: service_line_id}
 
   return axios.post(`/api/patients/${patient.id}/visits`, body, {headers: make_headers(user_attr)})
@@ -225,21 +242,35 @@ export const create_visit = (service_line_id) => (dispatch, getState) => {
     })
 }
 
-export const ensure_visit = (patient, service_line) => (dispatch, getState) => {
+export const ensure_visit = (force) => (dispatch, getState) => {
   
   var visit = getState().patient_reducer.visit_object
+  var service_line = getState().patient_reducer.service_line
 
   // TODO: we could also check to make sure the visit is not expired
-  if (visit && service_line.id == visit.service_line_id) {
+  if (visit && !visit.complete && service_line.id == visit.service_line.id) {
     return Promise.resolve(visit)
   }
   // NOTE: the server will take care of creating a new visit or giving us back an existing visit if needed
-  return dispatch(create_visit(service_line.id))
+  return dispatch(create_visit(service_line.id)).then((new_visit) => {
+    dispatch(set_visit(new_visit))
+    return Promise.resolve(new_visit)
+  })
+}
+
+const get_current_patient = ()  => (dispatch, getState) => {
+  var patient = getState().patient_reducer.patient_object
+  
+  // TODO: why is this necessary? the patient object should be set after register or login
+  if (!patient) {
+    patient = getState().global_reducer.current_user.attributes.patient
+  }
+  return patient
 }
 
 export const get_current_patient_and_visit = () => (dispatch, getState) => {
   
-  var patient = getState().patient_reducer.patient_object
+  var patient = dispatch(get_current_patient())
 
   // TODO: if there is not patient in current state, we could get the patient object using user_id
 
@@ -249,7 +280,7 @@ export const get_current_patient_and_visit = () => (dispatch, getState) => {
 
   var service_line = getState().patient_reducer.service_line
 
-  return dispatch(ensure_visit(patient, service_line)).then((visit) => {
+  return dispatch(ensure_visit(false, service_line)).then((visit) => {
     return Promise.resolve({patient: patient, visit : visit} )
   })
 }
@@ -277,7 +308,10 @@ export const get_current_answer_by_name = (name) => (dispatch, getState) => {
 export const complete_current_visit = () => (dispatch, getState) => {
   return dispatch(get_current_patient_and_visit()).then((resp) => {
     var user_attr = get_user_attr(getState())
-    return dispatch(api_call('PUT', `/api/patients/${resp.patient.id}/visits/${resp.visit.id}`, {headers: make_headers(user_attr)}, {is_complete: true}))
+    return dispatch(api_call('PUT', `/api/patients/${resp.patient.id}/visits/${resp.visit.id}/complete`, {headers: make_headers(user_attr)}, {complete: true})).then((new_visit) => {
+      dispatch(set_visit(new_visit))
+      return Promise.resolve(new_visit)
+    })
   })
 }
 

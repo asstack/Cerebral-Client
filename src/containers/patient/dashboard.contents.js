@@ -8,6 +8,8 @@ import ShippingInformation from '../../components/dashboard/shipping_information
 import PaymentInformation from '../../components/dashboard/payment_information'
 import MessageProcessManager from '../../components/dashboard/message_process_manager'
 
+import {get_patient_shipping_address} from '../../actions/patient_action'
+
 
 //TODO: will use it as wrapper 
 class DashboardContents extends Component{
@@ -17,9 +19,17 @@ class DashboardContents extends Component{
     this.state = {
       user:this.props.user,
       type:this.props.type,
-      patients_list:this.props.patients_list
+      patients_list:this.props.patients_list,
+      shipping_address: {address_1: null, address_2: null, city: null, region: null, postal_code: null},
+
     }
   }
+
+  componentDidMount = () => {
+    this.props.get_patient_shipping_address().then((data) => {
+      this.setState({shipping_address: data[0]})
+    })
+  }  
 
 
   componentWillReceiveProps = (next_props) => { 
@@ -34,7 +44,7 @@ class DashboardContents extends Component{
         <div className="d-flex flex-column main-content-column">
           <div className="d-flex flex-row justify-content-between main-content-row flex-wrap">
             <EditProfile attr={this.state.user.attributes}/>
-            <ShippingInformation attr={{street:"71 university heights dr", city:"stony brook", zipcode:"11790"}}/>
+            <ShippingInformation attr={this.state.shipping_address}/>
           </div>
           <div className="d-flex flex-row justify-content-between main-content-row flex-wrap">
             <EditPassword attr={this.state.user.attributes}/>
@@ -69,6 +79,5 @@ class DashboardContents extends Component{
   }
 }
 
-
-export default DashboardContents
+export default withRouter(connect(null, {get_patient_shipping_address}) (DashboardContents))
 

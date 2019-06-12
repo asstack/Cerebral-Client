@@ -83,7 +83,7 @@ export const map_type_to_component = (question, handlers, user, subscript_ref) =
                 submit_action = {handlers.submit_answer_and_next_step}/> 
     case 'patient_identification':
       return <Identification 
-                flag_title = {question.flag_title}
+                question = {question.flag_title}
                 submit_action = {handlers.submit_and_upload_data}/>  
     case 'patient_shipping':
       return <PatientShipping submit_action = {handlers.submit_answer_and_next_step}/> 

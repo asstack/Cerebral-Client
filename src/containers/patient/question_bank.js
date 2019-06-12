@@ -9,6 +9,8 @@ import * as wrapper from '../../utils/wrapper.js'
 import * as common from '../../utils/common.js'
 import ReactGA from 'react-ga'
 
+import Alert from 'react-s-alert'
+
 class QuestionBank extends Component{
   
   constructor(props){
@@ -83,7 +85,7 @@ class QuestionBank extends Component{
 
   submit_answer_and_next_step = (ans) => {
     const {patient_actions} = this.props
-    patient_actions.answer_current_question({answer: ans}).then(() => {
+      patient_actions.answer_current_question({answer: ans}).then(() => {
       return this.patient_state_transition_helper();
     })
   }
@@ -153,16 +155,17 @@ class QuestionBank extends Component{
 
   sign_in_and_next = (info) => { 
     const {patient_actions, global_actions} = this.props
-    const service_line = this.props.service_line;
 
     global_actions.sign_in(info).then ((resp) => {
       if (resp.user_attr.patient) {
         patient_actions.set_patient(resp.user_attr.patient);
-        patient_actions.ensure_visit(resp.user_attr.patient, service_line).then((visit) => {
+        patient_actions.ensure_visit(true).then((visit) => {
           //this.patient_state_transition_helper()
         })
       }
-    }) 
+    }).catch((err) => {
+      Alert.error(err.message)
+    })
   }
   
  
@@ -191,7 +194,7 @@ const mapStateToProps = (state) => {
   const {
     api_middleware: api_middleware,
     global_reducer: {app_state, current_user},
-    patient_reducer: {patient_object, service_line, question_banks,question_banks_step, patient_state, step, question_bank_id, questions, current_bank_name}
+    patient_reducer: {patient_object, question_banks,question_banks_step, patient_state, step, question_bank_id, questions, current_bank_name}
   } = state
 
   return {
@@ -201,7 +204,6 @@ const mapStateToProps = (state) => {
 		question_banks: question_banks,
     question_banks_step: question_banks_step,
     current_user: current_user,
-    service_line: service_line,
     patient_state: patient_state,
     patient_object: patient_object,
     question_step: step,
