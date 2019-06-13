@@ -10,13 +10,14 @@ class RadioDetails extends Component {
     this.state = {
       ref_id:this.props.ref_id,
       q_id:this.props.q_id, 
-      active:false,   
+      yes_active:false,   
+      no_active:false,   
       details:"", 
     }
   }
  
   componentWillReceiveProps = (next_props) => { 
-    this.setState({ref_id:next_props.ref_id, q_id:next_props.q_id, active:false, details:""})
+    this.setState({ref_id:next_props.ref_id, q_id:next_props.q_id, yes_active:false,no_active:false, details:""})
     this.forceUpdate() 
   }
 
@@ -24,16 +25,24 @@ class RadioDetails extends Component {
     return false
   }
 
-  set_option_handler = option => { 
-    this.setState({active:option, details:""}) 
+  set_option_handler = (option) => { 
+    if(option === 'yes'){
+      this.setState({yes_active:!this.state.yes_active, no_active:false, details:""})  
+    }else{ 
+      this.setState({no_active:!this.state.no_active, yes_active:false, details:""})  
+    }
     this.props.submit_action(option, this.state.q_id)
-
     this.forceUpdate();
   } 
 
   update_text_handler = e => {
     this.setState({details:e.target.value}) 
-    let ans = (this.state.active?"YES, ":"NO, ")+e.target.value
+    let ans=""
+    if(this.state.yes_active){
+      ans = "Yes, "+e.target.value 
+    }else if(this.state.no_active){
+      ans = "No, "+e.target.value 
+    }
     this.props.submit_action(ans, this.props.q_id)
   }
   
@@ -54,20 +63,20 @@ class RadioDetails extends Component {
           </div>
           <div className="d-flex flex-row justify-content-between radio-holder">
             <div className="d-flex flex-row">
-              <input className ="checkbox-type-small" type="radio"  onChange={e => this.set_option_handler(true) } checked={this.state.active}/>
+              <input className ="checkbox-type-small" type="radio"  onClick={e => this.set_option_handler('yes') } checked={this.state.yes_active}/>
               <div className="d-flex align-items-start checkbox-small-text">
                 Yes
               </div>
             </div>
             <div className="d-flex flex-row">
-              <input className ="checkbox-type-small" type="radio" onChange={e => this.set_option_handler(false)} checked={!this.state.active}/>
-              <div className="d-flex align-items-start checkbox-small-text" checked={!this.state.active}>
+              <input className ="checkbox-type-small" type="radio" onClick={e => this.set_option_handler('no')} checked={this.state.no_active}/>
+              <div className="d-flex align-items-start checkbox-small-text">
                 No
               </div>
             </div>
           </div>
         </div>
-        {(this.state.active||this.state.q_id===3)?this.textarea_view():null}
+        {(this.state.yes_active||(this.state.yes_active || this.state.no_active) &&this.state.q_id===3)?this.textarea_view():null}
       </div>
     );
   }

@@ -29,7 +29,7 @@ class TherapistCheckbox extends Component{
   
   checkbox_view = (val, index) => {
     return(
-      <div key={uuidv1()} className="d-flex flex-row checkbox-vertical-holder">
+      <div key={uuidv1()} className="d-flex align-items-center flex-row checkbox-vertical-holder">
         <input className ="checkbox-type-small" type="checkbox" checked={index===this.state.index}
           onChange={e => this.update_info_handler(index, val.name)}/>
         <div className="d-flex align-items-start checkbox-small-text">

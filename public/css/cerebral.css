@@ -306,7 +306,7 @@ h3 {
 }
 
 .input-no-border-holder { 
-  width:207px;
+  width:204px;
 }
 
 
@@ -388,6 +388,7 @@ h3 {
   border-style: solid;
   border-width: 2px;
   border-color: rgba(37, 0, 68, 1.0);
+  margin-bottom:4px;
 }
 
 .btn-arrow {
@@ -1232,7 +1233,17 @@ h3 {
 }
 
 .custom-selector:hover {
+  background: #3E0370;
   cursor:pointer;
+}
+
+.custom-select-lable {
+
+}
+
+.custom-selector-side {
+  margin:11px;
+  width:38px;
 }
 
 .custom-options-holder {
@@ -1315,7 +1326,7 @@ h3 {
 
 
 .patient-info-textarea {
-  margin-top:40px;
+  margin-top:10px;
 }
 
 .therapist-info-container {
