@@ -67,15 +67,15 @@ class ReferralProcess extends Component{
             Cerebral provides a platform for you to connect your patients to prescribing physicians. 
           </div>
           <div className="d-flex flex-row justify-content-between align-items-start"> 
-            <div className="d-flex flex-column justify-content-center">
+            <div className="col d-flex flex-column justify-content-center padding-left-0">
               <img className="therapist-cover-img align-self-center" src={process.env.PUBLIC_URL + '/img/patient.png'}/> 
               <span className="therapist-cover-img-desc">Refer patients</span>
             </div>
-            <div className="d-flex flex-column justify-content-center">
+            <div className="col d-flex flex-column justify-content-center">
               <img className="therapist-cover-img align-self-center" src={process.env.PUBLIC_URL + '/img/visit_image.png'}/> 
               <span className="therapist-cover-img-desc"> We connect your patients to a doctor for an online visit </span>
             </div>
-            <div className="d-flex flex-column justify-content-center">
+            <div className="col d-flex flex-column justify-content-center padding-right-0">
               <img className="therapist-cover-img align-self-center" src={process.env.PUBLIC_URL + '/img/connect_message.png'}/> 
               <span className="therapist-cover-img-desc"> Connect with prescribing physician for follow-ups</span>
             </div>
