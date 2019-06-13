@@ -21,6 +21,7 @@ import MedicationPreference from '../components/question_types/medication_prefer
 import DosagePreference from '../components/question_types/dosage_preference';
 import RegisterManager from '../components/question_types/register_manager'
 import IdentificationCover from '../components/question_types/identification_cover'
+import MentalHealthCover from '../components/question_types/mental_health_cover'
 
 
 
@@ -37,6 +38,8 @@ export const map_type_to_component = (question, handlers, user, subscript_ref) =
   if(!question) return null
 
   switch(question.question_type) {
+    case 'mentalhealthcover_temp':
+      return <MentalHealthCover submit = {handlers.next_step_handler}/>
     case 'identification_cover':
       return <IdentificationCover submit_action = {handlers.next_step_handler}/>
     case 'selector':

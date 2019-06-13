@@ -1394,9 +1394,6 @@ h3 {
   min-width:90px;
 }
 
-
-
-
 .message-title-end {
   padding-bottom:none;
 }
@@ -1448,6 +1445,20 @@ h3 {
   color: #333333;
 }
 
+/*-------------------- mental_health_cover ----------------*/
+
+.mental-health-cover-text {
+  font-size: 16px;
+  line-height: 25px;
+  color: #250044;
+}
+
+
+.mental-health-cover-subtext {
+  font-size: 18px;
+  line-height: 20px;
+  color: #250044;
+}
 
 /*--------------------- loading modal ---------------------*/
 
