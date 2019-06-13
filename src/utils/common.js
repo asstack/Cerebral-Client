@@ -34,7 +34,7 @@ export const email_validation = email => {
   }
 }
 
-export const map_type_to_component = (question, handlers, user, subscript_ref) => {
+export const map_type_to_component = (question, handlers, user, subscript_ref, title_ref) => {
   if(!question) return null
 
   switch(question.question_type) {
@@ -70,6 +70,7 @@ export const map_type_to_component = (question, handlers, user, subscript_ref) =
       return <CheckBoxComponent options = {question.options} 
                 flag_title = {question.flag_title}
                 subscript_ref = {subscript_ref}
+                title_ref = {title_ref}
                 submit_action = {handlers.submit_answer_and_next_step}
                 details = 'true'/> 
     case 'date':
@@ -82,6 +83,7 @@ export const map_type_to_component = (question, handlers, user, subscript_ref) =
       return <YesNoDetails
                 flag_title = {question.flag_title}
                 subscript_ref = {subscript_ref}
+                title_ref = {title_ref}
                 description = {question.options} 
                 submit_action = {handlers.submit_answer_and_next_step}/> 
     case 'patient_identification':
@@ -102,6 +104,7 @@ export const map_type_to_component = (question, handlers, user, subscript_ref) =
       return <VideoSelector 
               flag_title = {question.flag_title}
               subscript_ref = {subscript_ref}
+              title_ref = {title_ref}
               submit_text_action = {handlers.submit_answer_and_next_step}
               submit_video_action = {handlers.submit_and_upload_data}/>  
     default:

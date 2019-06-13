@@ -12,11 +12,12 @@ class TextArea extends Component {
   }
 
   componentDidMount = () => {
-    console.log("subscript dom:", this.props.subscript_ref) 
     if(this.props.subscript_ref && this.props.subscript_ref.current){
       this.props.subscript_ref.current.innerText = ""
       this.props.subscript_ref.current.style.padding = "0"
-
+    }
+    if(this.props.title_ref && this.props.title_ref.current){
+      this.props.title_ref.current.innerText = this.props.flag_title||"Please elaborate on your answer. " 
     }
   }
 
@@ -37,7 +38,7 @@ class TextArea extends Component {
       <div>
         {this.state.msg?<div className = "d-flex justify-content-start text-small-red">{this.state.msg}</div>:null}
         <div className="form-group">
-          <textarea onChange={this.update_text_handler} placeholder = {this.props.flag_title||"Please elaborate on your answer. "} className="q-textarea form-control" rows="5" />
+          <textarea onChange={this.update_text_handler} className="q-textarea form-control" rows="5" />
         </div>
         {components.confirm_button_type_1(this.submit_btn_handler, "Confirm your answer")}  
       </div>

@@ -4,7 +4,7 @@ import * as components from '../question_components/components'
 class MentalHealthCover extends Component {
 
 
-  //use ref to change the question 0 of n to Identity Verification
+  //TODO: simple
   constructor(props){
     super(props)
     this.state = {
@@ -33,5 +33,4 @@ class MentalHealthCover extends Component {
 }
 
 export default MentalHealthCover
-
 

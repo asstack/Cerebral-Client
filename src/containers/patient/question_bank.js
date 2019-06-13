@@ -26,7 +26,7 @@ class QuestionBank extends Component{
     }
     props.api_actions.api_reset()
     this.subscript_ref = React.createRef();
-    
+    this.title_ref = React.createRef();    
   }
  
   update_bank_state = () => {
@@ -197,8 +197,9 @@ class QuestionBank extends Component{
     }
     const question = this.props.questions[this.props.question_step]
 
-    const component = common.map_type_to_component(question, handlers, this.props.user, this.subscript_ref)
-    const QuestionsWrapper = wrapper.questions_wrapper(component, question, this.state, this.subscript_ref) 
+    //TODO: using ref to change title and subtitle in child component, but it's hacky way. will take that part as a component 
+    const component = common.map_type_to_component(question, handlers, this.props.user, this.subscript_ref, this.title_ref)
+    const QuestionsWrapper = wrapper.questions_wrapper(component, question, this.state, this.subscript_ref, this.title_ref) 
     return(
       <div>
         <QuestionsWrapper/>  
