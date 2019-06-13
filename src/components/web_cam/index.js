@@ -43,8 +43,8 @@ class WebcamComponent extends Component {
 		}else{
 			return (
 				<div>
-					<div className = "d-flex justify-content-start">
-						<h2>Review your image.</h2>
+					<div className = "d-flex justify-content-center camera-title">
+						<h3>Review your image</h3>
 					</div>
 					<div className="d-flex justify-content-center">
 						{this.state.screenshot ? <img src={this.state.screenshot} /> : null}
