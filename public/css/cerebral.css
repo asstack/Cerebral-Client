@@ -22,7 +22,7 @@ h1 {
   font-style: normal;
   */
   font-size: 30px;
-  letter-spacing:0.8px;
+  letter-spacing: -0.8px;
   line-height: 45px;
 
 
@@ -195,13 +195,13 @@ h3 {
 
 .group-checkbox-text{
   padding-right:52px;
-  font-size: 18px;
+  font-size: 16px;
   font-weight:600;
   line-height: 18px;
   /* identical to box height, or 100% */
 
   text-align: center;
-  letter-spacing: -0.43px;
+  letter-spacing: -0.4px;
 
   color: #250044;
   min-height:60px;
@@ -291,7 +291,9 @@ h3 {
 
 .input-no-border {
   border:none;
-  font-size: 18px;
+  text-align: right;
+  border-left: 1px solid #250044;
+  font-size: 16px;
   font-weight:600;
   line-height: 18px;
   color: #979797;
@@ -330,7 +332,7 @@ h3 {
   height: 100%;
   border: 0;
   border-left: 1px solid #250044; 
-  font-size: 18px;
+  font-size: 16px;
   font-weight:600;
   line-height: 18px;
   color: #979797;
@@ -345,7 +347,7 @@ h3 {
   background-color:white;
   border:0;
   font-family: Montserrat;
-  font-size: 18px;
+  font-size: 16px;
   line-height: 18px;
   font-weight:600;
   letter-spacing: -0.43px;
@@ -418,7 +420,8 @@ h3 {
   border-width: 1px;
   border-color: rgba(37, 0, 68, 1.0);
 
-  font-size: 18px;
+  font-size: 16px;
+  letter-spacing: -0.4px;
   font-weight: 600;
   line-height: 18px;
   text-align: center;
@@ -432,13 +435,13 @@ h3 {
 
 .text-btn {
 
-  font-size: 18px;
+  font-size: 16px;
   font-weight: 600;
   line-height: 22px;
 /* identical to box height, or 122% */
 
   text-align: center;
-  letter-spacing: -0.314286px;
+  letter-spacing: -0.4px;
   
   color: rgba(255, 255, 255, 1.0);
 }
@@ -456,7 +459,7 @@ h3 {
   font-weight: 600;
   line-height: 22px;
   text-align: center;
-  letter-spacing: -0.314286px;
+  letter-spacing: -0.4px;
   padding-left:40px;
   padding-right:40px;
   color: rgba(255, 255, 255, 1.0);
@@ -469,7 +472,9 @@ h3 {
   
   font-size: 18px;
   line-height: 25px;
-  letter-spacing: -0.375px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: -0.4px;
   color: #9998D6;
   padding-bottom:30px;
   /* or 167% */
@@ -478,7 +483,7 @@ h3 {
 .text-subscript { 
   font-size: 16px;
   line-height: 25px;
-  letter-spacing: -0.375px;
+  letter-spacing: -0.4px;
   color: #250044;
 
   color: #9B9B9B;
@@ -533,7 +538,7 @@ h3 {
 
 .text-small__unselected{
   font-size: 16.0px;
-  color: #9998D6;
+  color: #EFF1FA;
 }
 
 .text-middle {
@@ -564,7 +569,7 @@ h3 {
 }
 
 .solid-border-bottom__unselected {
-  border-bottom: 10px solid #9998D6;
+  border-bottom: 10px solid #EFF1FA;
 }
 
 .question-container {
@@ -780,7 +785,7 @@ h3 {
   font-weight: 600;
   color: #250044;
   line-height: 20px;
-  letter-spacing: -0.43px;
+  letter-spacing: -0.4px;
   text-transform: uppercase;
   margin-bottom:25px;
 }
@@ -790,7 +795,7 @@ h3 {
   font-weight:600;
   color:#250044;
   line-height: 18px;
-  letter-spacing: -0.43px;
+  letter-spacing: -0.4px;
   margin-top:25px;
 }
 
@@ -816,7 +821,7 @@ h3 {
   font-size: 18px;
   color:#250044; 
   line-height: 18px;
-  letter-spacing: -0.43px;
+  letter-spacing: -0.4px;
   margin-top:50px;
 }
 
@@ -1001,7 +1006,7 @@ h3 {
   padding-bottom:20px;
   font-size: 20px;
   line-height: 20px;
-  letter-spacing: -1.5px;
+  letter-spacing: -0.4px;
   text-transform: uppercase;
   font-weight: 600;
   color: #250044;
@@ -1079,7 +1084,7 @@ h3 {
   line-height: 22px;
 
   text-align: center;
-  letter-spacing: -0.43px;
+  letter-spacing: -0.4px;
   color: #979797;
   padding-left: 10px;
   padding-top:4px;
