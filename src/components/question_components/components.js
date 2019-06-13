@@ -114,7 +114,7 @@ export const patient_refer_inputs = (event_handler, item, index, total) => {
       <div className="d-flex flex-column patient-refer-input-holder">
         <div className="d-flex flex-row">
           <div className="d-flex justify-content-center patient-refer-input-item ">
-            <input className="col patient-refer-input" name={"fname"+index} onChange={(e)=>event_handler.update(index, "first_name", e)} defaultValue={item.first_name} type="text" placeholder="First name"/>
+            <input className="col patient-refer-input" name={"fname"+index} onChange={(e)=>event_handler.update(index, "first_name", e)} defaultValue={item.first_name} type="text" placeholder="First Name"/>
           </div> 
           <div className="gap-5"></div>
           <div className="d-flex justify-content-center patient-refer-input-item ">

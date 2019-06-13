@@ -72,6 +72,9 @@ class CreateProfile extends Component {
 
   render(){
     let btn_wording = this.props.user_type==='therapist'?'Sign up to refer patients':'Get started with your online visit'
+    let chk_wording = this.props.user_type==='therapist'?'I have consent from my patient/s to share their contact information with Cerebral for a prescription referral and to provide information regarding their diagnosis to the prescribing physician.' :'I have consent from my patient/s to share their contact information with Cerebral for a prescription referral and to provide information regarding their diagnosis to the prescribing physician.'
+
+
     return (
       <div>
         {this.state.msg? <div className = "d-flex justify-content-center p-2 text-small-red">{this.state.msg}</div> : null}
@@ -83,7 +86,7 @@ class CreateProfile extends Component {
         {components.input_password_type_1(this.update_password.bind(this), "Create Password")}
         {components.input_password_type_1(this.update_password_confirm.bind(this), "Retype Password")}
         <div className="d-flex flex-row justify-content-start">
-        {components.checkbox_type_1(this.set_concensus.bind(this), 'I consent to Telehealth, terms and privacy policy. All information is strictly confidential and is used to help our professionals provide the best care for you.')}
+        {components.checkbox_type_1(this.set_concensus.bind(this), chk_wording)}
         </div>
         {components.confirm_button_type_1(this.update_handler.bind(this), btn_wording)}
         {components.confirm_button_type_2(this.props.state_update, "I already have a Cerebral account", 'create')}
