@@ -24,6 +24,7 @@ class PatientInfo extends Component {
 
   //TODO: use id or name from question 
   clean_up_answers = () => {  
+   
     this.setState({answers: [{name: 'phone', answers: null}, {name: 'referral_reason', answers: null},
                              {name: 'referral_how_long', answers:null}, {name: 'referral_support_network', answers:'NO'},
                              {name: 'referral_danger', answers:'NO'}, {name: 'referral_notes', answers:'NO'}] 
@@ -86,6 +87,7 @@ class PatientInfo extends Component {
         this.props.actions.update_refer_index(this.state.ref_index+1)
         this.props.actions.update_refer_answers(null)
         this.forceUpdate()
+        window.scrollTo(0, 0);
       } 
     }
   }
@@ -130,21 +132,22 @@ class PatientInfo extends Component {
               <div></div>
             </div>       
           </div>
-          <div className="d-flex flex-row justify-content-start patient-info-title">
-            {"PATIENT "+ (this.state.ref_index+1) +" of "+ this.state.items.length} 
-            <span className="patient-info-indicator"> *Indicates required information</span>
-        </div>
-
+          <div className="d-flex flex-column justify-content-start">
+            <div className="patient-info-title">Patient Referral Information</div> 
+            <div className="patient-info-indicator">Please complete the following patient information for each referred patient. </div>
+          </div>
         <div className="d-flex flex-column therapist-info-container">
-          <div className="d-flex justify-content-start patient-info-description">
-            <span>Patient Profile Information:</span>
+          <div className="d-flex justify-content-start patient-info-description align-items-center">
+            <span> 
+              {"PATIENT "+ (this.state.ref_index+1) +" of "+ this.state.items.length+": "+patient.first_name +" "+ patient.last_name} 
+            </span>
           </div>
           {questions?questions.map((item, index)=> (this.map_question_to_view(item, index, patient)) ):null}
           <div className="d-flex flex-column patient-info-submit-btn-holder">
             {this.state.msg?
               <div className="d-flex justify-content-center text-small-red">
                 {this.state.msg}</div>:null}
-            <input id='submit_refer' className="patient-refer-submit-btn" onClick={this.submit_item_handler}  type="button" value="Submit and Continue"/>
+            <input id='submit_refer' className="patient-refer-submit-btn" onClick={this.submit_item_handler}  type="button" value="Submit patient information >"/>
           </div>
        </div>	
       </div>    

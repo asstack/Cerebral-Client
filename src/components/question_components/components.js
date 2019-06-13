@@ -112,14 +112,11 @@ export const patient_refer_inputs = (event_handler, item, index, total) => {
         <span>{"Patient "+ (index+1)}</span>
       </div>
       <div className="d-flex flex-column patient-refer-input-holder">
-        <div className="d-flex flex-row">
-          <div className="d-flex justify-content-center patient-refer-input-item ">
-            <input className="col patient-refer-input" name={"fname"+index} onChange={(e)=>event_handler.update(index, "first_name", e)} defaultValue={item.first_name} type="text" placeholder="First Name"/>
-          </div> 
-          <div className="gap-5"></div>
-          <div className="d-flex justify-content-center patient-refer-input-item ">
-            <input className="col patient-refer-input" name={"lname"+index} onChange={(e)=>event_handler.update(index, "last_name", e)} defaultValue={item.last_name} type="text" placeholder="Last Name"/>
-          </div>
+        <div className="d-flex justify-content-center patient-refer-input-item ">
+          <input className="col patient-refer-input" name={"fname"+index} onChange={(e)=>event_handler.update(index, "first_name", e)} defaultValue={item.first_name} type="text" placeholder="First Name"/>
+        </div> 
+        <div className="d-flex justify-content-center patient-refer-input-item ">
+          <input className="col patient-refer-input" name={"lname"+index} onChange={(e)=>event_handler.update(index, "last_name", e)} defaultValue={item.last_name} type="text" placeholder="Last Name"/>
         </div>
         <div className="d-flex justify-content-center patient-refer-input-item ">
           <input className="col patient-refer-input" name={"email"+index} onChange={(e)=>event_handler.update(index, "email", e)} defaultValue={item.email} type="email" placeholder="Email"/>

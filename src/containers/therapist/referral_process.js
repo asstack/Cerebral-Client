@@ -51,6 +51,7 @@ class ReferralProcess extends Component{
   redirect_url = (url) => {
     this.props.history.push(url)
   }
+
   cover_page = () => {  
     const id = this.props.user.attributes.id
     return (

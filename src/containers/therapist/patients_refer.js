@@ -47,6 +47,8 @@ class PatientsRefer extends Component {
    if(patients && index < patients.length){
      //this.props.submit_action(this.props.ref_patients, this.props.ref_index); 
      return myPromiseModal({open:true}).then(value=>{
+
+      console.log("value:",value)
       if(value){ 
         this.props.submit_action(this.props.ref_patients, this.props.ref_index); 
       }

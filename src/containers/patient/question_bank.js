@@ -106,10 +106,12 @@ class QuestionBank extends Component{
       }
       else{
         if(!this.props.question_banks.includes(option.question_bank_names[0])){
-          patient_actions.update_patient_question_banks(this.props.question_banks.concat( option.question_bank_names), question_banks_step).then(()=>{
+          patient_actions.update_patient_question_banks([this.props.question_banks[0]].concat( option.question_bank_names), question_banks_step).then(()=>{
             if (option.name) patient_actions.update_service_line(option.name)	
             this.patient_state_transition_helper(); 
           })
+        }else { 
+          this.patient_state_transition_helper(); 
         }
      }
     }else this.patient_state_transition_helper();
