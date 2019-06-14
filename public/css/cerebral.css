@@ -474,14 +474,12 @@ h3 {
 }
 
 
-
-
 .text_description {
   
-  font-size: 18px;
-  line-height: 25px;
+  font-size: 16px;
   font-weight: 600;
   text-transform: uppercase;
+  line-height:30px;
   letter-spacing: -0.4px;
   color: #9998D6;
   padding-bottom:30px;
