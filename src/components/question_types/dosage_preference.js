@@ -20,7 +20,6 @@ class DosagePreference extends QuestionPreference {
       get_treatment_by_name(resp.response).then((med_pref_resp) => {
         // TODO: update global store with patient information
         console.log("get_treatment_dosages resp: ", med_pref_resp)
-
         var dosages_with_title = med_pref_resp.dosages.map((dosage) => {
           return{
             ...dosage,
