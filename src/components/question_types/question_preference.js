@@ -48,6 +48,7 @@ export class QuestionPreference extends Component {
       backgroundSize: 'cover',
       backgroundRepeat: 'no-repeat',
       backgroundPosition: 'center left',
+      padding:'0',
     }
 
       return this.draw_image_checkbox(item, index, checkStyle, (item) => {

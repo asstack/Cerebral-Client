@@ -42,14 +42,14 @@ class MedicationPreference extends QuestionPreference {
     return (
       <div style={{width: '100%', height: '100%'}}>
       <div className='text-recommendation' 
-        style={{visibility: is_recommended ? 'visible' : 'hidden', position: 'relative', left: '10%', top: '8%', width: '200px'}}>Our Recommendation</div>
-      <div className='text-left' style={{position: 'relative', left: '10%', top: '15%', fontWeight: 'bold'}}>{this.capitalize(item.name+" ("+item.brand_name+")")}</div>
+        style={{visibility: is_recommended ? 'visible' : 'hidden', position: 'relative', left: '10%', top: '8%', width: '245px', height:'42px', paddingTop:'10px', fontSize:'20px'}}>Our Recommendation</div>
+      <div className='text-left' style={{position: 'relative', left: '10%', top: '15%', fontWeight: 'bold', fontSize: '18px'}}>{this.capitalize(item.name+" ("+item.brand_name+")")}</div>
       
       <div className='text-left' style={{position: 'relative', left: '10%', top: '25%'}}>Used To Treat</div>
-      <div className='text-small text-left' style={{position: 'relative', left: '10%', top: '27%'}}>{item.service_line.title}</div>
+      <div className='text-small text-left' style={{position: 'relative', left: '10%', top: '27%', fontWeight:'500', color:'#444444'}}>{item.service_line.title}</div>
 
-      <div className='text-left' style={{position: 'relative', left: '10%', top: '35%'}}>Side Effects</div>
-      <div className='text-small text-left' style={{position: 'relative', left: '10%', top: '37%'}}>{item.side_effects.map(e => e.title).join(", ")}</div>
+      <div className='text-left' style={{position: 'relative', left: '10%', top: '35%'}}>Possible side effects could include:</div>
+      <div className='text-small text-left' style={{position: 'relative', left: '10%', top: '37%', fontWeight:'500', color:'#444444'}}>{item.side_effects.map(e => e.title).join(", ")}</div>
       </div>
     )
   }
