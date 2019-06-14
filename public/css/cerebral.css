@@ -4,7 +4,7 @@
 body {
   font-family: "Montserrat";
   font-weight: regular;
-  letter-spacing: -1.5px;
+  letter-spacing: -0.4px;
 }
 
 .q-textarea::placeholder {
@@ -330,8 +330,8 @@ h3 {
 .small-holder::placeholder {
   font-size: 18px;
   line-height: 21px;
-  letter-spacing: -1.5px;
-
+  letter-spacing: -0.4px;
+  
   color: #250044;
 }
 
@@ -1403,6 +1403,8 @@ h3 {
 
 .therapist-cover-img-desc {
   text-align: center;
+  padding-top: 10px;
+  color: #250044;
   max-width:195px;
 }
 
