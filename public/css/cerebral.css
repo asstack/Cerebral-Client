@@ -84,10 +84,11 @@ h3 {
 .container-noprogress {
   align-self:center;
   margin-top: 30px;
-  max-width:604px;
+  width:100%;
 }
 
 .container-progress {
+
   width:100%;
 }
 

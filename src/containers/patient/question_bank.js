@@ -203,7 +203,7 @@ class QuestionBank extends Component{
     const component = common.map_type_to_component(question, handlers, this.props.user, this.subscript_ref, this.title_ref)
     const QuestionsWrapper = wrapper.questions_wrapper(component, question, this.state, this.subscript_ref, this.title_ref) 
     return(
-      <div>
+      <div className="d-flex flex-row justify-content-center">
         <QuestionsWrapper/>  
         {this.state.is_loading?this.modal({open:true}): null}
       </div>

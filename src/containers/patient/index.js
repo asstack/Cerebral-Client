@@ -157,7 +157,7 @@ class Patient extends Component{
     }else if(this.props.question_banks.length===1){
       return(
         <div className="d-flex flex-column container-noprogress">
-            <div className="d-flex flex-row justify-content-left header-noprogress">
+            <div className="d-flex flex-row justify-content-left therapist-header">
               <img className="cerebral-logo" src={process.env.PUBLIC_URL + '/img/logo.png'}/>
             </div>
             <Route path="/patient/:bank_name" component={QuestionBank}/>

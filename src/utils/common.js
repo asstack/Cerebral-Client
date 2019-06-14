@@ -39,7 +39,7 @@ export const map_type_to_component = (question, handlers, user, subscript_ref, t
 
   switch(question.question_type) {
     case 'mentalhealthcover_temp':
-      return <MentalHealthCover submit = {handlers.next_step_handler}/>
+      return <MentalHealthCover submit_action = {handlers.next_step_handler}/>
     case 'identification_cover':
       return <IdentificationCover submit_action = {handlers.next_step_handler}/>
     case 'selector':
