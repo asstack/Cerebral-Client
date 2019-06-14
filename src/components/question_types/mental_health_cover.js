@@ -21,7 +21,7 @@ class MentalHealthCover extends Component {
         <div className = "mental-health-cover-subtext">
           *All information is confidential and stored in accordance to HIPAA guidelines
         </div>
-        {components.confirm_button_type_1(this.props.submit_action, 'Start my mental health assessment')}
+        {components.confirm_button_type_1(this.props.submit_action, 'Start my mental health assessment >')}
       </div>
     )
   }

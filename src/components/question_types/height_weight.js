@@ -60,7 +60,7 @@ class HeightWeight extends Component {
             {[...Array(12)].map((e, index)=>(this.select_option(index)))}
          </select>
        </div>
-      {components.confirm_button_type_1(this.submit_btn_handler, "Confirm weight and height")}
+       {components.confirm_button_type_1(this.submit_btn_handler, "Confirm weight and height >")}
       </div>
     )
   }

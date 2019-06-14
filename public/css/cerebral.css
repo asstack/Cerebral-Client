@@ -82,7 +82,8 @@ h3 {
 }
 
 .container-noprogress {
-  margin-top: 85px;
+  align-self:center;
+  margin-top: 30px;
   max-width:604px;
 }
 
@@ -558,6 +559,8 @@ h3 {
 
 .text-mid-title {
   font-size: 24.0px;
+  font-weight:600;
+  letter-spacing:-0.4px;
   color: rgba(37, 0, 68, 1.0);
 }
 
@@ -1329,6 +1332,10 @@ h3 {
   margin-top:10px;
 }
 
+.patient-info-textarea textarea::placeholder {
+  color: #9b9b9b
+}
+
 .therapist-info-container {
   margin-top:50px;
   padding-left:100px;
@@ -1345,6 +1352,7 @@ h3 {
 
 .therapist-noprogress {
   width:100%;
+  padding-bottom:50px;
 }
 
 .therapist-header {
@@ -1369,9 +1377,11 @@ h3 {
 
 .therapist-cover-description {
   font-size: 16px;
-  line-height: 25px;
+  line-height: 30px;
+  letter-spacing: -0.4px;
   color: #250044;
   margin-bottom:50px;
+
 }
 
 .therapist-cover-top-menu {

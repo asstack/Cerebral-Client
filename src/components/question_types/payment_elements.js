@@ -53,7 +53,7 @@ class PaymentElements extends Component {
       <div className="patient_shipping">
       {components.input_type_autocomplete(this.update_property.bind(this, 'payment_full_name'), "Card Holder Name", 'cc-name')}
         <CardElement className = "form-control" {...createOptions(20)}/>
-        {components.confirm_button_type_1(this.update_handler, "Confirm Payment Information")}
+        {components.confirm_button_type_1(this.update_handler, "Confirm Payment Information >")}
       </div>
     );
   }

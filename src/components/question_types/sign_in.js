@@ -34,7 +34,7 @@ class SignIn extends Component {
   //check: Please input your email address ex) yourname@example.com 
     
     render(){
-      let btn_wording = this.props.user_type==='therapist'?'Sign in to refer patients':'Get started with online visit'
+      let btn_wording = this.props.user_type==='therapist'?'Start referring patients':'Get started with online visit'
       return (
         <div className="patient_signin">
           {components.input_type_1(this.update_email.bind(this), "Email Address")}

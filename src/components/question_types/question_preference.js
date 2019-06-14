@@ -88,7 +88,7 @@ export class QuestionPreference extends Component {
           this.default_option(this.state.options.length)
         }
         <div className="d-flex flex-row justify-content-center">
-        {components.confirm_button_type_1(this.submit_btn_handler, "Confirm")}  
+          {components.confirm_button_type_1(this.submit_btn_handler, "Confirm >")}  
         </div>
       </div>
     )

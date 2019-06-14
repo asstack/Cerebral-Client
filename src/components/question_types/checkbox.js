@@ -84,7 +84,7 @@ class CheckBoxComponent extends Component {
           {this.state.options.map((item, index) => (this.map_data_to_checkbox(item, index)))}
         </div>
         <div className="d-flex flex-row justify-content-center">
-        {components.confirm_button_type_1(this.submit_btn_handler, "Confirm")}  
+          {components.confirm_button_type_1(this.submit_btn_handler, "Confirm >")}  
         </div>
       </div> 
       )

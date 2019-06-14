@@ -34,7 +34,7 @@ class PatientShipping extends Component {
         {components.input_type_autocomplete(this.update_property.bind(this, 'city'), "City", 'shipping locality')}
         {components.input_type_autocomplete(this.update_property.bind(this, 'region'), "State", 'shipping region')}
         {components.input_type_autocomplete(this.update_property.bind(this, 'postal_code'), "ZIP", 'shipping postal-code')}
-        {components.confirm_button_type_1(this.update_handler.bind(this), "Confirm Shipping Address")}
+        {components.confirm_button_type_1(this.update_handler.bind(this), "Confirm Shipping Address >")}
       </div>
     );
   }

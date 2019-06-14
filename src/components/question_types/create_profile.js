@@ -71,7 +71,7 @@ class CreateProfile extends Component {
   }
 
   render(){
-    let btn_wording = this.props.user_type==='therapist'?'Sign up to refer patients':'Get started with your online visit'
+    let btn_wording = this.props.user_type==='therapist'?'Start referring patients':'Get started with your online visit'
     let chk_wording = this.props.user_type==='therapist'?'I have consent from my patient/s to share their contact information with Cerebral for a prescription referral and to provide information regarding their diagnosis to the prescribing physician.' :'I consent to Telehealth, terms and privacy policy. All information is strictly confidential and is used to help our professionals provide the best care for you.'
 
 

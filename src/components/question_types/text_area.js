@@ -40,7 +40,7 @@ class TextArea extends Component {
         <div className="form-group">
           <textarea onChange={this.update_text_handler} className="q-textarea form-control" rows="5" />
         </div>
-        {components.confirm_button_type_1(this.submit_btn_handler, "Confirm your answer")}  
+        {components.confirm_button_type_1(this.submit_btn_handler, "Confirm your answer >")}  
       </div>
     )
   }

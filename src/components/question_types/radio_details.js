@@ -49,7 +49,7 @@ class RadioDetails extends Component {
   textarea_view = () => {
     return (
       <div className="d-flex flex-column patient-info-textarea">    
-        <textarea onChange={this.update_text_handler} className="form-control" rows="5" defaultValue={this.state.details}/>
+        <textarea placeholder="Please elaborate your answer" onChange={this.update_text_handler} className="form-control" rows="5" defaultValue={this.state.details}/>
       </div>
     )
   }
@@ -57,7 +57,7 @@ class RadioDetails extends Component {
   render(){  
     return (
       <div key={uuidv1()} className="d-flex flex-column justify-content-start patient-info-items-holder">
-        <div className="d-flex flex-row justify-content-between">
+       <div className="d-flex flex-row justify-content-between">
           <div className="d-flex align-content-start align-items-center patient-info-radio-item">
             <span>{this.props.question.title}</span>
           </div>
