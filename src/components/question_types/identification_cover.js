@@ -11,7 +11,17 @@ class IdentificationCover extends Component {
     
     }
   }
-  
+
+  componentDidMount=()=>{
+    if(this.props.q_number_ref){
+      // this.props.q_number_ref.current.innerText="Identity Verification"      
+    } 
+  }
+
+  confirm_btn_handler = e => {
+    this.props.submit_action("submit") 
+  }
+     
   view = () => {
     return (
       <div className ="d-flex flex-column"> 
@@ -29,7 +39,7 @@ class IdentificationCover extends Component {
             <div className="id-description"> Upload or capture a picture of your valid photo ID.</div> 
           </div>
         </div> 
-        {components.confirm_button_type_1(this.props.submit_action, 'Start verification')}
+        {components.confirm_button_type_1(this.confirm_btn_handler, 'Start verification >')}
       </div>
     )
   }

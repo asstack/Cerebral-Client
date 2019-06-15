@@ -21,6 +21,7 @@ class Patient extends Component{
       prev_state:this.props.patient_state,
       width: window.innerWidth,
     }
+    this.q_number = React.createRef();    
   }
 
   update_width_handler = () =>{
@@ -165,6 +166,17 @@ class Patient extends Component{
       )	 
     }else if(this.props.questions && this.props.questions[this.props.question_step]){
       const question = this.props.questions[this.props.question_step]
+      const q_bank = this.props.current_bank_name
+      let total = this.props.total_step
+      let step = this.props.question_step+1
+      if(q_bank === 'anxiety_mha' || q_bank === 'insomnia_a' || q_bank==='checkout'){
+        step--; 
+        total--;
+      }
+      let wording = step>0? "QUESTION "+step+" OF "+ total:"";
+      if(q_bank==='checkout' && step===0){
+        wording = "Identity Verification"
+      }
       return( 
         <div className="container-progress">
           <div className="d-flex flex-column">
@@ -172,9 +184,10 @@ class Patient extends Component{
               {this.state.width>820? this.props.question_banks.map((item, index) => (this.progress_menu(item, index))) : this.single_progress_menu(state) }
             </div>
             <div className="d-flex flex-column question-container">
-              <div className="d-flex justify-content-left text-middle">QUESTION {this.props.question_step+1} OF {this.props.total_step}</div>
+              <div ref={this.q_number} className="d-flex justify-content-left text-middle">{wording}</div>
               <div className="questions-container">
-                <Route path="/patient/:bank_name" component={QuestionBank}/>
+                <Route path="/patient/:bank_name" render={(props) => 
+                    <QuestionBank q_number_ref={this.q_number}/>}/>
               </div>
             </div>
           </div>    
@@ -198,7 +211,7 @@ class Patient extends Component{
 const mapStateToProps = state => {
   const{
     global_reducer: {app_state, current_user},
-    patient_reducer: {service_line, patient_state, step, total_step, questions, question_banks, question_bank_objects, question_banks_step}
+    patient_reducer: {current_bank_name, service_line, patient_state, step, total_step, questions, question_banks, question_bank_objects, question_banks_step}
   } = state
   return {
     app_state:app_state,
@@ -210,6 +223,7 @@ const mapStateToProps = state => {
     question_banks_step:question_banks_step,
     question_bank_objects: question_bank_objects,
     question_step:step,
+    current_bank_name:current_bank_name,
     total_step:total_step
   }
 }

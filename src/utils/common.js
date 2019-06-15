@@ -22,6 +22,7 @@ import DosagePreference from '../components/question_types/dosage_preference';
 import RegisterManager from '../components/question_types/register_manager'
 import IdentificationCover from '../components/question_types/identification_cover'
 import MentalHealthCover from '../components/question_types/mental_health_cover'
+import InsomniaCover from '../components/question_types/insomnia_cover'
 
 
 
@@ -34,14 +35,16 @@ export const email_validation = email => {
   }
 }
 
-export const map_type_to_component = (question, handlers, user, subscript_ref, title_ref) => {
+export const map_type_to_component = (question, handlers, user, subscript_ref, title_ref, q_number_ref) => {
   if(!question) return null
 
   switch(question.question_type) {
-    case 'mentalhealthcover_temp':
-      return <MentalHealthCover submit_action = {handlers.next_step_handler}/>
+    case 'insomnia_cover': 
+      return <InsomniaCover submit_action = {handlers.submit_answer_and_next_step} q_number_ref = {q_number_ref}/>
+    case 'mental_health_cover':
+      return <MentalHealthCover submit_action = {handlers.submit_answer_and_next_step}q_number_ref = {q_number_ref}/>
     case 'identification_cover':
-      return <IdentificationCover submit_action = {handlers.next_step_handler}/>
+      return <IdentificationCover submit_action = {handlers.submit_answer_and_next_step} q_number_ref = {q_number_ref}/>
     case 'selector':
       return selector(handlers.set_selector_handler, question)
     case 'emergency_contact':

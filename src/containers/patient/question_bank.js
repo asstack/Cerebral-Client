@@ -179,8 +179,8 @@ class QuestionBank extends Component{
   modal = ({ open, close, message}) => (
     <Modal className="loading-modal" show={open} onHide={() => console.log("cannot close")}>
           <Modal.Body className="loading-modal-body">
-            <div class="spinner-border loading-icon-color" role="status">
-              <span class="sr-only">Loading...</span>
+            <div className="spinner-border loading-icon-color" role="status">
+              <span className="sr-only">Loading...</span>
             </div>
           </Modal.Body>
     </Modal>
@@ -200,7 +200,7 @@ class QuestionBank extends Component{
     const question = this.props.questions[this.props.question_step]
 
     //TODO: using ref to change title and subtitle in child component, but it's hacky way. will take that part as a component 
-    const component = common.map_type_to_component(question, handlers, this.props.user, this.subscript_ref, this.title_ref)
+    const component = common.map_type_to_component(question, handlers, this.props.user, this.subscript_ref, this.title_ref, this.props.q_number_ref)
     const QuestionsWrapper = wrapper.questions_wrapper(component, question, this.state, this.subscript_ref, this.title_ref) 
     return(
       <div className="d-flex flex-row justify-content-center">
