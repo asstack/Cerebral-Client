@@ -42,7 +42,7 @@ class CompleteProcess extends Component{
             <img src={logo} />
           </div>
 
-          <div className="d-flex justify-content-center text-small-2">
+          <div className="d-flex justify-content-center complete-message-holder text-small-2">
             Your doctor will contact you within the next 24 hours via email with your prescription approval notice or follow-up questions.  This email will grant you access to our secure messaging portal for follow-ups with the prescribing doctor. 
           </div>
           {components.confirm_button_type_1(this.btn_handler, "Go to your profile >")}

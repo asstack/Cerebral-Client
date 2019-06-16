@@ -591,6 +591,10 @@ h3 {
   padding:20px
 }
 
+.complete-message-holder {
+  width:604px;
+}
+
 .id-item-holder {
 
   border: 1px dotted #250044;

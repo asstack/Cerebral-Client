@@ -43,7 +43,7 @@ class ReferralComplete extends Component {
             <img src={process.env.PUBLIC_URL + '/img/connect_message.png'} />
           </div>
 
-          <div className="d-flex justify-content-center text-small-2">
+          <div className="d-flex justify-content-center complete-message-holder text-small-2">
             A referral link will be sent to your patient(s). Once the patient follows through, you’ll be notified via email and a notification on your account.  You now have access to our secure messaging portal for follow-ups with the prescribing doctor from your member profile.
           </div>
           {components.confirm_button_type_1(this.btn_handler, "Go to your profile >")}
