@@ -150,7 +150,7 @@ class PatientsRefer extends Component {
           </div>
           <div className="d-flex flex-column therapist-question-container">
             <div className="d-flex justify-content-start patient-refer-description">
-              <span>Please enter patient/s contact information.</span>
+              <span>Please enter patient(s) contact information.</span>
             </div> 
             {[...Array(this.state.total_items)].map((e, index) => (components.patient_refer_inputs(event_handlers, this.state.items[index], index, this.state.total_items)))}  
             <div className="d-flex justify-content-end patient-refer-add-btn-holder">

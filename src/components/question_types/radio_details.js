@@ -49,7 +49,7 @@ class RadioDetails extends Component {
   textarea_view = () => {
     return (
       <div className="d-flex flex-column patient-info-textarea">    
-        <textarea placeholder="Please elaborate your answer" onChange={this.update_text_handler} className="form-control" rows="5" defaultValue={this.state.details}/>
+        <textarea placeholder="Please elaborate on your answer." onChange={this.update_text_handler} className="form-control" rows="5" defaultValue={this.state.details}/>
       </div>
     )
   }
