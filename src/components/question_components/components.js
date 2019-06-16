@@ -33,7 +33,7 @@ export const input_type_no_border = (event_handler, text) => {
 export const input_type_autocomplete = (event_handler, text, autocomplete_value) => {
   return(
     <div className="d-flex justify-content-start input-holder">
-			<input className="col input-type1" onChange={event_handler} defaultValue=""
+			<input className="col input-type-payment" onChange={event_handler} defaultValue=""
 				type="text" placeholder={text} autoComplete={autocomplete_value}/>
     </div>
   )
@@ -123,7 +123,7 @@ export const patient_refer_inputs = (event_handler, item, index, total) => {
         </div>
       </div>
       <div className="d-flex align-content-center flex-between patient-refer-right-item">
-        {(total>3 && index+1===total)?<img onClick={event_handler.remove} className="remove-button" src='/img/patient_remove.png' />:<div></div>}
+        {(total>2 && index+1===total)?<img onClick={event_handler.remove} className="remove-button" src='/img/patient_remove.png' />:<div></div>}
       </div>
     </div>
   )

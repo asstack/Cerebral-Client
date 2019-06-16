@@ -37,7 +37,7 @@ class PaymentElements extends Component {
             'border-style': 'solid',
             'border-width': '2px',
             'border-color': 'rgba(37, 0, 68, 1.0)',
-            color: 'black',
+            color: '#868e96',
             fontFamily: 'ProximaNova-Bold", Helvetica, Arial',
             '::placeholder': {
                 color: "#868e96",
@@ -51,9 +51,13 @@ class PaymentElements extends Component {
       }
     return (
       <div className="patient_shipping">
-      {components.input_type_autocomplete(this.update_property.bind(this, 'payment_full_name'), "Card Holder Name", 'cc-name')}
+        {components.input_type_autocomplete(this.update_property.bind(this, 'payment_full_name'), "Card holder name", 'cc-name')}
         <CardElement className = "form-control" {...createOptions(20)}/>
-        {components.confirm_button_type_1(this.update_handler, "Confirm Payment Information >")}
+        {components.confirm_button_type_1(this.update_handler, "Confirm payment information >")}
+        <div className="d-flex justify-content-center confirm-btn-holder"> 
+          <div className = "d-flex justify-content-center payment-warning">*Cancel at any time (cancellation policy) </div>
+        </div>
+
       </div>
     );
   }

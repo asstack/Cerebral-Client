@@ -31,8 +31,8 @@ class PatientsRefer extends Component {
 		this.state = {
       msg:null,
       update:false,
-      total_items:3,
-      items: [{email:null, first_name:null, last_name:null}, {email:null, first_name:null, last_name:null}, {email:null, first_name:null, last_name:null}],
+      total_items:2,
+      items: [{email:null, first_name:null, last_name:null}, {email:null, first_name:null, last_name:null}],
       incomplete:[]
 		}
 	}
@@ -68,7 +68,7 @@ class PatientsRefer extends Component {
 
   remove_item_handler = e => {
     
-    if(this.state.total_items>3){
+    if(this.state.total_items>2){
       const new_items = this.state.items.slice(0,-1);
       const new_num = this.state.total_items-1;
       this.setState({total_items: new_num,

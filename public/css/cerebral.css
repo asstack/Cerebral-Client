@@ -288,6 +288,26 @@ h3 {
   color: rgba(37, 0, 68, 1.0);
 }
 
+.input-type-payment::placeholder  {
+  font-size: 20px;
+  line-height: 37px;
+  letter-spacing: -0.4px;
+  color:#868e96;
+}
+
+.input-type-payment {
+  font-family:'Helvetica';
+  font-size: 18px;
+  background: #FFFFFF;
+  border: 1px solid #ced4da;
+  border-radius: 2px;
+  height: 36px;
+  color:#868e96;
+}
+
+
+
+
 .input-no-border::placeholder {
 
   font-size: 18px;
@@ -631,6 +651,112 @@ h3 {
   text-transform: capitalize;
   color: #250044;
 }
+
+/*--------- payment ----------*/
+.payment-info {
+  margin-bottom:30px;
+  border: 1px solid #250044;
+  box-sizing: border-box;
+  border-radius: 2px;
+}
+
+.payment-info-item {
+  margin-left:30px;
+  margin-right:30px;
+  margin-top:20px;
+  padding-bottom:20px;
+  border-bottom:1px solid #250044;
+}
+
+.payment-info-item h1 {
+  margin-bottom:20px;
+}
+
+.payment-info-item-total {
+
+  margin-top:20px;
+  margin-left:30px;
+  margin-right:30px;
+  padding-bottom:20px;
+}
+
+.payment-left-text {
+  text-align:right;
+}
+
+.payment-plain-text {
+  font-size: 16px;
+  line-height: 37px;
+  letter-spacing: -0.43px;
+  color: #250044;
+}
+
+.payment-warning {
+
+  margin-bottom:20px;
+  max-width: 340px;
+  min-width: 340px;
+  font-size: 16px;
+  line-height: 25px;
+  letter-spacing: -0.43px;
+  color: #444444;
+  margin-top:-10px;
+}
+
+.text-disable {
+  text-decoration-line:line-through;
+  text-decoration-color:#50E3C2;
+}
+
+.text-green {
+  font-size: 16px;
+  line-height: 37px;
+  letter-spacing: -0.43px;
+  margin-right:20px;
+  color: #50E3C2;
+}
+
+.payment-bold-text {
+  font-size: 16px;
+  font-weight:600;
+  line-height: 37px;
+  letter-spacing: -0.43px;
+  color: #250044;
+}
+
+.payment-input-holder {
+  height:60px; 
+  width:326px;
+  border: 1px solid #250044;
+  border-radius: 2px;
+}
+
+.payment-input-holder input {
+  border:none;
+  width:100%; 
+  font-size: 16px;
+  font-weight:600;
+  line-height: 18px;
+  letter-spacing: -0.43px;
+  padding-left:13px;
+  color: #250044;
+}
+
+.payment-input-holder input::placeholder {
+  font-size: 16px;
+  font-weight:600;
+  line-height: 18px;
+  letter-spacing: -0.43px;
+  color: #250044;
+}
+
+
+.payment-input-holder input:focus{
+  outline: none;
+  border: none;
+}
+
+
 
 /*------- profile(dashboard) page---------*/
 
