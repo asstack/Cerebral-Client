@@ -51,7 +51,7 @@ class PaymentElements extends Component {
       }
     return (
       <div className="patient_shipping">
-        {components.input_type_autocomplete(this.update_property.bind(this, 'payment_full_name'), "Card holder name", 'cc-name')}
+        {components.input_type_payment(this.update_property.bind(this, 'payment_full_name'), "Card holder name", 'cc-name')}
         <CardElement className = "form-control" {...createOptions(20)}/>
         {components.confirm_button_type_1(this.update_handler, "Confirm payment information >")}
         <div className="d-flex justify-content-center confirm-btn-holder"> 

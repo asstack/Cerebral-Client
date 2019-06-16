@@ -56,6 +56,10 @@ class CreateProfile extends Component {
     this.setState({last_name:lname})
   }
 
+  update_license = (e) => {
+  
+  }
+
   update_password = (e) => {
     const pwd = e.target.value
     this.setState({password:pwd})
@@ -83,6 +87,7 @@ class CreateProfile extends Component {
           {components.input_type_1(this.update_firstname.bind(this), "First Name")}
           {components.input_type_1(this.update_lastname.bind(this), "Last Name")}
         </div>
+        {this.props.user_type==='therapist'?components.input_type_1(this.update_license.bind(this), "License #"):null}
         {components.input_password_type_1(this.update_password.bind(this), "Create Password")}
         {components.input_password_type_1(this.update_password_confirm.bind(this), "Confirm Password")}
         <div className="d-flex flex-row justify-content-start">
