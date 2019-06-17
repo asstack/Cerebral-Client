@@ -72,7 +72,6 @@ class Patient extends Component{
  
 	componentDidUpdate(){	
     setTimeout(null,1000)
-    console.log("update here?") 
     window.addEventListener("resize", this.update_width_handler);
     const current_path = this.props.location.pathname
     const new_state = current_path.split("/")[2]
@@ -141,7 +140,6 @@ class Patient extends Component{
 
   // uses https://reacttraining.com/react-router/web/api/Route
   render_views(state){
-   console.log("state: ", state) 
    if(state==="completed"){  
       return(
         <Route path="/patient/completed" component={CompleteProcess}/>
@@ -166,7 +164,6 @@ class Patient extends Component{
           </div>
       )	 
     }else if(this.props.questions && this.props.questions[this.props.question_step]){
-      console.log("here came?") 
       const question = this.props.questions[this.props.question_step]
       const q_bank = this.props.current_bank_name
       let total = this.props.total_step

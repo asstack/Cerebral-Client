@@ -45,7 +45,6 @@ class QuestionBank extends Component{
     if(!bank_name || url_info==='qualification'){ 
       patient_actions.update_patient_question_banks(['qualification'], 0).then(() => {
         patient_actions.set_current_question_bank_by_name('qualification').then(resp => {
-          console.log("questions", resp)  
           this.setState({questions:resp.data})
           this.update_bank_state() 
         }) 
@@ -88,8 +87,7 @@ class QuestionBank extends Component{
 
   componentWillReceiveProps = (next_props) => { 
 
-    setTimeout(console.log("q bank receive props timer") ,1000)
-    console.log("get questions:", next_props.questions)  
+    //setTimeout(console.log("q bank receive props timer") ,1000)
   }
 
 
@@ -223,7 +221,6 @@ class QuestionBank extends Component{
     //TODO: using ref to change title and subtitle in child component, but it's hacky way. will take that part as a component 
     const component = common.map_type_to_component(question, handlers, this.props.user, this.subscript_ref, this.title_ref, this.props.q_number_ref)
     const QuestionsWrapper = wrapper.questions_wrapper(component, question, this.state, this.subscript_ref, this.title_ref) 
-    console.log("check rendering")
     return(
       <div className="d-flex flex-row justify-content-center">
         <QuestionsWrapper/>  
