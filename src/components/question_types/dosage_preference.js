@@ -19,8 +19,10 @@ class DosagePreference extends QuestionPreference {
     get_current_answer_by_name('medication_preference').then((resp) => {
 
       if (!resp.response) {
+        console.log("!resp  response: ", resp)
         this.props.set_dosage({name: null, id: 0})
         // TODO: skip this component
+        //this.props.skip_action()
       }
       else {
 
@@ -51,7 +53,7 @@ class DosagePreference extends QuestionPreference {
     if (!selected_dosage) {
       selected_dosage = {name: null, id: 0}
     }
-    this.props.set_dosage(selected_dosage)
+    this.props.set_dosage(selected_dosage) 
     this.props.submit_action(selected_dosage.name)
   }
 

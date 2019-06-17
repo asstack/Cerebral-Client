@@ -100,9 +100,9 @@ export const map_type_to_component = (question, handlers, user, subscript_ref, t
     case 'side_effects':
       return <SideEffects submit_action = {handlers.submit_answer_and_next_step}/>  
     case 'medication_preference':
-      return <MedicationPreference submit_action = {handlers.submit_answer_and_next_step}/>  
+      return <MedicationPreference submit_action = {handlers.submit_answer_and_next_step_2}/>  
     case 'dosage_preference':
-      return <DosagePreference submit_action = {handlers.submit_answer_and_next_step}/>  
+      return <DosagePreference submit_action = {handlers.submit_answer_and_next_step_2} skip_action = {handlers.next_step_handler}/>  
     case 'patient_video':
       return <VideoSelector 
               flag_title = {question.flag_title}

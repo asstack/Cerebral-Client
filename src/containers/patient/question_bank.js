@@ -113,14 +113,23 @@ class QuestionBank extends Component{
     })
   }
 
+  //TODO: It is hacky way only for the demo
   submit_answer_and_next_step = (ans) => {
     const {patient_actions} = this.props
     this.patient_state_transition_helper()
     patient_actions.answer_current_question({answer: ans}).then(() => {
-      //return this.patient_state_transition_helper();
-      
+      //return this.patient_state_transition_helper(); 
     })
   }
+
+  submit_answer_and_next_step_2 = (ans) => {
+    const {patient_actions} = this.props
+    patient_actions.answer_current_question({answer: ans}).then(() => {
+      return this.patient_state_transition_helper(); 
+    })
+  }
+
+
 
   set_bank_selector_handler=(e, option)=>{
 
@@ -223,6 +232,7 @@ class QuestionBank extends Component{
       set_bank_selector_handler:this.set_bank_selector_handler.bind(this),
       did_create_patient: this.did_create_patient.bind(this),
       submit_answer_and_next_step: this.submit_answer_and_next_step.bind(this),
+      submit_answer_and_next_step_2: this.submit_answer_and_next_step_2.bind(this),
       submit_and_upload_data:this.submit_and_upload_data.bind(this),
       patient_sign_in:this.sign_in_and_next.bind(this)
     }
