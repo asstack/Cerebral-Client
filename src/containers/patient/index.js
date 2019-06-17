@@ -40,6 +40,8 @@ class Patient extends Component{
 
 
   componentDidMount(){ 
+
+    setTimeout(console.log("set q bank did update"), 2000)
     const {patient_actions, global_actions} = this.props
     const init_state = this.props.location.pathname.split("/")[2];    
     const user = this.props.user.attributes;

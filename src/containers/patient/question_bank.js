@@ -43,10 +43,11 @@ class QuestionBank extends Component{
     const url_info = this.props.location.pathname.split("/")[2];    
     
     if(!bank_name || url_info==='qualification'){ 
+      //this.setState({bank_step:0})
       patient_actions.update_patient_question_banks(['qualification'], 0).then(() => {
         patient_actions.set_current_question_bank_by_name('qualification').then(resp => {
-          this.setState({questions:resp.data})
-          this.update_bank_state() 
+          this.setState({questions:resp.data, bank_step:0})
+          //this.update_bank_state() 
         }) 
       })	
       
@@ -54,9 +55,10 @@ class QuestionBank extends Component{
     }else if(bank_name === question_banks[step]){
       this.update_bank_state()
     }else if(question_banks && question_banks[step]){
+      this.setState({bank_step:0})
       patient_actions.set_current_question_bank_by_name(question_banks[step]).then(resp => { 
         patient_actions.update_patient_state(question_banks[step])
-        this.setState({questions:resp.data})
+        this.setState({questions:resp.data, bank_step:step})
         this.props.history.push(`/patient/${question_banks[step]}`) 
       }) 
     }
@@ -64,21 +66,28 @@ class QuestionBank extends Component{
   }
 
   componentDidUpdate(){
+
     const {bank_name, question_banks_step, question_banks, patient_actions} = this.props
 
-    if(this.state.bank_step < question_banks_step){
+    const url_info = this.props.location.pathname.split("/")[2];    
+    if( url_info!=='qualification' && this.state.bank_step < question_banks_step){
+
+      this.setState({bank_step:question_banks_step, is_loading:true})
       patient_actions.set_current_question_bank_by_name(question_banks[question_banks_step]).then(resp => { 
-        this.setState({questions:resp.data})
+
+        setTimeout(console.log("set q bank did update"), 2000)
+        this.setState({questions:resp.data, is_loading:false})
         this.update_bank_state()
         patient_actions.update_patient_state(question_banks[question_banks_step])
         this.props.history.push("/patient/"+question_banks[question_banks_step]) 
       })
-    }else if(this.state.bank_step > question_banks_step){
+    }else if(url_info!=='qualification' && this.state.bank_step > question_banks_step){
+      this.setState({bank_step:question_banks_step})
       patient_actions.set_current_question_bank_by_name(question_banks[question_banks_step], true).then(resp => {
 
         patient_actions.update_patient_state(question_banks[question_banks_step])
         this.update_bank_state()
-        this.setState({questions:resp.data}) 
+        this.setState({questions:resp.data})
         this.props.history.push("/patient/"+question_banks[question_banks_step]) 
       })
     }
@@ -86,8 +95,6 @@ class QuestionBank extends Component{
 
 
   componentWillReceiveProps = (next_props) => { 
-
-    //setTimeout(console.log("q bank receive props timer") ,1000)
   }
 
 
@@ -99,15 +106,19 @@ class QuestionBank extends Component{
 
   set_selector_handler=(e, option)=>{
     const {patient_actions} = this.props
+
+    this.patient_state_transition_helper();
     patient_actions.answer_current_question({answer: option.name}).then(() => {
-      return this.patient_state_transition_helper();
+      //return this.patient_state_transition_helper();
     })
   }
 
   submit_answer_and_next_step = (ans) => {
     const {patient_actions} = this.props
-      patient_actions.answer_current_question({answer: ans}).then(() => {
-      return this.patient_state_transition_helper();
+    this.patient_state_transition_helper()
+    patient_actions.answer_current_question({answer: ans}).then(() => {
+      //return this.patient_state_transition_helper();
+      
     })
   }
 
@@ -118,11 +129,10 @@ class QuestionBank extends Component{
     if (option.question_bank_names.length > 0) {
       if (option.immediate) {
         patient_actions.update_patient_question_banks(option.question_bank_names, 0).then(() => {
-          this.setState({bank_step:-1})
           this.props.history.push("/patient/"+option.question_bank_names[0]) 
+          this.setState({bank_step:-1})
         })
-      }
-      else{
+      }else{
         if(!this.props.question_banks.includes(option.question_bank_names[0])){
           patient_actions.update_patient_question_banks([this.props.question_banks[0]].concat( option.question_bank_names), question_banks_step).then(()=>{
             if (option.name) patient_actions.update_service_line(option.name)	
