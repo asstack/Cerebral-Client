@@ -14,6 +14,7 @@ export class QuestionPreference extends Component {
 
   //TODO: Save multiple values from selected boxes
   check_box_handler = (e, selected_index) => {
+    console.log(`check_box_handler: selected_index=${selected_index}`)
     this.setState({...this.state, selected_index:selected_index})
   }
 
@@ -40,7 +41,7 @@ export class QuestionPreference extends Component {
   }
   
   map_data_to_checkbox = (item, index) => {
-    let is_recommended = item.id == 1
+    let is_recommended = false  // no recommendations!
     var checkStyle = 
     {
       backgroundImage: `url(${this.get_image_for_item(item, is_recommended)})`,
