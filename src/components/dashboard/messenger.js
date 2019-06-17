@@ -37,8 +37,9 @@ class Messenger extends Component {
         //will get therapist and doctor list 
       }
     }else{
-      //exists thread
+      //exists thread 
       this.props.get_messages_for_thread(this.state.thread.id).then(resp => {
+        console.log("get message data:", resp.data) 
         this.setState({messages:resp.data}) 
       })
     }
@@ -146,13 +147,15 @@ class Messenger extends Component {
   to_list= () => {
     return(
       <select onChange = {this.set_to_target}>
-        <option value={null}>select from list</option>
+        <option value={null}>{this.state.target?this.state.target.user.email:'select from list'}</option>
         {this.state.to_lists.map((val,index)=>this.to_option(val,index))} 
       </select>   
     )
   }
 
   view= () => {
+    console.log("target: ", this.state.target)
+    console.log("thread: ", this.state.thread)
     return (
       <div className="main-content-wide-card">
         <div className="d-flex flex-row justify-content-between  patients-list-item-container-nb">
@@ -166,16 +169,17 @@ class Messenger extends Component {
           <div className="align-self-start main-content-wide-card">
             <div className="d-flex flex-column">
               <div className="d-flex flex-column message-header-area">
-                <div className="d-flex message-title">
-                  <div className="message-title-left">To:</div> 
-                  {this.state.thread?"name will be there":this.to_list()}
+                 <div className="d-flex message-title"> 
+                  <div className="message-title-left">Dr Anh</div> 
+                </div>
+                <div className="d-flex message-title message-title-end">
+                  <div className="message-title-left">Patient:</div> 
+                  {this.state.thread && this.state.target?this.state.target.user.email:this.to_list()}
                 </div>
                 {this.state.user.attributes.therapist && this.state.target==='doctor' 
                     ?<div className="d-flex message-title"> Patient Name:</div>
                     :null}
-                <div className="d-flex message-title  message-title-end"> 
-                  <div className="message-title-left">Subject:</div> 
-                </div>
+               
               </div>
               <div ref="chatbox" onScroll={(e)=>this.on_scroll(e)} className="d-flex flex-column message-item-area">
                 {this.state.messages.map((val,idx)=>this.mount_message_item(val,idx))}
