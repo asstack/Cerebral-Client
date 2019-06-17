@@ -25,8 +25,9 @@ class MedicationPreference extends QuestionPreference {
   submit_btn_handler = e => {
     var selected_treatment = this.state.options[this.state.selected_index]
 
+     
     if (!selected_treatment) {
-      selected_treatment = this.state.options[0]
+      selected_treatment = {name: null, id: 0}
     }
 
     this.props.set_treatment(selected_treatment)
