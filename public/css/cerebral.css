@@ -766,7 +766,7 @@ h3 {
 
 .profile-side-bar-holder {
   width:25%;
-  min-height:1000px;
+/*min-height:1000px;*/
   min-width:250px;
 }
 
@@ -1081,7 +1081,7 @@ h3 {
   background: #A3A3A3;
   border-radius: 4px 4px 0px 0px;
   color: #FFFFFF;
-  font-size: 18px;
+  font-size: 16px;
   font-weight:600;
 }
 
@@ -1089,7 +1089,7 @@ h3 {
   cursor:pointer;
   height:60px;
   box-shadow: 0px 1px 1px #D3DBF8;
-  font-size: 18px;
+  font-size: 16px;
   color: #333333;
 }
 
@@ -1132,10 +1132,91 @@ h3 {
 }
 
 
+/*patient information in profile*/
+.patient-info-photo-holder {
+  width:200px;
+  /*height:200px;*/
+}
 
+.patient-info-photo {
+  width:80%;
+/*  height:80%;*/
+}
 
+.patient-basic-right {
+  margin-left:15px;
+}
 
+.patient-basic-right .title{
+    font-size: 18px;
+    font-weight: 600;
+    color: #250044;
+    letter-spacing: -0.4px;
+    text-transform: uppercase;
+    margin-top:20px;
+    margin-bottom: 25px;
+}
 
+.patient-basic-right .item{
+    font-size: 16px;
+    color: #250044;
+    letter-spacing:-0.4px;
+    margin-bottom: 25px;
+}
+
+.referral-card-title {
+  font-size: 18px;
+  font-weight:600;
+  line-height: 20px;
+  margin-bottom:30px;
+  letter-spacing: -0.43px;
+  text-transform: uppercase;
+
+  color: #250044;
+}
+
+.patient-referral-right{
+  margin-bottom:30px;
+  font-size: 16px;
+  line-height: 18px;
+  letter-spacing: -0.43px;
+  color: #444444;
+  overflow-wrap:break-word;
+  max-width:645px;
+} 
+
+.patient-referral-left{
+  width:185px;
+  margin-bottom:30px;
+
+  font-size: 16px;
+  line-height: 18px;
+  letter-spacing: -0.43px;
+  color: #250044;
+}
+
+.patient-basic-left-item {
+  font-size: 16px;
+  line-height: 18px;
+  letter-spacing: -0.43px;
+
+  width:185px;
+}
+
+.patient-basic-right-item {
+  font-size: 16px;
+  line-height: 18px;
+  letter-spacing: -0.43px;
+  color: #444444;
+}
+
+.patient-referral-last{
+  margin-bottom:0px;
+}
+
+.patient-info-status-icon {
+  padding-right:20px;
+}
 
 
 /*therapists input holder*/
@@ -1578,6 +1659,18 @@ h3 {
   margin-right:30px;
   padding-left:30px;
   padding-right:30px;
+
+}
+
+.message-input-area-no-margin {
+  height:60px;
+  background: #FFFFFF;
+  border: 1px solid #D3DBF8;
+  box-sizing: border-box;
+  border-radius: 55px;
+  margin-top:50px;
+  padding-left:30px;
+  padding-right:30px;
 }
 
 .message-item-left {
@@ -1647,10 +1740,9 @@ h3 {
 }
 
 .message-button {
-  font-size: 22px;
   font-weight:600;
-  line-height: 27px;
- 
+  font-size: 18px;
+  line-height: 22px; 
   cursor:pointer;
 }
 

@@ -22,6 +22,7 @@ class DashboardContents extends Component{
 
 
   componentWillReceiveProps = (next_props) => { 
+
     this.setState({user:next_props.user, type:next_props.type, patient_list:next_props.patient_list}) 
   }
 
@@ -58,7 +59,7 @@ class DashboardContents extends Component{
       case 'profile_info':
         return this.patient_info_view()
       case 'patients_list':
-        return this.patient_list_view()
+        return <PatientsList attr={this.state.user.attributes}/>
       case 'message':
         return <MessageProcessManager user={this.state.user} view_type="message_box"/>
       default:

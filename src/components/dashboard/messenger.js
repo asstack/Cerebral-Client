@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import * as components from '../question_components/components'
 import ReactDOM from 'react-dom'
 import { connect } from 'react-redux'
-import {get_patients_for_therapist} from "../../actions/therapist_action"
+import {get_patient_details, get_patients_for_therapist} from "../../actions/therapist_action"
 import {create_message_thread, create_message, get_messages_for_thread, get_message_threads_for_current_user} from "../../actions/user_auth_action"
 import uuidv1 from 'uuid'
 
@@ -40,7 +40,10 @@ class Messenger extends Component {
       //exists thread 
       this.props.get_messages_for_thread(this.state.thread.id).then(resp => {
         console.log("get message data:", resp.data) 
-        this.setState({messages:resp.data}) 
+        this.props.get_patient_details(this.state.thread.recipient_id).then(patient => {
+          console.log("get patient data: ", patient.data) 
+          this.setState({messages:resp.data,target:patient.data}) 
+        })
       })
     }
   }
@@ -201,5 +204,5 @@ class Messenger extends Component {
 
 }
 
-export default connect(null, { create_message_thread, create_message, get_messages_for_thread, get_message_threads_for_current_user, get_patients_for_therapist}) (Messenger)
+export default connect(null, {get_patient_details, create_message_thread, create_message, get_messages_for_thread, get_message_threads_for_current_user, get_patients_for_therapist}) (Messenger)
 

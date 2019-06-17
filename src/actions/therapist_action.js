@@ -82,6 +82,13 @@ export const get_patients_for_therapist = () => (dispatch, getState) => {
   var user_attr = get_user_attr(getState())
   var therapist = user_attr.therapist
   return axios.get(`/api/therapists/${therapist.id}/patients`, {headers: make_headers(user_attr)})
+
+}
+
+export const get_patient_details = (patient_id) => (dispatch, getState) => {
+  var user_attr = get_user_attr(getState())
+  var therapist = user_attr.therapist
+  return axios.get(`/api/therapists/${therapist.id}/patients/${patient_id}`, {headers: make_headers(user_attr)})
 }
 
 export const get_patient_info_questions = (bank_id) => (dispatch) => {

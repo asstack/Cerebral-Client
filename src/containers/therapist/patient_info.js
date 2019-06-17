@@ -26,8 +26,8 @@ class PatientInfo extends Component {
   clean_up_answers = () => {  
    
     this.setState({answers: [{name: 'phone', answers: null}, {name: 'referral_reason', answers: null},
-                             {name: 'referral_how_long', answers:null}, {name: 'referral_support_network', answers:'NO'},
-                             {name: 'referral_danger', answers:'NO'}, {name: 'referral_notes', answers:'NO'}] 
+                             {name: 'referral_how_long', answers:null}, {name: 'referral_support_network', answers:null},
+                             {name: 'referral_danger', answers:null}, {name: 'referral_notes', answers:null}] 
     })
   }
   

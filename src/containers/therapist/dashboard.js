@@ -21,6 +21,7 @@ class TherapistDashboard extends Component{
   //therapist info check in here
   componentDidMount(){
     const user_info = this.props.user.attributes
+
     if(user_info.id===null || user_info.therapist===null){
       this.props.history.push("/therapist/member") 
     } 

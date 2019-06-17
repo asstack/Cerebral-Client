@@ -72,9 +72,9 @@ class MessageList extends Component {
             <img className="search-img" src={process.env.PUBLIC_URL + '/img/search.png'}/>
           </div> 
         </div>
-        <div className="d-flex flex-row align-items-center message-button-holder">
+        <div className="d-flex flex-row align-items-center message-button-holder" onClick={e=>this.new_msg_handler(e,null)} >
           <img className="remove-button" src={process.env.PUBLIC_URL+'/img/add_patient.png'}/> 
-          <div className="d-flex new-message-button" onClick={e=>this.new_msg_handler(e,null)}>New Message</div>
+          <div className="d-flex new-message-button">New Message</div>
         </div>
       </div> 
       <div className="d-flex flex-column">
