@@ -22,6 +22,7 @@ class QuestionBank extends Component{
       banks:this.props.question_banks,
       bank_name:this.props.bank_name,
       question_step:this.props.question_step,
+      questions:this.props.questions,
       is_loading:false
     }
     props.api_actions.api_reset()
@@ -43,17 +44,22 @@ class QuestionBank extends Component{
     
     if(!bank_name || url_info==='qualification'){ 
       patient_actions.update_patient_question_banks(['qualification'], 0).then(() => {
-        patient_actions.set_current_question_bank_by_name('qualification') 
-        this.update_bank_state() 
+        patient_actions.set_current_question_bank_by_name('qualification').then(resp => {
+          console.log("questions", resp)  
+          this.setState({questions:resp.data})
+          this.update_bank_state() 
+        }) 
       })	
       
       if(url_info!=='qualification') this.props.history.push("/patient/qualification")
     }else if(bank_name === question_banks[step]){
       this.update_bank_state()
     }else if(question_banks && question_banks[step]){
-      patient_actions.update_patient_state(question_banks[step])
-      patient_actions.set_current_question_bank_by_name(question_banks[step]) 
-      this.props.history.push(`/patient/${question_banks[step]}`) 
+      patient_actions.set_current_question_bank_by_name(question_banks[step]).then(resp => { 
+        patient_actions.update_patient_state(question_banks[step])
+        this.setState({questions:resp.data})
+        this.props.history.push(`/patient/${question_banks[step]}`) 
+      }) 
     }
     //else need to redirect to somewhere..
   }
@@ -62,17 +68,31 @@ class QuestionBank extends Component{
     const {bank_name, question_banks_step, question_banks, patient_actions} = this.props
 
     if(this.state.bank_step < question_banks_step){
-      this.update_bank_state()
-      patient_actions.update_patient_state(question_banks[question_banks_step])
-      patient_actions.set_current_question_bank_by_name(question_banks[question_banks_step])
-      this.props.history.push("/patient/"+question_banks[question_banks_step]) 
+      patient_actions.set_current_question_bank_by_name(question_banks[question_banks_step]).then(resp => { 
+        this.setState({questions:resp.data})
+        this.update_bank_state()
+        patient_actions.update_patient_state(question_banks[question_banks_step])
+        this.props.history.push("/patient/"+question_banks[question_banks_step]) 
+      })
     }else if(this.state.bank_step > question_banks_step){
-      this.update_bank_state()
-      patient_actions.update_patient_state(question_banks[question_banks_step])
-      patient_actions.set_current_question_bank_by_name(question_banks[question_banks_step], true)
-      this.props.history.push("/patient/"+question_banks[question_banks_step]) 
+      patient_actions.set_current_question_bank_by_name(question_banks[question_banks_step], true).then(resp => {
+
+        patient_actions.update_patient_state(question_banks[question_banks_step])
+        this.update_bank_state()
+        this.setState({questions:resp.data}) 
+        this.props.history.push("/patient/"+question_banks[question_banks_step]) 
+      })
     }
   }
+
+
+  componentWillReceiveProps = (next_props) => { 
+
+    setTimeout(console.log("q bank receive props timer") ,1000)
+    console.log("get questions:", next_props.questions)  
+  }
+
+
 
   /*local event this*/
   next_step_handler=(e)=>{
@@ -130,7 +150,8 @@ class QuestionBank extends Component{
   }
    
   patient_state_transition_helper = () => {
-    const {question_banks, question_banks_step, questions, question_step, patient_actions} = this.props 
+    const {question_banks, question_banks_step, question_step, patient_actions} = this.props 
+    const questions = this.state.questions
     if (this.props.api_middleware.status == 'REAUTH') {
       this.props.global_actions.remove_token()
       this.props.history.push("/patient/sign_in") 
@@ -146,9 +167,9 @@ class QuestionBank extends Component{
 
   
   submit_and_upload_data = (data, type) => { 
-    const {question_banks, question_banks_step, questions, question_step, 
+    const {question_banks, question_banks_step, question_step, 
            patient_actions} = this.props
-  
+    const questions = this.state.questions 
     this.setState({is_loading:true}) 
     patient_actions.upload_object_for_current_question(data, type).then((resp) => {
       this.setState({is_loading:false}) 
@@ -197,11 +218,12 @@ class QuestionBank extends Component{
       submit_and_upload_data:this.submit_and_upload_data.bind(this),
       patient_sign_in:this.sign_in_and_next.bind(this)
     }
-    const question = this.props.questions[this.props.question_step]
+    const question = this.state.questions[this.props.question_step]
 
     //TODO: using ref to change title and subtitle in child component, but it's hacky way. will take that part as a component 
     const component = common.map_type_to_component(question, handlers, this.props.user, this.subscript_ref, this.title_ref, this.props.q_number_ref)
     const QuestionsWrapper = wrapper.questions_wrapper(component, question, this.state, this.subscript_ref, this.title_ref) 
+    console.log("check rendering")
     return(
       <div className="d-flex flex-row justify-content-center">
         <QuestionsWrapper/>  
@@ -216,7 +238,7 @@ const mapStateToProps = (state) => {
   const {
     api_middleware: api_middleware,
     global_reducer: {app_state, current_user},
-    patient_reducer: {patient_object, question_banks,question_banks_step, patient_state, step, question_bank_id, questions, current_bank_name}
+    patient_reducer: {patient_object, question_banks,question_banks_step, patient_state, step, question_bank_id,current_bank_name}
   } = state
 
   return {
@@ -231,7 +253,6 @@ const mapStateToProps = (state) => {
     question_step: step,
     question_bank_id: question_bank_id,
     bank_name:current_bank_name,
-    questions: questions
   }
 }
 

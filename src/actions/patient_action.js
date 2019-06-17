@@ -155,7 +155,8 @@ export const update_patient_questions = (bank_id, bank_name, flag=false) => (dis
     .then(function(resp){
       let idx=0;
       if(flag) idx=resp.data.length-1
-      dispatch(set_patient_questions(resp.data, bank_id, bank_name, idx))
+      dispatch(set_patient_questions(resp.data, bank_id, bank_name, idx)) 
+      return resp
     })
 }
 

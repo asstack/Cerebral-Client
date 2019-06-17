@@ -18,7 +18,7 @@ class Patient extends Component{
   constructor(props){
     super(props)
     this.state = {
-      prev_state:this.props.patient_state,
+      prev_state:'',
       width: window.innerWidth,
     }
     this.q_number = React.createRef();    
@@ -40,11 +40,11 @@ class Patient extends Component{
 
 
   componentDidMount(){ 
-
     const {patient_actions, global_actions} = this.props
     const init_state = this.props.location.pathname.split("/")[2];    
     const user = this.props.user.attributes;
     this.update_width_handler()
+
     if(!user.patient && user.therapist){
       global_actions.reset_state()      
       Alert.info("Please sign in by using patient account.") 
@@ -58,7 +58,7 @@ class Patient extends Component{
 
     if(!init_state){
       this.props.history.push("/patient/sign_in") 
-    }else if(init_state!==this.state.prev_state){  
+    }else if(init_state==='qualification' || init_state!==this.state.prev_state){  
       this.setState({prev_state:init_state})
       patient_actions.update_patient_state(init_state)
     }
@@ -71,7 +71,8 @@ class Patient extends Component{
   }
  
 	componentDidUpdate(){	
-    
+    setTimeout(null,1000)
+    console.log("update here?") 
     window.addEventListener("resize", this.update_width_handler);
     const current_path = this.props.location.pathname
     const new_state = current_path.split("/")[2]
@@ -140,7 +141,7 @@ class Patient extends Component{
 
   // uses https://reacttraining.com/react-router/web/api/Route
   render_views(state){
-    
+   console.log("state: ", state) 
    if(state==="completed"){  
       return(
         <Route path="/patient/completed" component={CompleteProcess}/>
@@ -155,16 +156,17 @@ class Patient extends Component{
       return( 
         <Route path="/patient/sign_in" component={SignIn}/>
       )
-    }else if(this.props.question_banks.length===1){
+    }else if(this.props.question_banks.length===1 || state==="qualification" || state===""){
       return(
         <div className="d-flex flex-column container-noprogress">
             <div className="d-flex flex-row justify-content-left therapist-header">
               <img className="cerebral-logo" src={process.env.PUBLIC_URL + '/img/logo.png'}/>
             </div>
-            <Route path="/patient/:bank_name" component={QuestionBank}/>
+            <Route path="/patient/:bank_name" render = {props => <QuestionBank questions = {[]}/>}/>
           </div>
       )	 
     }else if(this.props.questions && this.props.questions[this.props.question_step]){
+      console.log("here came?") 
       const question = this.props.questions[this.props.question_step]
       const q_bank = this.props.current_bank_name
       let total = this.props.total_step
@@ -187,7 +189,7 @@ class Patient extends Component{
               <div ref={this.q_number} className="d-flex justify-content-left text-middle">{wording}</div>
               <div className="questions-container">
                 <Route path="/patient/:bank_name" render={(props) => 
-                    <QuestionBank q_number_ref={this.q_number}/>}/>
+                    <QuestionBank q_number_ref={this.q_number} questions = {this.props.questions}/>}/>
               </div>
             </div>
           </div>    
