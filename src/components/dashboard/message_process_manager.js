@@ -30,15 +30,13 @@ class MessageProcessManager extends Component {
   default_view = () => {
     return (  
       <div className="d-flex flex-column profile-main-content">
-        <div className="d-flex justify-content-end text-main-title">INBOX</div>
+        <div className="d-flex justify-content-end text-main-title">MESSAGE CENTER</div>
         <div className="d-flex flex-column main-content-row">
            <div className="align-self-start main-content-wide-card">
             <div className="d-flex flex-column card-items-container">
-              <div className="wide-card-title">MY MESSAGES</div>
-              <div className="wide-card-description">You have no new messages</div>
               <div className="d-flex flex-column justify-content-center wide-card-item">
-                <input className="wide-card-selector align-self-center" type="button" value="Message support" onClick={e=>this.update_state_handler('support')}/>
-                <input className="wide-card-selector align-self-center" type="button" value="Message the doctor" onClick={e=>this.update_state_handler('inbox')}/>
+                <input className="wide-card-selector align-self-center" type="button" value="Support Inbox" onClick={e=>this.update_state_handler('support')}/>
+                <input className="wide-card-selector align-self-center" type="button" value="Doctor Inbox" onClick={e=>this.update_state_handler('inbox')}/>
               </div>
             </div> 
           </div>           

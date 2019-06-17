@@ -38,10 +38,11 @@ class MessageList extends Component {
 
   row_item = (item, index) => {
     let css_style = index===this.state.threads-1?"table-item-last":"table-item"
+    console.log("thread item:", item)
     return(
       <div  key={uuidv1()} className={"d-flex flex-row justify-content-start "+css_style} onClick={e=>this.new_msg_handler(e, item)}>
         <div className="d-flex justify-content-center align-items-center message-item-col-1"> <input type='checkbox'/> </div>
-        <div className="d-flex justify-content-start align-items-center message-item-col-2">Doctor's Name</div>
+        <div className="d-flex justify-content-start align-items-center message-item-col-2">Dr Ahn</div>
         <div className="d-flex justify-content-start align-items-center message-item-col-3">{this.state.user.attributes.patient?"Prescription Status":"Patient name"}</div> 
         <div className="d-flex justify-content-start align-items-center message-item-col-4">Message Subject</div>
         <div className="d-flex justify-content-start align-items-center message-item-col-5">Date</div>
@@ -54,7 +55,7 @@ class MessageList extends Component {
   row_header = () => (
    <div className="d-flex flex-row justify-content-start table-item-head">
      <div className="d-flex justify-content-center align-items-center message-item-col-1"><input type='checkbox'/> </div>
-      <div className="d-flex justify-content-start align-items-center message-item-col-2">Doctor's name</div>
+      <div className="d-flex justify-content-start align-items-center message-item-col-2">Dr Ahn</div>
       <div className="d-flex justify-content-start align-items-center message-item-col-3"> {this.state.user.attributes.patient?"Prescription Status":"Patient name"}</div> 
       <div className="d-flex justify-content-start align-items-center message-item-col-4">Message Subject</div>
       <div className="d-flex justify-content-start align-items-center message-item-col-5">Date</div>
