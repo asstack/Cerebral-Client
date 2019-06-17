@@ -170,7 +170,7 @@ class Messenger extends Component {
             <div className="d-flex flex-column">
               <div className="d-flex flex-column message-header-area">
                  <div className="d-flex message-title"> 
-                  <div className="message-title-left">Dr Ahn</div> 
+                  <div className="message-title-left">Dr Anh</div> 
                 </div>
                 <div className="d-flex message-title message-title-end">
                   <div className="message-title-left">Patient:</div> 
