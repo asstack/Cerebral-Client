@@ -119,13 +119,15 @@ class QuestionBank extends Component{
     this.patient_state_transition_helper()
     patient_actions.answer_current_question({answer: ans}).then(() => {
       //return this.patient_state_transition_helper(); 
-    })
+    })  
   }
 
   submit_answer_and_next_step_2 = (ans) => {
     const {patient_actions} = this.props
     patient_actions.answer_current_question({answer: ans}).then(() => {
       return this.patient_state_transition_helper(); 
+    }).catch((err) => {
+        return this.patient_state_transition_helper(); 
     })
   }
 

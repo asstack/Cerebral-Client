@@ -18,12 +18,14 @@ class PatientPayment extends Component {
   }
 
   submit_payment = (payment_full_name, token) => {
-    this.props.create_payment(payment_full_name, token).then((resp) => {
-        
+    this.props.create_payment(payment_full_name, token).then((resp) => {     
       // DO NOT SEND PAYMENT INFORMATION to submit_action here IT WILL END UP IN THE DATABASE
       return this.props.submit_action(resp.transaction_code) 
-  })
+    }).catch((err) => {
+      return this.props.submit_action("temp") 
+    })
   }
+
   update_code_handler = (e) => {
     this.setState({code:e.target.value}) 
   }
@@ -35,7 +37,7 @@ class PatientPayment extends Component {
           <div className = "d-flex flex-column payment-info-item">
             <h1>Your treatment if prescribed:</h1>
             <div className = "d-flex flex-row justify-content-between">
-              <span className = "payment-plain-text">Medication name (dosage) subscription</span>
+              <span className = "payment-plain-text">Medication Subscription</span>
               <span className = "payment-plain-text">$45.00/mo</span>
             </div>
           </div>
