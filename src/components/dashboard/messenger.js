@@ -143,14 +143,14 @@ class Messenger extends Component {
 
   to_option =(val, index)=>{
     return(
-      <option key={uuidv1()} value={index}>{val.user.email}</option>
+      <option key={uuidv1()} value={index}>{val.user.first_name + " "+val.user.last_name}</option>
     )
   }
 
   to_list= () => {
     return(
       <select onChange = {this.set_to_target}>
-        <option value={null}>{this.state.target?this.state.target.user.email:'select from list'}</option>
+        <option value={null}>{this.state.target?this.state.target.user.first_name+" "+this.state.target.user.last_name:'Select from list'}</option>
         {this.state.to_lists.map((val,index)=>this.to_option(val,index))} 
       </select>   
     )
@@ -177,7 +177,7 @@ class Messenger extends Component {
                 </div>
                 <div className="d-flex message-title message-title-end">
                   <div className="message-title-left">Patient:</div> 
-                  {this.state.thread && this.state.target?this.state.target.user.email:this.to_list()}
+                  {this.state.thread && this.state.target?this.state.target.user.first_name + " " + this.state.target.user.last_name:this.to_list()}
                 </div>
                 {this.state.user.attributes.therapist && this.state.target==='doctor' 
                     ?<div className="d-flex message-title"> Patient Name:</div>
