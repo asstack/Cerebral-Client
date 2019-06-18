@@ -68,7 +68,7 @@ class DosagePreference extends QuestionPreference {
       <div className='text-small text-left' style={{position: 'relative', left: '10%', top: '27%', color:'#444444'}}>{item.dosage} milligrams</div>
 
       <div className='text-left' style={{position: 'relative', left: '10%', top: '35%'}}>Price</div>
-      <div className='text-small text-left' style={{position: 'relative', left: '10%', top: '37%', color:'#444444'}}>${item.price} per 30 days</div>
+      <div className='text-small text-left' style={{position: 'relative', left: '10%', top: '37%', color:'#444444'}}>$45 per 30 days</div>
       </div>
   )
   }

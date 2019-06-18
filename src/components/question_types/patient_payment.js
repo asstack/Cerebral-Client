@@ -9,6 +9,9 @@ class PatientPayment extends Component {
 
   constructor(props){
     super(props)
+    this.state = {
+      code:"",
+    }
   }
 
   componentDidMount = () => {
@@ -20,6 +23,9 @@ class PatientPayment extends Component {
       // DO NOT SEND PAYMENT INFORMATION to submit_action here IT WILL END UP IN THE DATABASE
       return this.props.submit_action(resp.transaction_code) 
   })
+  }
+  update_code_handler = (e) => {
+    this.setState({code:e.target.value}) 
   }
   
   render(){
@@ -46,12 +52,12 @@ class PatientPayment extends Component {
           <div className = "d-flex flex-row justify-content-between align-items-center payment-info-item">
             <span className = "payment-plain-text">Referral code (-$7.00)</span>
             <div className = "d-flex flex-row align-items-center payment-input-holder">
-              <input type='text' placeholder='Enter your therapist referral code here'/>
+              <input type='text' onChange={this.update_code_handler} placeholder='Enter your therapist referral code here'/>
             </div>
           </div>
           <div className = "d-flex flex-row justify-content-between payment-info-item-total">
             <span className = "payment-bold-text">Order Total</span>
-            <span className = "payment-bold-text">$ 23.00/mo</span>
+            <span className = "payment-bold-text">{this.state.code !=='Wellspace01'?"$45.00/mo":"$38.00/mo"}</span>
           </div>
         </div>
 

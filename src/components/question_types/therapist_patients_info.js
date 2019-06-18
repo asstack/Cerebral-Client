@@ -21,7 +21,7 @@ class TherapistPatientsInfo extends Component{
   }
  
   componentWillReceiveProps = (next_props) => { 
-    this.setState({ref_id:next_props.ref_id, q_id:next_props.q_id, fisrt_name:next_props.patient.first_name, last_name:next_props.patient.last_name, email:next_props.patient.email, phone:null})
+    this.setState({ref_id:next_props.ref_id, q_id:next_props.q_id, first_name:next_props.patient.first_name, last_name:next_props.patient.last_name, email:next_props.patient.email, phone:null})
     this.forceUpdate()
   }
 
