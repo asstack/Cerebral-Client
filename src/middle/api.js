@@ -46,7 +46,7 @@ export const api_call = (type, url, header, body = null, update_data=null) => di
     }
   ).catch(error => {
 
-    if (error.response.status == 401) {
+    if (error.response.status === 401) {
       dispatch({
         type: API_REAUTH,
         error: error.data

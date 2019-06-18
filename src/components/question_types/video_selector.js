@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import * as components from '../question_components/components'
 import TextArea from './text_area'
 import VideoRecorderComponent from '../video_recorder'
 

@@ -1,5 +1,4 @@
 import React, {Component} from 'react'
-import ReactDOM from 'react-dom'
 import * as components from '../question_components/components'
 
 class TextArea extends Component {

@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import * as components from '../question_components/components'
 import MessageList from './message_list'
 import Messenger from './messenger'
 

@@ -18,9 +18,9 @@ class PatientShipping extends Component {
       this.props.submit_action(JSON.stringify(this.state)) 
    }
 
-   update_property = (which, e) => {
-       this.state[which] = e.target.value
-   }
+  update_property = (which, e) => {
+     this.setState({which:e.target.value})
+  }
 
   set_view_type_handler = (e, type) => {
     this.setState({validation_method:type})

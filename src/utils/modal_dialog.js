@@ -1,4 +1,4 @@
-import React, {Component} from 'react'
+import React from 'react'
 import { createModal } from 'react-modal-promise'
 import { Modal } from 'react-bootstrap'
 

@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import * as components from '../question_components/components'
 import { connect } from 'react-redux'
 import {get_message_threads_for_current_user} from "../../actions/user_auth_action"
 import uuidv1 from 'uuid'
@@ -47,7 +46,7 @@ class MessageList extends Component {
         <div className="d-flex justify-content-start align-items-center message-item-col-4">Message Subject</div>
         <div className="d-flex justify-content-start align-items-center message-item-col-5">Date</div>
         <div className="d-flex justify-content-center align-items-center message-item-col-6"> 
-          <img className="detail-btn" onClick={this.delete_msg_handler} src={process.env.PUBLIC_URL + '/img/trashcan.png'}/>
+          <img className="detail-btn" alt='delete msg' onClick={this.delete_msg_handler} src={process.env.PUBLIC_URL + '/img/trashcan.png'}/>
         </div>
       </div> 
     )
@@ -69,11 +68,11 @@ class MessageList extends Component {
         <div className="d-flex flex-row justify-content-between search-bar-holder">
           <input type="text" placeholder="Search Message"/>
           <div className="d-flex align-items-center">
-            <img className="search-img" src={process.env.PUBLIC_URL + '/img/search.png'}/>
+            <img className="search-img" alt='search' src={process.env.PUBLIC_URL + '/img/search.png'}/>
           </div> 
         </div>
         <div className="d-flex flex-row align-items-center message-button-holder" onClick={e=>this.new_msg_handler(e,null)} >
-          <img className="remove-button" src={process.env.PUBLIC_URL+'/img/add_patient.png'}/> 
+          <img className="remove-button" alt='remove' src={process.env.PUBLIC_URL+'/img/add_patient.png'}/> 
           <div className="d-flex new-message-button">New Message</div>
         </div>
       </div> 

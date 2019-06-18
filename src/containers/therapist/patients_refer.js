@@ -1,5 +1,4 @@
 import React, {Component} from 'react'
-import { connect } from 'react-redux'
 import * as components from '../../components/question_components/components'
 import { createModal } from 'react-modal-promise'
 import { Modal } from 'react-bootstrap'

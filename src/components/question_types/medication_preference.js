@@ -1,13 +1,10 @@
-import React, {Component} from 'react'
+import React from 'react'
 import {QuestionPreference, prop_methods} from './question_preference'
 import { connect } from 'react-redux'
 import { get_treatments, set_treatment } from '../../actions/patient_action'
 
 
 class MedicationPreference extends QuestionPreference {
-  constructor(props) {
-    super(props)
-  }
 
   componentDidMount = () => {
 

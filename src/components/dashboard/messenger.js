@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import * as components from '../question_components/components'
 import ReactDOM from 'react-dom'
 import { connect } from 'react-redux'
 import {get_patient_details, get_patients_for_therapist} from "../../actions/therapist_action"
@@ -74,7 +73,6 @@ class Messenger extends Component {
   
   //TODO: get more previous chat if got last item
   on_scroll(e) {
-    const offsetTop  = e.target.getBoundingClientRect(); 
 
     if(e.target.scrollTop===0 && !this.state.is_last){
       //get more message 
@@ -190,7 +188,7 @@ class Messenger extends Component {
             </div> 
             <div className="d-flex flex-row align-items-center message-input-area">
               <input ref="msg_input" className="col message-input" onChange={this.update_msg_handler} type='text' placeholder='Type message here' defaultValue=""/> 
-              <img onClick={e=>this.send_msg_handler()}src={process.env.PUBLIC_URL + '/img/input_arrow.svg'} className="message-submit"/>
+              <img onClick={e=>this.send_msg_handler()} alt='send message' src={process.env.PUBLIC_URL + '/img/input_arrow.svg'} className="message-submit"/>
             </div>
           </div>
         </div> 

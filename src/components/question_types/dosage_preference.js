@@ -1,4 +1,4 @@
-import React, {Component} from 'react'
+import React from 'react'
 import { connect } from 'react-redux'
 import {QuestionPreference, prop_methods} from './question_preference'
 import { get_treatment_dosages, get_current_answer_by_name, get_treatment_by_name, set_dosage } from '../../actions/patient_action'
@@ -74,7 +74,7 @@ class DosagePreference extends QuestionPreference {
   }
 
   get_image_for_item = (item, is_recommended) => {
-    let color = is_recommended ? 'purple' : 'blue'
+    //let color = is_recommended ? 'purple' : 'blue'
     return is_recommended ? item.recommended_image : item.image
   }
 }

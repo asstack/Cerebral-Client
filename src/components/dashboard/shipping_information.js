@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
-import * as components from '../question_components/components'
 import {connect} from 'react-redux'
-import {Route, withRouter } from "react-router-dom"
+import {withRouter } from "react-router-dom"
 
 import {get_patient_shipping_address} from '../../actions/patient_action'
 

@@ -1,5 +1,5 @@
 import * as global_actions from './user_auth_action'
-import { register_user, get_user_attr, make_headers } from './user_auth_action';
+import { get_user_attr, make_headers } from './user_auth_action';
 import axios from 'axios'
 
 export const SET_THERAPIST = 'SET_THERAPIST'

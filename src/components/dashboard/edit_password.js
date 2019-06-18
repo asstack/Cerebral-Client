@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import * as components from '../question_components/components'
 
 //not sure patient and therapist can share this component
 class EditPassword extends Component {

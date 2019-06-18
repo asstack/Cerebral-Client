@@ -1,7 +1,4 @@
 import React, {Component} from 'react'
-import { connect } from 'react-redux'
-import { sign_in } from '../../actions/user_auth_action'
-import { move_patient_sign_up, set_profile_question } from '../../actions/patient_action'
 import * as components from '../../components/question_components/components'
 
 

@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import * as components from '../question_components/components'
 import { connect } from 'react-redux'
 import Moment from 'moment';
 import {get_patient_details} from "../../actions/therapist_action"
@@ -21,7 +20,7 @@ class PatientInformation extends Component {
   }
 
   componentDidMount = () => {
-    const patient = this.props.patient 
+  
   }
 
   componentWillReceiveProps = (next_props) => { 

@@ -1,12 +1,10 @@
 import React, {Component} from 'react';
-import * as components from '../question_components/components'
 import CreateProfile from './create_profile'
 import SignIn from './sign_in'
 import {withRouter} from "react-router-dom"
 import {connect} from 'react-redux'
 
 import { ensure_visit, get_current_patient } from '../../actions/patient_action'
-import Alert from 'react-s-alert'
 
 class RegisterManager extends Component {
 

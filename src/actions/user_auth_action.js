@@ -10,7 +10,7 @@ export const SET_QUESTIONS = "SET_QUESTIONS"
 export const SET_PATIENT = "SET_USER_PATIENT"
 export const SET_THERAPIST = "SET_USER_THERAPIST"
 
-const proxy = require('http-proxy-middleware');
+//const proxy = require('http-proxy-middleware');
 
 // set_user will update global state with information corresponding to the User object in the database
 const set_user = user_info => ({

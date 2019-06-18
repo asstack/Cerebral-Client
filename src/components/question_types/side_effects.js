@@ -1,8 +1,4 @@
-import React, {Component} from 'react'
-import uuidv1 from  'uuid/v1';
-import {Router, Route, withRouter} from 'react-router-dom'
 import { connect } from 'react-redux'
-import * as components from '../question_components/components'
 import { get_side_effects } from '../../actions/patient_action'
 import CheckBoxComponent from './checkbox';
 
