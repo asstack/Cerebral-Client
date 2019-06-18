@@ -54,7 +54,7 @@ class PatientInformation extends Component {
                 </div> 
                 <div className = "d-flex flex-row patient-basic-right item">
                   <div className = "patient-basic-left-item">Telephone number:</div>
-                  <div className = "patient-basic-right-item">{this.state.patient?this.state.patient.visit.answers[0].response||"Not provided":"Not provided"}</div> 
+                  <div className = "patient-basic-right-item">{this.get_named_answer('phone')}</div> 
                 </div>
               </div>
             </div>
@@ -106,6 +106,12 @@ class PatientInformation extends Component {
     </div>
   }
 
+  get_named_answer = (name) => {
+    if (!this.state.patient) return 'No patient information'
+    const answer = this.state.patient.visit.answers.filter(answer => answer.question.name  == name)
+    return answer.length > 0 ? answer[0].response : 'No response to question'
+  }
+
   patient_prescriber_info = () => {
     return <div className="align-self-start main-content-wide-card">
       <div className="d-flex flex-column card-items-container">
@@ -118,8 +124,8 @@ class PatientInformation extends Component {
                 <div className = "patient-referral-left">   
                   Treatment duration:
                 </div>
-                <div className = "patient-referral-right">   
-                  {this.state.patient?this.state.patient.visit.answers[2].response||'Information not provided':'Information not provided'} 
+                <div className = "patient-referral-right"> 
+                  {this.get_named_answer('referral_how_long')}  
                 </div>
                </div>
 
@@ -128,7 +134,7 @@ class PatientInformation extends Component {
                   Support network:
                 </div>
                 <div className = "patient-referral-right">   
-                  {this.state.patient?this.state.patient.visit.answers[3].response||'Information not provided':'Information not provided'} 
+                  {this.get_named_answer('referral_support_network')}  
                 </div>
                </div>
 
@@ -137,21 +143,20 @@ class PatientInformation extends Component {
                   Self harm/Violent tendencies:
                 </div>
                 <div className = "patient-referral-right">   
-                  {this.state.patient?this.state.patient.visit.answers[4].response||'Information not provided':'Information not provided'} 
+                  {this.get_named_answer('referral_danger')}  
                 </div>
                </div>
 
                <div className = "d-flex flex-row"> 
                 <div className = "patient-referral-left">   
-                  Diagnoses notes:
+                  Diagnosis notes:
                 </div>
                 <div className = "patient-referral-right">   
-
-                  {this.state.patient?this.state.patient.visit.answers[5].response||'Information not provided':'Information not provided'} 
+                  {this.get_named_answer('referral_notes')}  
                 </div>
                </div>
                <div className="d-flex flex-row align-items-center message-input-area-no-margin">
-                <input ref="msg_input" className="col message-input" onChange={this.update_msg_handler} type='text' placeholder='Add addisional notes' defaultValue=""/> 
+                <input ref="msg_input" className="col message-input" onChange={this.update_msg_handler} type='text' placeholder='Add additional notes' defaultValue=""/> 
                 <img src={process.env.PUBLIC_URL + '/img/input_arrow.svg'} className="message-submit"/>
               </div>
             </div>
