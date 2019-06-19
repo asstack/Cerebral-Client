@@ -58,7 +58,6 @@ class QuestionBank extends Component{
     const {patient_actions} = this.props
     patient_actions.update_patient_question_banks([bank_name], 0).then(() => {
       patient_actions.set_current_question_bank_by_name(bank_name, is_last).then(resp => {
-        console.log("did Mount get questions:", resp.data)
         this.setState({is_ready:true})
       })
     })  
@@ -122,16 +121,34 @@ class QuestionBank extends Component{
   }
   
 
+  skip_questions = (step, skip_step) => {  
+    let q_type = this.state.questions[step].question_type;
+    if(q_type==='create_profile' && this.props.user['access-token']){
+      this.props.patient_actions.set_step(skip_step);
+    }else if(q_type==='dosage_preference' && this.props.user['access-token']){
+      this.props.patient_actions.get_current_answer_by_name('medication_preference').then(resp => {
+        if(!resp.response){ 
+          if(this.state.questions.length > skip_step+1){
+            this.props.patient_actions.set_step(skip_step);
+          }else{
+            this.props.patient_actions.set_current_question_bank_by_name(this.state.banks[this.state.bank_step+1], false, this.state.bank_step+1)
+          }
+        }else{
+          this.props.patient_actions.set_step(step);
+        } 
+      })  
+    }else{ 
+      this.props.patient_actions.set_step(step);
+    }
+   }
+
   back_btn_handler = () => {
     const {questions, banks, bank_step, question_step} = this.state
     if(question_step > 0){
       //just change the step  
-      let new_step = questions[question_step-1].question_type==="create_profile"  && this.props.user['access-token']?question_step-2:question_step-1;
-      this.props.patient_actions.set_step(new_step);
+      this.skip_questions(question_step-1, question_step-2);   
     }else if(question_step === 0 && bank_step > 0){
-      this.props.patient_actions.set_current_question_bank_by_name(banks[bank_step-1], true, bank_step-1).then(resp => {
-        console.log("get questions:", resp.data)
-      }) 
+      this.props.patient_actions.set_current_question_bank_by_name(banks[bank_step-1], true, bank_step-1)
     }
   }
    
@@ -142,12 +159,9 @@ class QuestionBank extends Component{
       this.props.history.push("/patient/completed") 
       this.props.patient_actions.clean_up_patient_process()
     }else if(questions.length > question_step+1){ 
-      let new_step = questions[question_step+1].question_type==="create_profile" && this.props.user['access-token']?question_step+2:question_step+1;
-      this.props.patient_actions.set_step(new_step);
+      this.skip_questions(question_step+1, question_step+2);
     }else{
-      this.props.patient_actions.set_current_question_bank_by_name(banks[bank_step+1], false, bank_step+1).then(resp => {
-        console.log("get questions:", resp.data)
-      })
+      this.props.patient_actions.set_current_question_bank_by_name(banks[bank_step+1], false, bank_step+1)
     }
   }
 
@@ -172,15 +186,6 @@ class QuestionBank extends Component{
       this.patient_state_transition_helper()
       //return this.patient_state_transition_helper(); 
     })  
-  }
-
-  submit_answer_and_next_step_2 = (ans) => {
-    const {patient_actions} = this.props
-    patient_actions.answer_current_question({answer: ans}).then(() => {
-      return this.patient_state_transition_helper(); 
-    }).catch((err) => {
-        return this.patient_state_transition_helper(); 
-    })
   }
 
 
@@ -236,10 +241,10 @@ class QuestionBank extends Component{
       this.setState({is_loading:false}) 
       this.patient_state_transition_helper()
     })
-      .catch((err) => {
-        this.setState({is_loading:false}) 
-        this.patient_state_transition_helper()
-      })
+    .catch((err) => {
+      this.setState({is_loading:false}) 
+      this.patient_state_transition_helper()
+    })
   }
 
   sign_in_and_next = (info) => { 
@@ -290,7 +295,6 @@ class QuestionBank extends Component{
 
   non_progress_view = (component, question) => {
 
-    console.log("non progress")
     const QuestionsWrapper = wrapper.questions_wrapper(component, question, this.state, this.subscript_ref, this.title_ref) 
     return(
       <div className="d-flex flex-column container-noprogress">
@@ -306,7 +310,6 @@ class QuestionBank extends Component{
 
   progress_view =  (component, question) => {
 
-    console.log("progress")
     const q_bank = this.state.banks[this.state.bank_step]
     const QuestionsWrapper = wrapper.questions_wrapper(component, question, this.state, this.subscript_ref, this.title_ref) 
     let total = this.state.questions.length
@@ -362,7 +365,6 @@ class QuestionBank extends Component{
   type_to_view = (component, question) => {
 
     let bank_len = this.state.banks.length
-    console.log("type_to_view:", bank_len, ", ", this.state.is_ready)
     if(this.state.is_ready && bank_len === 1){
       return this.non_progress_view(component, question)
     }else if(this.state.is_ready && bank_len > 1){ 
@@ -383,7 +385,6 @@ class QuestionBank extends Component{
 
     //TODO: using ref to change title and subtitle in child component, but it's hacky way. will take that part as a component 
     const question = this.state.questions[this.state.question_step]
-    console.log("question bank render:", question,",",this.state)
     const component = common.map_type_to_component(question, handlers, this.props.user, this.subscript_ref, this.title_ref)
     return(
       this.type_to_view(component, question)

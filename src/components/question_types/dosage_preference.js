@@ -22,7 +22,7 @@ class DosagePreference extends QuestionPreference {
         console.log("!resp  response: ", resp)
         this.props.set_dosage({name: null, id: 0})
         // TODO: skip this component
-        this.props.skip_action()
+        //this.props.skip_action()
       }
       else {
 
