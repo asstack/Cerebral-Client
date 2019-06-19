@@ -16,39 +16,25 @@ import Alert from 'react-s-alert'
 
 class App extends Component {
 
-  //Todo: get state before compoenet mounting
-  //Routing : [/, patinet, therapist]
   constructor(props){
     super(props)
     props.set_env(props.env)
     if (props.env.REACT_APP_GA_KEY) ReactGA.initialize(props.env.REACT_APP_GA_KEY);
     this.state = {
-      prv_state:this.props.app_state, 
-      prv_path:"/"
+      current_state:'' 
     }
   }
   
   componentDidMount(){
     const init_state =  this.props.location.pathname.split("/")[1]  
-    if(init_state!=this.state.prv_state){
-      this.setState({prv_state:init_state})
-      this.props.update_app_state(init_state) 
-    }
+    this.setState({current_state:init_state}) 
   }
 
-  componentDidUpdate(){
-    const {app_state} = this.props
-    const current_path = this.props.location.pathname
-    const new_state = current_path.split("/")[1]
-
-    if(current_path!==this.state.prv_path){
-
-      if (this.props.env.REACT_APP_GA_KEY) ReactGA.pageview(current_path);
-      
-      this.setState({prv_path:current_path});  
-    }
-    if(new_state!==this.state.prv_state){
-      this.setState({prv_state:new_state})
+  componentDidUpdate(){ 
+    const new_state =  this.props.location.pathname.split("/")[1]  
+    if(this.state.current_state!==new_state){
+      console.log("App did update:", new_state)
+      this.setState({current_state:new_state});  
     }
   }
 
@@ -66,33 +52,14 @@ class App extends Component {
     }
   }
 
-  mapStateToPath = state => {
-    switch(state) {
-      case 'checkout':
-        return "/checkout"
-      case 'treatment':
-        return "/treatment"
-      case 'patient':
-        return "/patient"
-      case 'therapist':
-        return "/therapist"
-      case 'user':
-        return "/user"
-      default:
-        return "/";
-    }
-  }
-
   render(){
-    let component = this.target_component(this.state.prv_state)
-    let path = this.mapStateToPath(this.state.prv_state)
-    
-    console.log('App,js: ',path, ",", this.state.prv_state)
+    let component = this.target_component(this.state.current_state) 
+    console.log('App rendering: ',this.state.current_state)
     return (
       <div className="App d-flex justify-content-center container">
         <ModalContainer />
         <ErrorBoundary airbrake_project={process.env.REACT_APP_AIRBRAKE_PROJECT_ID} airbrake_key={process.env.REACT_APP_AIRBRAKE_API_KEY}>
-          <Route path={path} component={component} />
+          <Route path='/' component={component} />
           <Alert stack={{limit: 3}} />
         </ErrorBoundary>
       </div>
@@ -100,9 +67,5 @@ class App extends Component {
   }
 }
 
-const mapStateToProps = (state) => {
-  const {global_reducer: {app_state}} = state
-  return {app_state: app_state}
-}
 
-export default withRouter(connect(mapStateToProps,{update_app_state, set_env}) (App))
+export default withRouter(connect(null,{update_app_state, set_env}) (App))

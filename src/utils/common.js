@@ -35,16 +35,16 @@ export const email_validation = email => {
   }
 }
 
-export const map_type_to_component = (question, handlers, user, subscript_ref, title_ref, q_number_ref) => {
+export const map_type_to_component = (question, handlers, user, subscript_ref, title_ref) => {
   if(!question) return null
 
   switch(question.question_type) {
     case 'insomnia_cover': 
-      return <InsomniaCover submit_action = {handlers.submit_answer_and_next_step} q_number_ref = {q_number_ref}/>
+      return <InsomniaCover submit_action = {handlers.submit_answer_and_next_step} />
     case 'mental_health_cover':
-      return <MentalHealthCover submit_action = {handlers.submit_answer_and_next_step}q_number_ref = {q_number_ref}/>
+      return <MentalHealthCover submit_action = {handlers.submit_answer_and_next_step} />
     case 'identification_cover':
-      return <IdentificationCover submit_action = {handlers.submit_answer_and_next_step} q_number_ref = {q_number_ref}/>
+      return <IdentificationCover submit_action = {handlers.submit_answer_and_next_step} />
     case 'selector':
       return selector(handlers.set_selector_handler, question)
     case 'emergency_contact':
@@ -96,13 +96,13 @@ export const map_type_to_component = (question, handlers, user, subscript_ref, t
     case 'patient_shipping':
       return <PatientShipping submit_action = {handlers.submit_answer_and_next_step}/> 
     case 'patient_payment':
-      return <PatientPayment submit_action = {handlers.submit_answer_and_next_step_2}/> 
+      return <PatientPayment submit_action = {handlers.submit_answer_and_next_step}/> 
     case 'side_effects':
       return <SideEffects submit_action = {handlers.submit_answer_and_next_step}/>  
     case 'medication_preference':
-      return <MedicationPreference submit_action = {handlers.submit_answer_and_next_step_2}/>  
+      return <MedicationPreference submit_action = {handlers.submit_answer_and_next_step}/>  
     case 'dosage_preference':
-      return <DosagePreference submit_action = {handlers.submit_answer_and_next_step_2} skip_action = {handlers.next_step_handler}/>  
+      return <DosagePreference submit_action = {handlers.submit_answer_and_next_step} skip_action = {handlers.next_step_handler}/>  
     case 'patient_video':
       return <VideoSelector 
               flag_title = {question.flag_title}

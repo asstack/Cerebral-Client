@@ -47,13 +47,14 @@ const set_state_with_step = (state, new_step) => ({
   new_step:new_step
 })
 
-const set_patient_questions = (questions, bank_id, bank_name, q_id) => ({
+const set_patient_questions = (questions, bank_id, bank_name, q_id, bank_step) => ({
   type:SET_PATIENT_QUESTIONS,
   questions:questions,
   total_step:questions.length,
   bank_id:bank_id,
   bank_name:bank_name,
-  q_id:q_id
+  q_id:q_id,
+  bank_step:bank_step
 })
 
 const set_question_banks = (question_bank_objects, questions_banks, bank_step=0) => ({
@@ -140,22 +141,21 @@ export const update_patient_question_banks = (bank_names, step) => (dispatch, ge
     })
 }
 
-export const set_current_question_bank_by_name = (bank_name, flag=false) => (dispatch, getState) => {
+export const set_current_question_bank_by_name = (bank_name, flag=false, bank_step=0) => (dispatch, getState) => {
   var header = {'Content-Type': 'application/json'}
   return axios.get(`/api/question_banks/search?name=${bank_name}`)
     .then(function(resp){
       console.log("current bank:", bank_name, " ", resp.data)
-      return dispatch(update_patient_questions(resp.data.id, bank_name,flag))
+      return dispatch(update_patient_questions(resp.data.id, bank_name, flag, bank_step))
     })
 }
 
-export const update_patient_questions = (bank_id, bank_name, flag=false) => (dispatch, getState) => { 
+export const update_patient_questions = (bank_id, bank_name, flag=false,bank_step=0) => (dispatch, getState) => { 
   var header = {'Content-Type': 'application/json'}
   return axios.get(`/api/question_banks/${bank_id}/questions`)
     .then(function(resp){
-      let idx=0;
-      if(flag) idx=resp.data.length-1
-      dispatch(set_patient_questions(resp.data, bank_id, bank_name, idx)) 
+      let idx=flag?resp.date.length-1:0;
+      dispatch(set_patient_questions(resp.data, bank_id, bank_name, idx, bank_step)) 
       return resp
     })
 }

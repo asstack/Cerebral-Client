@@ -83,7 +83,8 @@ export const patient_reducer = handleActions({
       question_bank_id : action.bank_id,
       current_bank_name : action.bank_name,
       questions : action.questions,
-      total_step : action.total_step
+      total_step : action.total_step,
+      question_banks_step : action.bank_step
     }
   },
   [patient_action_types.SET_QUESTION_BANKS]: (state, action) => {
