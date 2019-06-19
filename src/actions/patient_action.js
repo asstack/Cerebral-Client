@@ -7,6 +7,7 @@ import PromiseModal from 'react-modal-promise';
 
 export const SET_STEP = 'patient/SET_STEP'
 export const RESET_STATE = 'RESET'
+export const RESET_QUESTIONS_AND_VISIT = 'patient/iRESET_QUESTIONS_AND_VISIT'
 // these constants will not be used because answers will not be stored locally
 // export const SET_ANSWER = 'profile/SET_ANSWER'
 // export const SUBMIT_ANSWERS = 'profile/SUBMIT_ANSWERS'
@@ -27,8 +28,13 @@ export const SET_VISIT = 'patient/SET_VISIT'
 export const SET_TREATMENT = 'patient/SET_TREATMENT'
 export const SET_DOSAGE = 'patient/SET_DOSAGE'
 
+
 const reset_state = () => ({
   type:RESET_STATE
+})
+
+const cleanup_questions_and_visit = () => ({
+  type:RESET_QUESTIONS_AND_VISIT
 })
 
 //TODO: implement middleware for handling api call
@@ -154,7 +160,7 @@ export const update_patient_questions = (bank_id, bank_name, flag=false,bank_ste
   var header = {'Content-Type': 'application/json'}
   return axios.get(`/api/question_banks/${bank_id}/questions`)
     .then(function(resp){
-      let idx=flag?resp.date.length-1:0;
+      let idx=flag?resp.data.length-1:0;
       dispatch(set_patient_questions(resp.data, bank_id, bank_name, idx, bank_step)) 
       return resp
     })
@@ -248,7 +254,7 @@ export const ensure_visit = (force) => (dispatch, getState) => {
   var visit = getState().patient_reducer.visit_object
   var service_line = getState().patient_reducer.service_line
 
-  // TODO: we could also check to make sure the visit is not expired
+  // TODO: wecould also check to make sure the visit is not expired
   if (visit && !visit.complete && service_line.id == visit.service_line.id) {
     return Promise.resolve(visit)
   }
@@ -351,7 +357,6 @@ export const update_patient_state = state => (dispatch, getState) => {
   return dispatch(set_patient_state(state))
 }
 
-
 export const upload_object_for_current_question = (file, file_type) => (dispatch, getState) => {
 
   return dispatch(answer_current_question({upload: true, file_type: file_type})).then((resp) => {
@@ -365,6 +370,10 @@ export const upload_object_for_current_question = (file, file_type) => (dispatch
             return Promise.resolve()
           })
       })
+}
+
+export const clean_up_patient_process = () => (dispatch) => {
+  return dispatch(cleanup_questions_and_visit())
 }
 
 export const sign_out = () => (dispatch, getState) => {

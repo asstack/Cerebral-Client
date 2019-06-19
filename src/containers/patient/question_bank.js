@@ -7,10 +7,32 @@ import * as global_actions from '../../actions/user_auth_action'
 import * as api_actions from '../../middle/api'
 import * as wrapper from '../../utils/wrapper.js'
 import * as common from '../../utils/common.js'
+import { createModal } from 'react-modal-promise'
 import { Modal } from 'react-bootstrap'
 import uuidv1 from 'uuid'
 import ReactGA from 'react-ga'
 import Alert from 'react-s-alert'
+
+
+const MyModal = ({ open, close, message}) => (
+  <Modal show={open} onHide={() => close()}>
+    <Modal.Header closeButton>
+      <Modal.Title>Resume Assessment</Modal.Title>
+    </Modal.Header>
+    <Modal.Body>It looks like you were in the process of completing an assessment process. Would you like to begin where you left off?</Modal.Body>
+    <Modal.Footer>
+      <button variant="secondary" onClick={() => close(false)}>
+        No
+      </button>
+      <button variant="primary" onClick={() => close(true)}>
+        Yes
+      </button>
+    </Modal.Footer>
+  </Modal>
+)
+
+const myPromiseModal = createModal(MyModal)
+
 
 //TODO: temporarily use modal for loading but may change to react component
 class QuestionBank extends Component{
@@ -23,7 +45,9 @@ class QuestionBank extends Component{
       question_step:0,
       questions:[],
       width: window.innerWidth,
-      is_loading:false
+      visit:[],
+      is_loading:false,
+      is_ready:false,
     }
     props.api_actions.api_reset()
     this.subscript_ref = React.createRef();
@@ -35,6 +59,7 @@ class QuestionBank extends Component{
     patient_actions.update_patient_question_banks([bank_name], 0).then(() => {
       patient_actions.set_current_question_bank_by_name(bank_name, is_last).then(resp => {
         console.log("did Mount get questions:", resp.data)
+        this.setState({is_ready:true})
       })
     })  
   }
@@ -48,66 +73,46 @@ class QuestionBank extends Component{
         this.props.history.push("/patient/qualification") 
       } 
     }else{
-      if(url_info==='qualification' || !this.props.questions){
+      if(url_info==='qualification'){
         //TODO: create new visit and start from profile 
-        this.update_and_set_question('profile', 0)  
-        this.props.history.push("/patient/profile") 
+        if(!this.props.questions){
+          this.update_and_set_question('profile', 0)  
+          this.props.history.push("/patient/profile") 
+        }else{
+          return myPromiseModal({open:true}).then(value=>{
+            if(!value){
+              this.update_and_set_question('profile',0) 
+              this.props.history.push("/patient/profile") 
+            }else{  
+              let bank_name = this.props.question_banks[this.props.question_banks_step]
+              this.props.history.push("/patient/"+bank_name) 
+              this.setState({is_ready:true})
+            } 
+          }) 
+        }
       }else{
+        let bank_name = this.props.question_banks[this.props.question_banks_step]
+        if(url_info !== bank_name){ 
+          this.props.history.push("/patient/"+bank_name) 
+        }
+        this.setState({is_ready:true})
         //if ensure visit
         // modal to ask  
         //else
         // create_new_visit and set qualification
       }  
-    }
-    
-      /* 
-    else if(url_info==='qualification' && this.props.questions){
-      //provide option if whey want to continue or want to start from 0 
-      this.update_and_set_question('qualification', 0); 
-    }   
-    */
+    }  
   }
 
   componentDidUpdate(){
 
     console.log("question_bank componentDIdUpdate:", this.props.user) 
     //window.addEventListener("resize", this.update_width_handler);
-      /*
-    const {bank_name, question_banks_step, question_banks, patient_actions} = this.props
-    const url_info = this.props.location.pathname.split("/")[2];    
-    if( url_info!=='qualification' && this.state.bank_step < question_banks_step){
-
-      this.setState({bank_step:question_banks_step, is_loading:true})
-      patient_actions.set_current_question_bank_by_name(question_banks[question_banks_step]).then(resp => { 
-
-        setTimeout(console.log("set q bank did update"), 2000)
-        this.setState({questions:resp.data, is_loading:false})
-        this.update_bank_state()
-        patient_actions.update_patient_state(question_banks[question_banks_step])
-        this.props.history.push("/patient/"+question_banks[question_banks_step]) 
-      })
-    }else if(url_info!=='qualification' && this.state.bank_step > question_banks_step){
-      this.setState({bank_step:question_banks_step})
-      patient_actions.set_current_question_bank_by_name(question_banks[question_banks_step], true).then(resp => {
-
-        patient_actions.update_patient_state(question_banks[question_banks_step])
-        this.update_bank_state()
-        this.setState({questions:resp.data})
-        this.props.history.push("/patient/"+question_banks[question_banks_step]) 
-      })
-    }
-    */
   }
   
   //TODO: redux storage bank name is not correct
   componentWillReceiveProps = (next_props) => { 
-    console.log("question_bank receiveProps q:",next_props.questions )
-    console.log("question_bank receiveProps q_num:",next_props.question_step )
-    console.log("question_bank receiveProps banks:",next_props.question_banks )
-    console.log("question_bank receiveProps banks_step:",next_props.question_banks_step )
-    console.log("question_bank receiveProps bank_name:",next_props.bank_name )
-    console.log("state: ", this.state)
-    this.setState({questions:next_props.questions, question_step:next_props.question_step, bank_step:next_props.question_banks_step, banks:next_props.question_banks})
+    this.setState({visit: next_props.visit, questions:next_props.questions, question_step:next_props.question_step, bank_step:next_props.question_banks_step, banks:next_props.question_banks})
 
   }
 
@@ -121,7 +126,7 @@ class QuestionBank extends Component{
     const {questions, banks, bank_step, question_step} = this.state
     if(question_step > 0){
       //just change the step  
-      let new_step = questions[question_step-1].question_type==="create_profile"?question_step-2:question_step-1;
+      let new_step = questions[question_step-1].question_type==="create_profile"  && this.props.user['access-token']?question_step-2:question_step-1;
       this.props.patient_actions.set_step(new_step);
     }else if(question_step === 0 && bank_step > 0){
       this.props.patient_actions.set_current_question_bank_by_name(banks[bank_step-1], true, bank_step-1).then(resp => {
@@ -135,8 +140,9 @@ class QuestionBank extends Component{
     
     if(banks.length===bank_step+1 && questions.length === question_step+1){ 
       this.props.history.push("/patient/completed") 
+      this.props.patient_actions.clean_up_patient_process()
     }else if(questions.length > question_step+1){ 
-      let new_step = questions[question_step+1].question_type==="create_profile"?question_step+2:question_step+1;
+      let new_step = questions[question_step+1].question_type==="create_profile" && this.props.user['access-token']?question_step+2:question_step+1;
       this.props.patient_actions.set_step(new_step);
     }else{
       this.props.patient_actions.set_current_question_bank_by_name(banks[bank_step+1], false, bank_step+1).then(resp => {
@@ -196,7 +202,9 @@ class QuestionBank extends Component{
           patient_actions.update_patient_question_banks([this.props.question_banks[0]].concat(option.question_bank_names), question_banks_step).then(()=>{
             if (option.name) patient_actions.update_service_line(option.name)	 
             if (this.props.user['access-token']){
-              patient_actions.create_visit(option.name) 
+              if(!this.state.visit || this.state.visit.service_line.name!==option.name){
+                patient_actions.create_visit(option.name) 
+              }
             }
             this.patient_state_transition_helper(); 
           })
@@ -250,7 +258,7 @@ class QuestionBank extends Component{
   }
 
   //---------------- view ------------------//
-  modal = ({ open, close, message}) => (
+  progress_modal = ({ open, close, message}) => (
     <Modal className="loading-modal" show={open} onHide={() => console.log("cannot close")}>
           <Modal.Body className="loading-modal-body">
             <div className="spinner-border loading-icon-color" role="status">
@@ -323,7 +331,7 @@ class QuestionBank extends Component{
 
             <div className="d-flex flex-row justify-content-center">
               <QuestionsWrapper/>  
-              {this.state.is_loading?this.modal({open:true}): null}
+              {this.state.is_loading?this.progress_modal({open:true}): null}
             </div>
            </div>
           </div>
@@ -354,10 +362,10 @@ class QuestionBank extends Component{
   type_to_view = (component, question) => {
 
     let bank_len = this.state.banks.length
-    console.log("type_to_view:",bank_len)
-    if(bank_len === 1){
+    console.log("type_to_view:", bank_len, ", ", this.state.is_ready)
+    if(this.state.is_ready && bank_len === 1){
       return this.non_progress_view(component, question)
-    }else if(bank_len > 1){ 
+    }else if(this.state.is_ready && bank_len > 1){ 
       return this.progress_view(component, question)  
     }else return null 
   }
@@ -386,12 +394,13 @@ class QuestionBank extends Component{
 //TODO: elaborate to save memory
 const mapStateToProps = (state) => {
   const {
-    patient_reducer: {questions, question_banks, question_bank_objects, question_banks_step, patient_state, step, question_bank_id}
+    patient_reducer: {questions, visit_object, question_banks, question_bank_objects, question_banks_step, patient_state, step, question_bank_id}
   } = state
 
   return {
     patient_state: patient_state,
 		question_banks: question_banks,
+    visit: visit_object,
     question_bank_objects: question_bank_objects,
     question_banks_step: question_banks_step,
     question_step: step, 

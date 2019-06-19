@@ -45,6 +45,19 @@ export const patient_reducer = handleActions({
       is_complete: action.is_complete
     }
   },
+  [patient_action_types.RESET_QUESTIONS_AND_VISIT]: (state, action) => {
+    return{
+      ...state,
+      questions : '',
+      step:0,
+      question_banks:[],
+      question_banks_step:0,
+      current_bank_name:'',
+      visit_object: null, 
+      treatment_object: null,
+      dosage_object: null,
+    }
+  }, 
   [patient_action_types.SET_PATIENT]: (state, action) => {
     return{
       ...state,

@@ -45,7 +45,7 @@ class PatientPayment extends Component {
           <div className = "d-flex flex-column payment-info-item">
             <div className = "d-flex flex-row justify-content-between">
               <span className="payment-plain-text" >Online Doctor’s visit</span>
-              <div classNmae="d-flex flex-row justify-content-between">  
+              <div className="d-flex flex-row justify-content-between">  
                 <span className = "payment-plain-text text-green">FREE</span>
                 <span className="payment-plain-text text-disable">$15.00/visit</span>
               </div>
