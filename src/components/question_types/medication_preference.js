@@ -14,7 +14,8 @@ class MedicationPreference extends QuestionPreference {
       console.log("get_treatments resp: ", resp)
       this.setState({
         ...this.state,
-        options: resp
+        options: resp,
+        is_ready:true
       });
     })
   }

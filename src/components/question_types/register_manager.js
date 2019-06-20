@@ -16,16 +16,11 @@ class RegisterManager extends Component {
   }
 
   componentDidMount = () => {
-
-    /*
-    if(this.props.get_current_patient() && this.props.skip_action){
-      this.props.ensure_visit(true).then(() => {
-        this.props.skip_action() 
-      })
-    }
-    */
+    this.setState({view_type:'register'})
   }
+  
 
+  //TODO: Check therapist and patient to use same
   state_update=(e, type)=>{
     if(type==='signin'){
       if(this.props.update_type) this.props.update_type('register')
@@ -34,6 +29,11 @@ class RegisterManager extends Component {
     else {
       if(this.props.update_type) this.props.update_type('signin')
       this.setState({view_type:'signin'});
+    }
+
+    if(this.props.set_subcomp!==null){
+      if(type===this.props.view_type) this.props.set_subcomp(true) 
+      else this.props.set_subcomp(false)
     }
   }
 

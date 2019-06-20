@@ -8,14 +8,15 @@ export class QuestionPreference extends Component {
     super(props)
     this.state = {
       options: [],
-      selected_index: null
+      selected_index: null,
+      is_ready:false
     }
   }
 
   //TODO: Save multiple values from selected boxes
   check_box_handler = (e, selected_index) => {
     console.log(`check_box_handler: selected_index=${selected_index}`)
-    this.setState({...this.state, selected_index:selected_index})
+    this.setState({...this.state, is_ready:true, selected_index:selected_index})
   }
 
   capitalize = (str) => {
@@ -81,7 +82,8 @@ export class QuestionPreference extends Component {
 
   render(){
     // TODO: figure out which treatment was recommended
-    return (
+    if(!this.state.is_ready) return null
+    else return (
       <div>    
         {
           this.state.options.map((item, index) => (this.map_data_to_checkbox(item, index)))

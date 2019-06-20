@@ -12,7 +12,8 @@ class SideEffects extends CheckBoxComponent {
       this.setState({
         ...this.state,
         options: resp,
-        checked_options: new Array(resp.length).fill(false)  
+        checked_options: new Array(resp.length).fill(false), 
+        is_ready:true
       });
     })
   }

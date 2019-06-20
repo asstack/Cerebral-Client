@@ -94,7 +94,7 @@ class CreateProfile extends Component {
         {components.checkbox_type_1(this.set_concensus.bind(this), chk_wording)}
         </div>
         {components.confirm_button_type_1(this.update_handler.bind(this), btn_wording)}
-        {components.confirm_button_type_2(this.props.state_update, "I already have a Cerebral account", 'create')}
+        {components.confirm_button_type_2(this.props.state_update, "I already have a Cerebral account", 'register')}
       </div>
     );
   }

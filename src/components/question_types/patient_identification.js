@@ -14,8 +14,8 @@ class Identification extends Component {
   }
 
   set_type_handler = (e, type) => {
-    console.log(type)
     this.setState({view_type:type})
+    this.props.set_subcomp(true)
   }
 
   view = () => {

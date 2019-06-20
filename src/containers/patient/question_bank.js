@@ -106,13 +106,12 @@ class QuestionBank extends Component{
 
   componentDidUpdate(){
 
-    console.log("question_bank componentDIdUpdate:", this.props.user) 
     //window.addEventListener("resize", this.update_width_handler);
   }
   
   //TODO: redux storage bank name is not correct
   componentWillReceiveProps = (next_props) => { 
-    this.setState({visit: next_props.visit, questions:next_props.questions, question_step:next_props.question_step, bank_step:next_props.question_banks_step, banks:next_props.question_banks})
+    this.setState({visit: next_props.visit, questions:next_props.questions, question_step:next_props.question_step, bank_step:next_props.question_banks_step, banks:next_props.question_banks, is_subcomp:false})
 
   }
 
@@ -121,6 +120,9 @@ class QuestionBank extends Component{
     //window.removeEventListener('resize', this.update_width_handler);
   }
   
+  shouldComponentUpdate(next_props, next_state){
+    return !next_state.is_subcomp  
+  }
 
   skip_questions = (step, skip_step) => {  
     let q_type = this.state.questions[step].question_type;
@@ -144,12 +146,16 @@ class QuestionBank extends Component{
    }
 
   back_btn_handler = () => {
-    const {questions, banks, bank_step, question_step} = this.state
-    if(question_step > 0){
-      //just change the step  
-      this.skip_questions(question_step-1, question_step-2);   
-    }else if(question_step === 0 && bank_step > 0){
-      this.props.patient_actions.set_current_question_bank_by_name(banks[bank_step-1], true, bank_step-1)
+    const {questions, banks, bank_step, question_step, is_subcomp} = this.state
+    if(is_subcomp){
+      this.setState({is_subcomp:false}) 
+    }else{
+      if(question_step > 0){
+        //just change the step  
+        this.skip_questions(question_step-1, question_step-2);   
+      }else if(question_step === 0 && bank_step > 0){
+        this.props.patient_actions.set_current_question_bank_by_name(banks[bank_step-1], true, bank_step-1)
+      }
     }
   }
    
@@ -223,13 +229,18 @@ class QuestionBank extends Component{
   
   did_create_patient = (state) => {
     const {patient_actions, global_actions}=this.props
+
+    this.setState({is_loading:true}) 
     global_actions.register_and_set_user(state)
       .then(() => {return global_actions.sign_in(state)})
         .then(() => { return patient_actions.create_patient_from_user() })
-      .then(() => { this.patient_state_transition_helper()
-      })
+          .then(() => { 
+            this.patient_state_transition_helper() 
+            this.setState({is_loading:false}) 
+          })
       .catch((err) => {
         console.log(err)
+        this.setState({is_loading:false}) 
       })
   }
   
@@ -251,15 +262,18 @@ class QuestionBank extends Component{
   sign_in_and_next = (info) => { 
     const {patient_actions, global_actions} = this.props
 
+    this.setState({is_loading:false}) 
     global_actions.sign_in(info).then ((resp) => {
       if (resp.user_attr.patient) {
         patient_actions.set_patient(resp.user_attr.patient);
         patient_actions.ensure_visit(true).then((visit) => {
           this.patient_state_transition_helper()
+          this.setState({is_loading:false}) 
         })
       }
     }).catch((err) => {
       Alert.error(err.message)
+      this.setState({is_loading:false}) 
     })
   }
 

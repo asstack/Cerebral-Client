@@ -40,7 +40,8 @@ class DosagePreference extends QuestionPreference {
 
           this.setState({
             ...this.state,
-            options: dosages_with_title
+            is_ready:true,
+            options: dosages_with_title,
           });
       })
     }

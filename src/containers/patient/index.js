@@ -21,7 +21,6 @@ class Patient extends Component{
 
   componentDidMount(){ 
 
-    // setTimeout(console.log("set q bank did update"), 2000)
     const {global_actions, location, user} = this.props
     const init_state = location.pathname.split("/")[2];    
     const user_attr = user.attributes;
@@ -49,7 +48,6 @@ class Patient extends Component{
     const current_path = this.props.location.pathname
     const new_state = current_path.split("/")[2]
     
-    console.log("didupdate qjqdls?",new_state)
     if(!new_state){  
       this.props.history.push("/patient/sign_in") 
     }else if(new_state!==this.state.state){

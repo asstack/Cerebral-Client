@@ -12,14 +12,16 @@ class CheckBoxComponent extends Component {
       single_option:'',
       msg:'',
       details:false,
-      type:'checkbox'
+      type:'checkbox',
+      is_ready:false
     }
   }
 
   componentDidMount(){
     //initalize item
+    console.log("didmount:", this.state)
     const arr = new Array(this.props.options.length).fill(false);     
-    this.setState({details:this.props.details , options: this.props.options, checked_options:arr})
+    this.setState({details:this.props.details , options: this.props.options, checked_options:arr, is_ready:true})
   }
 
 
@@ -45,6 +47,10 @@ class CheckBoxComponent extends Component {
       info=info.slice(0,-2)
       if(this.state.details==='true' && info!=='None apply'){
         this.setState({single_option:info, type:'details'}) 
+        if(this.props.set_subcomp!==null){ 
+          console.log("want to update here")
+          this.props.set_subcomp(true)
+        }
       }else{
         this.props.submit_action(info)
       }
@@ -76,6 +82,7 @@ class CheckBoxComponent extends Component {
     }
 
   view_by_type=()=>{
+    if(!this.state.is_ready) return null;
     if(this.state.type==='checkbox'){
       return (
         <div className="check-box-question">    

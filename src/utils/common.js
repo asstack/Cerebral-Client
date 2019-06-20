@@ -51,8 +51,9 @@ export const map_type_to_component = (question, handlers, user, subscript_ref, t
       return <EmergencyContact submit_action = {handlers.submit_answer_and_next_step}/>
     case 'create_profile':
       return <RegisterManager
-                type = 'register'
+                view_type = 'register'
                 user = {user} 
+                set_subcomp = {handlers.set_subcomp}
                 signin_submit_action = {handlers.patient_sign_in}
                 register_submit_action = {handlers.did_create_patient} 
                 skip_action = {handlers.next_step_handler}/>
@@ -70,11 +71,13 @@ export const map_type_to_component = (question, handlers, user, subscript_ref, t
                 submit_action = {handlers.submit_answer_and_next_step}
                 details = 'false'/>
     case 'checkbox_details':
-      return <CheckBoxComponent options = {question.options} 
+      return <CheckBoxComponent 
+                options = {question.options} 
                 flag_title = {question.flag_title}
                 subscript_ref = {subscript_ref}
                 title_ref = {title_ref}
                 submit_action = {handlers.submit_answer_and_next_step}
+                set_subcomp = {handlers.set_subcomp} 
                 details = 'true'/> 
     case 'date':
       return <Date submit_action = {handlers.submit_answer_and_next_step}/> 
@@ -88,10 +91,12 @@ export const map_type_to_component = (question, handlers, user, subscript_ref, t
                 subscript_ref = {subscript_ref}
                 title_ref = {title_ref}
                 description = {question.options} 
+                set_subcomp = {handlers.set_subcomp} 
                 submit_action = {handlers.submit_answer_and_next_step}/> 
     case 'patient_identification':
       return <Identification 
                 question = {question.flag_title}
+                set_subcomp = {handlers.set_subcomp} 
                 submit_action = {handlers.submit_and_upload_data}/>  
     case 'patient_shipping':
       return <PatientShipping submit_action = {handlers.submit_answer_and_next_step}/> 
@@ -108,6 +113,7 @@ export const map_type_to_component = (question, handlers, user, subscript_ref, t
               flag_title = {question.flag_title}
               subscript_ref = {subscript_ref}
               title_ref = {title_ref}
+              set_subcomp = {handlers.set_subcomp} 
               submit_text_action = {handlers.submit_answer_and_next_step}
               submit_video_action = {handlers.submit_and_upload_data}/>  
     default:
