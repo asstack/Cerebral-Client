@@ -17,13 +17,16 @@ class PatientDashboard extends Component{
   }
 
   componentDidMount(){
+    console.log("dash board patient user:", this.props.user)
     if(!this.props.user.attributes['access-token']){ 
-      this.props.history.push('/') 
+      this.props.history.push('/patient/sign_in') 
     }      
   }
 
   //updated user information
   componentWillReceiveProps = (next_props) => { 
+
+    console.log("dash board patient user:", this.props.user)
     if(next_props.user.id===null || next_props.user.patient===null){ 
       this.props.history.push('/patient/sign_in') 
     }

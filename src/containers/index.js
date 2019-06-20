@@ -20,12 +20,12 @@ class MainPage extends Component{
     const {update_app_state}=this.props
 
     //update_app_state('qualification')
-    this.props.history.push('patient/qualification') 
+    this.props.history.push('patient/question_bank/qualification') 
   }
 
   app_state_register_handler = e => {
     const {update_app_state}=this.props
-    this.props.history.push('patient/profile')
+    this.props.history.push('patient/dashboard')
   }
 
   app_state_signin_handler = e => {

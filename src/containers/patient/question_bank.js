@@ -65,26 +65,26 @@ class QuestionBank extends Component{
 
   //TODO: checking visit is not clear.
   componentDidMount(){
-    const url_info = this.props.location.pathname.split("/")[2];    
+    const url_info = this.props.location.pathname.split("/")[3];    
     if(!this.props.user['access-token']){
       this.update_and_set_question('qualification', 0); 
       if(url_info!=='qualification'){  
-        this.props.history.push("/patient/qualification") 
+        this.props.history.push("/patient/question_bank/qualification") 
       } 
     }else{
       if(url_info==='qualification'){
         //TODO: create new visit and start from profile 
         if(!this.props.questions){
           this.update_and_set_question('profile', 0)  
-          this.props.history.push("/patient/profile") 
+          this.props.history.push("/patient/quesion_bank/profile") 
         }else{
           return myPromiseModal({open:true}).then(value=>{
             if(!value){
               this.update_and_set_question('profile',0) 
-              this.props.history.push("/patient/profile") 
+              this.props.history.push("/patient/question_bank/profile") 
             }else{  
               let bank_name = this.props.question_banks[this.props.question_banks_step]
-              this.props.history.push("/patient/"+bank_name) 
+              this.props.history.push("/patient/question_bank/"+bank_name) 
               this.setState({is_ready:true})
             } 
           }) 
@@ -92,7 +92,7 @@ class QuestionBank extends Component{
       }else{
         let bank_name = this.props.question_banks[this.props.question_banks_step]
         if(url_info !== bank_name){ 
-          this.props.history.push("/patient/"+bank_name) 
+          this.props.history.push("/patient/question_bank/"+bank_name) 
         }
         this.setState({is_ready:true})
         //if ensure visit
@@ -198,7 +198,7 @@ class QuestionBank extends Component{
       if (option.immediate) {
         patient_actions.update_patient_question_banks(option.question_bank_names, 0).then(() => {
           patient_actions.set_current_question_bank_by_name(option.question_bank_names[0]).then(resp=> 
-            this.props.history.push("/patient/"+option.question_bank_names[0]) 
+            this.props.history.push("/patient/question_bank/"+option.question_bank_names[0]) 
           )
         })
       }else{

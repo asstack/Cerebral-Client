@@ -48,6 +48,8 @@ class Patient extends Component{
 	componentDidUpdate(){	
     const current_path = this.props.location.pathname
     const new_state = current_path.split("/")[2]
+    
+    console.log("didupdate qjqdls?",new_state)
     if(!new_state){  
       this.props.history.push("/patient/sign_in") 
     }else if(new_state!==this.state.state){
@@ -66,27 +68,52 @@ class Patient extends Component{
     }
   }
   
-  render_views_2 =(state) => {
+  render_views =(state) => {
+    console.log("render view state:", state)
     if(state==='sign_in'){
       return <Route path="/patient/sign_in" component={SignIn}/>
     }else if (state==='dashboard'){ 
-      return <Route path="/patient/dashboard" render = {(props) => 
-        <PatientDashboard user={this.props.user} />
-      }/>
+      console.log("render view in state:", state)
+      return (
+        <Route path="/patient/dashboard" render = {(props) => 
+          <PatientDashboard user={this.props.user} />}/>)
     }else if (state==='completed'){     
       return <Route path="/patient/completed" component={CompleteProcess}/>
     }else{
+      console.log("render view in bankname:", state)
       return (
-        <Route path="/patient/:bank_name" render = {(props) => 
-          <QuestionBank user={this.props.user.attributes} />}/>
-     )
+        <Route path="/patient/question_bank/:bank_name" render = {(props) => 
+            <QuestionBank user={this.props.user.attributes} />}/>
+      )
     }  
+  }
+
+  render_views_2= state => {
+  
+    switch(state){
+      case 'sign_in': 
+        return <Route path="/patient/sign_in" component={SignIn}/>
+      case 'dashboard':
+        return (
+          <Route path="/patient/dashboard" render = {(props) => 
+            <PatientDashboard user={this.props.user} />}/>)
+      case 'completed':
+        return <Route path="/patient/completed" component={CompleteProcess}/>
+      case 'question_bank':
+        return (
+          <Route path="/patient/question_bank/:bank_name" render = {(props) => 
+            <QuestionBank user={this.props.user.attributes} />}/>)
+      default: 
+        return <div></div>
+    }
+
   }
   
   render(){
     const target_view = this.render_views_2(this.state.state) 
+    console.log("target view", target_view)
     return(
-        target_view
+      target_view
     );
   }
 }
