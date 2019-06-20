@@ -30,10 +30,10 @@ export const input_type_no_border = (event_handler, text) => {
 }
 
 
-export const input_type_autocomplete = (event_handler, text, autocomplete_value) => {
+export const input_type_autocomplete = (event_handler, text, autocomplete_value, key) => {
   return(
     <div className="d-flex justify-content-start input-holder">
-			<input className="col input-type1" onChange={event_handler} defaultValue=""
+      <input className="col input-type1" onChange={e=>event_handler(e, key)} defaultValue=""
 				type="text" placeholder={text} autoComplete={autocomplete_value}/>
     </div>
   )

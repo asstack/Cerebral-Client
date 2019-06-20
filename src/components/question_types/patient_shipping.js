@@ -15,11 +15,12 @@ class PatientShipping extends Component {
   }
 
   update_handler = (e) => { 
-      this.props.submit_action(JSON.stringify(this.state)) 
+    this.props.submit_action(JSON.stringify(this.state)) 
    }
 
-  update_property = (which, e) => {
-     this.setState({which:e.target.value})
+  update_property = (e, key) => {
+    let temp = {key:e.target.value}
+    this.setState({[key]:e.target.value})
   }
 
   set_view_type_handler = (e, type) => {
@@ -29,11 +30,11 @@ class PatientShipping extends Component {
   render(){
     return (
       <div className="patient_shipping">
-        {components.input_type_autocomplete(this.update_property.bind(this, 'address_1'), "Shipping Address 1", 'shipping street-address')}
-        {components.input_type_autocomplete(this.update_property.bind(this, 'address_2'), "Shipping Address 2", '')}
-        {components.input_type_autocomplete(this.update_property.bind(this, 'city'), "City", 'shipping locality')}
-        {components.input_type_autocomplete(this.update_property.bind(this, 'region'), "State", 'shipping region')}
-        {components.input_type_autocomplete(this.update_property.bind(this, 'postal_code'), "ZIP", 'shipping postal-code')}
+        {components.input_type_autocomplete(this.update_property, "Shipping Address 1", 'shipping street-address','address_1')}
+        {components.input_type_autocomplete(this.update_property, "Shipping Address 2", '', 'adress_2')}
+        {components.input_type_autocomplete(this.update_property, "City", 'shipping locality','city')}
+        {components.input_type_autocomplete(this.update_property, "State", 'shipping region','region')}
+        {components.input_type_autocomplete(this.update_property, "ZIP", 'shipping postal-code','postal_code')}
         {components.confirm_button_type_1(this.update_handler.bind(this), "Confirm Shipping Address >")}
       </div>
     );
