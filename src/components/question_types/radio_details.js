@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import uuidv1 from 'uuid'
-import * as components from '../question_components/components'
 
 
 class RadioDetails extends Component {
@@ -76,7 +75,7 @@ class RadioDetails extends Component {
             </div>
           </div>
         </div>
-        {(this.state.yes_active||(this.state.yes_active || this.state.no_active) &&this.state.q_id===3)?this.textarea_view():null}
+        {(this.state.yes_active || ((this.state.yes_active || this.state.no_active) && this.state.q_id===3))?this.textarea_view():null}
       </div>
     );
   }

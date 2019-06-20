@@ -1,6 +1,4 @@
 import React, {Component} from 'react'
-import {Router, Route, withRouter} from 'react-router-dom'
-import {connect} from 'react-redux'
 
 
 //this container is designed for one question bank. 

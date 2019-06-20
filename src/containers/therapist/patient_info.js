@@ -1,7 +1,5 @@
 import React, {Component} from 'react'
-import {Router, Route, withRouter} from 'react-router-dom'
 import { connect } from 'react-redux'
-import * as components from '../../components/question_components/components'
 import CustomSelector from '../../components/question_types/custom_selector'
 import RadioDetails from '../../components/question_types/radio_details'
 import TherapistPatientsInfo from '../../components/question_types/therapist_patients_info'
@@ -113,6 +111,8 @@ class PatientInfo extends Component {
           <RadioDetails submit_action = {this.update_answer_handler} 
                         question={item} q_id={index}/>
         )
+      default:
+        return null
     } 
   }
 
@@ -122,7 +122,7 @@ class PatientInfo extends Component {
         <div className="d-flex flex-column patient-info-background">
           <div className="d-flex justify-content-center flex-row menu-bar">
             <div className= "col d-flex justify-content-between solid-border-bottom__unselected text-small__unselected menu-bar-item-holder">
-              <img src={process.env.PUBLIC_URL + '/img/arrow.png'} onClick={e => this.props.update_type_handler('cover')} className="arrow-btn"/>
+              <img src={process.env.PUBLIC_URL + '/img/arrow.png'} alt="link to cover page" onClick={e => this.props.update_type_handler('cover')} className="arrow-btn"/>
               <div className="align-self-end menu-item">  Therapist Information </div>
               <div></div>
             </div>      

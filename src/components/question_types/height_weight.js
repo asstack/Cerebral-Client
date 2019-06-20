@@ -1,7 +1,6 @@
 import React, {Component} from 'react'
 import uuidv1 from 'uuid'
 import * as components from '../question_components/components'
-import PropTypes from 'prop-types'
 
 class HeightWeight extends Component {
   constructor(props){

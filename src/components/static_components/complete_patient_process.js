@@ -1,6 +1,5 @@
 import React, {Component} from 'react'
 import logo from './complete_patient.png';
-import {withRouter} from "react-router-dom"
 import {connect} from 'react-redux'
 import * as components from '../../components/question_components/components'
 import { complete_current_visit } from '../../actions/patient_action'
@@ -9,11 +8,11 @@ class CompleteProcess extends Component{
 
   constructor(props){
     super(props)
+    this.state={}
   }
 
   componentDidMount = () => {
 
-    const {complete_current_visit} = this.props
 
     this.props.complete_current_visit()
   }
@@ -27,7 +26,9 @@ class CompleteProcess extends Component{
 
       <div className="d-flex flex-column therapist-noprogress">
         <div className="d-flex flex-row justify-content-between align-items-center therapist-header">
-          <img className="cerebral-logo" src={process.env.PUBLIC_URL + '/img/logo.png'}/>
+          <a href={process.env.REACT_APP_MAIN_PAGE_URL}>
+            <img alt="move to main" className="cerebral-logo" src={process.env.PUBLIC_URL + '/img/logo.png'}/>
+          </a>
         </div>
  
         <div className="d-flex flex-column justify-content-center container-noprogress align-items-center">
@@ -39,7 +40,7 @@ class CompleteProcess extends Component{
           </div>
 
           <div className="d-flex justify-content-center image-holder">
-            <img src={logo} />
+            <img alt="main logo" src={logo} />
           </div>
 
           <div className="d-flex justify-content-center complete-message-holder text-small-2">

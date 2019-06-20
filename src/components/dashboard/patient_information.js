@@ -43,7 +43,7 @@ class PatientInformation extends Component {
             <div className = "d-flex flex-row"> 
               <div className = "d-flex align-items-center patient-info-photo-holder">
               
-                <img className = "patient-info-photo" src={process.env.PUBLIC_URL + '/img/photo.png'}/>
+                <img alt="patient info" className = "patient-info-photo" src={process.env.PUBLIC_URL + '/img/photo.png'}/>
               </div>
               <div className = "d-flex flex-column patient-basic-right">
                 <div className = "patient-basic-right title"> {this.state.patient.user.first_name + " "+ this.state.patient.user.last_name} </div>
@@ -94,7 +94,7 @@ class PatientInformation extends Component {
                   Referral status: 
                 </div>
                 <div className = "patient-referral-right patient-referral-last">   
-                  <img className = "patient-info-status-icon" src={process.env.PUBLIC_URL + '/img/ready.png'}/>
+                  <img alt="ready for info" className = "patient-info-status-icon" src={process.env.PUBLIC_URL + '/img/ready.png'}/>
                   Patient has not completed assessment 
                 </div>
                </div>
@@ -107,7 +107,7 @@ class PatientInformation extends Component {
 
   get_named_answer = (name) => {
     if (!this.state.patient) return 'No patient information'
-    const answer = this.state.patient.visit.answers.filter(answer => answer.question.name  == name)
+    const answer = this.state.patient.visit.answers.filter(answer => answer.question.name === name)
     return answer.length > 0 ? answer[0].response : 'No response to question'
   }
 
@@ -156,7 +156,7 @@ class PatientInformation extends Component {
                </div>
                <div className="d-flex flex-row align-items-center message-input-area-no-margin">
                 <input ref="msg_input" className="col message-input" onChange={this.update_msg_handler} type='text' placeholder='Add additional notes' defaultValue=""/> 
-                <img src={process.env.PUBLIC_URL + '/img/input_arrow.svg'} className="message-submit"/>
+                <img alt="message submit" src={process.env.PUBLIC_URL + '/img/input_arrow.svg'} className="message-submit"/>
               </div>
             </div>
           </div> 

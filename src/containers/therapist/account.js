@@ -1,8 +1,7 @@
 import React, {Component} from 'react'
-import {Router, Route, withRouter} from 'react-router-dom'
+import {withRouter} from 'react-router-dom'
 import {bindActionCreators} from 'redux'
 import { connect } from 'react-redux'
-import * as components from '../../components/question_components/components'
 import RegisterManager from '../../components/question_types/register_manager'
 import * as therapist_actions from '../../actions/therapist_action'
 import * as global_actions from '../../actions/user_auth_action'
@@ -57,7 +56,7 @@ class Account extends Component {
         <div className="d-flex flex-column">
           <div className="d-flex justify-content-center flex-row menu-bar">
             <div className= "col d-flex justify-content-between solid-border-bottom text-small menu-bar-item-holder">
-              <img src={process.env.PUBLIC_URL + '/img/arrow.png'} className="arrow-btn"/>
+              <img alt="arrow btn" src={process.env.PUBLIC_URL + '/img/arrow.png'} className="arrow-btn"/>
               <div className="align-self-end menu-item">  Therapist Information </div>
               <div></div>
             </div>      
@@ -71,8 +70,7 @@ class Account extends Component {
           <div className="d-flex flex-column question-container">
             <div className="d-flex flex-column main-noprogress">
               <div className="description_noprogress">
-                <h1>{ this.state.type==='register'?"Create an account to refer patients":"Sign in to refer patients"
-}</h1>
+                <h1>{wording}</h1>
               </div>
               <RegisterManager update_type = {this.update_type_handler} user_type = "therapist" signin_submit_action = {this.sign_in_handler} register_submit_action = {this.register_handler} view_type={this.props.default_type}/>
             </div> 

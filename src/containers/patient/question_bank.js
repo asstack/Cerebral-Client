@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {Router, Route, withRouter} from 'react-router-dom'
+import {withRouter} from 'react-router-dom'
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
 import * as patient_actions from '../../actions/patient_action'
@@ -10,7 +10,6 @@ import * as common from '../../utils/common.js'
 import { createModal } from 'react-modal-promise'
 import { Modal } from 'react-bootstrap'
 import uuidv1 from 'uuid'
-import ReactGA from 'react-ga'
 import Alert from 'react-s-alert'
 
 
@@ -147,7 +146,7 @@ class QuestionBank extends Component{
    }
 
   back_btn_handler = () => {
-    const {questions, banks, bank_step, question_step, is_subcomp} = this.state
+    const {banks, bank_step, question_step, is_subcomp} = this.state
     if(is_subcomp){
       this.setState({is_subcomp:false}) 
     }else{
@@ -246,9 +245,7 @@ class QuestionBank extends Component{
   }
   
   submit_and_upload_data = (data, type) => { 
-    const {question_banks, question_banks_step, question_step, 
-           patient_actions} = this.props
-    const questions = this.state.questions 
+    const {patient_actions} = this.props
     this.setState({is_loading:true}) 
     patient_actions.upload_object_for_current_question(data, type).then((resp) => {
       this.setState({is_loading:false}) 
@@ -297,7 +294,7 @@ class QuestionBank extends Component{
   progress_menu = (bank_name, index) => {
     return (
       <div key={uuidv1()} className= {this.map_type_to_style_class(this.props.question_banks_step, index)}>
-         {index===0?<img src={process.env.PUBLIC_URL + '/img/arrow.png'} className="arrow-btn" onClick={this.back_btn_handler}/>:<div></div>}
+         {index===0?<img src={process.env.PUBLIC_URL + '/img/arrow.png'} alt="prev question" className="arrow-btn" onClick={this.back_btn_handler}/>:<div></div>}
          <div className="align-self-end menu-item"> {this.question_bank_title(this, bank_name)} </div>
          <div></div>
       </div>
@@ -307,7 +304,7 @@ class QuestionBank extends Component{
   single_progress_menu = (bank_name) => {
     return (
        <div className= "col d-flex justify-content-between solid-border-bottom text-small menu-bar-item-holder">
-         <img src={process.env.PUBLIC_URL + '/img/arrow.png'} className="arrow-btn" onClick={this.back_btn_handler}/>
+         <img src={process.env.PUBLIC_URL + '/img/arrow.png'} className="arrow-btn" alt="prev question" onClick={this.back_btn_handler}/>
          <div className="align-self-end menu-item"> {this.question_bank_title(this, bank_name)} </div>
          <div></div>
       </div> 
@@ -321,7 +318,7 @@ class QuestionBank extends Component{
       <div className="d-flex flex-column container-noprogress">
         <div className="d-flex flex-row justify-content-left therapist-header">
           <a href={process.env.REACT_APP_MAIN_PAGE_URL}>
-            <img className="cerebral-logo" src={process.env.PUBLIC_URL + '/img/logo.png'}/>
+            <img className="cerebral-logo" src={process.env.PUBLIC_URL + '/img/logo.png'} alt="link to main page"/>
           </a>
         </div>
         <div className="d-flex flex-row justify-content-center">
@@ -373,7 +370,7 @@ class QuestionBank extends Component{
 
   question_bank_title = (that, bank_name) => {
     // look up question bank title in that.props.question_bank_objects
-    return that.props.question_bank_objects.filter(qbo => qbo.name == bank_name)[0].title
+    return that.props.question_bank_objects.filter(qbo => qbo.name === bank_name)[0].title
   }
  
   map_type_to_style_class = (state, target) => {

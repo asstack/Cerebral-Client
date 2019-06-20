@@ -29,13 +29,13 @@ class IdentificationCover extends Component {
         <div className="d-flex flex-row justify-content-between id-item-holder"> 
           <div className="col d-flex flex-column justify-content-center">
             <div className="d-flex align-self-center"><h2>1.</h2></div> 
-            <img className="d-flex align-self-center id-photo" src={process.env.PUBLIC_URL + '/img/photo.png'}/>
+            <img alt="take yourself" className="d-flex align-self-center id-photo" src={process.env.PUBLIC_URL + '/img/photo.png'}/>
             <div className="id-description">Upload or capture a picture of your face.</div>
           </div>
           <div className="id-item-divider"></div>
           <div className="col d-flex flex-column id-item justify-content-center">
             <div className="d-flex align-self-center"><h2>2.</h2></div> 
-            <img className="d-flex align-self-center id-photo" src={process.env.PUBLIC_URL + '/img/id_card.png'}/>
+            <img alt="id card" className="d-flex align-self-center id-photo" src={process.env.PUBLIC_URL + '/img/id_card.png'}/>
             <div className="id-description"> Upload or capture a picture of your valid photo ID.</div> 
           </div>
         </div> 

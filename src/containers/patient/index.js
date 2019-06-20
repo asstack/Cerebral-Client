@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Router, Route, withRouter} from 'react-router-dom'
+import {Route, withRouter} from 'react-router-dom'
 import { connect } from 'react-redux'
 import {bindActionCreators} from 'redux'
 import QuestionBank from './question_bank'
@@ -7,7 +7,6 @@ import PatientDashboard from './dashboard'
 import SignIn from './sign_in'
 import CompleteProcess from '../../components/static_components/complete_patient_process'
 import * as global_actions from '../../actions/user_auth_action'
-import ReactGA from 'react-ga'
 import Alert from 'react-s-alert'
 
 class Patient extends Component{

@@ -50,9 +50,10 @@ class PatientsRefer extends Component {
       console.log("value:",value)
       if(value){ 
         this.props.submit_action(this.props.ref_patients, this.props.ref_index); 
+      }else{ 
+        this.forceUpdate()   
       }
      })
-      this.forceUpdate()   
     }
   }
   
@@ -114,10 +115,10 @@ class PatientsRefer extends Component {
       } 
     }
 
-    if(incomplete.length==0 && patients.length>0){ 
+    if(incomplete.length===0 && patients.length>0){ 
       this.props.submit_action(patients); 
       this.props.update_ref_patients(patients)
-    }else if(!warning_msg && patients.length==0){
+    }else if(!warning_msg && patients.length===0){
       //warning msg no items 
       warning_msg="Please fill at least 1 patient information"
       this.setState({incomplete:incomplete, msg:warning_msg})
@@ -136,7 +137,7 @@ class PatientsRefer extends Component {
         <div className="d-flex flex-column">
           <div className="d-flex justify-content-center flex-row menu-bar">
             <div className= "col d-flex justify-content-between solid-border-bottom__unselected text-small__unselected menu-bar-item-holder">
-              <img src={process.env.PUBLIC_URL + '/img/arrow.png'} onClick={e=>this.props.update_type_handler('cover')} className="arrow-btn"/>
+              <img alt="link to cover" src={process.env.PUBLIC_URL + '/img/arrow.png'} onClick={e=>this.props.update_type_handler('cover')} className="arrow-btn"/>
               <div className="align-self-end menu-item">  Therapist Information </div>
               <div></div>
             </div>      
@@ -154,7 +155,7 @@ class PatientsRefer extends Component {
             {[...Array(this.state.total_items)].map((e, index) => (components.patient_refer_inputs(event_handlers, this.state.items[index], index, this.state.total_items)))}  
             <div className="d-flex justify-content-end patient-refer-add-btn-holder">
               <div id='add_patient' className="add-patient-button" onClick={this.add_item_handler}>
-                <img className="remove-button" src='/img/add_patient.png'/> <span className="add_patient_btn_text">Add patient</span>
+                <img alt="add patients to refer" className="remove-button" src='/img/add_patient.png'/> <span className="add_patient_btn_text">Add patient</span>
               </div>
             </div>
             <div className="d-flex patient-refer-submit-btn-holder">

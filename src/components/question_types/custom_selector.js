@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import uuidv1 from 'uuid'
-import * as components from '../question_components/components'
 
 
 //TODO: required indicator is hardcoded. we need to add an option in question
@@ -26,10 +25,6 @@ class CustomSelector extends Component {
   }
 
   componentWillReceiveProps = (next_props) => { 
-    let title=""
-    if(next_props.question){
-      title = this.props.question.options[0].title
-    }
    
     this.setState({ref_id:next_props.ref_id, q_id:next_props.q_id, active:false, items:next_props.items, selected:"Duration", option_index:0})}
 
@@ -65,7 +60,7 @@ class CustomSelector extends Component {
         <div className="d-flex justify-content-between align-items-center custom-selector" onClick = {e=>this.activate_options_handler()}>
           <div className="custom-selector-side"></div>
           <div>{this.state.selected}</div>
-          <div className="custom-selector-side"><img src={process.env.PUBLIC_URL + '/img/dropdown_icon.png'} /></div>
+          <div className="custom-selector-side"><img alt="dropdown and select duration" src={process.env.PUBLIC_URL + '/img/dropdown_icon.png'} /></div>
         </div>
         {this.select_option_view()}
       </div>

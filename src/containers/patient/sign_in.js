@@ -4,9 +4,6 @@ import { sign_in } from '../../actions/user_auth_action'
 import { set_visit, update_patient_state, move_patient_sign_up, set_profile_question, set_patient } from '../../actions/patient_action'
 import * as components from '../../components/question_components/components'
 
-import { createModal } from 'react-modal-promise'
-import { Modal } from 'react-bootstrap'
-
 import Alert from 'react-s-alert'
 
 import promiseModal from '../../utils/modal_dialog'
@@ -24,7 +21,7 @@ class SignIn extends Component {
   }
 
   componentDidMount(){
-    if (this.props.api_middleware.status == 'REAUTH') { 
+    if (this.props.api_middleware.status === 'REAUTH') { 
       Alert.info('You have been logged out for security reasons, please log back in to continue')
     }
     if(this.props.login_info.attributes['access-token']){    
@@ -89,7 +86,7 @@ class SignIn extends Component {
     return (
       <div className="d-flex flex-column container-noprogress">
         <div className="d-flex flex-row justify-content-left header-noprogress">
-          <a href={process.env.REACT_APP_MAIN_PAGE_URL}><img className="cerebral-logo" src={process.env.PUBLIC_URL + '/img/logo.png'}/></a>
+          <a href={process.env.REACT_APP_MAIN_PAGE_URL}><img className="cerebral-logo" alt="link to main page" src={process.env.PUBLIC_URL + '/img/logo.png'}/></a>
         </div>
         <div className="d-flex flex-column question-container">
           <div className="d-flex justify-content-center text-big">

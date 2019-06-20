@@ -2,8 +2,6 @@ import axios from 'axios'
 import {api_call} from '../middle/api'
 import * as global_actions from './user_auth_action'
 import { get_user_attr, make_headers } from './user_auth_action';
-import PromiseModal from 'react-modal-promise';
-
 
 export const SET_STEP = 'patient/SET_STEP'
 export const RESET_STATE = 'RESET'
@@ -135,7 +133,6 @@ export const move_patient_sign_up = (state) => (dispatch, getState) => {
 
 export const update_patient_question_banks = (bank_names, step) => (dispatch, getState) => {
 
-  var header = {'Content-Type': 'application/json'}
   return axios.get(`/api/question_banks`)
     .then(function(resp){
 
@@ -148,7 +145,6 @@ export const update_patient_question_banks = (bank_names, step) => (dispatch, ge
 }
 
 export const set_current_question_bank_by_name = (bank_name, flag=false, bank_step=0) => (dispatch, getState) => {
-  var header = {'Content-Type': 'application/json'}
   return axios.get(`/api/question_banks/search?name=${bank_name}`)
     .then(function(resp){
       console.log("current bank:", bank_name, " ", resp.data)
@@ -157,7 +153,6 @@ export const set_current_question_bank_by_name = (bank_name, flag=false, bank_st
 }
 
 export const update_patient_questions = (bank_id, bank_name, flag=false,bank_step=0) => (dispatch, getState) => { 
-  var header = {'Content-Type': 'application/json'}
   return axios.get(`/api/question_banks/${bank_id}/questions`)
     .then(function(resp){
       let idx=flag?resp.data.length-1:0;
@@ -255,7 +250,7 @@ export const ensure_visit = (force) => (dispatch, getState) => {
   var service_line = getState().patient_reducer.service_line
 
   // TODO: wecould also check to make sure the visit is not expired
-  if (visit && !visit.complete && service_line.id == visit.service_line.id) {
+  if (visit && !visit.complete && service_line.id === visit.service_line.id) {
     return Promise.resolve(visit)
   }
   // NOTE: the server will take care of creating a new visit or giving us back an existing visit if needed

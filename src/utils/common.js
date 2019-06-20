@@ -1,5 +1,4 @@
 import React from 'react'
-import {Route} from 'react-router-dom'
 import {selector} from '../components/question_types/selector'
 import Date from '../components/question_types/date'
 import HeightWeight from '../components/question_types/height_weight'
@@ -7,7 +6,6 @@ import CreateProfile from '../components/question_types/create_profile'
 import Phone from '../components/question_types/phone'
 import CheckBoxComponent from '../components/question_types/checkbox'
 import StateSelector from '../components/question_types/state_selector' 
-import TextArea from '../components/question_types/text_area' 
 import Identification from '../components/question_types/patient_identification'
 import PatientPayment from '../components/question_types/patient_payment' 
 import PatientShipping from '../components/question_types/patient_shipping' 
@@ -15,7 +13,6 @@ import YesNoDetails from '../components/question_types/yes_no_details'
 import VideoSelector from "../components/question_types/video_selector"
 import EmergencyContact from "../components/question_types/emergency_contact"
 
-import ReactGA from 'react-ga'
 import SideEffects from '../components/question_types/side_effects';
 import MedicationPreference from '../components/question_types/medication_preference';
 import DosagePreference from '../components/question_types/dosage_preference';
@@ -121,7 +118,7 @@ export const map_type_to_component = (question, handlers, user, subscript_ref, t
       return(
         <div>
         <div className='pb-5 d-flex flex-row justify-content-center'>
-          <img src='https://cdn.pixabay.com/photo/2017/06/16/07/26/under-construction-2408060__340.png'/>
+          <img alt="under construction" src='https://cdn.pixabay.com/photo/2017/06/16/07/26/under-construction-2408060__340.png'/>
         </div>
         <div className='d-flex flex-row justify-content-center'>
           <input className ="col btn-confirm text-btn" type="button" onClick={handlers.next_step_handler.bind(this)} value="Next"/>

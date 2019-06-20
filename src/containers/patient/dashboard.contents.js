@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
-import {Route, withRouter } from "react-router-dom"
+import { withRouter } from "react-router-dom"
 import {connect} from 'react-redux'
-import * as components from '../../components/question_components/components'
 import EditProfile from '../../components/dashboard/edit_profile'
 import EditPassword from '../../components/dashboard/edit_password'
 import ShippingInformation from '../../components/dashboard/shipping_information'

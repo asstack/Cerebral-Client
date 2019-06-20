@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Router, Route, withRouter} from 'react-router-dom'
+import {Route, withRouter} from 'react-router-dom'
 import { connect } from 'react-redux'
 import Account from './account'
 import TherapistDashboard from './dashboard'

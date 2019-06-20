@@ -2,13 +2,13 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import {update_app_state} from '../actions'
-import {update_patient_state, set_profile_question} from '../actions/patient_action'
-import ReactGA from 'react-ga'
+import {update_patient_state} from '../actions/patient_action'
 
 class MainPage extends Component{
 
   constructor(props){
     super(props)
+    this.state={}
   }
   
   componentDidMount(){
@@ -17,14 +17,11 @@ class MainPage extends Component{
     console.log("main page here")
   }
   app_state_update_handler = e => {
-    const {update_app_state}=this.props
-
     //update_app_state('qualification')
     this.props.history.push('patient/question_bank/qualification') 
   }
 
   app_state_register_handler = e => {
-    const {update_app_state}=this.props
     this.props.history.push('patient/dashboard')
   }
 

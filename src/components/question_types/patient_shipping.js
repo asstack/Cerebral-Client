@@ -19,7 +19,6 @@ class PatientShipping extends Component {
    }
 
   update_property = (e, key) => {
-    let temp = {key:e.target.value}
     this.setState({[key]:e.target.value})
   }
 

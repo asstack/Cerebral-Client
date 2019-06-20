@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Route, withRouter } from "react-router-dom"
+import {withRouter } from "react-router-dom"
 import {connect} from 'react-redux'
 import default_icon from '../../img/user.png'
 import {update_app_state} from '../../actions'
@@ -37,7 +37,6 @@ class PatientDashboard extends Component{
 
 
   app_state_checkout_handler = e => {
-    const {update_app_state}=this.props
 		this.props.update_patient_question_banks(['checkout'], 0).then(() => {
       this.props.history.push('/patient/checkout') 
     })
@@ -66,11 +65,11 @@ class PatientDashboard extends Component{
       <div className="d-flex flex-row therapist-noprogress">
         <div className="d-flex flex-column profile-side-bar-holder">
           <div className="d-flex justify-content-center profile-logo">
-            <a href={process.env.REACT_APP_MAIN_PAGE_URL}><img className="cerebral-logo" src={process.env.PUBLIC_URL + '/img/logo.png'}/></a>
+            <a href={process.env.REACT_APP_MAIN_PAGE_URL}><img className="cerebral-logo" src={process.env.PUBLIC_URL + '/img/logo.png'} alt="link to main page"/></a>
           </div>    
           <div className="profile-side-items-holder">
             <div className="profile-side-title-holder">
-              <img className = "profile-image" src={default_icon}/> 
+              <img className = "profile-image" src={default_icon} alt="link to profile"/> 
               <div className="d-flex justify-content-center profile-side-title">WELCOME {this.props.user.attributes.first_name}</div> 
             </div> 
             <div className= {type==='profile_info'?menu_css+' item-selected':menu_css} onClick={e => this.update_type_handler('profile_info')}>

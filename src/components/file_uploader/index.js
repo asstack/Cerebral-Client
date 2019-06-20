@@ -53,7 +53,7 @@ class FileUploader extends Component {
       return( 
         <div>
           <div className="id-image-holder"> 
-            <img className="id-image" src={this.state.file}/>
+            <img alt="upload img" className="id-image" src={this.state.file}/>
           </div>
             {components.confirm_button_type_1(this.confirm_btn_handler, "Confirm Image")}
             {components.confirm_button_type_2(this.clear_data_handler, "Upload again")}

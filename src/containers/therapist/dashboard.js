@@ -1,8 +1,7 @@
 import React, {Component} from 'react';
-import {Route, withRouter } from "react-router-dom"
+import {withRouter } from "react-router-dom"
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
-import * as components from '../../components/question_components/components'
 import DashboardContents from './dashboard.contents' 
 import * as therapist_actions from '../../actions/therapist_action'
 import * as global_actions from '../../actions/user_auth_action'
@@ -62,7 +61,7 @@ class TherapistDashboard extends Component{
       <div className="d-flex flex-row therapist-noprogress">
         <div className="d-flex flex-column profile-side-bar-holder">
           <div className="d-flex justify-content-center profile-logo">
-            <a href={process.env.REACT_APP_MAIN_PAGE_URL}><img className="cerebral-logo" src={process.env.PUBLIC_URL + '/img/logo.png'} /></a>
+            <a href={process.env.REACT_APP_MAIN_PAGE_URL}><img alt="link to main page" className="cerebral-logo" src={process.env.PUBLIC_URL + '/img/logo.png'} /></a>
           </div>    
            <div className="profile-side-items-holder">
               <div className="profile-side-title-holder">

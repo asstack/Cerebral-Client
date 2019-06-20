@@ -1,6 +1,5 @@
 import React, {Component} from 'react'
 import uuidv1 from  'uuid/v1';
-import {Router, Route, withRouter} from 'react-router-dom'
 import * as components from '../question_components/components'
 
 export class QuestionPreference extends Component {
@@ -29,7 +28,7 @@ export class QuestionPreference extends Component {
       <div className="input-group mb-1" key={uuidv1()}>
         <div className="input-group-prepend" >
           <div className="input-group-text group-checkbox">
-          <input type="checkbox" onChange={(e) => {this.check_box_handler(e, index)}} index={index} name={item.title} checked={index == this.state.selected_index} />
+          <input type="checkbox" onChange={(e) => {this.check_box_handler(e, index)}} index={index} name={item.title} checked={index === this.state.selected_index} />
           </div>
         </div>
         <div className="form-control group-checkbox-text" style={backStyle}>

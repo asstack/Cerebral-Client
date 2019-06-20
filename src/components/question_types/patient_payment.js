@@ -1,8 +1,7 @@
 import React, {Component} from 'react';
 import { connect } from 'react-redux'
-import * as components from '../question_components/components'
 import { create_payment } from '../../actions/patient_action'
-import {CardElement, Elements, StripeProvider} from 'react-stripe-elements'
+import {Elements, StripeProvider} from 'react-stripe-elements'
 import PaymentElements from './payment_elements'
 
 class PatientPayment extends Component {

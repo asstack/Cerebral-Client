@@ -1,6 +1,5 @@
 import React, {Component} from 'react'
 import { connect } from 'react-redux'
-import * as components from '../question_components/components'
 import {get_patients_for_therapist} from "../../actions/therapist_action"
 import PatientInformation from './patient_information'
 import uuidv1 from 'uuid'
@@ -25,7 +24,7 @@ class PatientsList extends Component {
 
   prescription_status = type => {
     switch(type){
-      case 'approved':
+      case 'ready':
         return "Patient has not completed assessment"
       case 'pending':
         return "Prescription pending doctor’s approval"
@@ -33,6 +32,8 @@ class PatientsList extends Component {
         return "Prescription approved"
       case 'denied':
         return "Prescription denied"
+      default:
+        return "Unknown"
     } 
   }
 
@@ -46,6 +47,8 @@ class PatientsList extends Component {
         return process.env.PUBLIC_URL + '/img/approved.png'
       case 'denied':
         return process.env.PUBLIC_URL + '/img/denied.png'
+      default:
+        return null
     }  
   }
 
@@ -61,7 +64,7 @@ class PatientsList extends Component {
       <div className="d-flex justify-content-start align-items-center table-item-col-3">{patient.visit.service_line.title}</div> 
       <div className="d-flex justify-content-start align-items-center table-item-col-4">{patient.prescription_status || "None"}</div>
       <div className="d-flex justify-content-center align-items-center table-item-col-5"> 
-        <img className="detail-btn" src={process.env.PUBLIC_URL + '/img/detail.png'}/>
+        <img alt="detail" className="detail-btn" src={process.env.PUBLIC_URL + '/img/detail.png'}/>
       </div>
     </div> 
   )
@@ -89,7 +92,7 @@ class PatientsList extends Component {
               <div className="d-flex flex-row justify-content-between search-bar-holder">
                 <input type="text" placeholder="Search patient list"/>
                   <div className="d-flex align-items-center">
-                    <img className="search-img" src={process.env.PUBLIC_URL + '/img/search.png'}/>
+                    <img alt="search" className="search-img" src={process.env.PUBLIC_URL + '/img/search.png'}/>
                   </div>
                 </div>
               </div> 

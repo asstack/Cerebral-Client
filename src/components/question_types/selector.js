@@ -1,6 +1,5 @@
 import React from 'react'
 import uuidv1 from 'uuid'
-import * as components from '../question_components/components'
 
 
 //TODO: move to components after all fixed

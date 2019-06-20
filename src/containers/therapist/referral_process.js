@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Router, Route, withRouter} from 'react-router-dom'
+import {withRouter} from 'react-router-dom'
 import { connect } from 'react-redux'
 import {bindActionCreators} from 'redux'
 import * as therapist_actions from '../../actions/therapist_action'
@@ -58,7 +58,7 @@ class ReferralProcess extends Component{
       <div className="d-flex flex-column therapist-noprogress">
         <div className="d-flex flex-row justify-content-between align-items-center therapist-header">
           <a href={process.env.REACT_APP_MAIN_PAGE_URL}>
-            <img className="cerebral-logo" src={process.env.PUBLIC_URL + '/img/logo.png'}/>
+            <img alt="link to mainpage" className="cerebral-logo" src={process.env.PUBLIC_URL + '/img/logo.png'}/>
           </a>
           <div className="therapist-cover-top-menu" onClick={e=>this.redirect_url("/therapist/member") }>{id?"PROFILE":"Member Login"}</div>
         </div>
@@ -71,15 +71,15 @@ class ReferralProcess extends Component{
           </div>
           <div className="d-flex flex-row justify-content-between align-items-start"> 
             <div className="col d-flex flex-column justify-content-center padding-left-0">
-              <img className="therapist-cover-img align-self-center" src={process.env.PUBLIC_URL + '/img/patient.png'}/> 
+              <img alt="patint" className="therapist-cover-img align-self-center" src={process.env.PUBLIC_URL + '/img/patient.png'}/> 
               <span className="therapist-cover-img-desc">Refer patients</span>
             </div>
             <div className="col d-flex flex-column justify-content-center">
-              <img className="therapist-cover-img align-self-center" src={process.env.PUBLIC_URL + '/img/visit_image.png'}/> 
+              <img alt="visit" className="therapist-cover-img align-self-center" src={process.env.PUBLIC_URL + '/img/visit_image.png'}/> 
               <span className="therapist-cover-img-desc"> We connect your patients to a doctor for an online visit </span>
             </div>
             <div className="col d-flex flex-column justify-content-center padding-right-0">
-              <img className="therapist-cover-img align-self-center" src={process.env.PUBLIC_URL + '/img/connect_message.png'}/> 
+              <img alt="message" className="therapist-cover-img align-self-center" src={process.env.PUBLIC_URL + '/img/connect_message.png'}/> 
               <span className="therapist-cover-img-desc"> Connect with prescribing physician for follow-ups</span>
             </div>
           </div>

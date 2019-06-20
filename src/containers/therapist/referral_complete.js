@@ -1,6 +1,5 @@
 import React, {Component} from 'react'
-import {Router, Route, withRouter} from 'react-router-dom'
-import { connect } from 'react-redux'
+import {withRouter} from 'react-router-dom'
 import * as components from '../../components/question_components/components'
 
 class ReferralComplete extends Component {
@@ -28,7 +27,7 @@ class ReferralComplete extends Component {
       <div className="d-flex flex-column therapist-noprogress">
         <div className="d-flex flex-row justify-content-between align-items-center therapist-header">
           <a href={process.env.REACT_APP_MAIN_PAGE_URL}>
-            <img className="cerebral-logo" src={process.env.PUBLIC_URL + '/img/logo.png'}/>
+            <img className="cerebral-logo" alt="link to mainpage" src={process.env.PUBLIC_URL + '/img/logo.png'}/>
           </a>
         </div>
  
@@ -42,7 +41,7 @@ class ReferralComplete extends Component {
           </div>
 
           <div className="d-flex justify-content-center image-holder">
-            <img src={process.env.PUBLIC_URL + '/img/connect_message.png'} />
+            <img alt="connect message" src={process.env.PUBLIC_URL + '/img/connect_message.png'} />
           </div>
 
           <div className="d-flex justify-content-center complete-message-holder text-small-2">

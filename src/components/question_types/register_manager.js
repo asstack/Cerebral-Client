@@ -31,7 +31,7 @@ class RegisterManager extends Component {
       this.setState({view_type:'signin'});
     }
 
-    if(this.props.set_subcomp!==null){
+    if(this.props.set_subcomp){
       if(type===this.props.view_type) this.props.set_subcomp(true) 
       else this.props.set_subcomp(false)
     }

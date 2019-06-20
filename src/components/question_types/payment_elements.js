@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {injectStripe} from 'react-stripe-elements'
-import {CardElement,CardNumberElement} from 'react-stripe-elements'
+import {CardElement} from 'react-stripe-elements'
 import * as components from '../question_components/components'
 
 class PaymentElements extends Component {
@@ -20,12 +20,10 @@ class PaymentElements extends Component {
     }).catch(err => {  
         this.props.submit_payment(this.state.payment_full_name, "")
     })
-
-
     }
 
     update_property = (which, e) => {
-        this.state[which] = e.target.value
+      this.setState({[which]:e.target.value})
     }
 
   

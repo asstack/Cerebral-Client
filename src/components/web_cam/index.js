@@ -47,7 +47,7 @@ class WebcamComponent extends Component {
 						<h3>Review your image</h3>
 					</div>
 					<div className="d-flex justify-content-center">
-						{this.state.screenshot ? <img src={this.state.screenshot} /> : null}
+						{this.state.screenshot ? <img alt="screen shot" src={this.state.screenshot} /> : null}
 					</div>
           {components.confirm_button_type_1(this.confirm_handler, 'Confirm image')}
 

@@ -29,7 +29,7 @@ class PasswordReset extends Component{
   componentDidMount(){
     console.log("PasswordReset")
 
-    if (this.state.mode == 'confirmation') {
+    if (this.state.mode === 'confirmation') {
       // TODO: pass user_confirmation_token into the api
     }
   }
@@ -53,7 +53,7 @@ class PasswordReset extends Component{
 
   new_password_handler = (e) => {
     
-    if (this.state.password != this.state.confirm_password) {
+    if (this.state.password !== this.state.confirm_password) {
       Alert.error('Passwords must match')
     }
     else {
@@ -72,6 +72,8 @@ class PasswordReset extends Component{
           case 422:
               message = 'Passwords need to be at least 6 characters in length'
               break;
+          default:
+              message = 'error' 
         }
         // error.response.status == 404
         Alert.error(message)
@@ -89,7 +91,7 @@ class PasswordReset extends Component{
             </div>
           </div>
         </div>
-        {this.state.mode == 'new_password' && 
+        {this.state.mode === 'new_password' && 
         <div className="d-flex flex-column question-container">
         <div className="d-flex justify-content-center text-big">
           <p>New Password</p>
@@ -103,7 +105,7 @@ class PasswordReset extends Component{
                   {components.confirm_button_type_1(this.new_password_handler.bind(this), "Save new password")}
                 </div>  
       </div>}
-      {this.state.mode == 'confirmation' &&
+      {this.state.mode === 'confirmation' &&
           <div className="d-flex flex-column question-container">
             <div className="d-flex justify-content-center text-big">
               <p>Email confirmation</p>
@@ -113,7 +115,7 @@ class PasswordReset extends Component{
             </div> 
           </div>
         }
-        {this.state.mode == 'did_reset' &&
+        {this.state.mode === 'did_reset' &&
           <div className="d-flex flex-column question-container">
             <div className="d-flex justify-content-center text-big">
               <p>Check Your Email</p>
@@ -123,7 +125,7 @@ class PasswordReset extends Component{
             </div> 
           </div>
           }
-        {this.state.mode == 'password_reset' &&
+        {this.state.mode === 'password_reset' &&
           <div className="d-flex flex-column question-container">
             <div className="d-flex justify-content-center text-big">
               <p>Reset Password</p>
