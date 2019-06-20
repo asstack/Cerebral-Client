@@ -68,27 +68,7 @@ class Patient extends Component{
     }
   }
   
-  render_views =(state) => {
-    console.log("render view state:", state)
-    if(state==='sign_in'){
-      return <Route path="/patient/sign_in" component={SignIn}/>
-    }else if (state==='dashboard'){ 
-      console.log("render view in state:", state)
-      return (
-        <Route path="/patient/dashboard" render = {(props) => 
-          <PatientDashboard user={this.props.user} />}/>)
-    }else if (state==='completed'){     
-      return <Route path="/patient/completed" component={CompleteProcess}/>
-    }else{
-      console.log("render view in bankname:", state)
-      return (
-        <Route path="/patient/question_bank/:bank_name" render = {(props) => 
-            <QuestionBank user={this.props.user.attributes} />}/>
-      )
-    }  
-  }
-
-  render_views_2= state => {
+  render_views= state => {
   
     switch(state){
       case 'sign_in': 
@@ -110,8 +90,7 @@ class Patient extends Component{
   }
   
   render(){
-    const target_view = this.render_views_2(this.state.state) 
-    console.log("target view", target_view)
+    const target_view = this.render_views(this.state.state) 
     return(
       target_view
     );

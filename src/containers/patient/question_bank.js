@@ -48,6 +48,7 @@ class QuestionBank extends Component{
       visit:[],
       is_loading:false,
       is_ready:false,
+      is_subcomp:false,
     }
     props.api_actions.api_reset()
     this.subscript_ref = React.createRef();
@@ -262,6 +263,11 @@ class QuestionBank extends Component{
     })
   }
 
+  //TODO: check components that has child components and save the status for rerendering (mobile view, back btn, or something), will be deprecated if we use tree structure for questions
+  set_subcomp_handler = (flag) => {
+    this.setState({is_subcomp:flag}) 
+  }
+
   //---------------- view ------------------//
   progress_modal = ({ open, close, message}) => (
     <Modal className="loading-modal" show={open} onHide={() => console.log("cannot close")}>
@@ -380,7 +386,8 @@ class QuestionBank extends Component{
       did_create_patient: this.did_create_patient.bind(this),
       submit_answer_and_next_step: this.submit_answer_and_next_step.bind(this),
       submit_and_upload_data:this.submit_and_upload_data.bind(this),
-      patient_sign_in:this.sign_in_and_next.bind(this)
+      patient_sign_in:this.sign_in_and_next.bind(this),
+      set_subcomp:this.set_subcomp_handler.bind(this)
     }
 
     //TODO: using ref to change title and subtitle in child component, but it's hacky way. will take that part as a component 
