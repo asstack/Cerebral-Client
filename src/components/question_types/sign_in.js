@@ -12,6 +12,14 @@ class SignIn extends Component {
       }
     }
 
+  componentDidMount = () => {
+        
+    if(this.props.title_ref && this.props.title_ref.current){
+      this.props.title_ref.current.innerText = "Sign in to your account" 
+    }
+  }
+
+
  		update_email = (e) => {
       const em = e.target.value
       this.setState({email:em})

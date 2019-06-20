@@ -39,7 +39,7 @@ class RegisterManager extends Component {
 
   target_view = () => {
     if(this.state.view_type==='signin'){ 
-      return <SignIn user_type = {this.props.user_type} submit_action={this.props.signin_submit_action} state_update={this.state_update}/> 
+      return <SignIn user_type = {this.props.user_type} submit_action={this.props.signin_submit_action} state_update={this.state_update} title_ref = {this.props.title_ref}/> 
     }else{
       return <CreateProfile user_type = {this.props.user_type} submit_action={this.props.register_submit_action} state_update = {this.state_update}/>} 
     } 

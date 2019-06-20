@@ -15,6 +15,7 @@ class Account extends Component {
     this.state = {
       type: this.props.default_type   
     }
+    this.title_ref = React.createRef();    
   }
   
   //check info and if exists, push to next

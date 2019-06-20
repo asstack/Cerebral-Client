@@ -56,6 +56,7 @@ export const map_type_to_component = (question, handlers, user, subscript_ref, t
                 set_subcomp = {handlers.set_subcomp}
                 signin_submit_action = {handlers.patient_sign_in}
                 register_submit_action = {handlers.did_create_patient} 
+                title_ref = {title_ref}
                 skip_action = {handlers.next_step_handler}/>
     case 'sign_up':
       return <CreateProfile

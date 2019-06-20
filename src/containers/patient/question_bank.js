@@ -33,7 +33,6 @@ const MyModal = ({ open, close, message}) => (
 
 const myPromiseModal = createModal(MyModal)
 
-
 //TODO: temporarily use modal for loading but may change to react component
 class QuestionBank extends Component{
   
@@ -85,8 +84,8 @@ class QuestionBank extends Component{
               this.props.history.push("/patient/question_bank/profile") 
             }else{  
               let bank_name = this.props.question_banks[this.props.question_banks_step]
-              this.props.history.push("/patient/question_bank/"+bank_name) 
               this.setState({is_ready:true})
+              this.props.history.push("/patient/question_bank/"+bank_name) 
             } 
           }) 
         }
@@ -95,7 +94,9 @@ class QuestionBank extends Component{
         if(url_info !== bank_name){ 
           this.props.history.push("/patient/question_bank/"+bank_name) 
         }
-        this.setState({is_ready:true})
+
+        this.setState({visit: this.props.visit, questions:this.props.questions, question_step:this.props.question_step, bank_step:this.props.question_banks_step, banks:this.props.question_banks, is_subcomp:false, is_ready:true})
+        //this.setState({is_ready:true})
         //if ensure visit
         // modal to ask  
         //else
