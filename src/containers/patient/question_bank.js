@@ -320,7 +320,9 @@ class QuestionBank extends Component{
     return(
       <div className="d-flex flex-column container-noprogress">
         <div className="d-flex flex-row justify-content-left therapist-header">
-          <img className="cerebral-logo" src={process.env.PUBLIC_URL + '/img/logo.png'}/>
+          <a href={process.env.REACT_APP_MAIN_PAGE_URL}>
+            <img className="cerebral-logo" src={process.env.PUBLIC_URL + '/img/logo.png'}/>
+          </a>
         </div>
         <div className="d-flex flex-row justify-content-center">
           <QuestionsWrapper/>  

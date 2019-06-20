@@ -66,7 +66,7 @@ class PatientDashboard extends Component{
       <div className="d-flex flex-row therapist-noprogress">
         <div className="d-flex flex-column profile-side-bar-holder">
           <div className="d-flex justify-content-center profile-logo">
-            <img className="cerebral-logo" src={process.env.PUBLIC_URL + '/img/logo.png'}/>
+            <a href={process.env.REACT_APP_MAIN_PAGE_URL}><img className="cerebral-logo" src={process.env.PUBLIC_URL + '/img/logo.png'}/></a>
           </div>    
           <div className="profile-side-items-holder">
             <div className="profile-side-title-holder">

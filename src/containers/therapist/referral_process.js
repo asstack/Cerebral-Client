@@ -57,7 +57,9 @@ class ReferralProcess extends Component{
     return (
       <div className="d-flex flex-column therapist-noprogress">
         <div className="d-flex flex-row justify-content-between align-items-center therapist-header">
-          <img className="cerebral-logo" src={process.env.PUBLIC_URL + '/img/logo.png'}/>
+          <a href={process.env.REACT_APP_MAIN_PAGE_URL}>
+            <img className="cerebral-logo" src={process.env.PUBLIC_URL + '/img/logo.png'}/>
+          </a>
           <div className="therapist-cover-top-menu" onClick={e=>this.redirect_url("/therapist/member") }>{id?"PROFILE":"Member Login"}</div>
         </div>
         <div className="d-flex flex-column justify-content-center align-self-center therapist-cover-main">
