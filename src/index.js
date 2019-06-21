@@ -9,6 +9,7 @@ import { PersistGate } from 'redux-persist/integration/react'
 
 const {store, persistor} = configure_store()
 
+
 render(
   // https://react-redux.js.org/introduction/basic-tutorial#providing-the-store
   <Provider store={store}>

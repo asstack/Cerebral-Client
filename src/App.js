@@ -29,6 +29,7 @@ class App extends Component {
   }
 
   componentDidUpdate(){ 
+
     const new_state =  this.props.location.pathname.split("/")[1]  
     if(this.state.current_state!==new_state){
       console.log("App did update:", new_state)
