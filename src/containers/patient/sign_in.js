@@ -46,7 +46,7 @@ class SignIn extends Component {
   }
 
   state_update_handler = e => {
-    this.props.history.push('/patient/qualification') 
+    this.props.history.push('/patient/question_bank/qualification') 
   }
 
   handle_patient_previous_state = () => {

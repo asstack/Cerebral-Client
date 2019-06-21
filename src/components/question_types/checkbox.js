@@ -19,7 +19,6 @@ class CheckBoxComponent extends Component {
 
   componentDidMount(){
     //initalize item
-    console.log("didmount:", this.state)
     const arr = new Array(this.props.options.length).fill(false);     
     this.setState({details:this.props.details , options: this.props.options, checked_options:arr, is_ready:true})
   }
@@ -48,7 +47,6 @@ class CheckBoxComponent extends Component {
       if(this.state.details==='true' && info!=='None apply'){
         this.setState({single_option:info, type:'details'}) 
         if(this.props.set_subcomp!==null){ 
-          console.log("want to update here")
           this.props.set_subcomp(true)
         }
       }else{

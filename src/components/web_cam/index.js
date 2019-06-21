@@ -24,8 +24,6 @@ class WebcamComponent extends Component {
 
 	//TODO: make action for confirm and Continue to Shopping, need api and s3 call to save image
 	confirm_handler = () => {
-		//const {submit_id_photo} = this.props
-		//submit_id_photo(this.screenshot)
     this.props.submit_action(this.state.screenshot, "image/jpeg")
 	}
 
@@ -61,18 +59,6 @@ class WebcamComponent extends Component {
   render() {
     return (
 			this.map_state_to_component(this.state.cam_state)
-			/*
-			<div>
-				<Webcam className = {"d-flex justify-content-center p-2"} width={'100%'} height={'100%'}  ref='webcam' />
-				<div className = "d-flex justify-content-center p-2">	
-					<input className="col btn-confirm text-btn"type="button" value="Take the pickture" onClick={this.screenshot_handler}/>
-				</div>
-				<div>
-					{this.state.screenshot ? <img src={this.state.screenshot} /> : null}
-				</div>
-				
-			</div>
-			*/
 		)
   }
 }

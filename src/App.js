@@ -9,7 +9,6 @@ import {update_app_state, set_env} from './actions'
 import ReactGA from 'react-ga'
 import ErrorBoundary from './error_boundary'
 import ModalContainer from 'react-modal-promise'
-
 import 'react-s-alert/dist/s-alert-default.css'
 import Alert from 'react-s-alert'
 
