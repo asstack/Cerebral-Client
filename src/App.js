@@ -25,7 +25,11 @@ class App extends Component {
   
   componentDidMount(){
     const init_state =  this.props.location.pathname.split("/")[1]  
-    this.setState({current_state:init_state}) 
+    if(!init_state){  
+      this.props.history.push("/") 
+    }else{
+      this.setState({current_state:init_state}) 
+    }
   }
 
   componentDidUpdate(){ 

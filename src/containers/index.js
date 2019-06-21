@@ -41,7 +41,7 @@ class MainPage extends Component{
       <div>
         <h1> main page </h1>
         <input type='button' value='Get Started' onClick={this.app_state_update_handler.bind(this)}/>
-        <input type='button' value='Register' onClick={this.app_state_register_handler.bind(this)}/>
+        <input type='button' value='Dashboard' onClick={this.app_state_register_handler.bind(this)}/>
         <input type='button' value='Sign In' onClick={this.app_state_signin_handler.bind(this)}/>
         <input type='button' value='therapist' onClick={e => this.app_state_handler("/therapist/")}/>
         <input type='button' value='Reset Password' onClick={this.app_state_reset_password_handler.bind(this)}/>      

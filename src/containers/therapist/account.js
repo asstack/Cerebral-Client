@@ -56,7 +56,7 @@ class Account extends Component {
         <div className="d-flex flex-column">
           <div className="d-flex justify-content-center flex-row menu-bar">
             <div className= "col d-flex justify-content-between solid-border-bottom text-small menu-bar-item-holder">
-              <img alt="arrow btn" src={process.env.PUBLIC_URL + '/img/arrow.png'} className="arrow-btn"/>
+              <img alt="arrow btn" src={process.env.PUBLIC_URL + '/img/arrow.png'} className="arrow-btn" onClick={e=>this.props.update_type_handler('cover')}/>
               <div className="align-self-end menu-item">  Therapist Information </div>
               <div></div>
             </div>      

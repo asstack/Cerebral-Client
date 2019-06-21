@@ -12,28 +12,30 @@ class PatientDashboard extends Component{
     super(props)
     this.state = {
       view_type:'profile_info', 
-      user:this.props.user
+      user:this.props.user,
+      is_ready:false
     }  
   }
 
   componentDidMount(){
-    console.log("dash board patient user:", this.props.user)
+    console.log("dash board patient Did mount user:", this.props.user)
     if(!this.props.user.attributes['access-token']){ 
       this.props.history.push('/patient/sign_in') 
+    }else{
+      this.setState({is_ready:true})
     }      
   }
 
   //updated user information
   componentWillReceiveProps = (next_props) => { 
 
-    console.log("dash board patient user:", this.props.user)
+    console.log("dash board Will receive patient user:", this.props.user)
     if(next_props.user.id===null || next_props.user.patient===null){ 
       this.props.history.push('/patient/sign_in') 
     }
 
     this.setState({user:next_props.user}) 
   }
-
 
 
   app_state_checkout_handler = e => {
@@ -101,7 +103,8 @@ class PatientDashboard extends Component{
 
 
   render(){ 
-    return( this.view() )
+    if(this.state.is_ready) return( this.view() )
+    else return null;
   } 
 }
 

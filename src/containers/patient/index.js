@@ -66,6 +66,7 @@ class Patient extends Component{
   }
   
   render_views= state => {
+    console.log("render view :", state)
     switch(state){
       case 'sign_in': 
         return <Route path="/patient/sign_in" component={SignIn}/>
@@ -81,7 +82,7 @@ class Patient extends Component{
           <Route path="/patient/question_bank/" render = {(props) => 
             <QuestionBank user={this.props.user.attributes} />}/>)
       default: 
-        return <div></div>
+        return <div>Invalid URL</div>
     }
 
   }
