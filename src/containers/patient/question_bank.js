@@ -75,7 +75,7 @@ class QuestionBank extends Component{
         //TODO: create new visit and start from profile 
         if(!this.props.questions){
           this.update_and_set_question('profile', 0)  
-          this.props.history.push("/patient/quesion_bank/profile") 
+          this.props.history.push("/patient/question_bank/profile") 
         }else{
           return myPromiseModal({open:true}).then(value=>{
             if(!value){

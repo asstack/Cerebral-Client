@@ -1247,7 +1247,9 @@ h3 {
   line-height: 18px;
   letter-spacing: -0.43px;
   color: #250044;
+  text-transform:CAPITALIZE;
 }
+
 .subscription-subtext {
   font-weight: 500;
   font-size: 14px;

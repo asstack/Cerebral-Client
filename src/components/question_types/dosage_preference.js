@@ -52,10 +52,10 @@ class DosagePreference extends QuestionPreference {
     var selected_dosage = this.state.options[this.state.selected_index]
 
     if (!selected_dosage) {
-      selected_dosage = {name: null, id: 0}
+      selected_dosage = {name: null, id: 0, dosage: null}
     }
     this.props.set_dosage(selected_dosage) 
-    this.props.submit_action(selected_dosage.name)
+    this.props.submit_action(selected_dosage.dosage)
   }
 
   draw_checkbox_description = (item, is_recommended) => {
