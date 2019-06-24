@@ -367,6 +367,13 @@ export const upload_object_for_current_question = (file, file_type) => (dispatch
       })
 }
 
+
+export const get_visits_for_patient = (patient_id) => (dispatch, getState) => {
+  let user_attr = get_user_attr(getState())
+  return axios.get(`/api/patients/${patient_id}/visits`, {headers:make_headers(user_attr)}) 
+
+}
+
 export const clean_up_patient_process = () => (dispatch) => {
   return dispatch(cleanup_questions_and_visit())
 }
@@ -374,3 +381,6 @@ export const clean_up_patient_process = () => (dispatch) => {
 export const sign_out = () => (dispatch, getState) => {
   return dispatch(reset_state())
 }
+
+
+

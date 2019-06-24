@@ -6,7 +6,7 @@ import EditPassword from '../../components/dashboard/edit_password'
 import ShippingInformation from '../../components/dashboard/shipping_information'
 import PaymentInformation from '../../components/dashboard/payment_information'
 import MessageProcessManager from '../../components/dashboard/message_process_manager'
-
+import SubscriptionInformation from '../../components/dashboard/subscription_information'
 import {get_patient_shipping_address} from '../../actions/patient_action'
 
 
@@ -60,7 +60,7 @@ class DashboardContents extends Component{
       case 'profile_info':
         return this.patient_info_view()
       case 'subscription_info':
-        return <div>subscription info</div>
+        return <SubscriptionInformation user = {this.state.user}/>
       case 'message':
         return <MessageProcessManager user={this.state.user} view_type="message_box"/>
       case 'result':

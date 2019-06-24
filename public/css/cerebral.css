@@ -1219,6 +1219,42 @@ h3 {
   padding-right:20px;
 }
 
+/*subscription information for patient profile*/
+
+.medication-info-photo {
+  height:120px;
+}
+
+.medication-holder {
+  margin-top:50px;
+}
+
+.subscription-col-1 {
+  margin-right:76px;
+}
+
+.subscription-col-2 {
+
+}
+
+.subscription-text-holder {
+  margin-bottom:30px;
+}
+
+.subscription-text {
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 18px;
+  letter-spacing: -0.43px;
+  color: #250044;
+}
+.subscription-subtext {
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 18px;
+  letter-spacing: -0.43px;
+  color: #9B9B9B;
+}
 
 /*therapists input holder*/
 
