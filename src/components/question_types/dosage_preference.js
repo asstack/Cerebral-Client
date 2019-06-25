@@ -17,15 +17,14 @@ class DosagePreference extends QuestionPreference {
     const {get_current_answer_by_name, get_treatment_by_name} = this.props
 
     get_current_answer_by_name('medication_preference').then((resp) => {
-
-      if (!resp.response) {
+      let med_data = JSON.parse(resp.response) 
+      if (!med_data.name) {
         console.log("!resp  response: ", resp)
         this.props.set_dosage({name: null, id: 0})
         // TODO: skip this component
-        //this.props.skip_action()
+        // this.props.skip_action()
       }
       else {
-
         console.log("medication_preference resp: ", resp)
         let parsed_resp = JSON.parse(resp.response)
         console.log("parsed resp:", parsed_resp.name)

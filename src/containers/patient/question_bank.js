@@ -130,7 +130,8 @@ class QuestionBank extends Component{
       this.props.patient_actions.set_step(skip_step);
     }else if(q_type==='dosage_preference' && this.props.user['access-token']){
       this.props.patient_actions.get_current_answer_by_name('medication_preference').then(resp => {
-        if(!resp.response){ 
+        let med_data = JSON.parse(resp.response) 
+        if(med_data.name==null){ 
           if(this.state.questions.length > skip_step+1){
             this.props.patient_actions.set_step(skip_step);
           }else{
