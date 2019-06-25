@@ -25,11 +25,12 @@ class MedicationPreference extends QuestionPreference {
 
      
     if (!selected_treatment) {
-      selected_treatment = {name: null, id: 0}
+      selected_treatment = {brand_name:null, name: null, id: 0}
     }
 
+    let obj = {name:selected_treatment.name, brand_name:selected_treatment.brand_name}
     this.props.set_treatment(selected_treatment)
-    this.props.submit_action(selected_treatment.name)
+    this.props.submit_action(JSON.stringify(obj))
   }
 
   get_image_for_item = (item, is_recommended) => {

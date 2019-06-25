@@ -1222,7 +1222,8 @@ h3 {
 /*subscription information for patient profile*/
 
 .medication-info-photo {
-  height:120px;
+  height:126px;
+  width:190px;
 }
 
 .medication-holder {
@@ -1230,6 +1231,8 @@ h3 {
 }
 
 .subscription-col-1 {
+  min-width:200px;
+  margin-left:15px;
   margin-right:76px;
 }
 

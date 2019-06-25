@@ -45,7 +45,8 @@ class SubscriptionInformation extends Component {
 
   subscription_info = (type, data) => {
     const title = type==='recent'?'MY RECENT SUBSCRIPTION':'SUBSCRIPTION HISTORY'
-    console.log("subscription info", data)
+
+    let med_preference = JSON.parse(data.medication_preference.response)
     return <div key={uuidv1()} className="align-self-start main-content-wide-card">
       <div className="d-flex flex-column card-items-container">
         <div className="d-flex flex-column justify-content-center patient_basic-info">
@@ -53,10 +54,10 @@ class SubscriptionInformation extends Component {
             <div className="small-card-title">{title}</div>
             <div className="d-flex flex-row medication-holder"> 
               <div className="d-flex align-items-center patient-info-photo-holder"> 
-                <img alt="medication info" className = "medication-info-photo" src={process.env.PUBLIC_URL + '/img/medication/'+data.medication_preference.response+'.svg'}/>
+                <img alt="medication info" className = "medication-info-photo" src={process.env.PUBLIC_URL + '/img/medication/'+med_preference.name+'.svg'}/>
               </div>
               <div className="d-flex flex-column subscription-col-1">
-                <div className="subscription-text-holder subscription-text">{data.medication_preference.response}</div> 
+                <div className="subscription-text-holder subscription-text">{med_preference.name +" ("+med_preference.brand_name+")"}</div> 
                 <div className="subscription-text-holder subscription-text">{data.dosage_preference.response+" mg"}</div> 
                 <div className="subscription-text-holder subscription-text">$45.00</div> 
               </div>
@@ -96,7 +97,6 @@ class SubscriptionInformation extends Component {
 
   default_view = () => {
     let history = this.state.history.slice(1)
-    console.log("check history:", history, "total:", this.state.history)
     return (  
       <div className="d-flex flex-column profile-main-content">
         <div className="d-flex flex-row justify-content-between">
@@ -104,8 +104,8 @@ class SubscriptionInformation extends Component {
           <div className="d-flex justify-content-end text-main-title">SUBSCRIPTION INFORMATION</div>
         </div>
         <div className="d-flex flex-column main-content-row">
-          {this.state.history.length>0?this.subscription_info('recent', this.state.history[0]):this.subscription_info('recent')}
-          {history.length>0?history.map((item, index) => this.subscription_info('history', item)):this.subscription_info('history')}  
+          {this.state.history.length>0?this.subscription_info('recent', this.state.history[0]):this.subscription_no_info('recent')}
+          {history.length>0?history.map((item, index) => this.subscription_info('history', item)):this.subscription_no_info('history')}  
         </div>
       </div> 
     ) 
