@@ -27,7 +27,9 @@ class App extends Component {
         }
       }, {
       trackingId: props.env.REACT_APP_AW_KEY,
-        gaOptions: { name: 'trackerAD' }}]
+        gaOptions: { name: 'trackerAD' }}
+      ,{ debug: true, alwaysSendToDefaultTracker: false }
+    ]
       ); 
     }
     ReactGA.pageview("client main page");
