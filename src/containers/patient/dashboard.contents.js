@@ -7,6 +7,7 @@ import ShippingInformation from '../../components/dashboard/shipping_information
 import PaymentInformation from '../../components/dashboard/payment_information'
 import MessageProcessManager from '../../components/dashboard/message_process_manager'
 import SubscriptionInformation from '../../components/dashboard/subscription_information'
+import Assessment from '../../components/dashboard/assessment'
 import {get_patient_shipping_address} from '../../actions/patient_action'
 
 
@@ -64,7 +65,7 @@ class DashboardContents extends Component{
       case 'message':
         return <MessageProcessManager user={this.state.user} view_type="message_box"/>
       case 'result':
-        return <div> message under the construction </div>
+        return <Assessment user = {this.state.user}/>
       default:
         return "Invalid url"
     } 

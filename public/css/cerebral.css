@@ -894,9 +894,11 @@ h3 {
 }
 
 .text-main-title{
-  font-size:20px;
   font-weight:600;
   color: #250044;
+  font-size: 14px;
+  letter-spacing: -0.43px;
+  text-transform: uppercase;
 }
 
 .main-content-row {
@@ -1259,6 +1261,59 @@ h3 {
   line-height: 18px;
   letter-spacing: -0.43px;
   color: #9B9B9B;
+}
+
+/*--------- Assessment profile -----------*/
+
+.amt-rst-container {
+  border-left: solid 20px #250044;
+}
+
+.amt-left-panel {
+  width:330px;
+  padding-right:50px;
+  padding-left:50px;
+}
+
+.amt-left-panel .title {
+  margin-top:50px;
+  font-size: 36px;
+  line-height: 55px;
+  letter-spacing: -0.5px;
+  color: #250044;
+}
+
+.amt-left-panel .description {
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 20px;
+  letter-spacing: -0.43px;
+  text-transform: uppercase;
+
+  color: #250044;
+  margin-top:50px;
+}
+
+.amt-left-panel .score {
+  margin-top:50px;
+  margin-bottom:50px;
+  font-weight: 600;
+  font-size: 36px;
+  line-height: 48px;
+  letter-spacing: -0.4px;
+  color: #D3DBF8;
+}
+.amt-left-panel .score .total {
+  color: #9B9B9B
+}
+
+.amt-graph-panel .description {
+  margin-top:10px;
+  font-size: 16px;
+  line-height: 18px;
+  font-weight: 600;
+  letter-spacing: -0.43px;
+  color: #250044;
 }
 
 /*therapists input holder*/
