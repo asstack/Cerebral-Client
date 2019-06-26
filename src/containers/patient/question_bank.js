@@ -137,6 +137,7 @@ class QuestionBank extends Component{
             this.props.patient_actions.set_step(skip_step);
           }else{
             this.props.patient_actions.set_current_question_bank_by_name(this.state.banks[this.state.bank_step+1], false, this.state.bank_step+1)
+            this.props.history.push("/patient/question_bank/"+ this.state.banks[this.state.bank_step+1]) 
           }
         }else{
           this.props.patient_actions.set_step(step);
@@ -157,6 +158,7 @@ class QuestionBank extends Component{
         this.skip_questions(question_step-1, question_step-2);   
       }else if(question_step === 0 && bank_step > 0){
         this.props.patient_actions.set_current_question_bank_by_name(banks[bank_step-1], true, bank_step-1)
+        this.props.history.push("/patient/question_bank/"+ banks[bank_step-1]) 
       }
     }
   }
@@ -171,6 +173,7 @@ class QuestionBank extends Component{
       this.skip_questions(question_step+1, question_step+2);
     }else{
       this.props.patient_actions.set_current_question_bank_by_name(banks[bank_step+1], false, bank_step+1)
+      this.props.history.push("/patient/question_bank/"+ banks[bank_step+1]) 
     }
   }
 
