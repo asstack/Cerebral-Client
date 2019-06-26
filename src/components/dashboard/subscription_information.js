@@ -47,6 +47,7 @@ class SubscriptionInformation extends Component {
     const title = type==='recent'?'MY RECENT SUBSCRIPTION':'SUBSCRIPTION HISTORY'
 
     let med_preference = JSON.parse(data.medication_preference.response)
+    console.log("med preference:", med_preference)
     return <div key={uuidv1()} className="align-self-start main-content-wide-card">
       <div className="d-flex flex-column card-items-container">
         <div className="d-flex flex-column justify-content-center patient_basic-info">
@@ -54,12 +55,19 @@ class SubscriptionInformation extends Component {
             <div className="small-card-title">{title}</div>
             <div className="d-flex flex-row medication-holder"> 
               <div className="d-flex align-items-center patient-info-photo-holder"> 
-                <img alt="medication info" className = "medication-info-photo" src={process.env.PUBLIC_URL + '/img/medication/'+med_preference.name+'.svg'}/>
+                <img alt="medication info" className = "medication-info-photo" 
+                  src={process.env.PUBLIC_URL + '/img/medication/'+(med_preference.name||'01-bottle')+'@3x.png'}/>
               </div>
               <div className="d-flex flex-column subscription-col-1">
-                <div className="subscription-text-holder subscription-text">{med_preference.name +" ("+med_preference.brand_name+")"}</div> 
-                <div className="subscription-text-holder subscription-text">{data.dosage_preference.response+" mg"}</div> 
-                <div className="subscription-text-holder subscription-text">$45.00</div> 
+                <div className="subscription-text-holder subscription-text">
+                  {med_preference.name===null?'Medication: Pending':med_preference.name +" ("+med_preference.brand_name+")"}
+                </div> 
+                <div className="subscription-text-holder subscription-text">
+                  {med_preference.name===null?'Dosage: Pending':data.dosage_preference.response+" mg"}
+                </div> 
+                <div className="subscription-text-holder subscription-text">
+                  $45.00
+                </div> 
               </div>
               <div className="d-flex flex-column">
                 <div className="subscription-text-holder subscription-text">prescription status</div> 
@@ -84,7 +92,7 @@ class SubscriptionInformation extends Component {
         <div className="d-flex flex-column justify-content-center patient_basic-info">
           <div className="d-flex flex-column">
             <div className="small-card-title">{title}</div>
-            <div className="d-flex flex-row medication-holder"> 
+            <div className="d-flex flex-row"> 
               <div className="subscription-subtext">
                 You have no previous subscriptions
               </div>
