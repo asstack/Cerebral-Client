@@ -18,14 +18,16 @@ class Assessment extends Component {
 
   test_chart = () => {
     return( 
-      <AreaChart width={500} height={325} data={[{name: 'month 1', uv: 11}, {name: 'month 2', uv: 8, pv:11}, {name: 'month 3', uv: 16}]}>
+      <AreaChart width={550} height={325} 
+                 margin={{ top: 20, right: 80, left: 0, bottom: 0 }}
+                 data={[{name: 'month 1', uv: 14}, {name: 'month 2', uv: 8, pv:11}, {name: 'month 3', uv: 16}]}>
         <XAxis dataKey="name" position='bottom' dy={10} fontSize={14}/>
         <YAxis type="number" domain={[0,21]}>
-           <Label angle={-90} value='Anxiety score' position='insideLeft' style={{textAnchor: 'middle', fontSize:'16px', fill:'#250044'}} />
+           <Label angle={-90} value='Anxiety score' position='insideLeft' style={{fontWeight:600, textAnchor: 'middle', fontSize:'16px', fill:'#250044'}} />
         </YAxis>
-        <CartesianGrid stroke="#E9E7E9"/>
+        <CartesianGrid stroke="#E9E7E9" vertical = "false" />
         <Area type="monotone" dataKey="uv" stroke="#e1e5f5" fill="#e1e5f5"/>
-        <ReferenceLine y={20} stroke="#250044" strokeDasharray="3 3" label={{ value: 'Baseline', fill: '#250044' }}/>
+        <ReferenceLine y={14} stroke="#250044" strokeDasharray="3 3" label={{fontWeight:600, fontSize:'16px', position:'right', value: 'Baseline', fill: '#250044' }}/>
       </AreaChart>
     )
   }
