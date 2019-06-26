@@ -23,11 +23,11 @@ class App extends Component {
     ReactGA.initialize([{
       trackingId: props.env.REACT_APP_GA_KEY,
         gaOptions: {
-          name: 'tracker ga',
+          name: 'trackerGA',
         }
       }, {
       trackingId: props.env.REACT_APP_AW_KEY,
-        gaOptions: { name: 'tracker ad' }}]
+        gaOptions: { name: 'trackerAD' }}]
       ); 
     }
     ReactGA.pageview("client main page");
