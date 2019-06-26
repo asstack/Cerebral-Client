@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import { connect } from 'react-redux'
 import uuidv1 from 'uuid'
-import {Label, LabelList, ResponsiveContainer, AreaChart, XAxis, YAxis, CartesianGrid, Area, Line} from 'recharts';
+import {ReferenceLine, Label, LabelList, ResponsiveContainer, AreaChart, XAxis, YAxis, CartesianGrid, Area, Line} from 'recharts';
 
 class Assessment extends Component {
 
@@ -18,14 +18,14 @@ class Assessment extends Component {
 
   test_chart = () => {
     return( 
-      <AreaChart width={500} height={325} data={[{name: 'month 1', uv: 11, pv: 11}, {name: 'month 2', uv: 8, pv:11}, {name: 'month 3', uv: 16, pv:11}]}>
+      <AreaChart width={500} height={325} data={[{name: 'month 1', uv: 11}, {name: 'month 2', uv: 8, pv:11}, {name: 'month 3', uv: 16}]}>
         <XAxis dataKey="name" position='bottom' dy={10} fontSize={14}/>
         <YAxis type="number" domain={[0,21]}>
            <Label angle={-90} value='Anxiety score' position='insideLeft' style={{textAnchor: 'middle', fontSize:'16px', fill:'#250044'}} />
         </YAxis>
         <CartesianGrid stroke="#E9E7E9"/>
         <Area type="monotone" dataKey="uv" stroke="#e1e5f5" fill="#e1e5f5"/>
-        <Area type="monotone" dataKey="pv" stroke="#250044" strokeDasharray ="2 2"  fill="None"/>
+        <ReferenceLine y={20} stroke="#250044" strokeDasharray="3 3" label={{ value: 'Baseline', fill: '#250044' }}/>
       </AreaChart>
     )
   }
