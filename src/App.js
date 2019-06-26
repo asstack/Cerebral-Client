@@ -17,20 +17,27 @@ class App extends Component {
   constructor(props){
     super(props)
     props.set_env(props.env)
-    if (props.env.REACT_APP_GA_KEY){ 
-
-
-    ReactGA.initialize([{
-      trackingId: props.env.REACT_APP_GA_KEY,
+    if (props.env.REACT_APP_AW_KEY){ 
+      ReactGA.initialize(props.env.REACT_APP_AW_KEY, {
+        debug: true,
+        titleCase: false,
         gaOptions: {
-          name: 'trackerGA',
+          userId: 123
         }
-      }, {
-      trackingId: props.env.REACT_APP_AW_KEY,
-        gaOptions: { name: 'trackerAD' }}
-      ,{ debug: true, alwaysSendToDefaultTracker: false }
-    ]
+      });
+      /*
+      ReactGA.initialize([{
+        trackingId: props.env.REACT_APP_GA_KEY,
+          gaOptions: {
+            name: 'trackerGA',
+          }
+        }, {
+        trackingId: props.env.REACT_APP_AW_KEY,
+          gaOptions: { name: 'trackerAD' }}
+        ,{ debug: true, alwaysSendToDefaultTracker: false }
+      ]
       ); 
+      */
     }
     ReactGA.pageview("client main page");
     this.state = {
