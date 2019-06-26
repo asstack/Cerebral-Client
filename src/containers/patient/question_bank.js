@@ -1,4 +1,5 @@
 import React, {Component} from 'react'
+import ReactGA from 'react-ga'
 import {withRouter} from 'react-router-dom'
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
@@ -162,7 +163,7 @@ class QuestionBank extends Component{
    
   patient_state_transition_helper = () => {
     const {questions, banks, bank_step, question_step} = this.state
-    
+
     if(banks.length===bank_step+1 && questions.length === question_step+1){ 
       this.props.history.push("/patient/completed") 
       this.props.patient_actions.clean_up_patient_process()
@@ -190,6 +191,10 @@ class QuestionBank extends Component{
   //TODO: It is hacky way only for the demo
   submit_answer_and_next_step = (ans) => {
     const {patient_actions} = this.props
+     ReactGA.event({
+            category: 'patients',
+            action: 'submit answers',
+     }); 
     patient_actions.answer_current_question({answer: ans}).then(() => {
       this.patient_state_transition_helper()
       //return this.patient_state_transition_helper(); 
@@ -238,6 +243,10 @@ class QuestionBank extends Component{
           .then(() => { 
             this.patient_state_transition_helper() 
             this.setState({is_loading:false}) 
+            ReactGA.event({
+                    category: 'patients',
+                    action: 'create account',
+            });  
           })
       .catch((err) => {
         console.log(err)
@@ -266,6 +275,11 @@ class QuestionBank extends Component{
       if (resp.user_attr.patient) {
         patient_actions.set_patient(resp.user_attr.patient);
         patient_actions.ensure_visit(true).then((visit) => {
+          ReactGA.event({
+                  category: 'patients',
+                  action: 'sign_in',
+          }); 
+ 
           this.patient_state_transition_helper()
           this.setState({is_loading:false}) 
         })

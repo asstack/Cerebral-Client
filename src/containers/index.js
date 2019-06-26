@@ -3,6 +3,7 @@ import {connect} from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import {update_app_state} from '../actions'
 import {update_patient_state} from '../actions/patient_action'
+import ReactGA from 'react-ga'
 
 class MainPage extends Component{
 
@@ -13,7 +14,7 @@ class MainPage extends Component{
   
   componentDidMount(){
     //ReactGA.initialize('UA-139974495-1');
-    //ReactGA.pageview('/MainPage');
+    ReactGA.pageview('/MainPage');
     console.log("main page here")
   }
   app_state_update_handler = e => {

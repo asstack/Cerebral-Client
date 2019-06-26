@@ -17,12 +17,25 @@ class App extends Component {
   constructor(props){
     super(props)
     props.set_env(props.env)
-    if (props.env.REACT_APP_GA_KEY) ReactGA.initialize(props.env.REACT_APP_GA_KEY);
+    if (props.env.REACT_APP_GA_KEY){ 
+
+
+    ReactGA.initialize([{
+      trackingId: props.env.REACT_APP_GA_KEY,
+        gaOptions: {
+          name: 'tracker ga',
+        }
+      }, {
+      trackingId: props.env.REACT_APP_AW_KEY,
+        gaOptions: { name: 'tracker ad' }}]
+      ); 
+    }
+    ReactGA.pageview("client main page");
     this.state = {
       current_state:'' 
     }
   }
-  
+
   componentDidMount(){
     const init_state =  this.props.location.pathname.split("/")[1]  
     if(!init_state){  
