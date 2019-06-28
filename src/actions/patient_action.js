@@ -239,6 +239,7 @@ export const create_visit = (service_line_id) => (dispatch, getState) => {
 
   return axios.post(`/api/patients/${patient.id}/visits`, body, {headers: make_headers(user_attr)})
     .then(function(resp){
+      console.log("create visit:", resp.data)
       dispatch(set_visit(resp.data))
       return Promise.resolve(resp.data)
     })
@@ -311,7 +312,8 @@ export const complete_current_visit = () => (dispatch, getState) => {
   return dispatch(get_current_patient_and_visit()).then((resp) => {
     var user_attr = get_user_attr(getState())
     return dispatch(api_call('PUT', `/api/patients/${resp.patient.id}/visits/${resp.visit.id}/complete`, {headers: make_headers(user_attr)}, {complete: true})).then((new_visit) => {
-      dispatch(set_visit(new_visit))
+      console.log("complete current visit:", new_visit)
+      //dispatch(set_visit(new_visit))
       return Promise.resolve(new_visit)
     })
   })

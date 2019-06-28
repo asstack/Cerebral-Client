@@ -1,5 +1,5 @@
 import React from 'react'
-import {selector} from '../components/question_types/selector'
+import SelectorComponent from '../components/question_types/selector'
 import Date from '../components/question_types/date'
 import HeightWeight from '../components/question_types/height_weight'
 import CreateProfile from '../components/question_types/create_profile'
@@ -43,7 +43,7 @@ export const map_type_to_component = (question, handlers, user, subscript_ref, t
     case 'identification_cover':
       return <IdentificationCover submit_action = {handlers.submit_answer_and_next_step} />
     case 'selector':
-      return selector(handlers.set_selector_handler, question)
+      return <SelectorComponent submit_action = {handlers.submit_answer_and_next_step} question={question} type="selector"/>
     case 'emergency_contact':
       return <EmergencyContact submit_action = {handlers.submit_answer_and_next_step}/>
     case 'create_profile':
@@ -59,8 +59,7 @@ export const map_type_to_component = (question, handlers, user, subscript_ref, t
       return <CreateProfile
                 submit_action = {handlers.did_create_patient}/> 
     case 'bank_selector':
-      return selector(handlers.set_bank_selector_handler, 
-        question)
+      return <SelectorComponent submit_action = {handlers.set_bank_selector_handler} question={question} type="bank_selector"/>
     case 'phone':
       return <Phone skip_action = {handlers.next_step_handler}
                      submit_action = {handlers.submit_answer_and_next_step}/>

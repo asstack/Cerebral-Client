@@ -182,15 +182,6 @@ class QuestionBank extends Component{
     this.patient_state_transition_helper();
   }
 
-  set_selector_handler=(e, option)=>{
-    const {patient_actions} = this.props
-
-    this.patient_state_transition_helper();
-    patient_actions.answer_current_question({answer: option.name}).then(() => {
-      //return this.patient_state_transition_helper();
-    })
-  }
-
   //TODO: It is hacky way only for the demo
   submit_answer_and_next_step = (ans) => {
     const {patient_actions} = this.props
@@ -206,7 +197,7 @@ class QuestionBank extends Component{
 
 
   //TODO: now assuming service_line selector only use !option.immediate. we may make special question type for service_line selector 
-  set_bank_selector_handler=(e, option)=>{
+  set_bank_selector_handler=(option)=>{
 
 		const {question_banks_step, patient_actions} = this.props
 
@@ -221,11 +212,12 @@ class QuestionBank extends Component{
         //TODO: I am using this line only for service line selector
         if(!this.props.question_banks.includes(option.question_bank_names[0])){
           patient_actions.update_patient_question_banks([this.props.question_banks[0]].concat(option.question_bank_names), question_banks_step).then(()=>{
-            if (option.name) patient_actions.update_service_line(option.name)	 
             if (this.props.user['access-token']){
               if(!this.state.visit || this.state.visit.service_line.name!==option.name){
                 patient_actions.create_visit(option.name) 
               }
+            }else if(option.name){ 
+              patient_actions.update_service_line(option.name)	 
             }
             this.patient_state_transition_helper(); 
           })
@@ -413,7 +405,6 @@ class QuestionBank extends Component{
   render(){
     const handlers = {
       next_step_handler:this.next_step_handler.bind(this),
-      set_selector_handler:this.set_selector_handler.bind(this),
       set_bank_selector_handler:this.set_bank_selector_handler.bind(this),
       did_create_patient: this.did_create_patient.bind(this),
       submit_answer_and_next_step: this.submit_answer_and_next_step.bind(this),
@@ -425,6 +416,7 @@ class QuestionBank extends Component{
     //TODO: using ref to change title and subtitle in child component, but it's hacky way. will take that part as a component 
     const question = this.state.questions[this.state.question_step]
     const component = common.map_type_to_component(question, handlers, this.props.user, this.subscript_ref, this.title_ref)
+    console.log("state check:", this.state)
     return(
       this.type_to_view(component, question)
    );
