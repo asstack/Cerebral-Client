@@ -113,3 +113,12 @@ export const clean_refer_data = () => dispatch => {
 }
 
 
+export const write_note_for_patients = (patient_id, note) => (dispatch, getState) => {
+  var user_attr = get_user_attr(getState())
+  var therapist = user_attr.therapist
+  var body = {patient_id:patient_id, note:note}
+  console.log("user_attr:", user_attr, "therapist.id:", therapist.id, "body:", body)
+  return axios.post(`/api/therapists/${therapist.id}/notes`,body, {headers: make_headers(user_attr)})
+}
+
+

@@ -1198,6 +1198,20 @@ h3 {
   color: #250044;
 }
 
+.patient-referral-msg-input {
+    height: 60px;
+    background: #FFFFFF;
+    border: 1px solid #D3DBF8;
+    box-sizing: border-box;
+    border-radius: 55px;
+    padding-left: 30px;
+    padding-right: 30px;
+}
+
+.patient-note {
+  padding-bottom:10px;
+}
+
 .patient-basic-left-item {
   font-size: 16px;
   line-height: 18px;

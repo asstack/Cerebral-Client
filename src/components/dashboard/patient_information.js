@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import { connect } from 'react-redux'
 import Moment from 'moment';
-import {get_patient_details} from "../../actions/therapist_action"
+import {write_note_for_patients, get_patient_details} from "../../actions/therapist_action"
 
 
 //get_patient_details
@@ -15,12 +15,16 @@ class PatientInformation extends Component {
     super(props) 
     this.state = {
       patient:this.props.patient,
-      details:null
+      details:null,
+      notes:[],
+      new_note:""
     }
+    this.msg_input = React.createRef();
   }
 
   componentDidMount = () => {
-  
+    let notes = this.props.patient.note
+    this.setState({notes:notes})
   }
 
   componentWillReceiveProps = (next_props) => { 
@@ -33,6 +37,18 @@ class PatientInformation extends Component {
     this.props.update_state_handler(null,null)
   }
 
+  update_msg_handler = (e) => {
+    this.setState({new_note:e.target.value})
+  }
+
+  submit_note_handler = () => { 
+    this.props.write_note_for_patients(this.state.patient.id, this.state.new_note).then(resp => {
+      let notes=this.state.notes;
+      notes.push({note: this.state.new_note})
+      this.setState({notes:notes, new_note:""})
+      this.msg_input.current.value=""
+    })   
+  }
 
   patient_basic_info = () => {
     return <div className="align-self-start main-content-wide-card">
@@ -149,14 +165,16 @@ class PatientInformation extends Component {
                <div className = "d-flex flex-row"> 
                 <div className = "patient-referral-left">   
                   Diagnosis notes:
-                </div>
-                <div className = "patient-referral-right">   
-                  {this.get_named_answer('referral_notes')}  
+                </div> 
+                <div className = "d-flex flex-column patient-referral-right">   
+                  {this.state.notes.map((val, idx)=>{
+                    return <div className="patient-note">{val.note}</div> 
+                  })}
                 </div>
                </div>
-               <div className="d-flex flex-row align-items-center message-input-area-no-margin">
-                <input ref="msg_input" className="col message-input" onChange={this.update_msg_handler} type='text' placeholder='Add additional notes' defaultValue=""/> 
-                <img alt="message submit" src={process.env.PUBLIC_URL + '/img/input_arrow.svg'} className="message-submit"/>
+               <div className="d-flex flex-row align-items-center patient-referral-msg-input">
+                <input ref={this.msg_input} className="col message-input" onChange={this.update_msg_handler} type='text' placeholder='Add additional notes' defaultValue=""/> 
+                <img alt="message submit" onClick={e=>this.submit_note_handler()} src={process.env.PUBLIC_URL + '/img/input_arrow.svg'} className="message-submit"/>
               </div>
             </div>
           </div> 
@@ -195,5 +213,5 @@ class PatientInformation extends Component {
   
 }
 
-export default connect(null, {get_patient_details})(PatientInformation)
+export default connect(null, {write_note_for_patients, get_patient_details})(PatientInformation)
 

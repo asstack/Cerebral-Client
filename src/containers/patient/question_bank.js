@@ -265,7 +265,7 @@ class QuestionBank extends Component{
   sign_in_and_next = (info) => { 
     const {patient_actions, global_actions} = this.props
 
-    this.setState({is_loading:false}) 
+    this.setState({is_loading:true}) 
     global_actions.sign_in(info).then ((resp) => {
       if (resp.user_attr.patient) {
         patient_actions.set_patient(resp.user_attr.patient);

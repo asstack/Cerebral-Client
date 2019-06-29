@@ -11,7 +11,6 @@ import ErrorBoundary from './error_boundary'
 import ModalContainer from 'react-modal-promise'
 import 'react-s-alert/dist/s-alert-default.css'
 import Alert from 'react-s-alert'
-
 class App extends Component {
 
   constructor(props){
@@ -91,6 +90,5 @@ class App extends Component {
     );
   }
 }
-
 
 export default withRouter(connect(null,{update_app_state, set_env}) (App))

@@ -77,7 +77,7 @@ class Assessment extends Component {
     return( 
       <AreaChart width={550} height={325} 
                  margin={{ top: 20, right: 80, left: 0, bottom: 0 }}
-                 data={data.length==1?[{name:null, uv:data[0].uv}, data[0]]:data}>
+                 data={data.length===1?[{name:null, uv:data[0].uv}, data[0]]:data}>
         <XAxis dataKey="name" position='bottom' dy={10} fontSize={14}/>
         <YAxis type="number" domain={[0, this.get_total_score(type)]}>
            <Label angle={-90} value={this.get_graph_label(type)} position='insideLeft' style={{fontWeight:600, textAnchor: 'middle', fontSize:'16px', fill:'#250044'}} />

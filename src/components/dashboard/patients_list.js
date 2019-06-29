@@ -18,6 +18,7 @@ class PatientsList extends Component {
 
   componentDidMount = () => {
     this.props.get_patients_for_therapist().then((resp) => {
+      console.log("get patients for therapist:", resp)
       this.setState({patients:resp.data})
     })
   }
