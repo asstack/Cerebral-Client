@@ -107,6 +107,16 @@ export const register_user = user_info => (dispatch, getState)=>{
     }
 }
 
+export const update_user_information = user_info => (dispatch, getState) => {
+  const {first_name, last_name, email} = user_info
+  var user_attr = get_user_attr(getState())
+  if(first_name, last_name, email){
+    return axios.put(`/api/users/${user_attr.id}`, {last_name:last_name, first_name:first_name, email:email}, {headers:make_headers(user_attr)}).then(resp=>{
+      console.log("update user info :", resp) 
+    })
+  }
+}
+
 export const register_and_set_user = user_info => (dispatch, getState)=>{
   return dispatch(register_user(user_info)).then((resp) => {
     return dispatch(set_user(resp))
@@ -159,3 +169,5 @@ export const get_messages_for_thread = (thread_id) => (dispatch, getState) => {
   var user_attr = get_user_attr(getState())
   return axios.get(`/api/message_threads/${thread_id}/messages`, {headers: make_headers(user_attr)})
 }
+
+
