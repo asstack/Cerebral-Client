@@ -206,6 +206,12 @@ export const get_patient_shipping_address = () => (dispatch, getState) => {
   return dispatch(get_with_auth_and_return_just_data(`/api/patients/${patient.id}/shipping_addresses`))
 }
 
+export const update_patient_shipping_address = (addr) => (dispatch, getState)=>{
+  let user_attr = get_user_attr(getState())
+  var patient = dispatch(get_current_patient())
+  return axios.post(`/api/patients/${patient.id}/shipping_addresses`,addr,{headers:make_headers(user_attr)}) 
+}
+
 export const create_payment = (full_name, token) => (dispatch, getState) => {
 // export const create_payment = (full_name, card_number, exp_month, exp_year, cvc) => (dispatch, getState) => {
 

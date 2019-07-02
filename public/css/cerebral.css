@@ -923,7 +923,7 @@ h3 {
 }
 
 .small-card-title {
-  font-size: 20px;
+  font-size: 14px;
   font-weight: 600;
   color: #250044;
   line-height: 20px;
@@ -941,11 +941,11 @@ h3 {
   margin-top:25px;
 }
 
-
 .small-card-item input {
-  border: 1px solid #250044;
   width: 100%;
   height: 60px;
+  border: 1px solid #250044;
+  border-radius: 2px;
 }
 
 .small-card-item input:disabled {
@@ -953,14 +953,19 @@ h3 {
   border: 1px solid #B9B8BA;
 }
 
-.small-card-item input:placeholder{
-  color: #B9B8BA;
+.small-card-item input:disabled::placeholder {
+  color:#B9B8BA;
+}
+
+.small-card-item input::placeholder {
+  color:#250044;
 }
 
 .small-card-btn {
   cursor:pointer;
-  width:45px;
+  /*width:45px;*/
   font-size: 18px;
+  font-weight:600;
   color:#250044; 
   line-height: 18px;
   letter-spacing: -0.4px;

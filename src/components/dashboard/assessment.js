@@ -21,6 +21,7 @@ class Assessment extends Component {
     const id = this.props.user.attributes.id
     let scores = {isi:[], phq:[], gad:[]}
     this.props.get_visits_for_patient(id).then((resp)=> {
+      resp.data.sort((v1, v2) => { return v1.id - v2.id})
       resp.data.map((item, index)=> {
         if(item.isi_score!=null){
           scores['isi'].push({name:"month "+index, uv:item.isi_score})

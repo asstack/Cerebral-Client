@@ -9,6 +9,7 @@ export const SET_USER = "SET_USER"
 export const SET_QUESTIONS = "SET_QUESTIONS"
 export const SET_PATIENT = "SET_USER_PATIENT"
 export const SET_THERAPIST = "SET_USER_THERAPIST"
+export const UPDATE_USER_INFO = "UPDATE_USER_INFO" 
 
 //const proxy = require('http-proxy-middleware');
 
@@ -16,6 +17,11 @@ export const SET_THERAPIST = "SET_USER_THERAPIST"
 const set_user = user_info => ({
   type:SET_USER,
   user_attr:user_info
+})
+
+const update_user_info = user_info=> ({
+  type:UPDATE_USER_INFO,
+  user_info:{first_name:user_info.first_name, last_name:user_info.last_name, email:user_info.email}
 })
 
 export const remove_token = () => ({
@@ -45,6 +51,11 @@ export const change_password = (token, password, password_confirmation, redirect
 
     return axios.put('/api/auth/password', {password: password, password_confirmation: password_confirmation}, {headers: make_headers(resp.data.data)})
   })
+}
+
+export const update_password = (new_pwd, new_pwd_confirm, pwd) => (dispatch, getState) => {
+
+  return axios.put(`/api/auth/password`, {current_password:pwd, password:new_pwd, password_confirmation:new_pwd_confirm}, {headers:make_headers(get_user_attr(getState()))})
 }
 
 export const is_signed_in = () => (dispatch, getState) =>  {
@@ -112,10 +123,12 @@ export const update_user_information = user_info => (dispatch, getState) => {
   var user_attr = get_user_attr(getState())
   if(first_name, last_name, email){
     return axios.put(`/api/users/${user_attr.id}`, {last_name:last_name, first_name:first_name, email:email}, {headers:make_headers(user_attr)}).then(resp=>{
-      console.log("update user info :", resp) 
+      dispatch(update_user_info(user_info))
+      return Promise.resolve(resp)
     })
   }
 }
+
 
 export const register_and_set_user = user_info => (dispatch, getState)=>{
   return dispatch(register_user(user_info)).then((resp) => {

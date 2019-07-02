@@ -32,7 +32,21 @@ const init_global_state = {
 //global state storage, it will have user account information and current global state
 // https://redux.js.org/basics/reducers#handling-actions
 const global_reducer = handleActions({
-
+  [user_auth_types.UPDATE_USER_INFO]:(state ,action) => {
+    return {
+      ...state,
+      current_user: {
+        ...state.current_user, 
+        attributes: {
+          ...state.current_user.attributes, 
+          first_name:action.user_info.first_name,
+          last_name:action.user_info.last_name,
+          email:action.user_info.email,
+          
+        }
+      }
+    }
+  },
   [user_auth_types.SET_USER]:(state, action) => {
     return {
       // https://redux.js.org/recipes/using-object-spread-operator
