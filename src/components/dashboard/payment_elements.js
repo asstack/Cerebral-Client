@@ -57,6 +57,14 @@ class PaymentElements extends Component {
         },
       };
     }
+
+  elementClasses =()=> {
+    return (
+      {focus: 'focused',
+      empty: 'empty',
+      invalid: 'invalid'}
+    )
+  };
   
   stripe_view = () => {
     return(
@@ -66,7 +74,7 @@ class PaymentElements extends Component {
           <input type="text" placeholder="Card holder name" autoComplete="ccname" onChange={e=>this.update_property('payment_full_name', e)} />
         </div>
         <div className="small-card-item">
-          <CardNumberElement onChange={this.test_handler} style={{base: {fontSize: '18px',color:'#250044','::placeholder':{}}}}/>
+          <CardNumberElement placeholder="Card number" onChange={this.test_handler} style={{base: {fontSize: '18px',color:'#250044','::placeholder':{}}}}/>
         </div>
         <div className="small-card-item">
           <CardExpiryElement onChange={this.test_handler}  style={{base: {fontSize: '18px', color:'#250044'}}}/>
