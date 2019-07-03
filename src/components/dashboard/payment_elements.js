@@ -30,6 +30,7 @@ class PaymentElements extends Component {
           this.props.update_state(rst.token.card)
          })
          }else{
+
          }
      })
  }
