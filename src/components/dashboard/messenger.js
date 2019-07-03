@@ -42,6 +42,9 @@ class Messenger extends Component {
         this.props.get_patient_details(this.state.thread.recipient_id).then(patient => {
           console.log("get patient data: ", patient.data) 
           this.setState({messages:resp.data,target:patient.data}) 
+          //connect web socket here
+          // /message_thread/thread_id => server will check recipient_id and owner?
+
         })
       })
     }

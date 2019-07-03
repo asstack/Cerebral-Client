@@ -121,7 +121,7 @@ class QuestionBank extends Component{
   }
   
   shouldComponentUpdate(next_props, next_state){
-    return !next_state.is_subcomp  
+    return !(next_state.is_subcomp && !next_state.is_loading) 
   }
 
   skip_questions = (step, skip_step) => {  
@@ -261,11 +261,10 @@ class QuestionBank extends Component{
   
   did_create_patient = (state) => {
     const {patient_actions, global_actions}=this.props
-
     this.setState({is_loading:true}) 
     global_actions.register_and_set_user(state)
       .then(() => {return global_actions.sign_in(state)})
-        .then(() => { return patient_actions.create_patient_from_user() })
+        .then(() => { return patient_actions.create_patient_from_user()})
           .then(() => { 
 
             this.setState({is_ready:false, is_loading:false}) 
@@ -434,6 +433,7 @@ class QuestionBank extends Component{
   }
  
   render(){
+    console.log("check is loading", this.state.is_loading)
     const handlers = {
       next_step_handler:this.next_step_handler.bind(this),
       set_bank_selector_handler:this.set_bank_selector_handler.bind(this),
