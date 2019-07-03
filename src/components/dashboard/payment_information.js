@@ -50,45 +50,30 @@ class PaymentInformation extends Component {
 
   }
 
+
+  dot_for_number =()=> {
+      return <div>
+        <span>&#9679;</span><span>&#9679;</span><span>&#9679;</span><span>&#9679;</span>{" "}
+        <span>&#9679;</span><span>&#9679;</span><span>&#9679;</span><span>&#9679;</span>{" "}
+        <span>&#9679;</span><span>&#9679;</span><span>&#9679;</span><span>&#9679;</span>{" "}
+        {this.state.last4}
+      </div>
+  }
+  
   //TODO: practics: california -> where get and set this info
   read_view = () =>(
     <div className="align-self-start main-content-small-card">
       <div className="d-flex flex-column card-items-container">
         <div className="small-card-title">PAYMENT INFORMATION</div>
-        <div className="small-card-item">{this.state.provider?this.state.provider + " card":null}</div>
-        <div className="small-card-item">{this.state.last4?"****-****-****-"+this.state.last4:null}</div>
-        <div className="small-card-item">{this.state.exp_month?this.state.exp_month+'/'+this.state.exp_year:null}</div>
+        <div className="small-card-item">{this.state.provider?this.state.provider + " Card":null}</div>
+        <div className="small-card-item">{this.state.last4?this.dot_for_number():null}</div>
+        <div className="small-card-item">{this.state.exp_month?"Exp date: "+this.state.exp_month+'/'+this.state.exp_year:null}</div>
         <div className="small-card-btn" onClick={e=>this.edit_btn_handler('read')}>EDIT</div>
       </div> 
     </div> 
   ) 
 
-  write_view = () =>(
-    <div className="align-self-start main-content-small-card">
-      <div className="d-flex flex-column card-items-container">
-        <div className="small-card-title">MY PROFILE</div>
-
-        <div className="small-card-item">
-          <input type="text" placeholder='Provider' defaultValue={this.state.provider}/>
-        </div>
-        <div className="small-card-item">
-          <input type="text" placeholder='Card Number' defaultValue={this.state.number}/>
-        </div>
-        <div className="small-card-item">
-          <input type="text" placeholder='Exp Month/Year' defaultValue={this.state.exp}/>
-        </div>
-        <div className="small-card-item">
-          <input type="text" placeholder='cvc' defaultValue={this.state.cvc}/>
-        </div>
-        <div className="d-flex flex-row justify-content-between">
-          <div className="small-card-btn" onClick={e=>this.edit_btn_handler('write')}>Submit</div>
-          <div className="small-card-btn" onClick={e=>this.edit_btn_handler('write')}>Cancel</div>
-        </div>
-      </div> 
-    </div> 
-  ) 
-
-  stripe_view = () => {
+ stripe_view = () => {
     return(
       <div className="align-self-start main-content-small-card">
         <StripeProvider apiKey="pk_test_UARvRgKLIpQAbSeJrjRdd45K003KBuhOEM">
