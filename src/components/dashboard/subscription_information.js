@@ -56,7 +56,7 @@ class SubscriptionInformation extends Component {
             <div className="d-flex flex-row medication-holder"> 
               <div className="d-flex align-items-center patient-info-photo-holder"> 
                 <img alt="medication info" className = "medication-info-photo" 
-                  src={process.env.PUBLIC_URL + '/img/medication/'+(med_preference.name||'01-bottle')+'_3x.png'}/>
+                  src={process.env.PUBLIC_URL + '/img/medication/'+(med_preference.name||'01-bottle')+'.svg'}/>
               </div>
               <div className="d-flex flex-column subscription-col-1">
                 <div className="subscription-text-holder subscription-text">
