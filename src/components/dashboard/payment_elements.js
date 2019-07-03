@@ -19,6 +19,7 @@ class PaymentElements extends Component {
  test_handler = (e) =>{
     console.log("update:", e)
   }
+
  submit_handler = () => {
    this.props.stripe
      .createToken({type:'card', name: this.state.full_name})
@@ -65,7 +66,7 @@ class PaymentElements extends Component {
           <input type="text" placeholder="Card holder name" autoComplete="ccname" onChange={e=>this.update_property('payment_full_name', e)} />
         </div>
         <div className="small-card-item">
-          <CardNumberElement onChange={this.test_handler} style={{base: {fontSize: '18px',color:'#250044'}}}/>
+          <CardNumberElement onChange={this.test_handler} style={{base: {fontSize: '18px',color:'#250044','::placeholder':{}}}}/>
         </div>
         <div className="small-card-item">
           <CardExpiryElement onChange={this.test_handler}  style={{base: {fontSize: '18px', color:'#250044'}}}/>
