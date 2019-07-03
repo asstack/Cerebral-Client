@@ -379,8 +379,20 @@ export const upload_object_for_current_question = (file, file_type) => (dispatch
 export const get_visits_for_patient = (patient_id) => (dispatch, getState) => {
   let user_attr = get_user_attr(getState())
   return axios.get(`/api/patients/${patient_id}/visits`, {headers:make_headers(user_attr)}) 
+}
+
+export const get_payment_info = (patient_id) => (dispatch, getState) => {
+  let user_attr = get_user_attr(getState())
+  return axios.get(`/api/patients/${patient_id}/payments`, {headers:make_headers(user_attr)}) 
 
 }
+
+export const update_payment_info = (full_name, token, patient_id)=> (dispatch, getState) => {
+  let body = {full_name:full_name, token:token}
+  let user_attr = get_user_attr(getState())
+  return axios.post(`/api/patients/${patient_id}/payment_methods/`, body, {headers: make_headers(get_user_attr(getState()))})
+}
+
 
 export const clean_up_patient_process = () => (dispatch) => {
   return dispatch(cleanup_questions_and_visit())

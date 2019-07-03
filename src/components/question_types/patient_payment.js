@@ -22,7 +22,7 @@ class PatientPayment extends Component {
       return this.props.submit_action(resp.transaction_code) 
     }).catch((err) => {
       console.log("payment:", err)
-      return this.props.submit_action("temp") 
+      //return this.props.submit_action("temp") 
     })
   }
 

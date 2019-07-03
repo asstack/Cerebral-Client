@@ -48,7 +48,7 @@ class DashboardContents extends Component{
           </div>
           <div className="d-flex flex-row justify-content-between main-content-row flex-wrap">
             <EditPassword attr={this.state.user.attributes}/>
-            <PaymentInformation attr={{provider:"visa", number:"1111-1111-1111-1111", cvc:"111", exp:"11/11"}}/>
+            <PaymentInformation patient={this.state.user.attributes.patient}/>
           </div>
         
         </div>

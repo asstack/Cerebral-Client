@@ -946,6 +946,7 @@ h3 {
   height: 60px;
   border: 1px solid #250044;
   border-radius: 2px;
+  padding: 12px;
 }
 
 .small-card-item input:disabled {

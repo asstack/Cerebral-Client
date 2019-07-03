@@ -16,7 +16,8 @@ class PaymentElements extends Component {
 
     // Handle result.error or result.token
     this.props.stripe.createToken({name: this.state.payment_full_name}).then((result) => {
-        this.props.submit_payment(this.state.payment_full_name, result.token)
+      console.log("create token: ", result)
+      this.props.submit_payment(this.state.payment_full_name, result.token)
     }).catch(err => {  
         this.props.submit_payment(this.state.payment_full_name, "")
     })

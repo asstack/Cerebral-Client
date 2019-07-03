@@ -19,7 +19,6 @@ class DashboardContents extends Component{
 
 
   componentWillReceiveProps = (next_props) => { 
-
     this.setState({user:next_props.user, type:next_props.type, patient_list:next_props.patient_list}) 
   }
 
