@@ -94,7 +94,6 @@ class QuestionBank extends Component{
         if(url_info !== bank_name){ 
           this.props.history.push("/patient/question_bank/"+bank_name) 
         }
-
         this.setState({visit: this.props.visit, questions:this.props.questions, question_step:this.props.question_step, bank_step:this.props.question_banks_step, banks:this.props.question_banks, is_subcomp:false, is_ready:true})
         //this.setState({is_ready:true})
         //if ensure visit
@@ -129,6 +128,7 @@ class QuestionBank extends Component{
     let q_type = this.state.questions[step].question_type;
     if(q_type==='create_profile' && this.props.user['access-token']){
       this.props.patient_actions.set_step(skip_step);
+      this.setState({is_ready:true})
     }else if(q_type==='dosage_preference' && this.props.user['access-token']){
       this.props.patient_actions.get_current_answer_by_name('medication_preference').then(resp => {
         let med_data = JSON.parse(resp.response) 
@@ -136,28 +136,36 @@ class QuestionBank extends Component{
           if(this.state.questions.length > skip_step+1){
             this.props.patient_actions.set_step(skip_step);
           }else{
-            this.props.patient_actions.set_current_question_bank_by_name(this.state.banks[this.state.bank_step+1], false, this.state.bank_step+1)
-            this.props.history.push("/patient/question_bank/"+ this.state.banks[this.state.bank_step+1]) 
+            this.props.patient_actions.set_current_question_bank_by_name(this.state.banks[this.state.bank_step+1], false, this.state.bank_step+1).then(resp=>{
+              this.setState({is_ready:true})
+              this.props.history.push("/patient/question_bank/"+ this.state.banks[this.state.bank_step+1]) 
+            })
           }
         }else{
+          this.setState({is_ready:true})
           this.props.patient_actions.set_step(step);
         } 
       })  
     }else{ 
       this.props.patient_actions.set_step(step);
+      this.setState({is_ready:true})
     }
    }
 
   back_btn_handler = () => {
     const {banks, bank_step, question_step, is_subcomp} = this.state
+
     if(is_subcomp){
       this.setState({is_subcomp:false}) 
     }else{
+      this.setState({is_ready:false})
       if(question_step > 0){
         //just change the step  
         this.skip_questions(question_step-1, question_step-2);   
       }else if(question_step === 0 && bank_step > 0){
-        this.props.patient_actions.set_current_question_bank_by_name(banks[bank_step-1], true, bank_step-1)
+        this.props.patient_actions.set_current_question_bank_by_name(banks[bank_step-1], true, bank_step-1, -1).then(resp=>{
+          this.setState({is_ready:true})
+        })
         this.props.history.push("/patient/question_bank/"+ banks[bank_step-1]) 
       }
     }
@@ -185,10 +193,11 @@ class QuestionBank extends Component{
   //TODO: It is hacky way only for the demo
   submit_answer_and_next_step = (ans) => {
     const {patient_actions} = this.props
-     ReactGA.event({
+    ReactGA.event({
             category: 'patients',
             action: 'submit answers',
-     }); 
+    }); 
+    this.setState({is_ready:false})
     patient_actions.answer_current_question({answer: ans}).then(() => {
       this.patient_state_transition_helper()
       //return this.patient_state_transition_helper(); 
@@ -244,7 +253,6 @@ class QuestionBank extends Component{
             });  
           })
       .catch((err) => {
-        console.log(err)
         this.setState({is_loading:false}) 
       })
   }
@@ -253,11 +261,9 @@ class QuestionBank extends Component{
     const {patient_actions} = this.props
     this.setState({is_loading:true}) 
     patient_actions.upload_object_for_current_question(data, type).then((resp) => {
-      this.setState({is_loading:false}) 
       this.patient_state_transition_helper()
     })
     .catch((err) => {
-      this.setState({is_loading:false}) 
       this.patient_state_transition_helper()
     })
   }
@@ -276,7 +282,6 @@ class QuestionBank extends Component{
           }); 
  
           this.patient_state_transition_helper()
-          this.setState({is_loading:false}) 
         })
       }
     }).catch((err) => {
@@ -393,7 +398,6 @@ class QuestionBank extends Component{
   
  
   type_to_view = (component, question) => {
-
     let bank_len = this.state.banks.length
     if(this.state.is_ready && bank_len === 1){
       return this.non_progress_view(component, question)
@@ -416,7 +420,6 @@ class QuestionBank extends Component{
     //TODO: using ref to change title and subtitle in child component, but it's hacky way. will take that part as a component 
     const question = this.state.questions[this.state.question_step]
     const component = common.map_type_to_component(question, handlers, this.props.user, this.subscript_ref, this.title_ref)
-    console.log("state check:", this.state)
     return(
       this.type_to_view(component, question)
    );

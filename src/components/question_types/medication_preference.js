@@ -11,7 +11,6 @@ class MedicationPreference extends QuestionPreference {
     // TODO: get the selected medication so we can load dosages
 
     this.props.get_treatments(this.props.service_line.id).then((resp) => {
-      console.log("get_treatments resp: ", resp)
       this.setState({
         ...this.state,
         options: resp,
