@@ -135,15 +135,16 @@ class QuestionBank extends Component{
         if(med_data.name==null){ 
           if(this.state.questions.length > skip_step+1){
             this.props.patient_actions.set_step(skip_step);
+            this.setState({is_ready:true})
           }else{
             this.props.patient_actions.set_current_question_bank_by_name(this.state.banks[this.state.bank_step+1], false, this.state.bank_step+1).then(resp=>{
-              this.setState({is_ready:true})
               this.props.history.push("/patient/question_bank/"+ this.state.banks[this.state.bank_step+1]) 
+              this.setState({is_ready:true})
             })
           }
         }else{
-          this.setState({is_ready:true})
           this.props.patient_actions.set_step(step);
+          this.setState({is_ready:true})
         } 
       })  
     }else{ 
@@ -154,7 +155,6 @@ class QuestionBank extends Component{
 
   back_btn_handler = () => {
     const {banks, bank_step, question_step, is_subcomp} = this.state
-
     if(is_subcomp){
       this.setState({is_subcomp:false}) 
     }else{
@@ -163,9 +163,27 @@ class QuestionBank extends Component{
         //just change the step  
         this.skip_questions(question_step-1, question_step-2);   
       }else if(question_step === 0 && bank_step > 0){
-        this.props.patient_actions.set_current_question_bank_by_name(banks[bank_step-1], true, bank_step-1, -1).then(resp=>{
-          this.setState({is_ready:true})
-        })
+        console.log("bank step check :", banks[bank_step-1])
+        if(banks[bank_step-1]=='treatment_info'){
+           this.props.patient_actions.get_current_answer_by_name('medication_preference').then(resp=>{
+             let med_data = JSON.parse(resp.response)
+             if(med_data.name==null){
+              this.props.patient_actions.set_current_question_bank_by_name(banks[bank_step-1], true, bank_step-1, -1).then(resp=>{
+                this.setState({is_ready:true})
+              }) 
+             }else{
+              this.props.patient_actions.set_current_question_bank_by_name(banks[bank_step-1], true, bank_step-1, 0).then(resp=>{
+                this.setState({is_ready:true})
+              })  
+             }  
+           })
+            
+       }else{
+          this.props.patient_actions.set_current_question_bank_by_name(banks[bank_step-1], true, bank_step-1, 0).then(resp=>{
+            this.setState({is_ready:true})
+          })
+        }
+         
         this.props.history.push("/patient/question_bank/"+ banks[bank_step-1]) 
       }
     }
@@ -180,8 +198,10 @@ class QuestionBank extends Component{
     }else if(questions.length > question_step+1){ 
       this.skip_questions(question_step+1, question_step+2);
     }else{
-      this.props.patient_actions.set_current_question_bank_by_name(banks[bank_step+1], false, bank_step+1)
-      this.props.history.push("/patient/question_bank/"+ banks[bank_step+1]) 
+      this.props.patient_actions.set_current_question_bank_by_name(banks[bank_step+1], false, bank_step+1).then(resp=>{
+        this.props.history.push("/patient/question_bank/"+ banks[bank_step+1]) 
+        this.setState({is_ready:true}) 
+      })
     }
   }
 
@@ -213,8 +233,10 @@ class QuestionBank extends Component{
     if (option.question_bank_names.length > 0) {
       if (option.immediate) {
         patient_actions.update_patient_question_banks(option.question_bank_names, 0).then(() => {
-          patient_actions.set_current_question_bank_by_name(option.question_bank_names[0]).then(resp=> 
+          patient_actions.set_current_question_bank_by_name(option.question_bank_names[0]).then(resp=>{
+            this.setState({is_ready:true}) 
             this.props.history.push("/patient/question_bank/"+option.question_bank_names[0]) 
+            }
           )
         })
       }else{
@@ -245,8 +267,9 @@ class QuestionBank extends Component{
       .then(() => {return global_actions.sign_in(state)})
         .then(() => { return patient_actions.create_patient_from_user() })
           .then(() => { 
+
+            this.setState({is_ready:false, is_loading:false}) 
             this.patient_state_transition_helper() 
-            this.setState({is_loading:false}) 
             ReactGA.event({
                     category: 'patients',
                     action: 'create account',
@@ -259,11 +282,13 @@ class QuestionBank extends Component{
   
   submit_and_upload_data = (data, type) => { 
     const {patient_actions} = this.props
-    this.setState({is_loading:false}) 
+    this.setState({is_loading:true}) 
     patient_actions.upload_object_for_current_question(data, type).then((resp) => {
+      this.setState({is_ready:false, is_loading:false}) 
       this.patient_state_transition_helper()
     })
-    .catch((err) => {
+    .catch((err) => { 
+      this.setState({is_ready:false, is_loading:false}) 
       this.patient_state_transition_helper()
     })
   }
@@ -271,7 +296,7 @@ class QuestionBank extends Component{
   sign_in_and_next = (info) => { 
     const {patient_actions, global_actions} = this.props
 
-    this.setState({is_loading:true}) 
+    this.setState({is_ready:false}) 
     global_actions.sign_in(info).then ((resp) => {
       if (resp.user_attr.patient) {
         patient_actions.set_patient(resp.user_attr.patient);
@@ -286,7 +311,7 @@ class QuestionBank extends Component{
       }
     }).catch((err) => {
       Alert.error(err.message)
-      this.setState({is_loading:false}) 
+      this.setState({is_ready:true}) 
     })
   }
 
@@ -337,7 +362,7 @@ class QuestionBank extends Component{
           </a>
         </div>
         <div className="d-flex flex-row justify-content-center">
-          <QuestionsWrapper/>  
+          {this.state.is_ready?<QuestionsWrapper/> :null} 
         </div>
       </div>
     )	 
@@ -363,16 +388,18 @@ class QuestionBank extends Component{
           <div className="d-flex justify-content-center flex-row menu-bar">
             {this.state.width>820? this.state.banks.map((item, index) => (this.progress_menu(item, index))) : this.single_progress_menu(q_bank) }
           </div>
+          {this.state.is_ready?
           <div className="d-flex flex-column question-container">
             <div className="d-flex justify-content-left text-middle">{wording}</div>
             <div className="questions-container">
 
-            <div className="d-flex flex-row justify-content-center">
-              <QuestionsWrapper/>  
-              {this.state.is_loading?this.progress_modal({open:true}): null}
+              <div className="d-flex flex-row justify-content-center">
+                {this.state.is_ready?<QuestionsWrapper/> :null} 
+                {this.state.is_loading?this.progress_modal({open:true}): null}
+              </div>
             </div>
-           </div>
           </div>
+          :null}
         </div>    
       </div>
     )   
@@ -399,9 +426,9 @@ class QuestionBank extends Component{
  
   type_to_view = (component, question) => {
     let bank_len = this.state.banks.length
-    if(this.state.is_ready && bank_len === 1){
+    if(bank_len === 1){
       return this.non_progress_view(component, question)
-    }else if(this.state.is_ready && bank_len > 1){ 
+    }else if(bank_len > 1){ 
       return this.progress_view(component, question)  
     }else return null 
   }
