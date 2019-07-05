@@ -1,5 +1,7 @@
 import React, {Component} from 'react';
 import ReactDOM from 'react-dom'
+import ActionCable from 'actioncable';
+import { ActionCableProvider, ActionCableConsumer } from 'react-actioncable-provider';
 import { connect } from 'react-redux'
 import {get_patient_details, get_patients_for_therapist} from "../../actions/therapist_action"
 import {create_message_thread, create_message, get_messages_for_thread, get_message_threads_for_current_user} from "../../actions/user_auth_action"
@@ -19,11 +21,15 @@ class Messenger extends Component {
       is_last:false,
       target:null,
       update_scroll:false,
+      cable:null
     }
   }
 
   //we will get initial data in message_process_manager
   componentDidMount=()=>{
+    const cable = ActionCable.createConsumer('ws://http://localhost:3006/cable');
+    this.setState({cable:cable})
+    console.log("check cable:", cable)
     this.set_scroll_bottom() 
     //means it's new message  
     if(!this.state.thread){ 
@@ -37,6 +43,7 @@ class Messenger extends Component {
       }
     }else{
       //exists thread 
+      
       this.props.get_messages_for_thread(this.state.thread.id).then(resp => {
         console.log("get message data:", resp.data) 
         this.props.get_patient_details(this.state.thread.recipient_id).then(patient => {
@@ -48,6 +55,10 @@ class Messenger extends Component {
         })
       })
     }
+  }
+
+  web_socket_handler = (msg) => {
+    console.log("get here:",msg)
   }
 
 
@@ -62,6 +73,7 @@ class Messenger extends Component {
   componentWillReceiveProps = (next_props) => { 
     console.log("receive props") 
   }
+
 
   set_scroll_bottom = () => {
     let dom = ReactDOM.findDOMNode(this.refs.chatbox)  
@@ -195,7 +207,8 @@ class Messenger extends Component {
             </div>
           </div>
         </div> 
-      </div>
+        {this.state.thread && this.state.cable?<ActionCableProvider cable={this.state.cable}></ActionCableProvider>:null}
+     </div>
     )
   }
  
