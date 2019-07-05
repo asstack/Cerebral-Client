@@ -27,9 +27,9 @@ class Messenger extends Component {
 
   //we will get initial data in message_process_manager
   componentDidMount=()=>{
-    const cable = ActionCable.createConsumer('ws://http://localhost:3006/cable');
+    const cable = ActionCable.createConsumer(this.props.env.WEB_SOCKET_SERVER_URL);
+    console.log("cable:",cable)
     this.setState({cable:cable})
-    console.log("check cable:", cable)
     this.set_scroll_bottom() 
     //means it's new message  
     if(!this.state.thread){ 
@@ -43,16 +43,18 @@ class Messenger extends Component {
       }
     }else{
       //exists thread 
-      
+      console.log(this.state.thread) 
       this.props.get_messages_for_thread(this.state.thread.id).then(resp => {
         console.log("get message data:", resp.data) 
+          /*
         this.props.get_patient_details(this.state.thread.recipient_id).then(patient => {
           console.log("get patient data: ", patient.data) 
-          this.setState({messages:resp.data,target:patient.data}) 
+          this.setState({messages:resp.data, target:patient.data}) 
           //connect web socket here
           // /message_thread/thread_id => server will check recipient_id and owner?
 
         })
+        */
       })
     }
   }
@@ -88,7 +90,6 @@ class Messenger extends Component {
   
   //TODO: get more previous chat if got last item
   on_scroll(e) {
-
     if(e.target.scrollTop===0 && !this.state.is_last){
       //get more message 
     }
@@ -102,7 +103,7 @@ class Messenger extends Component {
   create_message_helper = (user_id, thread_id, r_id, msg) => {
     let msg_object = {message:msg, user_id: user_id}
     let msgs = this.state.messages;
-    this.props.create_message(thread_id,r_id, msg).then((resp) => {
+    this.props.create_message(user_id, thread_id, r_id, msg).then((resp) => {
       msgs.push(msg_object)
       this.setState({messages:msgs, msg:"", update_scroll:true})
       this.refs.msg_input.value="" 
@@ -123,7 +124,7 @@ class Messenger extends Component {
         this.create_message_helper(user_id, thread_id, recipient_id, msg)
       })  
     }else if(msg && thread_id){
-      this.create_message_helper(user_id,thread_id,this.state.thread.recipient_id,msg)
+      this.create_message_helper(user_id, thread_id, this.state.thread.recipient_id, msg)
     }  
     
   }
@@ -207,7 +208,10 @@ class Messenger extends Component {
             </div>
           </div>
         </div> 
-        {this.state.thread && this.state.cable?<ActionCableProvider cable={this.state.cable}></ActionCableProvider>:null}
+          {this.state.thread && this.state.cable?
+            <ActionCableProvider cable={this.state.cable}>
+              <ActionCableConsumer channel="MessagesChannel" onReceived={e=>this.web_socket_handler(e)}></ActionCableConsumer>
+            </ActionCableProvider>:null}
      </div>
     )
   }

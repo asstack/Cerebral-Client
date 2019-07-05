@@ -166,15 +166,15 @@ export const get_message_threads_for_current_user = () => (dispatch, getState) =
   return axios.get(`/api/users/${user_attr.id}/message_threads`, {headers: make_headers(user_attr)})
 }
 
-export const create_message_thread = (recipient_id) => (dispatch, getState) => {
+export const create_message_thread = (recipient_id, patient_id) => (dispatch, getState) => {
   var user_attr = get_user_attr(getState())
-  var body = {recipient_id: recipient_id}
+  var body = {recipient_id: recipient_id, patient_id:patient_id}
   return axios.post(`/api/users/${user_attr.id}/message_threads`, body, {headers: make_headers(user_attr)})
 }
 
-export const create_message = (thread_id, recipient_id, message) => (dispatch, getState) => {
+export const create_message = (user_id, thread_id, recipient_id, message) => (dispatch, getState) => {
   var user_attr = get_user_attr(getState())
-  var body = {message: message, recipient_id}
+  var body = {message: message, recipient_id:recipient_id,user_id:user_id}
   return axios.post(`/api/message_threads/${thread_id}/messages`, body, {headers: make_headers(user_attr)})
 }
 
