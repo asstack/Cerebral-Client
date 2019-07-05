@@ -20,7 +20,6 @@ class PatientsList extends Component {
 
   componentDidMount = () => {
     this.props.get_patients_for_therapist().then((resp) => {
-      console.log("get patients for therapist:", resp)
       this.setState({patients:resp.data})
     })
   }
@@ -70,7 +69,6 @@ class PatientsList extends Component {
     }else{
       let searched=[]
       this.state.patients.map((data,index)=>{
-        console.log("search patient:",data)
         if(data.user.first_name.search(this.state.keyword)===0 || data.user.last_name.search(this.state.keyword)===0){
           searched.push(data)
         }
@@ -106,7 +104,6 @@ class PatientsList extends Component {
 
   
   view= () => {
-    console.log("searched:",this.state.search_list)
     if(this.state.view_type === "patient_info"){
       return <PatientInformation update_state_handler={this.patient_info_handler} patient={this.state.patient} />  
     }else{

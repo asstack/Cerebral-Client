@@ -42,9 +42,7 @@ class Messenger extends Component {
       }
     }else{
       //exists thread 
-      console.log(this.state.thread) 
       this.props.get_messages_for_thread(this.state.thread.id).then(resp => {
-        console.log("get message data:", resp.data) 
         this.setState({messages:resp.data})
           /*
         this.props.get_patient_details(this.state.thread.recipient_id).then(patient => {
@@ -115,7 +113,6 @@ class Messenger extends Component {
     let msg = this.state.msg;
     let thread_id = this.state.thread?this.state.thread.id:null;
     let user_id = this.state.user.attributes.id
-    console.log("send_message",this.state.thread)
     if(!thread_id && msg && this.state.target){
       let recipient_id = this.state.target.user.id
       this.props.create_message_thread(recipient_id).then((resp) => {
@@ -171,8 +168,6 @@ class Messenger extends Component {
   }
 
   view= () => {
-    console.log("target: ", this.state.target)
-    console.log("thread: ", this.state.thread)
     return (
       <div className="main-content-wide-card">
         <div className="d-flex flex-row justify-content-between  patients-list-item-container-nb">

@@ -37,7 +37,6 @@ class MessageList extends Component {
 
   row_item = (item, index) => {
     let css_style = index===this.state.threads-1?"table-item-last":"table-item"
-    console.log("thread item:", item)
     return(
       <div  key={uuidv1()} className={"d-flex flex-row justify-content-start "+css_style} onClick={e=>this.new_msg_handler(e, item)}>
         <div className="d-flex justify-content-center align-items-center message-item-col-1"> <input type='checkbox'/> </div>
