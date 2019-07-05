@@ -47,6 +47,7 @@ class SubscriptionInformation extends Component {
     const title = type==='recent'?'MY RECENT SUBSCRIPTION':'SUBSCRIPTION HISTORY'
 
     let med_preference = JSON.parse(data.medication_preference.response)
+    let img_src = (med_preference.name||'01-bottle')+'@3x.png'
     console.log("med preference:", med_preference)
     return <div key={uuidv1()} className="align-self-start main-content-wide-card">
       <div className="d-flex flex-column card-items-container">
@@ -56,7 +57,7 @@ class SubscriptionInformation extends Component {
             <div className="d-flex flex-row medication-holder"> 
               <div className="d-flex align-items-center patient-info-photo-holder"> 
                 <img alt="medication info" className = "medication-info-photo" 
-                  src={process.env.PUBLIC_URL + '/img/medication/'+(med_preference.name||'01-bottle')+'@3x.png'}/>
+                  src={`${process.env.PUBLIC_URL}/img/medication/${img_src}`}/>
               </div>
               <div className="d-flex flex-column subscription-col-1">
                 <div className="subscription-text-holder subscription-text">
