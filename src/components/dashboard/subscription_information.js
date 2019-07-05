@@ -47,7 +47,7 @@ class SubscriptionInformation extends Component {
     const title = type==='recent'?'MY RECENT SUBSCRIPTION':'SUBSCRIPTION HISTORY'
 
     let med_preference = JSON.parse(data.medication_preference.response)
-    let img_src = (med_preference.name||'01-bottle')+'@3x.png'
+    let img_src = (med_preference.name||'01-bottle')+'.png'
     console.log("med preference:", med_preference)
     return <div key={uuidv1()} className="align-self-start main-content-wide-card">
       <div className="d-flex flex-column card-items-container">
