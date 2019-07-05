@@ -27,8 +27,7 @@ class Messenger extends Component {
 
   //we will get initial data in message_process_manager
   componentDidMount=()=>{
-    const cable = ActionCable.createConsumer(this.props.env.WEB_SOCKET_SERVER_URL);
-    console.log("cable:",cable)
+    const cable = ActionCable.createConsumer(process.env.WEB_SOCKET_SERVER_URL);
     this.setState({cable:cable})
     this.set_scroll_bottom() 
     //means it's new message  
@@ -46,6 +45,7 @@ class Messenger extends Component {
       console.log(this.state.thread) 
       this.props.get_messages_for_thread(this.state.thread.id).then(resp => {
         console.log("get message data:", resp.data) 
+        this.setState({messages:resp.data})
           /*
         this.props.get_patient_details(this.state.thread.recipient_id).then(patient => {
           console.log("get patient data: ", patient.data) 

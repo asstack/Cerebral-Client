@@ -11,7 +11,9 @@ class PatientsList extends Component {
     super(props) 
     this.state = {
       patients: [],
+      search_list:null,
       patient:null,
+      keyword:null,
       view_type:null
     }
   }
@@ -58,6 +60,28 @@ class PatientsList extends Component {
   }
   
 
+  update_search_word=word=>{
+    this.setState({keyword:word})
+  }
+
+  search_patient=()=>{
+    if(!this.state.keyword){
+        this.setState({search_list:null})
+    }else{
+      let searched=[]
+      this.state.patients.map((data,index)=>{
+        console.log("search patient:",data)
+        if(data.user.first_name.search(this.state.keyword)===0 || data.user.last_name.search(this.state.keyword)===0){
+          searched.push(data)
+        }
+      })
+      this.setState({search_list:searched})
+    }
+
+  }
+
+  
+
   row_item = (css_style, patient) => (
     <div key={uuidv1()} onClick = {e => this.patient_info_handler("patient_info", patient)} className={"d-flex flex-row justify-content-start "+css_style}>
       <div className="d-flex justify-content-center align-items-center table-item-col-1"> <input type='checkbox'/> </div>
@@ -80,7 +104,9 @@ class PatientsList extends Component {
     </div> 
   )
 
+  
   view= () => {
+    console.log("searched:",this.state.search_list)
     if(this.state.view_type === "patient_info"){
       return <PatientInformation update_state_handler={this.patient_info_handler} patient={this.state.patient} />  
     }else{
@@ -91,18 +117,21 @@ class PatientsList extends Component {
           <div className="main-content-wide-card">
             <div className="patients-list-item-container-nb">
               <div className="d-flex flex-row justify-content-between search-bar-holder">
-                <input type="text" placeholder="Search patient list"/>
+                <input type="text" defaultValue={this.state.keyword} placeholder="Search patient list" onChange={e=>this.update_search_word(e.target.value)}/>
                   <div className="d-flex align-items-center">
-                    <img alt="search" className="search-img" src={process.env.PUBLIC_URL + '/img/search.png'}/>
+                    <img alt="search" onClick={e=>this.search_patient()} className="search-img" src={process.env.PUBLIC_URL + '/img/search.png'}/>
                   </div>
                 </div>
               </div> 
               <div className="d-flex flex-column">
                 {this.row_header()}
-                {
-                  this.state.patients.map((value, index) => {
-                    return this.row_item("table-item", value)
-                })}
+                  {this.state.search_list?
+                    this.state.search_list.map((value, index) => {
+                      return this.row_item("table-item", value)
+                    })
+                    :this.state.patients.map((value, index) => {
+                      return this.row_item("table-item", value)
+                     })}
               </div>
             </div> 
           </div>
