@@ -27,8 +27,7 @@ class Messenger extends Component {
 
   //we will get initial data in message_process_manager
   componentDidMount=()=>{
-    console.log("check url:", process.env)
-    const cable = ActionCable.createConsumer(process.env.REACT_APP_SOCKET_SERVER_URL);
+    const cable = ActionCable.createConsumer(process.env.REACT_APP_SOCKET_SERVER_URL+"/api/cable");
     this.setState({cable:cable})
     this.set_scroll_bottom() 
     //means it's new message  
