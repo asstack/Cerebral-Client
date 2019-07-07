@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import { connect } from 'react-redux'
 import {get_visits_for_patient} from "../../actions/patient_action"
 import uuidv1 from 'uuid'
+import Moment from 'moment';
 import {ReferenceLine, Label, LabelList, ResponsiveContainer, AreaChart, XAxis, YAxis, CartesianGrid, Area, Line} from 'recharts';
 
 class Assessment extends Component {
@@ -18,19 +19,20 @@ class Assessment extends Component {
   //
   //isi_score: null, phq_score: 20, gad_score: 12,
   componentDidMount = () => {
-    const id = this.props.user.attributes.id
+    const id = this.props.user.attributes.patient.id
     let scores = {isi:[], phq:[], gad:[]}
     this.props.get_visits_for_patient(id).then((resp)=> {
       resp.data.sort((v1, v2) => { return v1.id - v2.id})
       resp.data.map((item, index)=> {
+        let date = Moment(item.service_line.updated_at).format('MM/DD') 
         if(item.isi_score!=null){
-          scores['isi'].push({name:"month "+index, uv:item.isi_score})
+          scores['isi'].push({name:date, uv:item.isi_score})
         } 
         if(item.phq_score!=null){
-          scores['phq'].push({name:"month "+index, uv:item.phq_score})
+          scores['phq'].push({name:date, uv:item.phq_score})
         } 
         if(item.gad_score!=null){
-          scores['gad'].push({name:"month "+index, uv:item.gad_score})
+          scores['gad'].push({name:date, uv:item.gad_score})
         } 
       })
       this.setState({scores:scores, is_ready:true})  
