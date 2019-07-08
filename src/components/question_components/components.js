@@ -78,6 +78,17 @@ export const confirm_button_type_1 = (event_handler, description) => {
   )
 }
 
+export const skip_button_type_1 = (event_handler, description) => {
+  return(
+    <div className="col d-flex justify-content-center confirm-btn-holder">
+      <div className ="d-flex align-items-center sub-btn-confirm" onClick={event_handler}>
+          {description}
+      </div>
+    </div>
+  )
+}
+
+
 export const confirm_button_type_2 = (event_handler, description, type) => {
   return(
     <div className="d-flex justify-content-center link-btn-holder">

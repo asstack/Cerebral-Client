@@ -15,7 +15,7 @@ class SubscriptionInformation extends Component {
   }
 
   componentDidMount = () => {
-    const id = this.props.user.attributes.id
+    const id = this.props.user.attributes.patient.id
     let subs = []
     this.props.get_visits_for_patient(id).then((resp) => {
       resp.data.map((val, idx) => {

@@ -23,6 +23,10 @@ class EmergencyContact extends Component {
       }    
     }
    }
+
+  skip_btn_handler = e => {
+    this.props.submit_action("N/A")
+  }
   
   update_phone = (e) => {
     const ph = e.target.value
@@ -49,7 +53,10 @@ class EmergencyContact extends Component {
           {components.input_type_half(this.update_lastname.bind(this), "Last Name")}
         </div>
         {components.input_type_1(this.update_phone.bind(this), "Phone #")}
-        {components.confirm_button_type_1(this.update_handler.bind(this), btn_wording)}
+        <div className = "d-flex flex-row justify-content-between">
+          {components.confirm_button_type_1(this.update_handler.bind(this), btn_wording)}
+          {components.skip_button_type_1(this.skip_btn_handler.bind(this), "Skip >")}
+        </div>
       </div>
     );
   }

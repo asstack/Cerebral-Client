@@ -439,6 +439,17 @@ h3 {
   border-radius: 28.5px;
 }
 
+.sub-btn-confirm {
+  cursor:pointer;
+  border:none;
+  height: 60px;
+  font-size: 16px;
+  line-height: 22px;
+  text-align: center;
+  letter-spacing: -0.4px;
+  font-weight:600;
+  color: #9B9B9B;
+}
 
 .btn-selector {
   word-wrap: break-word;
