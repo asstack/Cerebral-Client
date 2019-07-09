@@ -15,16 +15,13 @@ class Assessment extends Component {
     }
   }
   
-  //data = {dep: [{name:'month n', uv:number}]}
-  //
-  //isi_score: null, phq_score: 20, gad_score: 12,
   componentDidMount = () => {
     const id = this.props.user.attributes.patient.id
     let scores = {isi:[], phq:[], gad:[]}
     this.props.get_visits_for_patient(id).then((resp)=> {
       resp.data.sort((v1, v2) => { return v1.id - v2.id})
       resp.data.map((item, index)=> {
-        let date = Moment(item.service_line.updated_at).format('MM/DD') 
+        let date = Moment(item.service_line.updated_at).format('MMMM YY') 
         if(item.isi_score!=null){
           scores['isi'].push({name:date, uv:item.isi_score})
         } 
@@ -45,6 +42,22 @@ class Assessment extends Component {
     else if(type==='gad') return 21
     else if(type==='isi') return 28
     else return 0;
+  }
+
+  get_dot_point = (type) => {
+    if(type==='phq') return 4
+    else if(type==='gad') return 6
+    else if(type==='isi') return 5
+    else return 4;
+  }
+  
+
+
+  get_yaxis_range = (type) => {
+    if(type==='phq') return 30
+    else if(type==='gad') return 21
+    else if(type==='isi') return 28
+    else return 30;
   }
 
   get_severity = (type, score) => {
@@ -76,18 +89,19 @@ class Assessment extends Component {
   }
 
   
+  //this.get_total_score(type)
   assessment_chart = (type, data) => {
     return( 
       <AreaChart width={550} height={325} 
                  margin={{ top: 20, right: 80, left: 0, bottom: 0 }}
                  data={data.length===1?[{name:null, uv:data[0].uv}, data[0]]:data}>
         <XAxis dataKey="name" position='bottom' dy={10} fontSize={14}/>
-        <YAxis type="number" domain={[0, this.get_total_score(type)]}>
+        <YAxis type="number" domain={[0,this.get_yaxis_range(type)]} tickCount={this.get_dot_point(type)}>
            <Label angle={-90} value={this.get_graph_label(type)} position='insideLeft' style={{fontWeight:600, textAnchor: 'middle', fontSize:'16px', fill:'#250044'}} />
         </YAxis>
         <CartesianGrid stroke="#E9E7E9" />
         <Area type="monotone" dataKey="uv" stroke="#e1e5f5" fill="#e1e5f5"/>
-        <ReferenceLine y={data[0].uv} stroke="#250044" strokeDasharray="3 3" label={{fontWeight:600, fontSize:'16px', position:'right', value: 'Baseline', fill: '#250044' }}/>
+        <ReferenceLine y={data[0].uv} stroke="#250044" strokeDasharray="3 3" label={{fontWeight:600, fontSize:'16px', position:'right', value: data[0].uv, fill: '#250044' }}/>
       </AreaChart>
     )
   }
@@ -113,7 +127,7 @@ class Assessment extends Component {
           </div>
           <div className = "d-flex flex-column align-self-center amt-graph-panel">
             {this.assessment_chart(type, data)}
-            <div className = "d-flex justify-content-center description">Assessment timeline (months)</div>
+            <div className = "d-flex justify-content-center description">Assessment timeline</div>
           </div>
         </div>
       </div>  
@@ -123,7 +137,6 @@ class Assessment extends Component {
 
   default_view = () => {  
     const data = this.state.scores
-    console.log("data:", data)
     return (  
       <div className="d-flex flex-column profile-main-content">
         <div className="d-flex flex-row justify-content-between">
@@ -139,8 +152,6 @@ class Assessment extends Component {
       </div> 
     ) 
   }
-
-
 
 
   render(){
