@@ -44,6 +44,10 @@ h3 {
   color: #250044;
 }
 
+.t-c-g {
+  color: #9B9B9B;
+}
+
 .padding-right-0 {
   padding-right: 0px;
 }
@@ -1254,6 +1258,7 @@ h3 {
 }
 
 .patient-info-status-icon {
+  max-height: 18px;
   padding-right:20px;
 }
 
