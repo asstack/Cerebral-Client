@@ -18,6 +18,9 @@ class TextArea extends Component {
     if(this.props.title_ref && this.props.title_ref.current){
       this.props.title_ref.current.innerText = this.props.flag_title||"Please elaborate on your answer. " 
     }
+    if(this.props.default_detail){
+      this.setState({text:this.props.default_detail})
+    }
   }
 
   update_text_handler = e => { 
@@ -33,11 +36,13 @@ class TextArea extends Component {
   }
 
   render(){ 
+    let default_value=this.props.default_detail?this.props.default_detail:""
     return(
       <div>
         {this.state.msg?<div className = "d-flex justify-content-start text-small-red">{this.state.msg}</div>:null}
         <div className="form-group">
-          <textarea onChange={this.update_text_handler} className="q-textarea form-control" rows="5" />
+          <textarea defaultValue={default_value} onChange={this.update_text_handler} className="q-textarea form-control" rows="5">
+          </textarea>
         </div>
         {components.confirm_button_type_1(this.submit_btn_handler, "Confirm your answer >")}  
       </div>

@@ -156,10 +156,14 @@ h3 {
 }
 
 .button-multi-selector:hover {
-    background: #250044;
-    color: #FFFFFF;
+  background: #250044;
+  color: #FFFFFF;
 }
 
+.selected { 
+  background: #250044;
+  color: #FFFFFF;
+}
 
 
 .agree-holder {

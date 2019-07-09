@@ -12,6 +12,7 @@ class CheckBoxComponent extends Component {
       single_option:'',
       msg:'',
       details:false,
+      default_detail:"",
       type:'checkbox',
       is_ready:false
     }
@@ -20,6 +21,15 @@ class CheckBoxComponent extends Component {
   componentDidMount(){
     //initalize item
     const arr = new Array(this.props.options.length).fill(false);     
+
+    if(this.props.prv_answer){
+      let prv_answer = JSON.parse(this.props.prv_answer)
+      prv_answer.option.map((val, index)=> {
+        arr[index]=true
+      })
+      this.setState({default_detail:prv_answer.detail})
+    }
+
     this.setState({details:this.props.details , options: this.props.options, checked_options:arr, is_ready:true})
   }
 
@@ -38,19 +48,21 @@ class CheckBoxComponent extends Component {
  }
 
   submit_btn_handler = () => {
-    var info=''
+    let answer ={option:[], name:[], detail:""}
     this.state.checked_options.forEach((val, idx)=>{
-      if(val) info+=this.state.options[idx].name+", "
+      if(val){
+        answer.option.push(idx)
+        answer.name.push(this.state.options[idx].name)
+      }
     }) 
-    if(info){ 
-      info=info.slice(0,-2)
-      if(this.state.details==='true' && info!=='None apply'){
-        this.setState({single_option:info, type:'details'}) 
+    if(answer.option.length > 0){ 
+      if(this.state.details==='true' && answer.name[0]!=='None apply'){
+        this.setState({answer:answer, type:'details'}) 
         if(this.props.set_subcomp!==null){ 
           this.props.set_subcomp(true)
         }
       }else{
-        this.props.submit_action(info)
+        this.props.submit_action(JSON.stringify(answer), this.props.question.id)
       }
     }else{
       this.setState({msg:"Please select at least one item"})
@@ -59,7 +71,9 @@ class CheckBoxComponent extends Component {
   
   //in this case, only submit one with text
   submit_with_text_handler = (text) => {
-    this.props.submit_action(this.state.single_option+", "+text)  
+    let answer = this.state.answer
+    answer["detail"]=text
+    this.props.submit_action(JSON.stringify(answer), this.props.question.id)  
   }
   
   //{(e) => this.check_box_handler(e,item.option_name)}
@@ -94,7 +108,7 @@ class CheckBoxComponent extends Component {
       </div> 
       )
     }else{
-      return <TextArea title_ref = {this.props.title_ref} subscript_ref = {this.props.subscript_ref} flag_title={this.props.flag_title} submit_action = {this.submit_with_text_handler}/> 
+      return <TextArea default_detail={this.state.default_detail} title_ref = {this.props.title_ref} subscript_ref = {this.props.subscript_ref} flag_title={this.props.flag_title} submit_action = {this.submit_with_text_handler}/> 
     } 
   }
 
