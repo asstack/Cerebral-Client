@@ -43,6 +43,15 @@ class SubscriptionInformation extends Component {
     })  
   }
 
+  word_field = (title, wording)=>{
+    return (
+      <div className="d-fex flex-row">
+        <span>{title}</span>
+        <span className="t-c-g">{wording}</span>
+      </div>
+    )
+  }
+
   subscription_info = (type, data) => {
     const title = type==='recent'?'MY RECENT SUBSCRIPTION':'SUBSCRIPTION HISTORY'
 
@@ -60,19 +69,19 @@ class SubscriptionInformation extends Component {
               </div>
               <div className="d-flex flex-column subscription-col-1">
                 <div className="subscription-text-holder subscription-text">
-                  {med_preference.name===null?'Medication: Pending':med_preference.name +" ("+med_preference.brand_name+")"}
+                  {med_preference.name===null?this.word_field('Medication: ','Pending'):this.word_field(med_preference.name +" ("+med_preference.brand_name+")","")}
                 </div> 
                 <div className="subscription-text-holder subscription-text">
-                  {med_preference.name===null?'Dosage: Pending':data.dosage_preference.response+" mg"}
+                  {med_preference.name===null?this.word_field('Dosage: ','Pending'):this.word_field("Dosage: ", data.dosage_preference.response+" mg")}
                 </div> 
                 <div className="subscription-text-holder subscription-text">
-                  $45.00
+                    {this.word_field("Price: ", "$45.00")}
                 </div> 
               </div>
               <div className="d-flex flex-column">
                 <div className="subscription-text-holder subscription-text">prescription status</div> 
                 <div className="d-flex flex-row">
-                  <img alt="ready for info" className = "patient-info-status-icon" src={process.env.PUBLIC_URL + '/img/ready.png'}/>
+                  <img alt="ready for info" className = "patient-info-status-icon" src={process.env.PUBLIC_URL + '/img/pending.png'}/>
                   <div className="subscription-subtext">
                     Pending - Waiting for approval from doctor
                   </div>
