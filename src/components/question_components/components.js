@@ -2,38 +2,37 @@ import React from 'react'
 import uuidv1 from 'uuid'
 
 //TODO: replace the components name after get all componenets. some will reuse in different pages
-export const input_type_1 = (event_handler, text) => {
+export const input_type_1 = (event_handler, text , default_value="") => {
   return(
     <div className="d-flex justify-content-start input-holder">
-			<input className="col input-type1" onChange={event_handler} defaultValue=""
+			<input className="col input-type1" onChange={event_handler} defaultValue={default_value} type="text" placeholder={text}/>
+    </div>
+  )
+}
+
+export const input_type_half = (event_handler, text, default_value="") => {
+  return(
+    <div className="d-flex justify-content-start input-holder">
+			<input className="col input-type1" onChange={event_handler} defaultValue={default_value}
 				type="text" placeholder={text}/>
     </div>
   )
 }
 
-export const input_type_half = (event_handler, text) => {
-  return(
-    <div className="d-flex justify-content-start input-holder">
-			<input className="col input-type1" onChange={event_handler} defaultValue=""
-				type="text" placeholder={text}/>
-    </div>
-  )
-}
-
-export const input_type_no_border = (event_handler, text) => {
+export const input_type_no_border = (event_handler, text, default_value="") => {
   return(
     <div className="d-flex justify-content-start input-no-border-holder">
-			<input className="col input-no-border" onChange={event_handler} defaultValue=""
+			<input className="col input-no-border" onChange={event_handler} defaultValue={default_value}
 				type="text" placeholder={text}/>
     </div>
   )
 }
 
 
-export const input_type_autocomplete = (event_handler, text, autocomplete_value, key) => {
+export const input_type_autocomplete = (event_handler, text, autocomplete_value, key, default_value="") => {
   return(
     <div className="d-flex justify-content-start input-holder">
-      <input className="col input-type1" onChange={e=>event_handler(e, key)} defaultValue=""
+      <input className="col input-type1" onChange={e=>event_handler(e, key)} defaultValue={default_value}
 				type="text" placeholder={text} autoComplete={autocomplete_value}/>
     </div>
   )
@@ -113,9 +112,10 @@ export const text_big_type_1 = text => {
   )
 }
 
-export const btn_selector = (event_handler, item, type)=>{
+export const btn_selector = (event_handler, item, type, selected=false)=>{
+  let css = selected?"selected":null
   return(
-    <input className ="button-two-selector" onClick={e=>event_handler(e, type) } type="button" value={item}/>
+    <input className ={"button-two-selector"+" "+css} onClick={e=>event_handler(e, type) } type="button" value={item}/>
   )
 }
 

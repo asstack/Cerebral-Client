@@ -375,6 +375,11 @@ export const upload_object_for_current_question = (file, file_type) => (dispatch
       })
 }
 
+export const get_answers_for_visit = (patient_id, visit_id) => (dispatch, getState) => {
+  let user_attr = get_user_attr(getState())
+  return axios.get(`/api/patients/${patient_id}/visits/${visit_id}/answers`, {headers:make_headers(user_attr)}) 
+}
+
 
 export const get_visits_for_patient = (patient_id) => (dispatch, getState) => {
   let user_attr = get_user_attr(getState())

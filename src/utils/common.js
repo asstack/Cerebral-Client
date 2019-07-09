@@ -32,7 +32,7 @@ export const email_validation = email => {
   }
 }
 
-export const map_type_to_component = (question, handlers, user, subscript_ref, title_ref) => {
+export const map_type_to_component = (question, handlers, user, answer, subscript_ref, title_ref) => {
   if(!question) return null
 
   switch(question.question_type) {
@@ -43,9 +43,9 @@ export const map_type_to_component = (question, handlers, user, subscript_ref, t
     case 'identification_cover':
       return <IdentificationCover submit_action = {handlers.submit_answer_and_next_step} />
     case 'selector':
-      return <SelectorComponent submit_action = {handlers.submit_answer_and_next_step} question={question} type="selector"/>
+      return <SelectorComponent submit_action = {handlers.submit_answer_and_next_step} question={question} prv_answer={answer} type="selector"/>
     case 'emergency_contact':
-      return <EmergencyContact submit_action = {handlers.submit_answer_and_next_step}/>
+      return <EmergencyContact submit_action = {handlers.submit_answer_and_next_step} question={question} prv_answer={answer}/>
     case 'create_profile':
       return <RegisterManager
                 view_type = 'register'
@@ -59,12 +59,18 @@ export const map_type_to_component = (question, handlers, user, subscript_ref, t
       return <CreateProfile
                 submit_action = {handlers.did_create_patient}/> 
     case 'bank_selector':
-      return <SelectorComponent submit_action = {handlers.set_bank_selector_handler} question={question} type="bank_selector"/>
+      return <SelectorComponent 
+              prv_answer={answer}
+              submit_action = {handlers.set_bank_selector_handler} question={question} type="bank_selector"/>
     case 'phone':
       return <Phone skip_action = {handlers.next_step_handler}
-                     submit_action = {handlers.submit_answer_and_next_step}/>
+                    question={question}
+                    submit_action = {handlers.submit_answer_and_next_step}
+                    prv_answer={answer}/>
     case 'checkboxes':
       return <CheckBoxComponent options = {question.options} 
+                question={question}
+                prv_answer={answer}
                 submit_action = {handlers.submit_answer_and_next_step}
                 details = 'false'/>
     case 'checkbox_details':
@@ -74,16 +80,20 @@ export const map_type_to_component = (question, handlers, user, subscript_ref, t
                 subscript_ref = {subscript_ref}
                 title_ref = {title_ref}
                 submit_action = {handlers.submit_answer_and_next_step}
+                question={question}
                 set_subcomp = {handlers.set_subcomp} 
+                prv_answer={answer}
                 details = 'true'/> 
     case 'date':
-      return <Date submit_action = {handlers.submit_answer_and_next_step}/> 
+      return <Date question={question} submit_action = {handlers.submit_answer_and_next_step} prv_answer = {answer}/> 
     case 'height_weight':
-      return <HeightWeight submit_action = {handlers.submit_answer_and_next_step}/>   
+      return <HeightWeight question={question} submit_action = {handlers.submit_answer_and_next_step} prv_answer = {answer}/>   
     case 'state_selector':
-      return <StateSelector submit_action = {handlers.submit_answer_and_next_step}/>    
+      return <StateSelector question={question} submit_action = {handlers.submit_answer_and_next_step} prv_answer = {answer}/>    
     case 'yes_no_details':
       return <YesNoDetails
+                prv_answer = {answer}
+                question={question}
                 flag_title = {question.flag_title}
                 subscript_ref = {subscript_ref}
                 title_ref = {title_ref}
@@ -96,15 +106,18 @@ export const map_type_to_component = (question, handlers, user, subscript_ref, t
                 set_subcomp = {handlers.set_subcomp} 
                 submit_action = {handlers.submit_and_upload_data}/>  
     case 'patient_shipping':
-      return <PatientShipping submit_action = {handlers.submit_answer_and_next_step}/> 
+      return <PatientShipping  
+              prv_answer={answer}
+              question = {question}
+              submit_action = {handlers.submit_answer_and_next_step}/> 
     case 'patient_payment':
       return <PatientPayment submit_action = {handlers.submit_answer_and_next_step}/> 
     case 'side_effects':
-      return <SideEffects submit_action = {handlers.submit_answer_and_next_step}/>  
+      return <SideEffects submit_action = {handlers.submit_answer_and_next_step} question={question} prv_answer = {answer}/>  
     case 'medication_preference':
-      return <MedicationPreference submit_action = {handlers.submit_answer_and_next_step}/>  
+      return <MedicationPreference submit_action = {handlers.submit_answer_and_next_step} question={question} prv_answer={answer}/>  
     case 'dosage_preference':
-      return <DosagePreference submit_action = {handlers.submit_answer_and_next_step} skip_action = {handlers.next_step_handler}/>  
+      return <DosagePreference submit_action = {handlers.submit_answer_and_next_step} prv_answer={answer} question={question} skip_action = {handlers.next_step_handler}/>  
     case 'patient_video':
       return <VideoSelector 
               flag_title = {question.flag_title}

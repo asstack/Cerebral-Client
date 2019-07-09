@@ -12,6 +12,9 @@ class SelectorComponent extends Component {
   
   componentDidMount(){
     this.setState({question:this.props.question, is_ready:true}) 
+    if(this.props.prv_answer){
+      this.setState({prv_answer:JSON.parse(this.props.prv_answer)})
+    }
   }
  
 
@@ -22,22 +25,26 @@ class SelectorComponent extends Component {
     }else{
       let ans = ""
       if(this.props.question.assessment_type!==null){
-        ans = JSON.stringify({score: this.state.question.options.length-index-1, answer:item.name})
+        ans = JSON.stringify({score: this.state.question.options.length-index-1, answer:item.name, index:index})
       }else{
-        ans = item.name
+        ans = JSON.stringify({answer:item.name, index:index})
       }
-      console.log("answer:", ans)
-      this.props.submit_action(ans) 
+      this.props.submit_action(ans, this.props.question.id) 
     }
   }
 
 
 
   selector_items = (options, class_type) => {
-    return options.map((item, index) => (
-      <input key={uuidv1()} className = {class_type} onClick={e=>this.submit_btn_handler(item, index)} 
+    return options.map((item, index) => {
+      let selected=""
+      if(this.state.prv_answer && index===this.state.prv_answer.index){
+        selected="selected"
+      } 
+      return (<input key={uuidv1()} className = {class_type+" "+selected} onClick={e=>this.submit_btn_handler(item, index)} 
         type="button" value={item.title}/>
-  ))}
+      )
+    })}
 
   selector = () => {
     const class_type = this.props.question.options.length>2? "button-multi-selector":"button-two-selector";

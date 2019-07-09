@@ -12,6 +12,10 @@ class Date extends Component {
     }
   }
 
+  componentDidMount=()=>{
+    this.setState({birth_date:this.props.prv_answer})
+  }
+
   input_update_handler = e =>{
     this.setState({birth_date:e.target.value}) 
   }
@@ -19,7 +23,7 @@ class Date extends Component {
   confirm_btn_handler = e => {
     const date = this.state.birth_date;
     if(date && moment(date, 'MM/DD/YY', true).isValid()){
-      this.props.submit_action(this.state.birth_date) 
+      this.props.submit_action(this.state.birth_date, this.props.question.id) 
     }else{
       this.setState({msg:"Please input the date of birth (mm/dd/yy)"}) 
     }
@@ -30,7 +34,7 @@ class Date extends Component {
     	<div>
         {this.state.msg? <div className = "d-flex justify-content-start p-2 text-small-red">{this.state.msg}</div>
 : null} 
-        {components.input_type_1(this.input_update_handler, "Date of Birth (mm/dd/yy)")}
+        {components.input_type_1(this.input_update_handler, "Date of Birth (mm/dd/yy)", this.props.prv_answer)}
         {components.confirm_button_type_1(this.confirm_btn_handler, "Confirm date of birth >")}
 		  </div>
 	

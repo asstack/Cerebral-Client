@@ -48,6 +48,7 @@ class QuestionBank extends Component{
       is_loading:false,
       is_ready:false,
       is_subcomp:false,
+      answers:{},
     }
     props.api_actions.api_reset()
     this.subscript_ref = React.createRef();
@@ -83,19 +84,30 @@ class QuestionBank extends Component{
               this.update_and_set_question('profile',0) 
               this.props.history.push("/patient/question_bank/profile") 
             }else{  
-              let bank_name = this.props.question_banks[this.props.question_banks_step]
+              //get answers in here
+              //patient_actions
+             let bank_name = this.props.question_banks[this.props.question_banks_step]
               this.setState({is_ready:true})
               this.props.history.push("/patient/question_bank/"+bank_name) 
             } 
           }) 
         }
       }else{
+        //get answers in here
         let bank_name = this.props.question_banks[this.props.question_banks_step]
-        if(url_info !== bank_name){ 
-          this.props.history.push("/patient/question_bank/"+bank_name) 
-        }
-        this.setState({visit: this.props.visit, questions:this.props.questions, question_step:this.props.question_step, bank_step:this.props.question_banks_step, banks:this.props.question_banks, is_subcomp:false, is_ready:true})
-        //this.setState({is_ready:true})
+        let patient = this.props.user.patient
+        this.props.patient_actions.get_answers_for_visit(patient.id, this.props.visit.id).then(resp=>{
+          let answers={}
+          resp.data.map((item, index)=>{ 
+            answers[item.question.id]=item.response
+          })
+  
+          if(url_info !== bank_name){ 
+            this.props.history.push("/patient/question_bank/"+bank_name) 
+          }
+          this.setState({answers:answers, visit: this.props.visit, questions:this.props.questions, question_step:this.props.question_step, bank_step:this.props.question_banks_step, banks:this.props.question_banks, is_subcomp:false, is_ready:true})
+        })
+       //this.setState({is_ready:true})
         //if ensure visit
         // modal to ask  
         //else
@@ -163,7 +175,6 @@ class QuestionBank extends Component{
         //just change the step  
         this.skip_questions(question_step-1, question_step-2);   
       }else if(question_step === 0 && bank_step > 0){
-        console.log("bank step check :", banks[bank_step-1])
         if(banks[bank_step-1]=='treatment_info'){
            this.props.patient_actions.get_current_answer_by_name('medication_preference').then(resp=>{
              let med_data = JSON.parse(resp.response)
@@ -211,7 +222,7 @@ class QuestionBank extends Component{
   }
 
   //TODO: It is hacky way only for the demo
-  submit_answer_and_next_step = (ans) => {
+  submit_answer_and_next_step = (ans, q_id=null) => {
     const {patient_actions} = this.props
     ReactGA.event({
             category: 'patients',
@@ -219,6 +230,12 @@ class QuestionBank extends Component{
     }); 
     this.setState({is_ready:false})
     patient_actions.answer_current_question({answer: ans}).then(() => {
+
+      if(q_id){
+        let answers=this.state.answers
+        answers[q_id]=ans
+        this.setState({answer:answers})
+      }
       this.patient_state_transition_helper()
       //return this.patient_state_transition_helper(); 
     })  
@@ -433,7 +450,6 @@ class QuestionBank extends Component{
   }
  
   render(){
-    console.log("check is loading", this.state.is_loading)
     const handlers = {
       next_step_handler:this.next_step_handler.bind(this),
       set_bank_selector_handler:this.set_bank_selector_handler.bind(this),
@@ -446,7 +462,8 @@ class QuestionBank extends Component{
 
     //TODO: using ref to change title and subtitle in child component, but it's hacky way. will take that part as a component 
     const question = this.state.questions[this.state.question_step]
-    const component = common.map_type_to_component(question, handlers, this.props.user, this.subscript_ref, this.title_ref)
+    const answer = question?this.state.answers[question.id]:null
+    const component = common.map_type_to_component(question, handlers, this.props.user, answer, this.subscript_ref, this.title_ref)
     return(
       this.type_to_view(component, question)
    );
