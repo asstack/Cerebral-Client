@@ -218,6 +218,68 @@ h3 {
   min-height:60px;
 }
 
+.group-expandable-checkobx {
+  min-height: 60px;
+  margin-bottom:10px;
+
+  border: 1px solid #250044;
+  box-sizing: border-box;
+  border-radius: 2px;
+}
+
+.expandable-checkbox-holder {
+  width:100%;
+  height: 60px;
+}
+
+.expandable-checkbox {
+  background-color:white;
+  border: none;
+}
+
+
+.expandable-checkbox-text {
+  height:100%;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 18px;
+  text-align: center;
+  letter-spacing: -0.4px;
+  color: #250044;
+  padding-right: 52px;
+  border: none;
+}
+
+.expandable-textarea-holder {
+  padding-left:13px;
+  padding-right:13px;
+  padding-bottom:13px;
+}
+
+.expandable-textarea {
+  width:100%;
+  min-height:100px;
+  color: #250044;
+  padding:7px;
+  background: #FFFFFF;
+  border: 1px solid #9998D6;
+  box-sizing: border-box;
+  box-shadow: 0px 0px 4px #AABAF9;
+  border-radius: 2px;
+}
+
+.expandable-textarea::placeholder{
+
+  font-style: italic;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 20px;
+  letter-spacing: -0.4px;
+  color: #250044;
+
+}
+
+
 .state-selector {
   background: #FFFFFF;
   height: 60px;
