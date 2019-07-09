@@ -53,9 +53,9 @@ export const change_password = (token, password, password_confirmation, redirect
   })
 }
 
-export const update_password = (new_pwd, new_pwd_confirm, pwd) => (dispatch, getState) => {
+export const update_password = (new_pwd, new_pwd_confirm) => (dispatch, getState) => {
 
-  return axios.put(`/api/auth/password`, {current_password:pwd, password:new_pwd, password_confirmation:new_pwd_confirm}, {headers:make_headers(get_user_attr(getState()))})
+  return axios.put(`/api/auth/password`, {password:new_pwd, password_confirmation:new_pwd_confirm}, {headers:make_headers(get_user_attr(getState()))})
 }
 
 export const is_signed_in = () => (dispatch, getState) =>  {
