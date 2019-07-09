@@ -33,7 +33,6 @@ class PatientDashboard extends Component{
     if(next_props.user.id===null || next_props.user.patient===null){ 
       this.props.history.push('/patient/sign_in') 
     }
-
     this.setState({user:next_props.user}) 
   }
 

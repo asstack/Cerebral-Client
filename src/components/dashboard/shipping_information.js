@@ -27,7 +27,6 @@ class ShippingInformation extends Component {
 
   componentDidMount = () => {
     this.props.get_patient_shipping_address().then((data) => {
-      console.log("get shipping address :", data)
       if (data && data.length > 0) {
         this.setState({
           address_1: data[0].address_1,

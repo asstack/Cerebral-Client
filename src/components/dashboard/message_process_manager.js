@@ -55,7 +55,7 @@ class MessageProcessManager extends Component {
     }else if(type==='messenger'){
       return <Messenger user={this.state.user} back_btn_handler = {this.update_state_handler} prv_state="inbox" thread={this.state.thread}/> 
     }else{
-      return this.default_view()
+      return <MessageList user={this.state.user} update_state_handler = {this.update_state_handler}/>
     }      
   }
 
