@@ -16,6 +16,7 @@ import EmergencyContact from "../components/question_types/emergency_contact"
 import SideEffects from '../components/question_types/side_effects';
 import MedicationPreference from '../components/question_types/medication_preference';
 import DosagePreference from '../components/question_types/dosage_preference';
+import CommunicationPreferene from '../components/question_types/communication_preference';
 import RegisterManager from '../components/question_types/register_manager'
 import IdentificationCover from '../components/question_types/identification_cover'
 import MentalHealthCover from '../components/question_types/mental_health_cover'
@@ -118,6 +119,8 @@ export const map_type_to_component = (question, handlers, user, answer, subscrip
       return <MedicationPreference submit_action = {handlers.submit_answer_and_next_step} question={question} prv_answer={answer}/>  
     case 'dosage_preference':
       return <DosagePreference submit_action = {handlers.submit_answer_and_next_step} prv_answer={answer} question={question} skip_action = {handlers.next_step_handler}/>  
+    case 'communication_preference':
+      return <CommunicationPreferene submit_action = {handlers.submit_answer_and_next_step} prv_answer={answer} question={question}/>
     case 'patient_video':
       return <VideoSelector 
               flag_title = {question.flag_title}
