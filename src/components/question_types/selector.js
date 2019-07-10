@@ -1,4 +1,5 @@
 import React, {Component} from 'react'
+import axios from 'axios'
 import uuidv1 from 'uuid'
 
 class SelectorComponent extends Component {
@@ -15,6 +16,27 @@ class SelectorComponent extends Component {
     if(this.props.prv_answer){
       this.setState({prv_answer:JSON.parse(this.props.prv_answer)})
     }
+
+    /*
+     * just keep it for future
+    navigator.geolocation.getCurrentPosition(position=>{
+      const key = " " //need google geocode api key 
+      const pos = position.coords
+      const temp_l = pos.latitude
+      const temp_r = pos.longitude
+      console.log("position:", position.coords)
+
+      axios.get(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${temp_l},${temp_r}&sensor=true&key=${key}`).then(resp=>{
+        const location = resp.data.results[0]
+        location.address_components.map((data, index)=>{
+          if(data.types[0]==="administrative_area_level_1"){
+            console.log("get data long name:", data.long_name)
+          }}
+        )
+      })
+    })
+    */
+    
   }
  
 
