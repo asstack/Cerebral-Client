@@ -37,13 +37,20 @@ class PatientShipping extends Component {
           this.setState({is_ready:true})
         )
     }
-
-  }
+  } 
 
   update_handler = (e) => { 
     let address = {address_1:this.state.address_1, address_2:this.state.address_2, city:this.state.city, region:this.state.region, postal_code:this.state.postal_code}
-    console.log("address:", address)
-    this.props.submit_action(JSON.stringify(address), this.props.question.id) 
+    if(!address.address_1 || !address.city || !address.region || !address.postal_code){
+      return
+    }
+    let valid_state = address.region.toLowerCase() 
+    const address_set = new Set(["ca", "california", "ohio", "oh"]);
+    if(address_set.has(valid_state)){
+      this.props.submit_action(JSON.stringify(address), this.props.question.id) 
+    }else{
+      alert("Unfortunately Cerebral is not yet active in this state. We are available in California and Ohio.")
+    }
    }
 
   update_property = (e, key) => {
@@ -53,17 +60,19 @@ class PatientShipping extends Component {
   set_view_type_handler = (e, type) => {
     this.setState({validation_method:type})
   }
-  
+
+ 
   render(){
-    console.log("check prv add:", this.state.prv_address)
-    console.log("check prv add:", this.state.prv_address["city"])
     return (
       <div className="patient_shipping">
         {components.input_type_autocomplete(this.update_property, "Shipping Address 1", 'shipping street-address','address_1', this.state.prv_address["address_1"])}
         {components.input_type_autocomplete(this.update_property, "Shipping Address 2", '', 'adress_2', this.state.prv_address["address_2"])}
         {components.input_type_autocomplete(this.update_property, "City", 'shipping locality','city', this.state.prv_address["city"])}
-        {components.input_type_autocomplete(this.update_property, "State", 'shipping region','region', this.state.prv_address["region"])}
-        {components.input_type_autocomplete(this.update_property, "ZIP", 'shipping postal-code','postal_code', this.state.prv_address["postal_code"])}
+        <div className="d-flex flex-row justify-content-between">
+          {components.input_type_autocomplete(this.update_property, "State", 'shipping region','region', this.state.prv_address["region"])}
+          <div></div>
+          {components.input_type_autocomplete(this.update_property, "ZIP", 'shipping postal-code','postal_code', this.state.prv_address["postal_code"])}
+        </div>
         {components.confirm_button_type_1(this.update_handler.bind(this), "Confirm Shipping Address >")}
       </div>
     );
