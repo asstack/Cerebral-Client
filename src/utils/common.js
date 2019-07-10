@@ -60,7 +60,7 @@ export const map_type_to_component = (question, handlers, user, answer, subscrip
       return <CreateProfile
                 submit_action = {handlers.did_create_patient}/> 
     case 'bank_selector':
-      return <SelectorComponent 
+      return <SelectorComponent
               prv_answer={answer}
               submit_action = {handlers.set_bank_selector_handler} question={question} type="bank_selector"/>
     case 'phone':
@@ -90,7 +90,7 @@ export const map_type_to_component = (question, handlers, user, answer, subscrip
     case 'height_weight':
       return <HeightWeight question={question} submit_action = {handlers.submit_answer_and_next_step} prv_answer = {answer}/>   
     case 'state_selector':
-      return <StateSelector question={question} submit_action = {handlers.submit_answer_and_next_step} prv_answer = {answer}/>    
+      return <StateSelector question={question} submit_action = {handlers.set_bank_selector_handler} prv_answer = {answer}/>    
     case 'yes_no_details':
       return <YesNoDetails
                 prv_answer = {answer}

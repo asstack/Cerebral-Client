@@ -13,8 +13,20 @@ class StateSelector extends Component {
     this.setState({state: e.target.value}) 
   }
 
+  //TODO: Need to update database for state select but still not sure if we use them or not. So, I am using hardcode for answer
   confirm_btn_handler = e => {
-    this.props.submit_action(this.state)
+    if(!this.state.state){
+      alert("Please select state")
+      return
+    }
+
+    let answer={}
+    if(this.state.state==="CA"|| this.state.state==="OH"){ 
+      answer = {title:this.state.state, immediate:true, question_bank_names:["profile"]} 
+    }else{
+      answer = {title:this.state.state, immediate:false, question_bank_names:[]} 
+    }
+    this.props.submit_action(answer)
   }
 
 	render(){	
@@ -27,6 +39,7 @@ class StateSelector extends Component {
           <option value="AK">Alaska</option>
           <option value="AZ">Arizona</option>
           <option value="AR">Arkansas</option>
+          <option value="CA">California</option>
           <option value="CO">Colorado</option>
           <option value="CT">Connecticut</option>
           <option value="DE">Delaware</option>

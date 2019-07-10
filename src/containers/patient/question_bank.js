@@ -246,8 +246,8 @@ class QuestionBank extends Component{
   set_bank_selector_handler=(option)=>{
 
 		const {question_banks_step, patient_actions} = this.props
-
     if (option.question_bank_names.length > 0) {
+      //using it only for state selector. It is hacky way to check state
       if (option.immediate) {
         patient_actions.update_patient_question_banks(option.question_bank_names, 0).then(() => {
           patient_actions.set_current_question_bank_by_name(option.question_bank_names[0]).then(resp=>{
