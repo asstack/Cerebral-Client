@@ -73,45 +73,52 @@ class QuestionBank extends Component{
         this.props.history.push("/patient/question_bank/qualification") 
       } 
     }else{
-      if(url_info==='qualification'){
+      const patient = this.props.user.patient
+      const visit = this.props.visit 
+      if(url_info==='qualification' || !visit){
         //TODO: create new visit and start from profile 
-        if(!this.props.questions){
+        if(!this.props.questions || !visit){
           this.update_and_set_question('profile', 0)  
           this.props.history.push("/patient/question_bank/profile") 
         }else{
-          return myPromiseModal({open:true}).then(value=>{
-            if(!value){
-              this.update_and_set_question('profile',0) 
-              this.props.history.push("/patient/question_bank/profile") 
-            }else{  
-              //get answers in here
-              //patient_actions
-             let bank_name = this.props.question_banks[this.props.question_banks_step]
-              this.setState({is_ready:true})
-              this.props.history.push("/patient/question_bank/"+bank_name) 
-            } 
-          }) 
+          //here i have to check visit and if not valid, create new visit and move to first question 
+          //else move to modal
+          this.props.patient_actions.is_valid_visit(patient.id, visit.id).then(resp=> {
+            return myPromiseModal({open:true}).then(value=>{
+              if(!value){
+                this.update_and_set_question('profile',0) 
+                this.props.history.push("/patient/question_bank/profile") 
+              }else{  
+                //get answers in here
+                //patient_actions
+               let bank_name = this.props.question_banks[this.props.question_banks_step]
+                this.setState({is_ready:true})
+                this.props.history.push("/patient/question_bank/"+bank_name) 
+              } 
+            }) 
+          }).catch(err=>{
+            this.update_and_set_question('profile', 0)  
+            this.props.history.push("/patient/question_bank/profile") 
+          })
         }
       }else{
         //get answers in here
         let bank_name = this.props.question_banks[this.props.question_banks_step]
-        let patient = this.props.user.patient
-        this.props.patient_actions.get_answers_for_visit(patient.id, this.props.visit.id).then(resp=>{
-          let answers={}
-          resp.data.map((item, index)=>{ 
-            answers[item.question.id]=item.response
+        this.props.patient_actions.is_valid_visit(patient.id, visit.id).then(resp=>{
+          this.props.patient_actions.get_answers_for_visit(patient.id, visit.id).then(resp=>{
+            let answers={}
+            resp.data.map((item, index)=>{ 
+              answers[item.question.id]=item.response
+            }) 
+            if(url_info !== bank_name){ 
+              this.props.history.push("/patient/question_bank/"+bank_name) 
+            }
+            this.setState({answers:answers, visit: visit, questions:this.props.questions, question_step:this.props.question_step, bank_step:this.props.question_banks_step, banks:this.props.question_banks, is_subcomp:false, is_ready:true})
           })
-  
-          if(url_info !== bank_name){ 
-            this.props.history.push("/patient/question_bank/"+bank_name) 
-          }
-          this.setState({answers:answers, visit: this.props.visit, questions:this.props.questions, question_step:this.props.question_step, bank_step:this.props.question_banks_step, banks:this.props.question_banks, is_subcomp:false, is_ready:true})
+        }).catch(e=>{
+            this.update_and_set_question('profile', 0)  
+            this.props.history.push("/patient/question_bank/profile") 
         })
-       //this.setState({is_ready:true})
-        //if ensure visit
-        // modal to ask  
-        //else
-        // create_new_visit and set qualification
       }  
     }  
   }
