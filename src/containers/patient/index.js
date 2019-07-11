@@ -24,12 +24,13 @@ class Patient extends Component{
     const init_state = location.pathname.split("/")[2];    
     const user_attr = user.attributes;
 
-    if(!user.patient && user_attr.therapist){
+    console.log("check user attr:", user_attr)
+    if(!user_attr.patient && user_attr.therapist){
       global_actions.reset_state()      
       Alert.info("Please sign in by using patient account.") 
     }
 
-    if(user["access-token"]){
+    if(user_attr["access-token"]){
       global_actions.is_signed_in().then((resp) => {
         if(!resp) global_actions.reset_state()
       }) 
