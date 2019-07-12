@@ -152,15 +152,8 @@ class QuestionBank extends Component{
       this.props.patient_actions.get_current_answer_by_name('medication_preference').then(resp => {
         let med_data = JSON.parse(resp.response) 
         if(med_data.name==null){ 
-          if(this.state.questions.length > skip_step+1){
-            this.props.patient_actions.set_step(skip_step);
-            this.setState({is_ready:true})
-          }else{
-            this.props.patient_actions.set_current_question_bank_by_name(this.state.banks[this.state.bank_step+1], false, this.state.bank_step+1).then(resp=>{
-              this.props.history.push("/patient/question_bank/"+ this.state.banks[this.state.bank_step+1]) 
-              this.setState({is_ready:true})
-            })
-          }
+          this.props.patient_actions.set_step(skip_step);
+          this.setState({is_ready:true})
         }else{
           this.props.patient_actions.set_step(step);
           this.setState({is_ready:true})
@@ -179,23 +172,14 @@ class QuestionBank extends Component{
     }else{
       this.setState({is_ready:false})
       if(question_step > 0){
-        //just change the step  
         this.skip_questions(question_step-1, question_step-2);   
       }else if(question_step === 0 && bank_step > 0){
         if(banks[bank_step-1]=='treatment_info'){
            this.props.patient_actions.get_current_answer_by_name('medication_preference').then(resp=>{
-             let med_data = JSON.parse(resp.response)
-             if(med_data.name==null){
-              this.props.patient_actions.set_current_question_bank_by_name(banks[bank_step-1], true, bank_step-1, -1).then(resp=>{
-                this.setState({is_ready:true})
-              }) 
-             }else{
               this.props.patient_actions.set_current_question_bank_by_name(banks[bank_step-1], true, bank_step-1, 0).then(resp=>{
                 this.setState({is_ready:true})
               })  
-             }  
            })
-            
        }else{
           this.props.patient_actions.set_current_question_bank_by_name(banks[bank_step-1], true, bank_step-1, 0).then(resp=>{
             this.setState({is_ready:true})
