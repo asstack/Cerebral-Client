@@ -32,7 +32,7 @@ class Phone extends Component {
   confirm_btn_handler = e => {
     const number = this.state.phone_number;
     
-    if(number && number.match(/\d/g).length===10){
+    if(number && number.match(/\d/g) && number.match(/\d/g).length===10){
       this.props.submit_action(this.state.phone_number, this.props.question.id)
     }else{
       this.setState({msg:"Please input the 10 digit of phone number"})  

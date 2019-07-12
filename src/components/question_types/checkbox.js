@@ -25,11 +25,10 @@ class CheckBoxComponent extends Component {
     if(this.props.prv_answer){
       let prv_answer = JSON.parse(this.props.prv_answer)
       prv_answer.option.map((val, index)=> {
-        arr[index]=true
+        arr[val]=true
       })
       this.setState({default_detail:prv_answer.detail})
     }
-
     this.setState({details:this.props.details , options: this.props.options, checked_options:arr, is_ready:true})
   }
 
