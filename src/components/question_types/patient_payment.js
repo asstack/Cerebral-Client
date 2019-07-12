@@ -26,13 +26,17 @@ class PatientPayment extends Component {
     })
   }
 
+  //TODO: If we have info for therapist company, they will generate their own code and will check by validate_referral_code api
   update_code_handler = (e) => {
     let code = e.target.value
-    if(code.length == 6){
+    if(code == "Cerebralpartner" ){
+      this.setState({is_available:true, code:code})
+      /*
       this.props.validate_referral_code(this.props.user.patient.id, code).then(resp=>{
         let is_valid = resp.data.length===1?true:false
         this.setState({is_available:is_valid, code:code})
       })
+      */
     }else{
       this.setState({is_available:false, code:code})
     }
