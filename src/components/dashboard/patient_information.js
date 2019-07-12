@@ -101,7 +101,7 @@ class PatientInformation extends Component {
                   Referred for: 
                 </div>
                 <div className = "patient-referral-right">   
-                  {this.state.patient?this.state.patient.visit.service_line.title:null} 
+                  {this.get_named_answer('referral_reason')}  
                 </div>
                </div>
 
