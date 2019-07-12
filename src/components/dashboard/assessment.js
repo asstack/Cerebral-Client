@@ -21,7 +21,7 @@ class Assessment extends Component {
     this.props.get_visits_for_patient(id).then((resp)=> {
       resp.data.sort((v1, v2) => { return v1.id - v2.id})
       resp.data.map((item, index)=> {
-        let date = Moment(item.service_line.updated_at).format('MMMM YY') 
+        let date = Moment(item.service_line.updated_at).format('MMMM YYYY') 
         if(item.isi_score!=null){
           scores['isi'].push({name:date, uv:item.isi_score})
         } 
