@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import { connect } from 'react-redux'
-import { create_payment } from '../../actions/patient_action'
+import { create_payment, validate_referral_code } from '../../actions/patient_action'
 import {Elements, StripeProvider} from 'react-stripe-elements'
 import PaymentElements from './payment_elements'
 
@@ -10,6 +10,7 @@ class PatientPayment extends Component {
     super(props)
     this.state = {
       code:"",
+      is_available:false
     }
   }
 
@@ -21,13 +22,20 @@ class PatientPayment extends Component {
       // DO NOT SEND PAYMENT INFORMATION to submit_action here IT WILL END UP IN THE DATABASE
       return this.props.submit_action(resp.transaction_code) 
     }).catch((err) => {
-      console.log("payment:", err)
       return this.props.submit_action("temp") 
     })
   }
 
   update_code_handler = (e) => {
-    this.setState({code:e.target.value}) 
+    let code = e.target.value
+    if(code.length == 6){
+      this.props.validate_referral_code(this.props.user.patient.id, code).then(resp=>{
+        let is_valid = resp.data.length===1?true:false
+        this.setState({is_available:is_valid, code:code})
+      })
+    }else{
+      this.setState({is_available:false, code:code})
+    }
   }
   
   render(){
@@ -59,7 +67,7 @@ class PatientPayment extends Component {
           </div>
           <div className = "d-flex flex-row justify-content-between payment-info-item-total">
             <span className = "payment-bold-text">Order Total</span>
-            <span className = "payment-bold-text">{this.state.code !=='Wellspace01'?"$45.00/mo":"$38.00/mo"}</span>
+            <span className = "payment-bold-text">{!this.state.is_available?"$45.00/mo":"$38.00/mo"}</span>
           </div>
         </div>
 
@@ -73,4 +81,4 @@ class PatientPayment extends Component {
   }
 }
 
-export default connect(null, {create_payment}) (PatientPayment)
+export default connect(null, {create_payment, validate_referral_code}) (PatientPayment)

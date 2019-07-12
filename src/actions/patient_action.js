@@ -147,7 +147,6 @@ export const update_patient_question_banks = (bank_names, step) => (dispatch, ge
 export const set_current_question_bank_by_name = (bank_name, flag=false, bank_step=0, skip=0) => (dispatch, getState) => {
   return axios.get(`/api/question_banks/search?name=${bank_name}`)
     .then(function(resp){
-      console.log("current bank:", bank_name, " ", resp.data)
       return dispatch(update_patient_questions(resp.data.id, bank_name, flag, bank_step, skip))
     })
 }
@@ -401,6 +400,12 @@ export const update_payment_info = (full_name, token, patient_id)=> (dispatch, g
   let user_attr = get_user_attr(getState())
   return axios.post(`/api/patients/${patient_id}/payment_methods/`, body, {headers: make_headers(get_user_attr(getState()))})
 }
+///clients?status=activated
+export const validate_referral_code = (patient_id, code)=> (dispatch, getState) => {
+  let user_attr = get_user_attr(getState())
+  return axios.get(`/api/patients/${patient_id}/referral_codes?referral_code=${code}`, {headers: make_headers(get_user_attr(getState()))})
+}
+
 
 
 export const clean_up_patient_process = () => (dispatch) => {

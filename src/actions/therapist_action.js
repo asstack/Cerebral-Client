@@ -93,7 +93,10 @@ export const get_patient_details = (patient_id) => (dispatch, getState) => {
 
 export const get_patient_info_questions = (bank_id) => (dispatch) => {
   return axios.get(`/api/question_banks/${bank_id}/questions`)
-    .then(resp=>dispatch(set_therapist_questions(resp.data)))  
+    .then(resp=>{
+      console.log("check bank:", resp)
+      dispatch(set_therapist_questions(resp.data))
+    })  
 }
 
 export const update_refer_answers = answers => (dispatch) => {

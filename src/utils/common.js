@@ -112,7 +112,9 @@ export const map_type_to_component = (question, handlers, user, answer, subscrip
               question = {question}
               submit_action = {handlers.submit_answer_and_next_step}/> 
     case 'patient_payment':
-      return <PatientPayment submit_action = {handlers.submit_answer_and_next_step}/> 
+      return <PatientPayment 
+              user = {user} 
+              submit_action = {handlers.submit_answer_and_next_step}/> 
     case 'side_effects':
       return <SideEffects submit_action = {handlers.submit_answer_and_next_step} question={question} prv_answer = {answer}/>  
     case 'medication_preference':
