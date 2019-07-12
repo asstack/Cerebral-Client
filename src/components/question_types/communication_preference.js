@@ -8,12 +8,10 @@ class CommunicationPreference extends Component {
     super(props)
     this.state = {
       options: [],
-      checked_options:[],
+      checked_option:null,
       answers:{},
       single_option:'',
       msg:'',
-      details:false,
-      default_detail:"",
       type:'checkbox',
       is_ready:false
     }
@@ -22,47 +20,40 @@ class CommunicationPreference extends Component {
   componentDidMount(){
     //initalize item
     const arr = new Array(3).fill(false);     
-    let options = [{type:"text/email", value:"Text/Email"}, {type:"video", value:"Video Call"},{type:"phone", value:"Phone Call"}]
+    let options = [{index:0, type:"text/email", value:"Text/Email"}, {index:1, type:"video", value:"Video Call"},{index:2, type:"phone", value:"Phone Call"}]
     if(this.props.prv_answer){
       let prv_answer = JSON.parse(this.props.prv_answer)
-      for (var key in prv_answer) {
-        arr[key]=true      
-      }
-      this.setState({answers:prv_answer})
+      this.setState({answers:prv_answer, checked_option:prv_answer.index})
     }
-    this.setState({details:this.props.details , options: options, checked_options:arr, is_ready:true, is_rerender:true})
+    this.setState({options: options, is_ready:true, is_rerender:true})
   }
 
   shouldComponentUpdate(next_props, next_state){
     return next_state.is_rerender;
   }
 
-  //NOTE: exception for None apply is hardcorded. 
   check_box_handler = (e, idx, item) => {
-    let list = this.state.checked_options
-    list[idx]=e.target.checked
-    let answers = this.state.answers
+    let option = null
+    let answer ={}
     if(e.target.checked){
-      answers[idx]={detail:"", answer:item.type} 
-    }else{
-      delete answers[idx]
-    }
-
-    this.setState({checked_options:list, answers:answers, is_rerender:true})
+      answer = {index:idx, detail:"", answer:item.type}
+      option = idx
+    }    
+    this.setState({checked_option:option, answers:answer, is_rerender:true})
+    
   }
 
-  //{idx:{answer:"phone", detail: text}}
   update_answer_handler = (e, idx)=>{
     let answers = this.state.answers;
-    answers[idx].detail = e.target.value
+    answers.detail = e.target.value
     this.setState({answers:answers, is_rerender:false})
   }
 
   submit_btn_handler = () => {
-    if(Object.keys(this.state.answers).length > 0){ 
+    if(this.state.answers && this.state.answers.detail){ 
       this.props.submit_action(JSON.stringify(this.state.answers), this.props.question.id)
     }else{
-      this.setState({msg:"Please select at least one communication option"})
+      alert("Please select one communication option and your availability")
     }
   }
 
@@ -87,16 +78,16 @@ class CommunicationPreference extends Component {
         <div className="d-flex flex-row expandable-checkbox-holder">
           <div className="input-group-prepend">
             <div className="input-group-text expandable-checkbox">
-              <input type="checkbox" onChange={(e) => {this.check_box_handler(e, index, item)}} name={item.type} checked={this.state.checked_options[index]}/>
+              <input type="radio" onChange={(e) => {this.check_box_handler(e, index, item)}} name={item.type} checked={this.state.checked_option===index}/>
             </div>
           </div>
           <div className="d-flex justify-content-center form-control expandable-checkbox-text">
             <span className="align-self-center">{item.value}</span>
           </div>
         </div>
-        {this.state.checked_options[index]? 
+        {this.state.checked_option===index? 
         <div className = "d-flex justify-content-center expandable-textarea-holder">
-          <textarea className="expandable-textarea" defaultValue={this.state.answers[index]? this.state.answers[index].detail:""} onChange={e=>this.update_answer_handler(e, index)} placeholder={this.placeholder_wording(item.type)}>
+          <textarea className="expandable-textarea" defaultValue={this.state.answers? this.state.answers.detail:""} onChange={e=>this.update_answer_handler(e, index)} placeholder={this.placeholder_wording(item.type)}>
           </textarea>
         </div>
         :null}
