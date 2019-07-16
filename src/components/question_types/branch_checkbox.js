@@ -3,7 +3,7 @@ import uuidv1 from  'uuid/v1';
 import * as components from '../question_components/components'
 import TextArea from './text_area'
 
-class CheckBoxComponent extends Component {
+class BranchCheckBox extends Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -36,10 +36,10 @@ class CheckBoxComponent extends Component {
   //NOTE: exception for None apply is hardcorded. 
   check_box_handler = (e, idx) => {
     let option_name = this.state.options[idx].name
-    let list = option_name==='None apply'?new Array(this.props.options.length).fill(false):this.state.checked_options 
+    let list = option_name==='Other'?new Array(this.props.options.length).fill(false):this.state.checked_options 
     list[idx]=e.target.checked
 
-    if(option_name!=='None apply' && this.state.options.slice(-1)[0].name==='None apply'){
+    if(option_name!=='Other' && this.state.options.slice(-1)[0].name==='Other'){
       list[list.length-1]=false;
     }
     
@@ -55,7 +55,7 @@ class CheckBoxComponent extends Component {
       }
     }) 
     if(answer.option.length > 0){ 
-      if(this.state.details==='true' && answer.name[0]!=='None apply'){
+      if(this.state.details==='true' && answer.name[0]!=='Other'){
         this.setState({answer:answer, type:'details'}) 
         if(this.props.set_subcomp!==null){ 
           this.props.set_subcomp(true)
@@ -118,4 +118,4 @@ class CheckBoxComponent extends Component {
   }
 }
 
-export default CheckBoxComponent
+export default BranchCheckBox

@@ -13,6 +13,7 @@ import YesNoDetails from '../components/question_types/yes_no_details'
 import VideoSelector from "../components/question_types/video_selector"
 import BranchSelector from "../components/question_types/branch_selector"
 import QuestionSelector from "../components/question_types/question_selector"
+import BranchCheckBox from '../components/question_types/branch_checkbox'
 import EmergencyContact from "../components/question_types/emergency_contact"
 
 import SideEffects from '../components/question_types/side_effects';
@@ -53,7 +54,18 @@ export const map_type_to_component = (question, handlers, user, answer, subscrip
       return <BranchSelector submit_action = {handlers.submit_branch_answer} question={question} prv_answer={answer}/>
     case 'question_selector':
       return <QuestionSelector submit_action = {handlers.submit_and_next_branch_question} question={question} prv_answer={answer}/>
- 
+    case 'branch_checkbox_details':
+      return <BranchCheckBox 
+
+                options = {question.options} 
+                flag_title = {question.flag_title}
+                subscript_ref = {subscript_ref}
+                title_ref = {title_ref}
+                submit_action = {handlers.submit_and_next_branch_question} 
+                question={question} 
+                set_subcomp = {handlers.set_subcomp} 
+                prv_answer={answer}
+                details='true'/>
     case 'create_profile':
       return <RegisterManager
                 view_type = 'register'
