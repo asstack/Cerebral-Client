@@ -36,13 +36,9 @@ class BranchCheckBox extends Component {
   //NOTE: exception for None apply is hardcorded. 
   check_box_handler = (e, idx) => {
     let option_name = this.state.options[idx].name
-    let list = option_name==='Other'?new Array(this.props.options.length).fill(false):this.state.checked_options 
+    let list = new Array(this.props.options.length).fill(false) 
     list[idx]=e.target.checked
 
-    if(option_name!=='Other' && this.state.options.slice(-1)[0].name==='Other'){
-      list[list.length-1]=false;
-    }
-    
     this.setState({checked_options:list}) 
  }
 
@@ -55,13 +51,13 @@ class BranchCheckBox extends Component {
       }
     }) 
     if(answer.option.length > 0){ 
-      if(this.state.details==='true' && answer.name[0]!=='Other'){
+      if(this.state.details==='true' && answer.name[0]==='Other'){
         this.setState({answer:answer, type:'details'}) 
         if(this.props.set_subcomp!==null){ 
           this.props.set_subcomp(true)
         }
       }else{
-        this.props.submit_action(JSON.stringify(answer), this.props.question.id)
+        this.props.submit_action(JSON.stringify(answer), this.props.question)
       }
     }else{
       this.setState({msg:"Please select at least one item"})
@@ -72,7 +68,7 @@ class BranchCheckBox extends Component {
   submit_with_text_handler = (text) => {
     let answer = this.state.answer
     answer["detail"]=text
-    this.props.submit_action(JSON.stringify(answer), this.props.question.id)  
+    this.props.submit_action(JSON.stringify(answer), this.props.question, 'done')  
   }
   
   //{(e) => this.check_box_handler(e,item.option_name)}
@@ -82,7 +78,7 @@ class BranchCheckBox extends Component {
       <div className={"input-group group-check-box-item"+last_item_style} key={uuidv1()}>
         <div className="input-group-prepend">
           <div className="input-group-text group-checkbox">
-            <input type="checkbox" onChange={(e) => {this.check_box_handler(e,index)}} name={item.title} checked={this.state.checked_options[index]}/>
+            <input type="radio" onChange={(e) => {this.check_box_handler(e,index)}} name={item.title} checked={this.state.checked_options[index]}/>
           </div>
         </div>
         <div className="d-flex justify-content-center form-control group-checkbox-text">

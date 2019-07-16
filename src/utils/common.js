@@ -6,6 +6,7 @@ import CreateProfile from '../components/question_types/create_profile'
 import Phone from '../components/question_types/phone'
 import CheckBoxComponent from '../components/question_types/checkbox'
 import StateSelector from '../components/question_types/state_selector' 
+import DosageSelector from '../components/question_types/dosage_selector' 
 import Identification from '../components/question_types/patient_identification'
 import PatientPayment from '../components/question_types/patient_payment' 
 import PatientShipping from '../components/question_types/patient_shipping' 
@@ -36,7 +37,7 @@ export const email_validation = email => {
   }
 }
 
-export const map_type_to_component = (question, handlers, user, answer, subscript_ref, title_ref) => {
+export const map_type_to_component = (question, handlers, user, answer, subscript_ref, title_ref, service_line) => {
   if(!question) return null
 
   switch(question.question_type) {
@@ -53,7 +54,9 @@ export const map_type_to_component = (question, handlers, user, answer, subscrip
     case 'branch_selector':
       return <BranchSelector submit_action = {handlers.submit_branch_answer} question={question} prv_answer={answer}/>
     case 'question_selector':
-      return <QuestionSelector submit_action = {handlers.submit_and_next_branch_question} question={question} prv_answer={answer}/>
+      return <QuestionSelector set_subcomp = {handlers.set_subcomp} submit_action = {handlers.submit_and_next_branch_question} question={question} prv_answer={answer}/>
+    case 'dosage_selector':
+      return <DosageSelector submit_action = {handlers.submit_and_next_branch_question} service_line={service_line} question={question} prv_answer={answer}/> 
     case 'branch_checkbox_details':
       return <BranchCheckBox 
 

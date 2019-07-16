@@ -49,6 +49,10 @@ class QuestionBank extends Component{
       is_ready:false,
       is_subcomp:false,
       answers:{},
+      b_questions:[], 
+      b_q_bank:"", 
+      b_q_step:0, 
+      b_q_active:false
     }
     props.api_actions.api_reset()
     this.subscript_ref = React.createRef();
@@ -167,7 +171,26 @@ class QuestionBank extends Component{
    }
 
   back_btn_handler = () => {
-    const {banks, bank_step, question_step, is_subcomp} = this.state
+    const {banks, bank_step, question_step, is_subcomp, questions, b_q_active, b_q_step} = this.state
+    const {patient_actions} = this.props
+
+    if(b_q_active){
+      if(is_subcomp){
+        this.setState({is_subcomp:false}) 
+      }else if(b_q_step==0){
+        patient_actions.set_b_question_active(false);
+      }else{
+        patient_actions.set_b_question_step(this.state.b_q_step-1);
+      }
+      return;
+    }
+
+    if(question_step>0 && questions[question_step-1].question_type==="branch_selector"){ 
+      patient_actions.set_b_question_active(true);
+      patient_actions.set_step(question_step-1);
+      return;
+    }
+
     if(is_subcomp){
       this.setState({is_subcomp:false}) 
     }else{
@@ -176,17 +199,16 @@ class QuestionBank extends Component{
         this.skip_questions(question_step-1, question_step-2);   
       }else if(question_step === 0 && bank_step > 0){
         if(banks[bank_step-1]=='treatment_info'){
-           this.props.patient_actions.get_current_answer_by_name('medication_preference').then(resp=>{
-              this.props.patient_actions.set_current_question_bank_by_name(banks[bank_step-1], true, bank_step-1, 0).then(resp=>{
+           patient_actions.get_current_answer_by_name('medication_preference').then(resp=>{
+              patient_actions.set_current_question_bank_by_name(banks[bank_step-1], true, bank_step-1, 0).then(resp=>{
                 this.setState({is_ready:true})
               })  
            })
        }else{
-          this.props.patient_actions.set_current_question_bank_by_name(banks[bank_step-1], true, bank_step-1, 0).then(resp=>{
+          patient_actions.set_current_question_bank_by_name(banks[bank_step-1], true, bank_step-1, 0).then(resp=>{
             this.setState({is_ready:true})
           })
-        }
-         
+        }    
         this.props.history.push("/patient/question_bank/"+ banks[bank_step-1]) 
       }
     }
@@ -213,7 +235,7 @@ class QuestionBank extends Component{
     this.patient_state_transition_helper();
   }
 
-  //TODO: It is hacky way only for the demo
+  //TODO: Change p_id to question and pass question to answer_current_quesation 
   submit_answer_and_next_step = (ans, q_id=null) => {
 
     const {patient_actions} = this.props
@@ -235,27 +257,36 @@ class QuestionBank extends Component{
   }
 
   //handler for branch selector 
-  submit_branch_answer = (ans, q_id, type) => {
-    if(type === "yes"){ 
-      this.props.patient_actions.get_branch_questions("anx_branch_yes").then(resp => {
-        console.log("yes branch:", resp)
-      })
-    }else{
-      this.props.patient_actions.get_branch_questions("anx_branch_no").then(resp => {
-        console.log("yes branch:", resp)
-      })
-    }
+  submit_branch_answer = (ans, question, type) => {
+    const {patient_actions} = this.props
+
+    patient_actions.answer_current_question({answer:ans}, question).then(()=>{
+
+      const bank_name = this.state.visit.service_line.name === "dep_anx"?"anx_branch_"+type:"ins_branch_"+type
+      let answers = this.state.answers
+      answers[question.id]=ans
+      this.setState({answer:answers})
+      patient_actions.get_branch_questions(bank_name)
+    })
+
   }
 
-  submit_and_next_branch_question = (ans, q_id, type) => {
-    if(type==='done' || this.state.b_q_step === this.state.b_questions.length-1){
-      console.log("done and move to next")
+  submit_and_next_branch_question = (ans, question, type) => {
+    this.setState({is_ready:false})
 
-    }else{
-      this.props.patient_actions.set_b_question_step(this.state.b_q_step+1);
-      console.log("next branch step")
-    }
-
+    const {patient_actions} = this.props 
+    patient_actions.answer_current_question({answer:ans}, question).then(()=>{
+      if(type==='done' || this.state.b_q_step === this.state.b_questions.length-1){
+        patient_actions.set_b_question_active(false)
+        this.patient_state_transition_helper()
+      }else{
+        patient_actions.set_b_question_step(this.state.b_q_step+1)
+        this.setState({is_ready:true})
+      }
+      let answers = this.state.answers
+      answers[question.id]=ans
+      this.setState({answer:answers})
+    })
   }
 
 
@@ -412,6 +443,8 @@ class QuestionBank extends Component{
       total--;
     }
     let wording = step>0? "QUESTION "+step+" OF "+ total:"";
+    wording = this.state.b_q_active?"QUESTION "+step+"-"+(this.state.b_q_step+1)+" OF "+ total:wording;
+
     if(q_bank==='checkout' && step===0){
       wording = "Identity Verification"
     }
@@ -482,7 +515,9 @@ class QuestionBank extends Component{
     //TODO: using ref to change title and subtitle in child component, but it's hacky way. will take that part as a component 
     const question = this.state.b_q_active?this.state.b_questions[this.state.b_q_step] :this.state.questions[this.state.question_step]
     const answer = question?this.state.answers[question.id]:null
-    const component = common.map_type_to_component(question, handlers, this.props.user, answer, this.subscript_ref, this.title_ref)
+    const service_line = this.state.visit?this.state.visit.service_line:null
+    const component = common.map_type_to_component(question, handlers, this.props.user, answer, this.subscript_ref, this.title_ref, service_line)
+    console.log("check answer:", answer)
     return(
       this.type_to_view(component, question)
    );

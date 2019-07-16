@@ -261,7 +261,6 @@ export const create_visit = (service_line_id) => (dispatch, getState) => {
 
   return axios.post(`/api/patients/${patient.id}/visits`, body, {headers: make_headers(user_attr)})
     .then(function(resp){
-      console.log("create visit:", resp.data)
       dispatch(set_visit(resp.data))
       return Promise.resolve(resp.data)
     })
@@ -334,20 +333,19 @@ export const complete_current_visit = () => (dispatch, getState) => {
   return dispatch(get_current_patient_and_visit()).then((resp) => {
     var user_attr = get_user_attr(getState())
     return dispatch(api_call('PUT', `/api/patients/${resp.patient.id}/visits/${resp.visit.id}/complete`, {headers: make_headers(user_attr)}, {complete: true})).then((new_visit) => {
-      console.log("complete current visit:", new_visit)
       //dispatch(set_visit(new_visit))
       return Promise.resolve(new_visit)
     })
   })
 }
 
-export const answer_current_question = (answer) => (dispatch, getState) => {
+export const answer_current_question = (answer, question=null) => (dispatch, getState) => {
 
   var user_attr = get_user_attr(getState())
 
   var patient_state = getState().patient_reducer
 
-  var current_question = patient_state.questions[patient_state.step]
+  var current_question = question?question:patient_state.questions[patient_state.step]
 
   // this answer does not need to be recorded because we have been explicitly told not to do so 
   if (current_question == null || !current_question.save_answer) return Promise.resolve();
@@ -438,5 +436,5 @@ export const set_b_question_step = (step) => (dispatch, getState)=>{
 }
 
 export const set_b_question_active = (is_active) => (dispatch, getState)=>{
-  return dispatch({type:SET_BRANCH_QUESTION_STEP, it_active:is_active})
+  return dispatch({type:SET_BRANCH_QUESTION_ACTIVE, is_active:is_active})
 }

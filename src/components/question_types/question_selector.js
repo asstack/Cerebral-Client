@@ -20,13 +20,16 @@ class QuestionSelector extends Component {
 
   set_type_handler = (e, type) => {
     if(type==="yes"){
-      this.props.submit_action(JSON.stringify({answer:type}), this.props.question.id, type)
+      this.props.submit_action(JSON.stringify({answer:type}), this.props.question, type)
     }else{
+      if(this.props.set_subcomp!==null){ 
+        this.props.set_subcomp(true)
+      } 
       this.setState({type:"detail"})
     } 
   }
   submit_description_action =(data)=> {
-      this.props.submit_action(JSON.stringify({answer:"no", detail:data}), this.props.question.id, 'done')
+      this.props.submit_action(JSON.stringify({answer:"no", detail:data}), this.props.question, 'done')
   }
 
   text_area_view = () => {

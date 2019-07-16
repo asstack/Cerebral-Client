@@ -19,10 +19,11 @@ class BranchSelector extends Component {
   }
 
   set_type_handler = (e, type) => {
+    console.log("type", type)
     if(type==="yes"){
-      this.props.submit_action(JSON.stringify({answer:type}),type, this.props.question.id)
+      this.props.submit_action(JSON.stringify({answer:type}), this.props.question, type)
     }else{
-      this.props.submit_action(JSON.stringify({answer:type}),type,this.props.question.id)
+      this.props.submit_action(JSON.stringify({answer:type}), this.props.question, type)
     } 
   }
 

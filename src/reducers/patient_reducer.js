@@ -45,7 +45,7 @@ export const patient_reducer = handleActions({
   [patient_action_types.SET_BRANCH_QUESTION_ACTIVE]: (state, action) => {
     return{
       ...state,
-      branch_question_active : action.is_active,
+       branch_question_active: action.is_active,
     }
   }, 
   [patient_action_types.SET_BRANCH_QUESTION_STEP]: (state, action) => {
