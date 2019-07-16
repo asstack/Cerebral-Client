@@ -113,7 +113,8 @@ class QuestionBank extends Component{
             if(url_info !== bank_name){ 
               this.props.history.push("/patient/question_bank/"+bank_name) 
             }
-            this.setState({answers:answers, visit: visit, questions:this.props.questions, question_step:this.props.question_step, bank_step:this.props.question_banks_step, banks:this.props.question_banks, is_subcomp:false, is_ready:true})
+            const {questions, question_step, question_banks_step, question_banks, b_questions, b_q_bank, b_q_step, b_q_active} = this.props
+            this.setState({answers:answers, visit: visit, questions:questions, question_step:question_step, bank_step:question_banks_step, banks:question_banks, is_subcomp:false, is_ready:true, b_questions:b_questions, b_q_bank:b_q_bank, b_q_step:b_q_step, b_q_active:b_q_active})
           })
         }).catch(e=>{
             this.update_and_set_question('profile', 0)  
@@ -130,7 +131,7 @@ class QuestionBank extends Component{
   
   //TODO: redux storage bank name is not correct
   componentWillReceiveProps = (next_props) => { 
-    this.setState({visit: next_props.visit, questions:next_props.questions, question_step:next_props.question_step, bank_step:next_props.question_banks_step, banks:next_props.question_banks, is_subcomp:false})
+    this.setState({b_questions:next_props.b_questions, b_q_bank:next_props.b_q_bank, b_q_step: next_props.b_q_step, b_q_active: next_props.b_q_active, visit: next_props.visit, questions:next_props.questions, question_step:next_props.question_step, bank_step:next_props.question_banks_step, banks:next_props.question_banks, is_subcomp:false})
 
   }
 
@@ -214,6 +215,7 @@ class QuestionBank extends Component{
 
   //TODO: It is hacky way only for the demo
   submit_answer_and_next_step = (ans, q_id=null) => {
+
     const {patient_actions} = this.props
     ReactGA.event({
             category: 'patients',
@@ -230,6 +232,30 @@ class QuestionBank extends Component{
       this.patient_state_transition_helper()
       //return this.patient_state_transition_helper(); 
     })  
+  }
+
+  //handler for branch selector 
+  submit_branch_answer = (ans, q_id, type) => {
+    if(type === "yes"){ 
+      this.props.patient_actions.get_branch_questions("anx_branch_yes").then(resp => {
+        console.log("yes branch:", resp)
+      })
+    }else{
+      this.props.patient_actions.get_branch_questions("anx_branch_no").then(resp => {
+        console.log("yes branch:", resp)
+      })
+    }
+  }
+
+  submit_and_next_branch_question = (ans, q_id, type) => {
+    if(type==='done' || this.state.b_q_step === this.state.b_questions.length-1){
+      console.log("done and move to next")
+
+    }else{
+      this.props.patient_actions.set_b_question_step(this.state.b_q_step+1);
+      console.log("next branch step")
+    }
+
   }
 
 
@@ -447,12 +473,14 @@ class QuestionBank extends Component{
       did_create_patient: this.did_create_patient.bind(this),
       submit_answer_and_next_step: this.submit_answer_and_next_step.bind(this),
       submit_and_upload_data:this.submit_and_upload_data.bind(this),
+      submit_branch_answer:this.submit_branch_answer.bind(this),
+      submit_and_next_branch_question:this.submit_and_next_branch_question.bind(this),
       patient_sign_in:this.sign_in_and_next.bind(this),
       set_subcomp:this.set_subcomp_handler.bind(this)
     }
 
     //TODO: using ref to change title and subtitle in child component, but it's hacky way. will take that part as a component 
-    const question = this.state.questions[this.state.question_step]
+    const question = this.state.b_q_active?this.state.b_questions[this.state.b_q_step] :this.state.questions[this.state.question_step]
     const answer = question?this.state.answers[question.id]:null
     const component = common.map_type_to_component(question, handlers, this.props.user, answer, this.subscript_ref, this.title_ref)
     return(
@@ -464,7 +492,8 @@ class QuestionBank extends Component{
 //TODO: elaborate to save memory
 const mapStateToProps = (state) => {
   const {
-    patient_reducer: {questions, visit_object, question_banks, question_bank_objects, question_banks_step, patient_state, step, question_bank_id}
+    patient_reducer: {questions, visit_object, question_banks, question_bank_objects, question_banks_step, patient_state, step, question_bank_id,
+                      branch_questions, branch_question_bank,branch_question_step, branch_question_active}
   } = state
 
   return {
@@ -476,6 +505,10 @@ const mapStateToProps = (state) => {
     question_step: step, 
 		questions: questions,
     question_bank_id: question_bank_id,
+    b_questions:branch_questions, 
+    b_q_bank:branch_question_bank,
+    b_q_step:branch_question_step, 
+    b_q_active:branch_question_active
   }
 }
 

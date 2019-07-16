@@ -72,7 +72,7 @@ class CheckBoxComponent extends Component {
   submit_with_text_handler = (text) => {
     let answer = this.state.answer
     answer["detail"]=text
-    this.props.submit_action(JSON.stringify(answer), this.props.question.id)  
+    this.props.submit_action(JSON.stringify(answer), this.props.question.id, 'done')  
   }
   
   //{(e) => this.check_box_handler(e,item.option_name)}
