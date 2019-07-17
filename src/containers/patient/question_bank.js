@@ -66,7 +66,7 @@ class QuestionBank extends Component{
         this.setState({is_ready:true})
       })
     })  
-  }
+  } 
 
   //TODO: checking visit is not clear.
   componentDidMount(){
@@ -236,7 +236,7 @@ class QuestionBank extends Component{
   }
 
   //TODO: Change p_id to question and pass question to answer_current_quesation 
-  submit_answer_and_next_step = (ans, q_id=null) => {
+  submit_answer_and_next_step = (ans, question=null) => {
 
     const {patient_actions} = this.props
     ReactGA.event({
@@ -244,11 +244,11 @@ class QuestionBank extends Component{
             action: 'submit answers',
     }); 
     this.setState({is_ready:false})
-    patient_actions.answer_current_question({answer: ans}).then(() => {
+    patient_actions.answer_current_question({answer: ans}, question).then(() => {
 
-      if(q_id){
+      if(question){
         let answers=this.state.answers
-        answers[q_id]=ans
+        answers[question.id]=ans
         this.setState({answer:answers})
       }
       this.patient_state_transition_helper()
@@ -517,7 +517,6 @@ class QuestionBank extends Component{
     const answer = question?this.state.answers[question.id]:null
     const service_line = this.state.visit?this.state.visit.service_line:null
     const component = common.map_type_to_component(question, handlers, this.props.user, answer, this.subscript_ref, this.title_ref, service_line)
-    console.log("check answer:", answer)
     return(
       this.type_to_view(component, question)
    );

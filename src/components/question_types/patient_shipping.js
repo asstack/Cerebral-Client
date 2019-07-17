@@ -47,7 +47,7 @@ class PatientShipping extends Component {
     let valid_state = address.region.toLowerCase() 
     const address_set = new Set(["ca", "california", "ohio", "oh"]);
     if(address_set.has(valid_state)){
-      this.props.submit_action(JSON.stringify(address), this.props.question.id) 
+      this.props.submit_action(JSON.stringify(address), this.props.question) 
     }else{
       alert("Unfortunately Cerebral is not yet active in this state. We are available in California and Ohio.")
     }

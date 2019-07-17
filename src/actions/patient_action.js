@@ -421,8 +421,6 @@ export const validate_referral_code = (patient_id, code)=> (dispatch, getState) 
   return axios.get(`/api/patients/${patient_id}/referral_codes?referral_code=${code}`, {headers: make_headers(get_user_attr(getState()))})
 }
 
-
-
 export const clean_up_patient_process = () => (dispatch) => {
   return dispatch(cleanup_questions_and_visit())
 }

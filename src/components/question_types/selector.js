@@ -51,7 +51,7 @@ class SelectorComponent extends Component {
       }else{
         ans = JSON.stringify({answer:item.name, index:index})
       }
-      this.props.submit_action(ans, this.props.question.id) 
+      this.props.submit_action(ans, this.props.question) 
     }
   }
 

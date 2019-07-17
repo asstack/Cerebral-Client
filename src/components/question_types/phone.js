@@ -33,7 +33,7 @@ class Phone extends Component {
     const number = this.state.phone_number;
     
     if(number && number.match(/\d/g) && number.match(/\d/g).length===10){
-      this.props.submit_action(this.state.phone_number, this.props.question.id)
+      this.props.submit_action(this.state.phone_number, this.props.question)
     }else{
       this.setState({msg:"Please input the 10 digit of phone number"})  
     }

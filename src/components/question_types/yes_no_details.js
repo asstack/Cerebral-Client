@@ -23,12 +23,12 @@ class YesNoDetails extends Component {
       this.setState({view_type:type})
       this.props.set_subcomp(true)
     }else{
-      this.props.submit_action(JSON.stringify({answer:type}), this.props.question.id)
+      this.props.submit_action(JSON.stringify({answer:type}), this.props.question)
     } 
   }
 
   submit_description_action =(data) => {
-    this.props.submit_action(JSON.stringify({answer:"yes", detail:data}), this.props.question_id) 
+    this.props.submit_action(JSON.stringify({answer:"yes", detail:data}), this.props.question) 
   }
   
   view = () => {
