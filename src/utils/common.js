@@ -6,11 +6,15 @@ import CreateProfile from '../components/question_types/create_profile'
 import Phone from '../components/question_types/phone'
 import CheckBoxComponent from '../components/question_types/checkbox'
 import StateSelector from '../components/question_types/state_selector' 
+import DosageSelector from '../components/question_types/dosage_selector' 
 import Identification from '../components/question_types/patient_identification'
 import PatientPayment from '../components/question_types/patient_payment' 
 import PatientShipping from '../components/question_types/patient_shipping' 
 import YesNoDetails from '../components/question_types/yes_no_details' 
 import VideoSelector from "../components/question_types/video_selector"
+import BranchSelector from "../components/question_types/branch_selector"
+import QuestionSelector from "../components/question_types/question_selector"
+import BranchCheckBox from '../components/question_types/branch_checkbox'
 import EmergencyContact from "../components/question_types/emergency_contact"
 
 import SideEffects from '../components/question_types/side_effects';
@@ -33,7 +37,7 @@ export const email_validation = email => {
   }
 }
 
-export const map_type_to_component = (question, handlers, user, answer, subscript_ref, title_ref) => {
+export const map_type_to_component = (question, handlers, user, answer, subscript_ref, title_ref, service_line) => {
   if(!question) return null
 
   switch(question.question_type) {
@@ -47,6 +51,24 @@ export const map_type_to_component = (question, handlers, user, answer, subscrip
       return <SelectorComponent submit_action = {handlers.submit_answer_and_next_step} question={question} prv_answer={answer} type="selector"/>
     case 'emergency_contact':
       return <EmergencyContact submit_action = {handlers.submit_answer_and_next_step} question={question} prv_answer={answer}/>
+    case 'branch_selector':
+      return <BranchSelector submit_action = {handlers.submit_branch_answer} question={question} prv_answer={answer}/>
+    case 'question_selector':
+      return <QuestionSelector set_subcomp = {handlers.set_subcomp} submit_action = {handlers.submit_and_next_branch_question} question={question} prv_answer={answer}/>
+    case 'dosage_selector':
+      return <DosageSelector submit_action = {handlers.submit_and_next_branch_question} service_line={service_line} question={question} prv_answer={answer}/> 
+    case 'branch_checkbox_details':
+      return <BranchCheckBox 
+
+                options = {question.options} 
+                flag_title = {question.flag_title}
+                subscript_ref = {subscript_ref}
+                title_ref = {title_ref}
+                submit_action = {handlers.submit_and_next_branch_question} 
+                question={question} 
+                set_subcomp = {handlers.set_subcomp} 
+                prv_answer={answer}
+                details='true'/>
     case 'create_profile':
       return <RegisterManager
                 view_type = 'register'

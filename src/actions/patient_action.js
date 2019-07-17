@@ -18,7 +18,9 @@ export const SET_PATIENT_QUESTIONS = 'patient/SET_PATIENT_QUESTIONS'
 export const SET_SERVICE_LINE = 'patient/SET_SERVICE_LINE'
 export const REMOVE_PATIENT_QUESTIONS = 'patient/REMOVE_PATIENT_QUESTIONS'
 export const REMOVE_PATIENT_QUESTION_BANKS = 'patient/REMOVE_PATIENT_QUESTION_BANKS'
-
+export const SET_BRANCH_QUESTION = 'patient/SET_BRANCH_QUESTION'
+export const SET_BRANCH_QUESTION_STEP ='patient/SET_BRANCH_QUESTION_STEP'
+export const SET_BRANCH_QUESTION_ACTIVE = 'patient/SET_BRANCH_QUESTION_ACTIVE'
 //step 2..9
 
 export const SET_PATIENT = 'patient/SET_PATIENT'
@@ -66,6 +68,12 @@ const set_question_banks = (question_bank_objects, questions_banks, bank_step=0)
   question_bank_objects: question_bank_objects,
   question_banks:questions_banks,
   question_banks_step:bank_step
+})
+
+const set_branch_question=(data, bank_name)=>({
+  type:SET_BRANCH_QUESTION,
+  questions:data,
+  bank_name:bank_name
 })
 
 export const set_question_banks_step = (question_banks_step) => ({
@@ -160,6 +168,15 @@ export const update_patient_questions = (bank_id, bank_name, flag=false, bank_st
     })
 }
 
+export const get_branch_questions = (bank_name) => (dispatch, getState)  => {
+  return axios.get(`/api/question_banks/search?name=${bank_name}`).then(resp=>{
+    return axios.get(`/api/question_banks/${resp.data.id}/questions`).then(resp=>{
+      dispatch(set_branch_question(resp.data, bank_name))
+      return resp
+    })
+  })
+}
+
 export const delete_patient_questions = () => (dispatch, getState) => {
 	return dispatch(remove_patient_questions())
 }
@@ -244,7 +261,6 @@ export const create_visit = (service_line_id) => (dispatch, getState) => {
 
   return axios.post(`/api/patients/${patient.id}/visits`, body, {headers: make_headers(user_attr)})
     .then(function(resp){
-      console.log("create visit:", resp.data)
       dispatch(set_visit(resp.data))
       return Promise.resolve(resp.data)
     })
@@ -317,20 +333,19 @@ export const complete_current_visit = () => (dispatch, getState) => {
   return dispatch(get_current_patient_and_visit()).then((resp) => {
     var user_attr = get_user_attr(getState())
     return dispatch(api_call('PUT', `/api/patients/${resp.patient.id}/visits/${resp.visit.id}/complete`, {headers: make_headers(user_attr)}, {complete: true})).then((new_visit) => {
-      console.log("complete current visit:", new_visit)
       //dispatch(set_visit(new_visit))
       return Promise.resolve(new_visit)
     })
   })
 }
 
-export const answer_current_question = (answer) => (dispatch, getState) => {
+export const answer_current_question = (answer, question=null) => (dispatch, getState) => {
 
   var user_attr = get_user_attr(getState())
 
   var patient_state = getState().patient_reducer
 
-  var current_question = patient_state.questions[patient_state.step]
+  var current_question = question?question:patient_state.questions[patient_state.step]
 
   // this answer does not need to be recorded because we have been explicitly told not to do so 
   if (current_question == null || !current_question.save_answer) return Promise.resolve();
@@ -416,5 +431,10 @@ export const sign_out = () => (dispatch, getState) => {
   return dispatch(reset_state())
 }
 
+export const set_b_question_step = (step) => (dispatch, getState)=>{
+  return dispatch({type:SET_BRANCH_QUESTION_STEP, step:step})
+}
 
-
+export const set_b_question_active = (is_active) => (dispatch, getState)=>{
+  return dispatch({type:SET_BRANCH_QUESTION_ACTIVE, is_active:is_active})
+}

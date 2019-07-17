@@ -26,8 +26,12 @@ export const init_patient_state = {
   step:0,
   total_step:1,
   
-  // NOTE: answers are never stored locally
-  // answers: '',
+  // branch question
+  branch_questions:[],
+  branch_question_bank:'',
+  branch_question_step:0,
+  branch_question_active:false,
+
   is_complete: false,
   // contains a copy of patient/visit information from the database
   patient_object: null,
@@ -38,11 +42,32 @@ export const init_patient_state = {
 }
 
 export const patient_reducer = handleActions({
+  [patient_action_types.SET_BRANCH_QUESTION_ACTIVE]: (state, action) => {
+    return{
+      ...state,
+       branch_question_active: action.is_active,
+    }
+  }, 
+  [patient_action_types.SET_BRANCH_QUESTION_STEP]: (state, action) => {
+    return{
+      ...state,
+      branch_question_step : action.step,
+    }
+  }, 
   [patient_action_types.SET_STEP]: (state, action) => {
     return{
       ...state,
       step : action.step,
       is_complete: action.is_complete
+    }
+  },
+  [patient_action_types.SET_BRANCH_QUESTION]:(state, action) => {
+    return{
+      ...state,
+      branch_questions:action.questions,
+      branch_question_bank:action.bank_name,
+      branch_question_step:0,
+      branch_question_active:true,
     }
   },
   [patient_action_types.RESET_QUESTIONS_AND_VISIT]: (state, action) => {

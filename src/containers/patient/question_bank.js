@@ -49,6 +49,10 @@ class QuestionBank extends Component{
       is_ready:false,
       is_subcomp:false,
       answers:{},
+      b_questions:[], 
+      b_q_bank:"", 
+      b_q_step:0, 
+      b_q_active:false
     }
     props.api_actions.api_reset()
     this.subscript_ref = React.createRef();
@@ -113,7 +117,8 @@ class QuestionBank extends Component{
             if(url_info !== bank_name){ 
               this.props.history.push("/patient/question_bank/"+bank_name) 
             }
-            this.setState({answers:answers, visit: visit, questions:this.props.questions, question_step:this.props.question_step, bank_step:this.props.question_banks_step, banks:this.props.question_banks, is_subcomp:false, is_ready:true})
+            const {questions, question_step, question_banks_step, question_banks, b_questions, b_q_bank, b_q_step, b_q_active} = this.props
+            this.setState({answers:answers, visit: visit, questions:questions, question_step:question_step, bank_step:question_banks_step, banks:question_banks, is_subcomp:false, is_ready:true, b_questions:b_questions, b_q_bank:b_q_bank, b_q_step:b_q_step, b_q_active:b_q_active})
           })
         }).catch(e=>{
             this.update_and_set_question('profile', 0)  
@@ -130,7 +135,7 @@ class QuestionBank extends Component{
   
   //TODO: redux storage bank name is not correct
   componentWillReceiveProps = (next_props) => { 
-    this.setState({visit: next_props.visit, questions:next_props.questions, question_step:next_props.question_step, bank_step:next_props.question_banks_step, banks:next_props.question_banks, is_subcomp:false})
+    this.setState({b_questions:next_props.b_questions, b_q_bank:next_props.b_q_bank, b_q_step: next_props.b_q_step, b_q_active: next_props.b_q_active, visit: next_props.visit, questions:next_props.questions, question_step:next_props.question_step, bank_step:next_props.question_banks_step, banks:next_props.question_banks, is_subcomp:false})
 
   }
 
@@ -166,7 +171,26 @@ class QuestionBank extends Component{
    }
 
   back_btn_handler = () => {
-    const {banks, bank_step, question_step, is_subcomp} = this.state
+    const {banks, bank_step, question_step, is_subcomp, questions, b_q_active, b_q_step} = this.state
+    const {patient_actions} = this.props
+
+    if(b_q_active){
+      if(is_subcomp){
+        this.setState({is_subcomp:false}) 
+      }else if(b_q_step==0){
+        patient_actions.set_b_question_active(false);
+      }else{
+        patient_actions.set_b_question_step(this.state.b_q_step-1);
+      }
+      return;
+    }
+
+    if(question_step>0 && questions[question_step-1].question_type==="branch_selector"){ 
+      patient_actions.set_b_question_active(true);
+      patient_actions.set_step(question_step-1);
+      return;
+    }
+
     if(is_subcomp){
       this.setState({is_subcomp:false}) 
     }else{
@@ -175,17 +199,16 @@ class QuestionBank extends Component{
         this.skip_questions(question_step-1, question_step-2);   
       }else if(question_step === 0 && bank_step > 0){
         if(banks[bank_step-1]=='treatment_info'){
-           this.props.patient_actions.get_current_answer_by_name('medication_preference').then(resp=>{
-              this.props.patient_actions.set_current_question_bank_by_name(banks[bank_step-1], true, bank_step-1, 0).then(resp=>{
+           patient_actions.get_current_answer_by_name('medication_preference').then(resp=>{
+              patient_actions.set_current_question_bank_by_name(banks[bank_step-1], true, bank_step-1, 0).then(resp=>{
                 this.setState({is_ready:true})
               })  
            })
        }else{
-          this.props.patient_actions.set_current_question_bank_by_name(banks[bank_step-1], true, bank_step-1, 0).then(resp=>{
+          patient_actions.set_current_question_bank_by_name(banks[bank_step-1], true, bank_step-1, 0).then(resp=>{
             this.setState({is_ready:true})
           })
-        }
-         
+        }    
         this.props.history.push("/patient/question_bank/"+ banks[bank_step-1]) 
       }
     }
@@ -212,8 +235,9 @@ class QuestionBank extends Component{
     this.patient_state_transition_helper();
   }
 
-  //TODO: It is hacky way only for the demo
+  //TODO: Change p_id to question and pass question to answer_current_quesation 
   submit_answer_and_next_step = (ans, q_id=null) => {
+
     const {patient_actions} = this.props
     ReactGA.event({
             category: 'patients',
@@ -230,6 +254,39 @@ class QuestionBank extends Component{
       this.patient_state_transition_helper()
       //return this.patient_state_transition_helper(); 
     })  
+  }
+
+  //handler for branch selector 
+  submit_branch_answer = (ans, question, type) => {
+    const {patient_actions} = this.props
+
+    patient_actions.answer_current_question({answer:ans}, question).then(()=>{
+
+      const bank_name = this.state.visit.service_line.name === "dep_anx"?"anx_branch_"+type:"ins_branch_"+type
+      let answers = this.state.answers
+      answers[question.id]=ans
+      this.setState({answer:answers})
+      patient_actions.get_branch_questions(bank_name)
+    })
+
+  }
+
+  submit_and_next_branch_question = (ans, question, type) => {
+    this.setState({is_ready:false})
+
+    const {patient_actions} = this.props 
+    patient_actions.answer_current_question({answer:ans}, question).then(()=>{
+      if(type==='done' || this.state.b_q_step === this.state.b_questions.length-1){
+        patient_actions.set_b_question_active(false)
+        this.patient_state_transition_helper()
+      }else{
+        patient_actions.set_b_question_step(this.state.b_q_step+1)
+        this.setState({is_ready:true})
+      }
+      let answers = this.state.answers
+      answers[question.id]=ans
+      this.setState({answer:answers})
+    })
   }
 
 
@@ -386,6 +443,8 @@ class QuestionBank extends Component{
       total--;
     }
     let wording = step>0? "QUESTION "+step+" OF "+ total:"";
+    wording = this.state.b_q_active?"QUESTION "+step+"-"+(this.state.b_q_step+1)+" OF "+ total:wording;
+
     if(q_bank==='checkout' && step===0){
       wording = "Identity Verification"
     }
@@ -447,14 +506,18 @@ class QuestionBank extends Component{
       did_create_patient: this.did_create_patient.bind(this),
       submit_answer_and_next_step: this.submit_answer_and_next_step.bind(this),
       submit_and_upload_data:this.submit_and_upload_data.bind(this),
+      submit_branch_answer:this.submit_branch_answer.bind(this),
+      submit_and_next_branch_question:this.submit_and_next_branch_question.bind(this),
       patient_sign_in:this.sign_in_and_next.bind(this),
       set_subcomp:this.set_subcomp_handler.bind(this)
     }
 
     //TODO: using ref to change title and subtitle in child component, but it's hacky way. will take that part as a component 
-    const question = this.state.questions[this.state.question_step]
+    const question = this.state.b_q_active?this.state.b_questions[this.state.b_q_step] :this.state.questions[this.state.question_step]
     const answer = question?this.state.answers[question.id]:null
-    const component = common.map_type_to_component(question, handlers, this.props.user, answer, this.subscript_ref, this.title_ref)
+    const service_line = this.state.visit?this.state.visit.service_line:null
+    const component = common.map_type_to_component(question, handlers, this.props.user, answer, this.subscript_ref, this.title_ref, service_line)
+    console.log("check answer:", answer)
     return(
       this.type_to_view(component, question)
    );
@@ -464,7 +527,8 @@ class QuestionBank extends Component{
 //TODO: elaborate to save memory
 const mapStateToProps = (state) => {
   const {
-    patient_reducer: {questions, visit_object, question_banks, question_bank_objects, question_banks_step, patient_state, step, question_bank_id}
+    patient_reducer: {questions, visit_object, question_banks, question_bank_objects, question_banks_step, patient_state, step, question_bank_id,
+                      branch_questions, branch_question_bank,branch_question_step, branch_question_active}
   } = state
 
   return {
@@ -476,6 +540,10 @@ const mapStateToProps = (state) => {
     question_step: step, 
 		questions: questions,
     question_bank_id: question_bank_id,
+    b_questions:branch_questions, 
+    b_q_bank:branch_question_bank,
+    b_q_step:branch_question_step, 
+    b_q_active:branch_question_active
   }
 }
 
