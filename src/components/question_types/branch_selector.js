@@ -19,7 +19,6 @@ class BranchSelector extends Component {
   }
 
   set_type_handler = (e, type) => {
-    console.log("type", type)
     if(type==="yes"){
       this.props.submit_action(JSON.stringify({answer:type}), this.props.question, type)
     }else{
@@ -30,7 +29,6 @@ class BranchSelector extends Component {
   view = () => {
   
       let prv_answer = this.state.prv_answer?this.state.prv_answer['answer']:null;
-    console.log("check question:", this.props.question)
       return ( 
        <div className="d-flex flex-row justify-content-between selector-component flex-wrap">
           {components.btn_selector(this.set_type_handler, "Yes", "yes", 'yes'===prv_answer)} 

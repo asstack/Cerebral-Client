@@ -24,7 +24,7 @@ class EmergencyContact extends Component {
     const {first_name, last_name, phone} = this.state
     if(phone && first_name && last_name){
       let ans = JSON.stringify({phone:phone, first_name:first_name, last_name:last_name})
-      this.props.submit_action(ans, this.props.question.id) 
+      this.props.submit_action(ans, this.props.question) 
     }else{
       if(!phone || !first_name || !last_name){ 
         this.setState({msg:"Please fill all the fields"}) 
@@ -33,7 +33,7 @@ class EmergencyContact extends Component {
    }
 
   skip_btn_handler = e => {
-    this.props.submit_action("N/A", this.props.question.id)
+    this.props.submit_action("N/A", this.props.question)
   }
   
   update_phone = (e) => {

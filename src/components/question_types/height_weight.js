@@ -38,7 +38,7 @@ class HeightWeight extends Component {
     const {weight, inch, ft} = this.state
     if(weight && inch && ft && !isNaN(weight) && !isNaN(inch) && !isNaN(ft)){ 
       let ans = JSON.stringify({weight:weight, inch:inch, ft:ft})
-      this.props.submit_action(ans, this.props.question.id)
+      this.props.submit_action(ans, this.props.question)
     }else{
       this.setState({msg: "Please input valid information"})
     }

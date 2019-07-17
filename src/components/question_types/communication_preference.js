@@ -51,7 +51,7 @@ class CommunicationPreference extends Component {
 
   submit_btn_handler = () => {
     if(this.state.answers && this.state.answers.detail){ 
-      this.props.submit_action(JSON.stringify(this.state.answers), this.props.question.id)
+      this.props.submit_action(JSON.stringify(this.state.answers), this.props.question)
     }else{
       alert("Please select one communication option and your availability")
     }

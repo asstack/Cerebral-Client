@@ -19,7 +19,6 @@ class BranchCheckBox extends Component {
   }
 
   componentDidMount(){
-    //initalize item
     const arr = new Array(this.props.options.length).fill(false);     
 
     if(this.props.prv_answer){
@@ -33,7 +32,6 @@ class BranchCheckBox extends Component {
   }
 
 
-  //NOTE: exception for None apply is hardcorded. 
   check_box_handler = (e, idx) => {
     let option_name = this.state.options[idx].name
     let list = new Array(this.props.options.length).fill(false) 
@@ -64,6 +62,7 @@ class BranchCheckBox extends Component {
     }
   }
   
+  
   //in this case, only submit one with text
   submit_with_text_handler = (text) => {
     let answer = this.state.answer
@@ -85,8 +84,8 @@ class BranchCheckBox extends Component {
           <span className="align-self-center">{item.title}</span>
         </div>
       </div>
-      )
-    }
+    )
+  }
 
   view_by_type=()=>{
     if(!this.state.is_ready) return null;

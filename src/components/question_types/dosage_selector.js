@@ -10,6 +10,7 @@ class DosageSelector extends Component {
       dosages:[],
       current_dosage:"",
       med_name:"",
+      med_brand:"",
       is_ready:false
 		}
 	}
@@ -31,7 +32,7 @@ class DosageSelector extends Component {
       const med_name = med.name[0].split(" ")[0].toLowerCase()
       this.props.get_treatment_by_name(med_name).then(med_resp => {
         const def_dsg = prv_dosg&&prv_dosg.medication === med_name?prv_dosg.answer:"";
-        this.setState({dosages:med_resp.dosages, med_name: med_name, is_ready:true, current_dosage:def_dsg})
+        this.setState({dosages:med_resp.dosages, med_name: med_name, is_ready:true, current_dosage:def_dsg, med_brand:med.name[0]})
       })
     })
   }
@@ -41,7 +42,8 @@ class DosageSelector extends Component {
   }
 
   confirm_btn_handler = e => {
-    let ans = {answer: this.state.current_dosage, medication: this.state.med_name}
+
+    let ans = {answer: this.state.current_dosage, medication: this.state.med_name, with_brand:this.state.med_brand}
     if(ans){
       this.props.submit_action(JSON.stringify(ans), this.props.question, 'done')
     }else{

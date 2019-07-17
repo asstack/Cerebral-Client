@@ -23,7 +23,7 @@ class Date extends Component {
   confirm_btn_handler = e => {
     const date = this.state.birth_date;
     if(date && moment(date, 'MM/DD/YY', true).isValid()){
-      this.props.submit_action(this.state.birth_date, this.props.question.id) 
+      this.props.submit_action(this.state.birth_date, this.props.question) 
     }else{
       this.setState({msg:"Please input the date of birth (mm/dd/yy)"}) 
     }
