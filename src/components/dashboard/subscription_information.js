@@ -56,6 +56,7 @@ class SubscriptionInformation extends Component {
     const title = type==='recent'?'MY RECENT SUBSCRIPTION':'SUBSCRIPTION HISTORY'
 
     let med_preference = JSON.parse(data.medication_preference.response)
+    let dosage = JSON.parse(data.dosage_preference.response) 
     return <div key={uuidv1()} className="align-self-start main-content-wide-card">
       <div className="d-flex flex-column card-items-container">
         <div className="d-flex flex-column justify-content-center patient_basic-info">
@@ -71,7 +72,7 @@ class SubscriptionInformation extends Component {
                   {med_preference.name===null?this.word_field('Medication: ','Pending'):this.word_field(med_preference.name +" ("+med_preference.brand_name+")","")}
                 </div> 
                 <div className="subscription-text-holder subscription-text">
-                  {med_preference.name===null?this.word_field('Dosage: ','Pending'):this.word_field("Dosage: ", data.dosage_preference.response+" mg")}
+                  {dosage.name===null?this.word_field('Dosage: ','Pending'):this.word_field("Dosage: ", dosage.dosage+" mg")}
                 </div> 
                 <div className="subscription-text-holder subscription-text">
                     {this.word_field("Price: ", "$45.00")}
