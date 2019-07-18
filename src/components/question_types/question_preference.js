@@ -8,6 +8,7 @@ export class QuestionPreference extends Component {
     this.state = {
       options: [],
       selected_index: null,
+      rec_label:"",
       is_ready:false
     }
   }
@@ -40,8 +41,7 @@ export class QuestionPreference extends Component {
       )
   }
   
-  map_data_to_checkbox = (item, index) => {
-    let is_recommended = false  // no recommendations!
+  map_data_to_checkbox = (item, index, is_recommended=false) => {
     var checkStyle = 
     {
       backgroundImage: `url(${this.get_image_for_item(item, is_recommended)})`,
@@ -81,20 +81,22 @@ export class QuestionPreference extends Component {
 
   render(){
     // TODO: figure out which treatment was recommended
+    
     if(!this.state.is_ready) return null
-    else return (
-      <div>    
-        {
-          this.state.options.map((item, index) => (this.map_data_to_checkbox(item, index)))
-        }
-        {
-          this.default_option(this.state.options.length)
-        }
-        <div className="d-flex flex-row justify-content-center">
-          {components.confirm_button_type_1(this.submit_btn_handler, "Confirm >")}  
+    else{
+      let offset = this.state.recommendation.length
+      return (
+        <div>    
+          {this.state.recommendation.length>0?
+            this.map_data_to_checkbox(this.state.recommendation[0],0,true):null}
+          {this.state.list.map((item, index) => (this.map_data_to_checkbox(item, index+offset)))}
+          {this.default_option(this.state.list.length+offset) }
+          <div className="d-flex flex-row justify-content-center">
+            {components.confirm_button_type_1(this.submit_btn_handler, "Confirm >")}  
+          </div>
         </div>
-      </div>
-    )
+      )
+    }
   }
 }
 

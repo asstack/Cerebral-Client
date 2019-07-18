@@ -83,7 +83,7 @@ class QuestionBank extends Component{
         //TODO: create new visit and start from profile 
         if(!this.props.questions || !visit){
           this.update_and_set_question('profile', 0)  
-          this.props.history.push("/patient/question_bank/profile") 
+          this.props.history.push("/patient/question_bank/qualification") 
         }else{
           //here i have to check visit and if not valid, create new visit and move to first question 
           //else move to modal
@@ -112,7 +112,7 @@ class QuestionBank extends Component{
           this.props.patient_actions.get_answers_for_visit(patient.id, visit.id).then(resp=>{
             let answers={}
             resp.data.map((item, index)=>{ 
-              answers[item.question.id]=item.response
+              answers[item.question.name]=item.response
             }) 
             if(url_info !== bank_name){ 
               this.props.history.push("/patient/question_bank/"+bank_name) 
@@ -248,7 +248,7 @@ class QuestionBank extends Component{
 
       if(question){
         let answers=this.state.answers
-        answers[question.id]=ans
+        answers[question.name]=ans
         this.setState({answer:answers})
       }
       this.patient_state_transition_helper()
@@ -264,7 +264,7 @@ class QuestionBank extends Component{
 
       const bank_name = this.state.visit.service_line.name === "dep_anx"?"anx_branch_"+type:"ins_branch_"+type
       let answers = this.state.answers
-      answers[question.id]=ans
+      answers[question.name]=ans
       this.setState({answer:answers})
       patient_actions.get_branch_questions(bank_name)
     })
@@ -284,7 +284,7 @@ class QuestionBank extends Component{
         this.setState({is_ready:true})
       }
       let answers = this.state.answers
-      answers[question.id]=ans
+      answers[question.name]=ans
       this.setState({answer:answers})
     })
   }
@@ -514,9 +514,9 @@ class QuestionBank extends Component{
 
     //TODO: using ref to change title and subtitle in child component, but it's hacky way. will take that part as a component 
     const question = this.state.b_q_active?this.state.b_questions[this.state.b_q_step] :this.state.questions[this.state.question_step]
-    const answer = question?this.state.answers[question.id]:null
+    const answer = question?this.state.answers[question.name]:null
     const service_line = this.state.visit?this.state.visit.service_line:null
-    const component = common.map_type_to_component(question, handlers, this.props.user, answer, this.subscript_ref, this.title_ref, service_line)
+    const component = common.map_type_to_component(question, handlers, this.props.user, answer, this.subscript_ref, this.title_ref, service_line, this.state.answers)
     return(
       this.type_to_view(component, question)
    );
