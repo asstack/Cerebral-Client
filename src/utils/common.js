@@ -37,7 +37,7 @@ export const email_validation = email => {
   }
 }
 
-export const map_type_to_component = (question, handlers, user, answer, subscript_ref, title_ref, service_line) => {
+export const map_type_to_component = (question, handlers, user, answer, subscript_ref, title_ref, service_line, answers=null) => {
   if(!question) return null
 
   switch(question.question_type) {
@@ -140,9 +140,9 @@ export const map_type_to_component = (question, handlers, user, answer, subscrip
     case 'side_effects':
       return <SideEffects submit_action = {handlers.submit_answer_and_next_step} question={question} prv_answer = {answer}/>  
     case 'medication_preference':
-      return <MedicationPreference submit_action = {handlers.submit_answer_and_next_step} question={question} prv_answer={answer}/>  
+      return <MedicationPreference submit_action = {handlers.submit_answer_and_next_step} question={question} prv_answer={answer} answers={answers}/>  
     case 'dosage_preference':
-      return <DosagePreference submit_action = {handlers.submit_answer_and_next_step} prv_answer={answer} question={question} skip_action = {handlers.next_step_handler}/>  
+      return <DosagePreference submit_action = {handlers.submit_answer_and_next_step} prv_answer={answer} question={question} skip_action = {handlers.next_step_handler} answers={answers}/>  
     case 'communication_preference':
       return <CommunicationPreferene submit_action = {handlers.submit_answer_and_next_step} prv_answer={answer} question={question}/>
     case 'patient_video':
