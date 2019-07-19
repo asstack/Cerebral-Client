@@ -19,7 +19,8 @@ class PaymentElements extends Component {
       console.log("create token: ", result)
       this.props.submit_payment(this.state.payment_full_name, result.token)
     }).catch(err => {  
-        this.props.submit_payment(this.state.payment_full_name, "")
+      //this.props.submit_payment(this.state.payment_full_name, "")
+      alert("Please input valid credit card information")
     })
     }
 

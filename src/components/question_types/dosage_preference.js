@@ -29,7 +29,6 @@ class DosagePreference extends QuestionPreference {
           let rec = []
           let list =[]
           med_pref_resp.dosages.forEach(dosage => {
-            //{answer: "mg20", medication: "escitalopram", with_brand: "Escitalopram (Lexapro)"}
             let item = { 
               ...dosage,
               title: `${this.capitalize(med_pref_resp.name)} ${dosage.dosage} milligrams`,
@@ -94,6 +93,7 @@ class DosagePreference extends QuestionPreference {
     if (!selected_dosage) {
       selected_dosage = {name: null, id: 0, dosage: null}
     }
+    console.log("check ans:", selected_dosage)
     this.props.set_dosage(selected_dosage) 
     this.props.submit_action(JSON.stringify(selected_dosage), this.props.question)
   }

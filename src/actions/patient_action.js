@@ -235,15 +235,19 @@ export const create_payment = (full_name, token) => (dispatch, getState) => {
 
       return dispatch(get_current_treatment_and_dosage()).then((td_resp) => {
 
+        /*
         if (!td_resp.treatment || !td_resp.dosage) {
           return Promise.reject(new Error('Treatment and dosage are not selected yet'))
         } 
+        */
 
+        console.log("check td_resp: ", td_resp)
+        console.log("check pv rest:", pv_resp)
         var body = {
           full_name: full_name,
           token: token,
           treatment_id: td_resp.treatment.id,
-          dosage_id: td_resp.dosage.id,
+          dosage_id: td_resp.dosage?td_resp.dosage.id:0,
           visit_id: pv_resp.visit.id
         }
     
