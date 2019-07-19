@@ -241,8 +241,6 @@ export const create_payment = (full_name, token) => (dispatch, getState) => {
         } 
         */
 
-        console.log("check td_resp: ", td_resp)
-        console.log("check pv rest:", pv_resp)
         var body = {
           full_name: full_name,
           token: token,
@@ -262,7 +260,6 @@ export const create_visit = (service_line_id) => (dispatch, getState) => {
 
   var patient = dispatch(get_current_patient())
   var body = {patient_id: patient.id, service_line_id: service_line_id}
-
   return axios.post(`/api/patients/${patient.id}/visits`, body, {headers: make_headers(user_attr)})
     .then(function(resp){
       dispatch(set_visit(resp.data))

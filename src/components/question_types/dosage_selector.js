@@ -32,6 +32,7 @@ class DosageSelector extends Component {
       const med_name = med.name[0].split(" ")[0].toLowerCase()
       this.props.get_treatment_by_name(med_name).then(med_resp => {
         const def_dsg = prv_dosg&&prv_dosg.medication === med_name?prv_dosg.answer:"";
+        med_resp.dosages.splice(med_resp.dosages.length-1)
         this.setState({dosages:med_resp.dosages, med_name: med_name, is_ready:true, current_dosage:def_dsg, med_brand:med.name[0]})
       })
     })

@@ -81,7 +81,6 @@ export class QuestionPreference extends Component {
 
   render(){
     // TODO: figure out which treatment was recommended
-    
     if(!this.state.is_ready) return null
     else{
       let offset = this.state.recommendation.length
@@ -89,8 +88,14 @@ export class QuestionPreference extends Component {
         <div>    
           {this.state.recommendation.length>0?
             this.map_data_to_checkbox(this.state.recommendation[0],0,true):null}
-          {this.state.list.map((item, index) => (this.map_data_to_checkbox(item, index+offset)))}
-          {this.default_option(this.state.list.length+offset) }
+            {this.state.list.map((item, index) => {
+              if(item.name==="no_preference"){
+                return this.default_option(index+offset)
+              }
+              else{
+                return this.map_data_to_checkbox(item, index+offset)
+              }
+            })}
           <div className="d-flex flex-row justify-content-center">
             {components.confirm_button_type_1(this.submit_btn_handler, "Confirm >")}  
           </div>
