@@ -26,6 +26,7 @@ class MedicationPreference extends QuestionPreference {
       
       const prv_answer = this.props.prv_answer?JSON.parse(this.props.prv_answer):null
       let prv_idx=null
+      console.log("recommendation:", recommendation)
       if(prv_answer && prv_answer.name===null){
         prv_idx = recommendation.length + list.length
       }else if(prv_answer &&  recommendation[0].name === prv_answer.name){
