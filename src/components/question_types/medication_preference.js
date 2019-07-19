@@ -90,7 +90,7 @@ class MedicationPreference extends QuestionPreference {
     items.forEach(item => {   
       if(dosage && item.name===dosage.medication && dosage.medication===prev_med_name) recommendation.push(item)
       if(item.name==="sertraline") cand1=item
-      if(item.name==="buproprion") cand2=item
+      if(item.name==="bupropion") cand2=item
     })
 
     if(recommendation.length == 0){
@@ -126,6 +126,7 @@ class MedicationPreference extends QuestionPreference {
 
     let obj = {name:selected_treatment.name, brand_name:selected_treatment.brand_name}
     this.props.set_treatment(selected_treatment)
+    console.log("medication:", obj)
     this.props.submit_action(JSON.stringify(obj), this.props.question)
   }
 
