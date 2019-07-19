@@ -15,10 +15,12 @@ class MedicationPreference extends QuestionPreference {
       const dosage = this.props.answers['current_dosage']?JSON.parse(this.props.answers['current_dosage']):null
       const prev_med = this.props.service_line.name === "ins"? this.props.answers['ins_hh_med']:this.props.answers['anx_hh_med']  
       const prev_med_name = prev_med? JSON.parse(prev_med).name[0].split(" ")[0].toLowerCase():null
-      const side_effects = JSON.parse(this.props.answers['side_effects'])
+      const side_effects = this.props.answers['side_effects']?JSON.parse(this.props.answers['side_effects']):null
+      const same_med = this.props.answers['same_med']?JSON.parse(this.props.answers['same_med']):{answer: "no"};
+
       let {recommendation, label} = this.props.service_line.name==="ins"
-        ?this.get_ins_recommendation(resp, dosage, prev_med_name, side_effects)
-        :this.get_dep_recommendation(resp, dosage,prev_med_name,side_effects);
+        ?this.get_ins_recommendation(resp, dosage, prev_med_name, side_effects, same_med)
+        :this.get_dep_recommendation(resp, dosage,prev_med_name, side_effects, same_med);
 
       let list = recommendation.length===0?resp:resp.filter(item=>{return item.name!=recommendation[0].name}) 
       
@@ -47,7 +49,7 @@ class MedicationPreference extends QuestionPreference {
     })
   }
 
-  get_ins_recommendation = (items, dosage, prev_med_name, side_effects) => {
+  get_ins_recommendation = (items, dosage, prev_med_name, side_effects, same_med) => {
     let recommendation = []
     let cand1=null
     let cand2=null
@@ -55,7 +57,7 @@ class MedicationPreference extends QuestionPreference {
 
     //it is only for depression and anxiety, so we need to make this as a function for insomnia
     items.forEach(item => {   
-      if(dosage && item.name===dosage.medication && dosage.medication===prev_med_name) recommendation.push(item)
+      if(dosage && item.name===dosage.medication && dosage.medication===prev_med_name && same_med.answer==="yes") recommendation.push(item)
       if(item.name==="mirtazapine") cand1=item
       if(item.name==="trazodone") cand2=item
     })
@@ -80,15 +82,14 @@ class MedicationPreference extends QuestionPreference {
   }
   
 
-  get_dep_recommendation = (items, dosage, prev_med_name, side_effects) => {
+  get_dep_recommendation = (items, dosage, prev_med_name, side_effects, same_med) => {
     let recommendation = []
     let cand1=null
     let cand2=null
     let label = ""
-
     //it is only for depression and anxiety, so we need to make this as a function for insomnia
     items.forEach(item => {   
-      if(dosage && item.name===dosage.medication && dosage.medication===prev_med_name) recommendation.push(item)
+      if(dosage && item.name===dosage.medication && dosage.medication===prev_med_name && same_med.answer==="yes") recommendation.push(item)
       if(item.name==="sertraline") cand1=item
       if(item.name==="bupropion") cand2=item
     })
@@ -125,7 +126,7 @@ class MedicationPreference extends QuestionPreference {
     }
 
     let obj = {name:selected_treatment.name, brand_name:selected_treatment.brand_name}
-    this.props.set_treatment(selected_treatment)
+    this.props.set_treatment(selected_treatment) 
     console.log("medication:", obj)
     this.props.submit_action(JSON.stringify(obj), this.props.question)
   }

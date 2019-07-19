@@ -156,7 +156,7 @@ class QuestionBank extends Component{
     }else if(q_type==='dosage_preference' && this.props.user['access-token']){
       this.props.patient_actions.get_current_answer_by_name('medication_preference').then(resp => {
         let med_data = JSON.parse(resp.response) 
-        if(med_data.name==null){ 
+        if(med_data.name===null || med_data.name==='no_preference'){ 
           this.props.patient_actions.set_step(skip_step);
           this.setState({is_ready:true})
         }else{
@@ -263,6 +263,7 @@ class QuestionBank extends Component{
     patient_actions.answer_current_question({answer:ans}, question).then(()=>{
 
       const bank_name = this.state.visit.service_line.name === "dep_anx"?"anx_branch_"+type:"ins_branch_"+type
+
       let answers = this.state.answers
       answers[question.name]=ans
       this.setState({answer:answers})
@@ -313,6 +314,7 @@ class QuestionBank extends Component{
                 patient_actions.create_visit(option.name) 
               }
             }else if(option.name){ 
+
               patient_actions.update_service_line(option.name)	 
             }
             this.patient_state_transition_helper(); 

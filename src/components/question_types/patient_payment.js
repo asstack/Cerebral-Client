@@ -22,7 +22,8 @@ class PatientPayment extends Component {
       // DO NOT SEND PAYMENT INFORMATION to submit_action here IT WILL END UP IN THE DATABASE
       return this.props.submit_action(resp.transaction_code) 
     }).catch((err) => {
-      return this.props.submit_action("temp") 
+      //return this.props.submit_action("temp") 
+      console.log("err, please try again:", err)
     })
   }
 

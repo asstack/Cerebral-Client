@@ -235,15 +235,17 @@ export const create_payment = (full_name, token) => (dispatch, getState) => {
 
       return dispatch(get_current_treatment_and_dosage()).then((td_resp) => {
 
+        /*
         if (!td_resp.treatment || !td_resp.dosage) {
           return Promise.reject(new Error('Treatment and dosage are not selected yet'))
         } 
+        */
 
         var body = {
           full_name: full_name,
           token: token,
           treatment_id: td_resp.treatment.id,
-          dosage_id: td_resp.dosage.id,
+          dosage_id: td_resp.dosage?td_resp.dosage.id:0,
           visit_id: pv_resp.visit.id
         }
     
@@ -258,7 +260,6 @@ export const create_visit = (service_line_id) => (dispatch, getState) => {
 
   var patient = dispatch(get_current_patient())
   var body = {patient_id: patient.id, service_line_id: service_line_id}
-
   return axios.post(`/api/patients/${patient.id}/visits`, body, {headers: make_headers(user_attr)})
     .then(function(resp){
       dispatch(set_visit(resp.data))
