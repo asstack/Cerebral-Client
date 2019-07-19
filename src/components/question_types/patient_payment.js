@@ -19,6 +19,8 @@ class PatientPayment extends Component {
 
   submit_payment = (payment_full_name, token) => {
     this.props.create_payment(payment_full_name, token).then((resp) => {     
+
+      console.log("create payment resp:", resp)
       // DO NOT SEND PAYMENT INFORMATION to submit_action here IT WILL END UP IN THE DATABASE
       return this.props.submit_action(resp.transaction_code) 
     }).catch((err) => {

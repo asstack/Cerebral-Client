@@ -241,11 +241,12 @@ export const create_payment = (full_name, token) => (dispatch, getState) => {
         } 
         */
 
+        //TODO: I manually added dosage id for no preference, since we skip the dosage selection for no preference. We may automatically check it in the backend
         var body = {
           full_name: full_name,
           token: token,
           treatment_id: td_resp.treatment.id,
-          dosage_id: td_resp.dosage?td_resp.dosage.id:0,
+          dosage_id: td_resp.dosage?td_resp.dosage.id:13,
           visit_id: pv_resp.visit.id
         }
     
