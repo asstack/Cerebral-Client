@@ -26,10 +26,9 @@ class MedicationPreference extends QuestionPreference {
       
       const prv_answer = this.props.prv_answer?JSON.parse(this.props.prv_answer):null
       let prv_idx=null
-      console.log("recommendation:", recommendation)
       if(prv_answer && prv_answer.name===null){
         prv_idx = recommendation.length + list.length
-      }else if(prv_answer &&  recommendation[0].name === prv_answer.name){
+      }else if(prv_answer && recommendation.length>0 && recommendation[0].name === prv_answer.name){
         prv_idx=0;
       }else if(prv_answer){
         list.forEach((item, idx) => {
@@ -116,7 +115,7 @@ class MedicationPreference extends QuestionPreference {
 
   submit_btn_handler = e => {
     let selected_treatment = null
-    if(this.state.recommendation===0){ 
+    if(this.state.recommendation.length===0){ 
       selected_treatment = this.state.list[this.state.selected_index]
     }else{
       selected_treatment = this.state.selected_index==0?this.state.recommendation[0]:this.state.list[this.state.selected_index-1];

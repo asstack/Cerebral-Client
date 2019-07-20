@@ -92,6 +92,7 @@ export const patient_reducer = handleActions({
   [patient_action_types.SET_VISIT]: (state, action) => {
     return{
       ...state,
+      service_line: action.visit_object.service_line,
       visit_object: action.visit_object
     } 
   },
