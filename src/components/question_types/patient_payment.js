@@ -10,7 +10,9 @@ class PatientPayment extends Component {
     super(props)
     this.state = {
       code:"",
-      is_available:false
+      is_available:false,
+      ins_checked:false,
+      upload_modal:false,
     }
   }
 
@@ -44,10 +46,66 @@ class PatientPayment extends Component {
       this.setState({is_available:false, code:code})
     }
   }
+  check_insurance_handler = type => {
+    if(type==='ins'){
+      this.setState({ins_checked:true})
+    }else{
+      this.setState({ins_checked:false})
+    }
+  }
+
+  upload_ins_card = type => {
+    this.setState({upload_modal:true})
+  }
+
+
+  img_upload_modal = () => {
+    return (
+      <div className="modal" tabIndex="-1" role="dialog">
+        <div className="modal-dialog" role="document">
+          <div className="modal-content">
+            <div className="modal-header">
+              <h5 className="modal-title">Modal title</h5>
+              <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div className="modal-body">
+              <p>Modal body text goes here.</p>
+            </div>
+            <div className="modal-footer">
+              <button type="button" className="btn btn-primary">Save changes</button>
+              <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    )
+  }
   
-  render(){
+
+  ins_card_view = () => {
+    return (
+      <div className = "d-flex flex-column payment-info-item">
+        <span className="payment-plain-text">Insurance Card Information:</span>
+        <div className="d-flex flex-row justify-content-center align-items-center ins-card-btn-holder">
+          <div className = {"d-flex flex-column align-items-center ins-card"} onClick={e=>this.upload_ins_card()}>
+            <div className="title"> Front </div>
+          </div>
+          <div className = {"d-flex flex-column align-items-center ins-card"}  onClick={e=>this.upload_ins_card()}>
+            <div className="title"> Back </div>
+          </div>
+        </div>
+      </div>
+    )
+  }
+
+  main_view =() => {
+    let ins_checked = this.state.ins_checked?"-checked":"";
+    let no_ins_checked = !this.state.ins_checked?"-checked":""; 
     return (
       <div className = "d-flex flex-column">
+        {this.state.upload_modal?this.img_upload_modal():null}
         <div className = "d-flex flex-column payment-info">
           <div className = "d-flex flex-column payment-info-item">
             <h1>Your treatment if prescribed:</h1>
@@ -56,6 +114,23 @@ class PatientPayment extends Component {
               <span className = "payment-plain-text">$45.00/mo</span>
             </div>
           </div>
+          <div className = "d-flex flex-column payment-info-item">
+            <span className="payment-plain-text">How would you like to pay for your medictation?</span>
+            <div className="d-flex flex-row justify-content-between insurance-btn-holder">
+              <div className = {"d-flex flex-column align-items-center insurance-btn"+ins_checked} onClick={e=>this.check_insurance_handler("ins")}>
+                <div className="title"> With Insurance </div>
+                <div className="description"> As little as $17/mo </div>
+              </div>
+              <div className = {"d-flex flex-column align-items-center insurance-btn"+no_ins_checked} onClick={e=>this.check_insurance_handler("no_ins")}>
+                <div className="title">No Insurance </div> 
+                <div className="description">As little as $45/mo</div>
+              </div>
+            </div>
+          </div>
+          {this.state.ins_checked?
+           this.ins_card_view()
+           :null
+          }
           <div className = "d-flex flex-column payment-info-item">
             <div className = "d-flex flex-row justify-content-between">
               <span className="payment-plain-text" >Online Doctor’s visit</span>
@@ -84,7 +159,13 @@ class PatientPayment extends Component {
         </Elements>
         </StripeProvider>
       </div>
-    );
+    )
+  }
+
+  
+  render(){
+    console.log("modal: ",this.state.upload_modal)
+    return this.main_view()
   }
 }
 

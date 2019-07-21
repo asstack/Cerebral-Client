@@ -837,6 +837,67 @@ h3 {
   border: none;
 }
 
+.insurance-btn-holder {
+  max-width:478px;
+  align-self:center;
+}
+
+.insurance-btn {
+
+  cursor:pointer;
+  margin-left:17px;
+  margin-right:17px;
+  padding:6px;
+  width:200px;
+  height:65px;
+  background: #FFFFFF;
+  border: 1px solid #250044;
+  border-radius: 2px;
+  color: #444444;
+}
+
+.insurance-btn-checked {
+  cursor:pointer;
+  margin-left:17px;
+  margin-right:17px;
+  padding:6px;
+  width:200px;
+  height:65px;
+  background: #250044;
+  border: 1px solid #250044;
+  border-radius: 2px;
+  color: #FFFFFF;
+}
+
+.insurance-btn .title {
+  font-size:18px;
+  font-weight:600;
+}
+
+.insurance-btn .title {
+  font-size:16px;
+}
+
+.ins-card-btn-holder {
+  min-height:263px;
+  background: #EFF1FA;
+  border-radius: 4px;
+}
+
+.ins-card {
+
+  cursor:pointer;
+  margin-left:17px;
+  margin-right:17px;
+  padding:6px;
+  width:200px;
+  height:65px;
+  background: #FFFFFF;
+  border: 1px solid #250044;
+  border-radius: 2px;
+  color: #444444;
+
+}
 
 
 /*------- profile(dashboard) page---------*/
