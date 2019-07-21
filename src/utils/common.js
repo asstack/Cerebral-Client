@@ -54,12 +54,15 @@ export const map_type_to_component = (question, handlers, user, answer, subscrip
     case 'branch_selector':
       return <BranchSelector submit_action = {handlers.submit_branch_answer} question={question} prv_answer={answer}/>
     case 'question_selector':
-      return <QuestionSelector set_subcomp = {handlers.set_subcomp} submit_action = {handlers.submit_and_next_branch_question} question={question} prv_answer={answer}/>
+      return <QuestionSelector 
+              flag_title = {question.flag_title}
+              subscript_ref = {subscript_ref}
+              title_ref = {title_ref}
+              set_subcomp = {handlers.set_subcomp} submit_action = {handlers.submit_and_next_branch_question} question={question} prv_answer={answer}/>
     case 'dosage_selector':
       return <DosageSelector submit_action = {handlers.submit_and_next_branch_question} service_line={service_line} question={question} prv_answer={answer}/> 
     case 'branch_checkbox_details':
       return <BranchCheckBox 
-
                 options = {question.options} 
                 flag_title = {question.flag_title}
                 subscript_ref = {subscript_ref}
