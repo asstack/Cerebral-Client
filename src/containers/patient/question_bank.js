@@ -13,7 +13,6 @@ import { Modal } from 'react-bootstrap'
 import uuidv1 from 'uuid'
 import Alert from 'react-s-alert'
 
-
 const MyModal = ({ open, close, message}) => (
   <Modal show={open} onHide={() => close()}>
     <Modal.Header closeButton>
