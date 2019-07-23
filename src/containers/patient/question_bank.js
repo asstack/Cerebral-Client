@@ -350,7 +350,12 @@ class QuestionBank extends Component{
 
     this.setState({is_loading:true}) 
     patient_actions.upload_object_for_current_question(data, type, file_name).then((resp) => {
-      patient_actions.answer_current_question(JSON.stringify({content_type:[type], file_name:[file_name]}), question).then(()=>{
+      console.log("upload object for current question:", resp)
+
+      let ans = {content_type:[type], file_name:[file_name]}
+
+      console.log("upload object for current question:", JSON.stringify(ans))
+      patient_actions.answer_current_question({answer: JSON.stringify(ans)}, question).then(()=>{
         this.setState({is_ready:false, is_loading:false}) 
         this.patient_state_transition_helper()
       })

@@ -386,7 +386,8 @@ export const update_patient_state = state => (dispatch, getState) => {
 
 export const upload_object_for_current_question = (file, file_type, file_name) => (dispatch, getState) => {
 
-  return dispatch(answer_current_question({upload: true, file_type: file_type,file_name:file_name})).then((resp) => {
+
+  return dispatch(answer_current_question({upload: true, file_type: file_type, file_name:file_name})).then((resp) => {
 
     var option = {headers:
                   {'ContentEncoding': 'base64', 
