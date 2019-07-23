@@ -1885,7 +1885,7 @@ h3 {
   padding:20px;
   font-size: 16px;
   font-weight:normal;
-  line-height: 30px;
+  line-height: 0;
 }
 
 .message-item-right {
@@ -1897,7 +1897,7 @@ h3 {
   padding:20px;
   font-size: 16px;
   font-weight:normal;
-  line-height: 30px;
+  line-height: 0;
 }
 
 .message-title {
