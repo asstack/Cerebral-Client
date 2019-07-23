@@ -128,7 +128,10 @@ export const map_type_to_component = (question, handlers, user, answer, subscrip
                 submit_action = {handlers.submit_answer_and_next_step}/> 
     case 'patient_identification':
       return <Identification 
-                question = {question.flag_title}
+              
+                question = {question}
+                flag_title = {question.flag_title}
+                file_name = {question.name}
                 set_subcomp = {handlers.set_subcomp} 
                 submit_action = {handlers.submit_and_upload_data}/>  
     case 'patient_shipping':
@@ -139,6 +142,7 @@ export const map_type_to_component = (question, handlers, user, answer, subscrip
     case 'patient_payment':
       return <PatientPayment 
               user = {user} 
+              question = {question}
               submit_action = {handlers.submit_answer_and_next_step}/> 
     case 'side_effects':
       return <SideEffects submit_action = {handlers.submit_answer_and_next_step} question={question} prv_answer = {answer}/>  
@@ -150,6 +154,7 @@ export const map_type_to_component = (question, handlers, user, answer, subscrip
       return <CommunicationPreferene submit_action = {handlers.submit_answer_and_next_step} prv_answer={answer} question={question}/>
     case 'patient_video':
       return <VideoSelector 
+              question = {question}
               flag_title = {question.flag_title}
               subscript_ref = {subscript_ref}
               title_ref = {title_ref}

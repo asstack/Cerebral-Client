@@ -35,9 +35,11 @@ class FileUploader extends Component {
     }
  }
 
+
+
   confirm_btn_handler = e => {
     if(this.state.file){
-      this.props.submit_action(this.state.file, this.state.file_type)
+      this.props.submit_action(this.state.flie, this.state.file_type, this.props.file_name, this.props.question)
     } 
   }
 

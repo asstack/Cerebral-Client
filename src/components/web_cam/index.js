@@ -24,7 +24,8 @@ class WebcamComponent extends Component {
 
 	//TODO: make action for confirm and Continue to Shopping, need api and s3 call to save image
 	confirm_handler = () => {
-    this.props.submit_action(this.state.screenshot, "image/jpeg")
+    console.log("file name:", this.props.file_name)
+    this.props.submit_action(this.state.screenshot, "image/jpeg", this.props.file_name, this.props.question)
 	}
 
 	map_state_to_component = state => {

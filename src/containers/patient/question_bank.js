@@ -345,14 +345,15 @@ class QuestionBank extends Component{
       })
   }
   
-  submit_and_upload_data = (data, type) => { 
+  submit_and_upload_data = (data, type, file_name=null,question) => { 
     const {patient_actions} = this.props
 
-
     this.setState({is_loading:true}) 
-    patient_actions.upload_object_for_current_question(data, type).then((resp) => {
-      this.setState({is_ready:false, is_loading:false}) 
-      this.patient_state_transition_helper()
+    patient_actions.upload_object_for_current_question(data, type, file_name).then((resp) => {
+      patient_actions.answer_current_question(JSON.stringify({content_type:[type], file_name:[file_name]}), question).then(()=>{
+        this.setState({is_ready:false, is_loading:false}) 
+        this.patient_state_transition_helper()
+      })
     })
     .catch((err) => { 
       this.setState({is_ready:false, is_loading:false}) 

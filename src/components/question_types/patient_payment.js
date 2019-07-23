@@ -1,8 +1,12 @@
 import React, {Component} from 'react';
 import { connect } from 'react-redux'
-import { create_payment, validate_referral_code } from '../../actions/patient_action'
+import { upload_object_for_current_question, create_payment, validate_referral_code } from '../../actions/patient_action'
 import {Elements, StripeProvider} from 'react-stripe-elements'
 import PaymentElements from './payment_elements'
+import Dropzone from 'react-dropzone'
+import { Modal } from 'react-bootstrap'
+import Webcam from "react-webcam"
+
 
 class PatientPayment extends Component {
 
@@ -10,21 +14,45 @@ class PatientPayment extends Component {
     super(props)
     this.state = {
       code:"",
-      is_available:false
+      is_available:false,
+      ins_checked:false,
+      upload_modal:false,
+      cam_state:'camera',
+      screenchot_type:null,
+      back_card:null,
+      front_card:null
     }
   }
 
   componentDidMount = () => {
+
   }
 
   submit_payment = (payment_full_name, token) => {
-    this.props.create_payment(payment_full_name, token).then((resp) => {     
 
-      console.log("create payment resp:", resp)
-      // DO NOT SEND PAYMENT INFORMATION to submit_action here IT WILL END UP IN THE DATABASE
-      return this.props.submit_action(resp.transaction_code) 
+    //TODO: have to send referral code 
+    if(this.state.ins_checked && (!this.state.back_card || !this.state.front_card)){
+      alert("Please upload your insurance card"); 
+      return;
+    } 
+
+    this.props.create_payment(payment_full_name, token).then((resp) => {     
+      if(this.state.ins_checked){
+        this.props.upload_object_for_current_question(this.state.front_card, "image/jpeg", "ins_card_front").then((resp1)=>{
+          this.props.upload_object_for_current_question(this.state.back_card, "image/jpeg", "ins_card_back").then((resp2)=>{
+
+            console.log("resp1:", resp1)
+            console.log("resp2:", resp2)
+            let answer = {transaction_code: resp.transaction_code, content_type:["image/jpeg", "image/jpeg"], file_name:["ins_card_front, ins_card_back"]};
+            // DO NOT SEND PAYMENT INFORMATION to submit_action here IT WILL END UP IN THE DATABASE
+            //
+            return this.props.submit_action(JSON.stringify(answer), this.props.question); 
+          })
+        }) 
+      }else{
+        return this.props.submit_action(JSON.stringify({transaction_code:resp.transaction_code}));
+      }
     }).catch((err) => {
-      //return this.props.submit_action("temp") 
       console.log("err, please try again:", err)
     })
   }
@@ -44,8 +72,89 @@ class PatientPayment extends Component {
       this.setState({is_available:false, code:code})
     }
   }
+
+  check_insurance_handler = type => {
+    if(type==='ins'){
+      this.setState({ins_checked:true})
+    }else{
+      this.setState({ins_checked:false})
+    }
+  }
+
+  upload_ins_card = (type) => {
+    this.setState({cam_state:"camera", upload_modal:true, screenshot_type:type})   
+  }
+
+  set_photo_handler = (is_save, type) => {
+    if(!is_save){ 
+      this.setState({cam_state:"camera", upload_modal:false, [type]:null})   
+    }else{
+      this.setState({cam_state:"camera", upload_modal:false}) 
+    } 
+  }
+
+	screenshot_handler = (type) => {
+    if(this.state.cam_state==="camera"){
+		  const screenshot = this.refs.webcam.getScreenshot()
+		  this.setState({[type]:screenshot, cam_state:"display"})
+    }else{
+      this.setState({[type]:null, cam_state:"camera"})
+    }
+	}
+
+  img_upload_modal = ({open, close, message}) => {
+    let ss_type = this.state.screenshot_type
+    return (
+      <Modal className="ins-card-modal" show={this.state.upload_modal} onHide={() => this.set_photo_handler(false, ss_type)}>
+        <Modal.Body>
+          <div className="d-flex flex-column">
+            <div className="d-flex flex-column justify-content-center"> 
+                {this.state.cam_state==="camera"?<Webcam className ={"d-flex justify-content-center ins-webcam-holder"} width={'100%'} height={'100%'} ref='webcam' screenshotForma="image/jpeg"/>:<img alt="insurance card" src={this.state[ss_type]}/>}               
+              <div className ="d-flex justify-content-center">
+
+                <div className = "d-flex justify-content-center align-items-center ins_card_camera_btn" onClick={() => this.screenshot_handler(ss_type)}>
+                    {this.state.cam_state==="camera"?"Take photo with Webcam":"Take again"}
+                </div>               
+            </div>
+            </div> 
+            <div className="d-flex flex-row justify-content-center">
+              <div className="d-flex justify-content-center align-items-center ins-modal-btn" onClick={() => this.set_photo_handler(true, ss_type)}>
+                Upload Photo
+              </div>
+              <div className="d-flex justify-content-center align-items-center ins-modal-btn" onClick={() => this.set_photo_handler(false, ss_type)}>
+                Cancel
+              </div>
+            </div>
+          </div>
+        </Modal.Body>
+      </Modal>
+    )
+  }
   
-  render(){
+
+  ins_card_view = () => {
+    return (
+      <div className = "d-flex flex-column payment-info-item">
+        <span className="payment-plain-text">Insurance Card Information:</span>
+        <div className="d-flex flex-row justify-content-center align-items-center ins-card-btn-holder">
+          <div className = "d-flex flex-column align-items-center ins-card" onClick={e=>this.upload_ins_card("front_card")}>
+            <img className="ins-display-photo" src= {this.state.front_card?this.state.front_card:process.env.PUBLIC_URL + '/img/ins_card.png'}/>
+            <img className="abs-photo-icon" src= {process.env.PUBLIC_URL + '/img/take_photo.png'}/>
+            <div className="title"> Front </div>
+          </div>
+          <div className = "d-flex flex-column align-items-center ins-card"  onClick={e=>this.upload_ins_card("back_card")}>
+            <img className="ins-display-photo" src= {this.state.back_card?this.state.back_card:process.env.PUBLIC_URL + '/img/ins_card.png'}/>
+            <img className="abs-photo-icon" src= {process.env.PUBLIC_URL + '/img/take_photo.png'}/>
+            <div className="title"> Back </div>
+          </div>
+        </div>
+      </div>
+    )
+  }
+
+  main_view =() => {
+    let ins_checked = this.state.ins_checked?"-checked":"";
+    let no_ins_checked = !this.state.ins_checked?"-checked":""; 
     return (
       <div className = "d-flex flex-column">
         <div className = "d-flex flex-column payment-info">
@@ -56,6 +165,23 @@ class PatientPayment extends Component {
               <span className = "payment-plain-text">$45.00/mo</span>
             </div>
           </div>
+          <div className = "d-flex flex-column payment-info-item">
+            <span className="payment-plain-text">How would you like to pay for your medictation?</span>
+            <div className="d-flex flex-row justify-content-between insurance-btn-holder">
+              <div className = {"d-flex flex-column align-items-center insurance-btn"+ins_checked} onClick={e=>this.check_insurance_handler("ins")}>
+                <div className="title"> With Insurance </div>
+                <div className="description"> As little as $17/mo </div>
+              </div>
+              <div className = {"d-flex flex-column align-items-center insurance-btn"+no_ins_checked} onClick={e=>this.check_insurance_handler("no_ins")}>
+                <div className="title">No Insurance </div> 
+                <div className="description">As little as $45/mo</div>
+              </div>
+            </div>
+          </div>
+          {this.state.ins_checked?
+           this.ins_card_view()
+           :null
+          }
           <div className = "d-flex flex-column payment-info-item">
             <div className = "d-flex flex-row justify-content-between">
               <span className="payment-plain-text" >Online Doctor’s visit</span>
@@ -84,8 +210,18 @@ class PatientPayment extends Component {
         </Elements>
         </StripeProvider>
       </div>
-    );
+    )
+  }
+
+  
+  render(){
+    return (
+      <div>
+          {this.state.upload_modal?this.img_upload_modal({open:true}):null}
+          {this.main_view()}
+      </div>
+    )
   }
 }
 
-export default connect(null, {create_payment, validate_referral_code}) (PatientPayment)
+export default connect(null, { upload_object_for_current_question, create_payment, validate_referral_code}) (PatientPayment)

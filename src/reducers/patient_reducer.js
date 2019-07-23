@@ -96,6 +96,15 @@ export const patient_reducer = handleActions({
       visit_object: action.visit_object
     } 
   },
+  [patient_action_types.REMOVE_VISIT]: (state, action) => {
+    return{
+      ...state,
+      service_line: null,
+      visit_object: null
+    } 
+  },
+  
+
   [patient_action_types.SET_TREATMENT]: (state, action) => {
     return{
       ...state,

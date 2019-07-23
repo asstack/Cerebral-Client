@@ -23,7 +23,7 @@ class VideoRecorderComponent extends Component {
 		const type ='video/webm;codecs=vp8'
 
 		var blob = new Blob(this.refs.recorder.recordedBlobs, {type : type});
-		this.props.submit_action(blob, type)
+		this.props.submit_action(blob, type, "ansycn_video", this.props.question)
 	}
   
   render() {
