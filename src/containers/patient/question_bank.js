@@ -13,7 +13,6 @@ import { Modal } from 'react-bootstrap'
 import uuidv1 from 'uuid'
 import Alert from 'react-s-alert'
 
-
 const MyModal = ({ open, close, message}) => (
   <Modal show={open} onHide={() => close()}>
     <Modal.Header closeButton>
@@ -348,6 +347,8 @@ class QuestionBank extends Component{
   
   submit_and_upload_data = (data, type) => { 
     const {patient_actions} = this.props
+
+
     this.setState({is_loading:true}) 
     patient_actions.upload_object_for_current_question(data, type).then((resp) => {
       this.setState({is_ready:false, is_loading:false}) 

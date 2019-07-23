@@ -255,14 +255,14 @@ export const create_payment = (full_name, token) => (dispatch, getState) => {
     })
 }
 
-export const create_visit = (service_line_id) => (dispatch, getState) => {
+export const create_visit = (service_line_name) => (dispatch, getState) => {
   
   let user_attr = get_user_attr(getState())
 
   let patient = dispatch(get_current_patient())
 
   //TODO: update backend to pass service line name and they will get the id of service line
-  let line_id = service_line_id==="ins"?2:1;
+  let line_id = service_line_name==="ins"?2:1;
   let body = {patient_id: patient.id, service_line_id: line_id}
   return axios.post(`/api/patients/${patient.id}/visits`, body, {headers: make_headers(user_attr)})
     .then(function(resp){
@@ -281,7 +281,7 @@ export const ensure_visit = (force) => (dispatch, getState) => {
     return Promise.resolve(visit)
   }
   // NOTE: the server will take care of creating a new visit or giving us back an existing visit if needed
-  return dispatch(create_visit(service_line.id)).then((new_visit) => {
+  return dispatch(create_visit(service_line.name)).then((new_visit) => {
     dispatch(set_visit(new_visit))
     return Promise.resolve(new_visit)
   })
