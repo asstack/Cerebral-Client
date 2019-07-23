@@ -36,25 +36,25 @@ class PatientPayment extends Component {
       return;
     } 
 
-    this.props.create_payment(payment_full_name, token).then((resp) => {     
-      if(this.state.ins_checked){
-        this.props.upload_object_for_current_question(this.state.front_card, "image/jpeg", "ins_card_front").then((resp1)=>{
-          this.props.upload_object_for_current_question(this.state.back_card, "image/jpeg", "ins_card_back").then((resp2)=>{
-
-            console.log("resp1:", resp1)
-            console.log("resp2:", resp2)
+    if(this.state.ins_checked){
+      this.props.upload_object_for_current_question(this.state.front_card, "image/jpeg", "ins_card_front").then((resp1)=>{
+        this.props.upload_object_for_current_question(this.state.back_card, "image/jpeg", "ins_card_back").then((resp2)=>{
+          this.props.create_payment(payment_full_name, token).then((resp) => {       
             let answer = {transaction_code: resp.transaction_code, content_type:["image/jpeg", "image/jpeg"], file_name:["ins_card_front, ins_card_back"]};
-            // DO NOT SEND PAYMENT INFORMATION to submit_action here IT WILL END UP IN THE DATABASE
-            //
-            return this.props.submit_action(JSON.stringify(answer), this.props.question); 
+            return this.props.submit_action({answer:JSON.stringify(answer)}, this.props.question); 
+          }).catch((err) => {
+            console.log("err, please try again:", err)
           })
-        }) 
-      }else{
+
+        })
+      }) 
+    }else{
+      this.props.create_payment(payment_full_name, token).then((resp) => {       
         return this.props.submit_action(JSON.stringify({transaction_code:resp.transaction_code}));
-      }
-    }).catch((err) => {
-      console.log("err, please try again:", err)
-    })
+      }).catch((err) => {
+        console.log("err, please try again:", err)
+      })
+    }
   }
 
   //TODO: If we have info for therapist company, they will generate their own code and will check by validate_referral_code api
