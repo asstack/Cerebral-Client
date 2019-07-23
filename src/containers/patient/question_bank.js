@@ -310,7 +310,7 @@ class QuestionBank extends Component{
           patient_actions.update_patient_question_banks([this.props.question_banks[0]].concat(option.question_bank_names), question_banks_step).then(()=>{
             if (this.props.user['access-token']){
               if(!this.state.visit || this.state.visit.service_line.name!==option.name){
-                patient_actions.create_visit(option.name) 
+                patient_actions.create_visit(option.id) 
               }
             }else if(option.name){ 
 
@@ -345,12 +345,15 @@ class QuestionBank extends Component{
       })
   }
   
-  submit_and_upload_data = (data, type) => { 
+  submit_and_upload_data = (data, type, file_name=null,question) => { 
     const {patient_actions} = this.props
+
     this.setState({is_loading:true}) 
-    patient_actions.upload_object_for_current_question(data, type).then((resp) => {
-      this.setState({is_ready:false, is_loading:false}) 
-      this.patient_state_transition_helper()
+    patient_actions.upload_object_for_current_question(data, type, file_name).then((resp) => {
+      patient_actions.answer_current_question(JSON.stringify({content_type:[type], file_name:[file_name]}), question).then(()=>{
+        this.setState({is_ready:false, is_loading:false}) 
+        this.patient_state_transition_helper()
+      })
     })
     .catch((err) => { 
       this.setState({is_ready:false, is_loading:false}) 

@@ -20,9 +20,9 @@ class Identification extends Component {
 
   view = () => {
     if(this.state.view_type === 'file'){
-      return <FileUploader submit_action = {this.props.submit_action} /> 
+      return <FileUploader question={this.props.question} file_name={this.props.file_name} submit_action = {this.props.submit_action} /> 
     }else if(this.state.view_type === 'webcam'){
-      return <WebcamComponent submit_action = {this.props.submit_action}/> 
+      return <WebcamComponent question={this.props.question} file_name={this.props.file_name} submit_action = {this.props.submit_action}/> 
     }else{
       return (
        <div className="d-flex flex-row justify-content-between selector-component flex-wrap">
