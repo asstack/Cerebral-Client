@@ -50,7 +50,7 @@ class PatientPayment extends Component {
       }) 
     }else{
       this.props.create_payment(payment_full_name, token).then((resp) => {       
-        return this.props.submit_action(JSON.stringify({transaction_code:resp.transaction_code}));
+        return this.props.submit_action(JSON.stringify({transaction_code:resp.transaction_code}), this.props.question);
       }).catch((err) => {
         console.log("err, please try again:", err)
       })

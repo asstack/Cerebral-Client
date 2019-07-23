@@ -12,9 +12,6 @@ class CompleteProcess extends Component{
   }
 
   componentDidMount = () => {
-
-
-    this.props.complete_current_visit()
   }
   
   btn_handler = () => {

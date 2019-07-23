@@ -217,8 +217,10 @@ class QuestionBank extends Component{
     const {questions, banks, bank_step, question_step} = this.state
 
     if(banks.length===bank_step+1 && questions.length === question_step+1){ 
-      this.props.history.push("/patient/completed") 
-      this.props.patient_actions.clean_up_patient_process()
+      this.props.patient_actions.complete_current_visit().then(resp=>{
+        this.props.history.push("/patient/completed") 
+        this.props.patient_actions.clean_up_patient_process()
+      })
     }else if(questions.length > question_step+1){ 
       this.skip_questions(question_step+1, question_step+2);
     }else{
@@ -350,11 +352,9 @@ class QuestionBank extends Component{
 
     this.setState({is_loading:true}) 
     patient_actions.upload_object_for_current_question(data, type, file_name).then((resp) => {
-      console.log("upload object for current question:", resp)
 
       let ans = {content_type:[type], file_name:[file_name]}
 
-      console.log("upload object for current question:", JSON.stringify(ans))
       patient_actions.answer_current_question({answer: JSON.stringify(ans)}, question).then(()=>{
         this.setState({is_ready:false, is_loading:false}) 
         this.patient_state_transition_helper()
