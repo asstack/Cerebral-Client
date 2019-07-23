@@ -310,7 +310,7 @@ class QuestionBank extends Component{
           patient_actions.update_patient_question_banks([this.props.question_banks[0]].concat(option.question_bank_names), question_banks_step).then(()=>{
             if (this.props.user['access-token']){
               if(!this.state.visit || this.state.visit.service_line.name!==option.name){
-                patient_actions.create_visit(option.id) 
+                patient_actions.create_visit(option.name) 
               }
             }else if(option.name){ 
 
