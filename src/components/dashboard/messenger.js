@@ -60,8 +60,13 @@ class Messenger extends Component {
   }
 
   web_socket_handler = (msg) => {
-    console.log("get here:",msg)
-  }
+    console.log("get here:",msg);
+    const { messages, user } = this.state;
+    const indexOfMsg = messages.findIndex(item => item.id === msg.message.id);
+      if(indexOfMsg === -1 && this.state.user.attributes.id !== msg.message.sender_id) {
+      this.setState({messages:[ ...this.state.messages, msg.message ]});
+    }
+  };
 
 
   componentDidUpdate=(prevProps, prevState)=>{ 
@@ -100,10 +105,10 @@ class Messenger extends Component {
     this.setState({msg:text})
   }
 
-  create_message_helper = (user_id, thread_id, r_id, msg) => {
-    let msg_object = {message:msg, user_id: user_id}
+  create_message_helper = (sender_id, thread_id, r_id, msg) => {
+    let msg_object = {message:msg, sender_id: sender_id}
     let msgs = this.state.messages;
-    this.props.create_message(user_id, thread_id, r_id, msg).then((resp) => {
+    this.props.create_message(sender_id, thread_id, r_id, msg).then((resp) => {
       msgs.push(msg_object)
       this.setState({messages:msgs, msg:"", update_scroll:true})
       this.refs.msg_input.value="" 
@@ -111,19 +116,22 @@ class Messenger extends Component {
   }
 
   send_msg_handler=(e)=>{
-    //send msg and if success, good, not option to resend it 
-    let msg = this.state.msg;
-    let thread_id = this.state.thread?this.state.thread.id:null;
-    let user_id = this.state.user.attributes.id
-    if(!thread_id && msg && this.state.target){
-      let recipient_id = this.state.target.user.id
-      this.props.create_message_thread(recipient_id).then((resp) => {
-        this.setState({thread:resp.data}) 
+    //send msg and if success, good, not option to resend it
+    let msg = this.state.msg;    
+    let thread_id = this.state.thread?this.state.thread.id:null; 
+    let recipient_id = ""
+    let sender_id = this.state.user.attributes.id
+    
+    if(!thread_id && msg){
+      recipient_id = this.state.target.user_id  
+      this.props.create_message_thread(recipient_id, sender_id).then((resp) => {
+        this.setState({thread:resp.data})
         thread_id = resp.data.id 
-        this.create_message_helper(user_id, thread_id, recipient_id, msg)
+        this.create_message_helper(sender_id, thread_id, recipient_id, msg)
       })  
     }else if(msg && thread_id){
-      this.create_message_helper(user_id, thread_id, this.state.thread.recipient_id, msg)
+      recipient_id = (sender_id == this.state.thread.sender_id)? this.state.thread.recipient_id : this.state.thread.sender_id
+      this.create_message_helper(sender_id, thread_id, recipient_id, msg)
     }  
     
   }
@@ -150,13 +158,13 @@ class Messenger extends Component {
   }
 
   mount_message_item = (item, idx)=>{
-    if(item.user_id===this.state.user.attributes.id) return this.sent_message_item(item, idx) 
+    if(item.sender_id===this.state.user.attributes.id) return this.sent_message_item(item, idx) 
     else return this.received_message_item(item, idx)
   }
 
   to_option =(val, index)=>{
     return(
-      <option key={uuidv1()} value={index}>{val.user.first_name + " "+val.user.last_name}</option>
+      <option key={uuidv1()} value={index}>{val.first_name + " "+val.last_name}</option>
     )
   }
 
@@ -207,7 +215,7 @@ class Messenger extends Component {
         </div> 
           {this.state.thread && this.state.cable?
             <ActionCableProvider cable={this.state.cable}>
-              <ActionCableConsumer channel="MessagesChannel" onReceived={e=>this.web_socket_handler(e)}></ActionCableConsumer>
+              <ActionCableConsumer channel={{ channel: 'MessageThreadsChannel', message_thread: this.state.thread.id }} onReceived={e=>this.web_socket_handler(e)} />
             </ActionCableProvider>:null}
      </div>
     )
