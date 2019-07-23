@@ -20,7 +20,7 @@ class VideoSelector extends Component {
 
   view = () => {
     if(this.state.view_type === 'video'){
-      return <VideoRecorderComponent submit_action = {this.props.submit_video_action} /> 
+      return <VideoRecorderComponent question = {this.props.question} submit_action = {this.props.submit_video_action} /> 
     }else if(this.state.view_type === 'text'){
       return <TextArea title_ref = {this.props.title_ref} subscript_ref = {this.props.subscript_ref} flag_title={this.props.flag_title} submit_action = {this.props.submit_text_action}/> 
     }else{

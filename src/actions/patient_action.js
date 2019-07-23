@@ -25,6 +25,7 @@ export const SET_BRANCH_QUESTION_ACTIVE = 'patient/SET_BRANCH_QUESTION_ACTIVE'
 
 export const SET_PATIENT = 'patient/SET_PATIENT'
 export const SET_VISIT = 'patient/SET_VISIT'
+export const REMOVE_VISIT = 'patient/REMOVE_VISIT'
 export const SET_TREATMENT = 'patient/SET_TREATMENT'
 export const SET_DOSAGE = 'patient/SET_DOSAGE'
 
@@ -89,6 +90,10 @@ export const set_patient = (patient_object) => ({
 export const set_visit = (visit_object) => ({
   type:SET_VISIT,
   visit_object:visit_object
+})
+
+export const remove_visit = () => ({
+  type:REMOVE_VISIT
 })
 
 export const set_treatment = (treatment_object) => ({
@@ -338,7 +343,7 @@ export const complete_current_visit = () => (dispatch, getState) => {
   return dispatch(get_current_patient_and_visit()).then((resp) => {
     var user_attr = get_user_attr(getState())
     return dispatch(api_call('PUT', `/api/patients/${resp.patient.id}/visits/${resp.visit.id}/complete`, {headers: make_headers(user_attr)}, {complete: true})).then((new_visit) => {
-      //dispatch(set_visit(new_visit))
+      dispatch(remove_visit())
       return Promise.resolve(new_visit)
     })
   })
@@ -379,15 +384,15 @@ export const update_patient_state = state => (dispatch, getState) => {
   return dispatch(set_patient_state(state))
 }
 
-export const upload_object_for_current_question = (file, file_type) => (dispatch, getState) => {
+export const upload_object_for_current_question = (file, file_type, file_name) => (dispatch, getState) => {
 
-  return dispatch(answer_current_question({upload: true, file_type: file_type})).then((resp) => {
+  return dispatch(answer_current_question({upload: true, file_type: file_type,file_name:file_name})).then((resp) => {
 
     var option = {headers:
                   {'ContentEncoding': 'base64', 
                   'Content-Type': file_type}}
-    
-      return axios.put(resp.object_url, file, option)
+
+    return axios.put(resp.object_url, file, option)
           .then(function(resp){
             return Promise.resolve()
           })
