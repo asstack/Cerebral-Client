@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import Dropzone from 'react-dropzone'
 import * as components from '../question_components/components'
+import * as util from '../../utils/common'
 
 class FileUploader extends Component {
 
@@ -14,17 +15,12 @@ class FileUploader extends Component {
 
   file_onload_handler = (e) => {
     const content = e.target.result;
-    //console.log('file content',  content)
-    //
     this.setState({file:content}) 
   }
 
   get_file_handler = (data) => {
 
     var fr = new FileReader();
-    //fr.onloadend = this.handleFile;
-    console.log(data[0].type)
-    //"image/png" image/jpeg
     const type = data[0].type
     if(type === 'image/png'|| type==='image/jpeg'){ 
       fr.onload= this.file_onload_handler; 
@@ -35,11 +31,11 @@ class FileUploader extends Component {
     }
  }
 
-
-
   confirm_btn_handler = e => {
     if(this.state.file){
-      this.props.submit_action(this.state.flie, this.state.file_type, this.props.file_name, this.props.question)
+      const blobs = util.imgtoBlob(this.state.file, this.state.file_type)
+      console.log("check file agail:", blobs) 
+      this.props.submit_action(blobs, this.state.file_type, this.props.file_name, this.props.question)
     } 
   }
 
