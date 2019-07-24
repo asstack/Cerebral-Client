@@ -7,6 +7,7 @@ import {get_patient_details, get_patients_for_therapist} from "../../actions/the
 import {create_message_thread, create_message, get_messages_for_thread, get_message_threads_for_current_user} from "../../actions/user_auth_action"
 import uuidv1 from 'uuid'
 
+
 //not sure patient and therapist can share this component
 class Messenger extends Component {
   constructor(props){
