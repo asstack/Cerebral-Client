@@ -81,27 +81,31 @@ class QuestionBank extends Component{
       if(url_info==='qualification' || !visit){
         //TODO: create new visit and start from profile 
         if(!this.props.questions || !visit){
-          this.update_and_set_question('profile', 0)  
+          this.update_and_set_question('qualification', 0)  
           this.props.history.push("/patient/question_bank/qualification") 
         }else{
           //here i have to check visit and if not valid, create new visit and move to first question 
           //else move to modal
+
           this.props.patient_actions.is_valid_visit(patient.id, visit.id).then(resp=> {
             return myPromiseModal({open:true}).then(value=>{
               if(!value){
-                this.update_and_set_question('profile',0) 
-                this.props.history.push("/patient/question_bank/profile") 
+                this.props.global_actions.reset_state();
+                this.update_and_set_question('qualification', 0); 
+                this.props.history.push("/patient/question_bank/qualification"); 
+                //this.update_and_set_question('profile',0) 
               }else{  
                 //get answers in here
                 //patient_actions
-               let bank_name = this.props.question_banks[this.props.question_banks_step]
-                this.setState({is_ready:true})
-                this.props.history.push("/patient/question_bank/"+bank_name) 
+               let bank_name = this.props.question_banks[this.props.question_banks_step];
+                this.setState({is_ready:true});
+                this.props.history.push("/patient/question_bank/"+bank_name); 
               } 
             }) 
           }).catch(err=>{
-            this.update_and_set_question('profile', 0)  
-            this.props.history.push("/patient/question_bank/profile") 
+            this.props.global_actions.reset_state();
+            this.update_and_set_question('qualification', 0); 
+            this.props.history.push("/patient/question_bank/qualification"); 
           })
         }
       }else{
