@@ -6,7 +6,7 @@ import PaymentElements from './payment_elements'
 import Dropzone from 'react-dropzone'
 import { Modal } from 'react-bootstrap'
 import Webcam from "react-webcam"
-
+import * as util from '../../utils/common'
 
 class PatientPayment extends Component {
 
@@ -35,10 +35,13 @@ class PatientPayment extends Component {
       alert("Please upload your insurance card"); 
       return;
     } 
+    
 
     if(this.state.ins_checked){
-      this.props.upload_object_for_current_question(this.state.front_card, "image/jpeg", "ins_card_front").then((resp1)=>{
-        this.props.upload_object_for_current_question(this.state.back_card, "image/jpeg", "ins_card_back").then((resp2)=>{
+      const front_card = util.imgtoBlob(this.state.front_card, "image/jpeg")
+      const back_card = util.imgtoBlob(this.state.back_card, "image/jpeg")
+      this.props.upload_object_for_current_question(front_card, "image/jpeg", "ins_card_front").then((resp1)=>{
+        this.props.upload_object_for_current_question(back_card, "image/jpeg", "ins_card_back").then((resp2)=>{
           this.props.create_payment(payment_full_name, token).then((resp) => {       
             let answer = {transaction_code: resp.transaction_code, content_type:["image/jpeg", "image/jpeg"], file_name:["ins_card_front, ins_card_back"]};
             return this.props.submit_action({answer:JSON.stringify(answer)}, this.props.question); 

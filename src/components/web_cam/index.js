@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
 import * as components from '../question_components/components'
+import * as util from '../../utils/common'
 import Webcam from "react-webcam"
 
 class WebcamComponent extends Component {
@@ -25,7 +26,8 @@ class WebcamComponent extends Component {
 	//TODO: make action for confirm and Continue to Shopping, need api and s3 call to save image
 	confirm_handler = () => {
     console.log("file name:", this.props.file_name)
-    this.props.submit_action(this.state.screenshot, "image/jpeg", this.props.file_name, this.props.question)
+    const blobs = util.imgtoBlob(this.state.screenshot, "image/jpeg")
+    this.props.submit_action(blobs, "image/jpeg", this.props.file_name, this.props.question)
 	}
 
 	map_state_to_component = state => {
