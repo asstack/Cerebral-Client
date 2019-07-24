@@ -1,0 +1,125 @@
+@media (max-width: 1302px) {
+  .profile-main-container {
+    padding: 0;
+  }
+  .profile-side-bar-holder {
+    position: absolute;
+    width: 100%;
+    height: 20%;
+  }
+  .profile-side-bar-holder.visible {
+    z-index: 10;
+    background: white;
+    height: 100vh;
+  }
+  .profile-side-items-holder {
+    visibility: hidden;
+    margin-top: 20px;
+  }
+  .profile-side-items-holder.visibile {
+    visibility: visible;
+  }
+  .main-content-column {
+    min-width: 100%;
+  }
+  .profile-main-holder {
+    min-width: 100%;
+  }
+  .main-content-small-card {
+    min-width: 100%;
+  }
+  .nav-opener {
+    width: 25px;
+  }
+  .nav-opener:after,
+  .nav-opener:before,
+  .nav-opener span {
+    width: 100%;
+    background-color: #250044;
+    border-radius: 3px;
+    content: '';
+    display: block;
+    height: 4px;
+    margin: 5px 0;
+    transition: all 0.2s ease-in-out;
+  }
+  .nav-opener.open {
+    span {
+      transform: scale(0);
+    }
+    &:before {
+      transform: translateY(9px) rotate(135deg);
+    }
+    &:after {
+      transform: translateY(-9px) rotate(-135deg);
+    }
+  }
+  .header {
+    padding: 30px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .profile-logo {
+    font-size: 18px;
+    color: #250044;
+  }
+  .profile-side-item-last {
+    border: 0 none;
+    color: #250044;
+  }
+  .profile-side-item-last.item-selected {
+    background: transparent;
+    opacity: 0.5;
+  }
+}
+
+@media (min-width: 1305px) {
+  .mob-only {
+    display: none !important;
+  }
+  .header {
+    margin-top: 50px;
+  }
+  .profile-logo {
+    font-size: 50px;
+    color: #250044;
+  }
+  .profile-side-items-holder {
+    margin-top: 120px;
+  }
+}
+
+.main-content-small-card {
+  margin-top: 50px;
+  min-height: 340px;
+}
+
+.profile-top-menu {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  padding: 50px 75px;
+  font-size: 22px;
+  line-height: 22px;
+  font-weight: 600;
+  color: #250044;
+  .log-out-holder {
+    cursor: pointer;
+  }
+}
+
+// common
+.no-scroll {
+  overflow: hidden;
+  height: 100vh;
+  padding: 0;
+}
+
+@media (max-width: 1302px) {
+  .desktop-only {
+    display: none !important;
+  }
+}
