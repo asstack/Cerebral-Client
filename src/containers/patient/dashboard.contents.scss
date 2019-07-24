@@ -1,0 +1,11 @@
+.profile-main-content {
+    margin-top: 50px;
+}
+
+@media (max-width: 1302px) {
+    .main-content-small-card {
+        &:nth-child(1) {
+            margin-top: 0;
+        }
+    }
+}
