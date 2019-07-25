@@ -20,7 +20,10 @@ class PatientPayment extends Component {
       cam_state:'camera',
       screenchot_type:null,
       back_card:null,
-      front_card:null
+      back_card_type:null,
+      front_card_type:null,
+      front_card:null,
+      is_loading:false,
     }
   }
 
@@ -38,14 +41,17 @@ class PatientPayment extends Component {
     
 
     if(this.state.ins_checked){
-      const front_card = util.imgtoBlob(this.state.front_card, "image/jpeg")
-      const back_card = util.imgtoBlob(this.state.back_card, "image/jpeg")
-      this.props.upload_object_for_current_question(front_card, "image/jpeg", "ins_card_front").then((resp1)=>{
-        this.props.upload_object_for_current_question(back_card, "image/jpeg", "ins_card_back").then((resp2)=>{
+      const front_card = util.imgtoBlob(this.state.front_card, this.state.front_card_type)
+      const back_card = util.imgtoBlob(this.state.back_card, this.state.back_card_type)
+      this.setState({is_loading:true})
+      this.props.upload_object_for_current_question(front_card, this.state.front_card_type, "ins_card_front").then((resp1)=>{
+        this.props.upload_object_for_current_question(back_card, this.state.back_card_type, "ins_card_back").then((resp2)=>{
           this.props.create_payment(payment_full_name, token).then((resp) => {       
-            let answer = {transaction_code: resp.transaction_code, content_type:["image/jpeg", "image/jpeg"], file_name:["ins_card_front, ins_card_back"]};
+            let answer = {transaction_code: resp.transaction_code, content_type:[this.state.front_card_type, this.state.back_card_type], file_name:["ins_card_front, ins_card_back"]};
+            this.setState({is_loading:false})
             return this.props.submit_action({answer:JSON.stringify(answer)}, this.props.question); 
           }).catch((err) => {
+            this.setState({is_loading:false})
             console.log("err, please try again:", err)
           })
 
@@ -97,13 +103,35 @@ class PatientPayment extends Component {
   }
 
 	screenshot_handler = (type) => {
+    console.log("check it in here:", type)
     if(this.state.cam_state==="camera"){
 		  const screenshot = this.refs.webcam.getScreenshot()
-		  this.setState({[type]:screenshot, cam_state:"display"})
+      this.setState({[type]:screenshot, cam_state:"display", [type+"_type"]:"image/jpeg"})
     }else{
       this.setState({[type]:null, cam_state:"camera"})
     }
 	}
+
+  file_onload_handler = e => {
+    const card_type = this.state.screenshot_type
+    const content = e.target.result;
+    this.setState({[card_type]:content}) 
+  }
+
+  upload_file_handler = (e, card_type) => {
+    
+    if(e.target.files.length>0){
+      var fr = new FileReader();
+      const type = e.target.files[0].type;
+      if(type === 'image/png'|| type==='image/jpeg'){ 
+        fr.onload= this.file_onload_handler; 
+        fr.readAsDataURL(e.target.files[0]); 
+        this.setState({[card_type+"_type"]:type, cam_state:"display"})
+      }else{
+        alert("Please use image file")
+      }
+    }
+  }
 
   img_upload_modal = ({open, close, message}) => {
     let ss_type = this.state.screenshot_type
@@ -112,17 +140,20 @@ class PatientPayment extends Component {
         <Modal.Body>
           <div className="d-flex flex-column">
             <div className="d-flex flex-column justify-content-center"> 
-                {this.state.cam_state==="camera"?<Webcam className ={"d-flex justify-content-center ins-webcam-holder"} width={'100%'} height={'100%'} ref='webcam' screenshotForma="image/jpeg"/>:<img alt="insurance card" src={this.state[ss_type]}/>}               
+                {this.state.cam_state==="camera"?<Webcam className ={"d-flex justify-content-center ins-webcam-holder"} width={'100%'} height={'100%'} ref='webcam' screenshotForma="image/jpeg"/>:<img alt="insurance card" className ="ins-card-preview" src={this.state[ss_type]}/>}               
               <div className ="d-flex justify-content-center">
 
-                <div className = "d-flex justify-content-center align-items-center ins_card_camera_btn" onClick={() => this.screenshot_handler(ss_type)}>
-                    {this.state.cam_state==="camera"?"Take photo with Webcam":"Take again"}
+                <div className = "d-flex justify-content-center align-items-center ins_card_camera_btn" 
+                  onClick={() => this.state.cam_state==="camera"?this.screenshot_handler(ss_type):this.set_photo_handler(true, ss_type)}>
+                    {this.state.cam_state==="camera"?"Take photo with Webcam":"Submit"}
                 </div>               
             </div>
             </div> 
             <div className="d-flex flex-row justify-content-center">
-              <div className="d-flex justify-content-center align-items-center ins-modal-btn" onClick={() => this.set_photo_handler(true, ss_type)}>
-                Upload Photo
+              <div className="d-flex justify-content-center align-items-center ins-modal-btn">
+
+                <label htmlFor="ins_file" className = "ins-file-upload-label">Upload Photo</label>
+                <input id="ins_file" type="file" className="ins-file-upload" accept="image/*" onChange={e=>{this.upload_file_handler(e, ss_type)}}/>
               </div>
               <div className="d-flex justify-content-center align-items-center ins-modal-btn" onClick={() => this.set_photo_handler(false, ss_type)}>
                 Cancel
@@ -216,12 +247,25 @@ class PatientPayment extends Component {
     )
   }
 
+
+  progress_modal = ({ open, close, message}) => (
+    <Modal className="loading-modal" show={open} onHide={() => console.log("cannot close")}>
+          <Modal.Body className="loading-modal-body">
+            <div className="spinner-border loading-icon-color" role="status">
+              <span className="sr-only">Loading...</span>
+            </div>
+          </Modal.Body>
+    </Modal>
+  )
+  
   
   render(){
+    console.log("get state:", this.state)
     return (
       <div>
           {this.state.upload_modal?this.img_upload_modal({open:true}):null}
           {this.main_view()}
+          {this.state.is_loading?this.progress_modal({open:true}): null}
       </div>
     )
   }
