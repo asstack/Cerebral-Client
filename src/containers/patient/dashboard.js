@@ -1,16 +1,12 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
+import cx from 'classnames';
 import default_icon from '../../img/user.png';
 import { update_app_state } from '../../actions';
-import {
-  sign_out,
-  update_service_line,
-  update_patient_question_banks
-} from '../../actions/patient_action';
+import { sign_out, update_service_line, update_patient_question_banks } from '../../actions/patient_action';
 import DashboardContents from './dashboard.contents';
 import './dashboard.scss';
-import cx from 'classnames';
 
 class PatientDashboard extends Component {
   constructor(props) {
@@ -56,14 +52,12 @@ class PatientDashboard extends Component {
   };
 
   type_to_view = () => {
-    return (
-      <DashboardContents user={this.state.user} type={this.state.view_type} />
-    );
+    return <DashboardContents user={this.state.user} type={this.state.view_type} />;
   };
 
   toggleNavState = () => {
     this.setState(prevState => ({
-      showNav: !this.state.showNav
+      showNav: !prevState.showNav
     }));
   };
 
@@ -74,108 +68,50 @@ class PatientDashboard extends Component {
 
   view = () => {
     const type = this.state.view_type;
-    const last_menu_css = 'd-flex justify-content-center align-items-center profile-side-item-last';
+    const menu_css = 'd-flex nav-menu--item justify-content-center align-items-center profile-side-item';
     const menu = (
       <>
-        <div
-          className={cx(
-            last_menu_css,
-            type === 'profile_info' ? 'item-selected' : ''
-          )}
-          onClick={() => this.updateType('profile_info')}
-        >
+        <div className={cx(menu_css, type === 'profile_info' ? 'item-selected' : '')} onClick={() => this.updateType('profile_info')}>
           Profile Information
         </div>
-        <div
-          className={cx(
-            last_menu_css,
-            type === 'subscription_info' ? 'item-selected' : ''
-          )}
-          onClick={() => this.updateType('subscription_info')}
-        >
+        <div className={cx(menu_css, type === 'subscription_info' ? 'item-selected' : '')} onClick={() => this.updateType('subscription_info')}>
           Subscription Information
         </div>
-        <div
-          className={cx(
-            last_menu_css,
-            type === 'message' ? 'item-selected' : ''
-          )}
-          onClick={() => this.updateType('message')}
-        >
+        <div className={cx(menu_css, type === 'message' ? 'item-selected' : '')} onClick={() => this.updateType('message')}>
           Messages
         </div>
-        <div
-          className={cx(
-            last_menu_css,
-            type === 'result' ? 'item-selected' : ''
-          )}
-          onClick={() => this.updateType('result')}
-        >
+        <div className={cx(menu_css, type === 'result' ? 'item-selected' : '')} onClick={() => this.updateType('result')}>
           My Assessment Results
         </div>
-        <div
-          className={cx(last_menu_css, 'mob-only')}
-          onClick={e => this.sign_out_handler()}
-        >
+        <div className={cx(menu_css, 'mob-only')} onClick={e => this.sign_out_handler()}>
           Logout
         </div>
       </>
     );
     return (
-      <div
-        className={cx(
-          'd-flex flex-row therapist-noprogress',
-          this.state.showNav ? 'no-scroll' : ''
-        )}
-      >
-        <div
-          className={cx(
-            'd-flex flex-column profile-side-bar-holder',
-            this.state.showNav ? 'visible' : 'hidden'
-          )}
-        >
+      <div className={cx('d-flex flex-row therapist-noprogress', this.state.showNav ? 'no-scroll' : '')}>
+        <div className={cx('d-flex flex-column profile-side-bar-holder', this.state.showNav ? 'visible' : '')}>
           <div className="header">
             <div className="d-flex justify-content-center profile-logo">
               <a href={process.env.REACT_APP_MAIN_PAGE_URL}>
-                <img
-                  className="cerebral-logo"
-                  src={`${process.env.PUBLIC_URL}/img/logo.png`}
-                  alt="link to main page"
-                />
+                <img className="cerebral-logo" src={`${process.env.PUBLIC_URL}/img/logo.png`} alt="link to main page" />
               </a>
             </div>
-            <div
-              className={cx('nav-opener', this.state.showNav ? 'open' : '')}
-              onClick={this.toggleNavState}
-            >
+            <div className={cx('nav-opener', this.state.showNav ? 'open' : '')} onClick={this.toggleNavState}>
               <span />
             </div>
           </div>
 
-          <div
-            className={cx(
-              'profile-side-items-holder',
-              this.state.showNav ? 'visible' : 'hidden'
-            )}
-          >
+          <div className={cx('profile-side-items-holder nav-menu', this.state.showNav ? 'visible' : '')}>
             <div className="profile-side-title-holder desktop-only">
-              <img
-                className="profile-image"
-                src={default_icon}
-                alt="link to profile"
-              />
-              <div className="d-flex justify-content-center profile-side-title">
-                WELCOME {this.props.user.attributes.first_name}
-              </div>
+              <img className="profile-image" src={default_icon} alt="link to profile" />
+              <div className="d-flex justify-content-center profile-side-title">WELCOME {this.props.user.attributes.first_name}</div>
             </div>
             {menu}
           </div>
         </div>
         <div className=" d-flex justify-content-end profile-top-menu desktop-only">
-          <div
-            className="log-out-holder text-logout"
-            onClick={e => this.sign_out_handler()}
-          >
+          <div className="log-out-holder text-logout" onClick={() => this.sign_out_handler()}>
             Logout
           </div>
         </div>
