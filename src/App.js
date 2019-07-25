@@ -6,7 +6,7 @@ import Therapist from './containers/therapist'
 import MainPage from './containers'
 import PasswordReset from './containers/user'
 import {update_app_state, set_env} from './actions'
-import ReactGA from 'react-ga'
+//import ReactGA from 'react-ga'
 import ErrorBoundary from './error_boundary'
 import ModalContainer from 'react-modal-promise'
 import 'react-s-alert/dist/s-alert-default.css'
@@ -17,6 +17,8 @@ class App extends Component {
     super(props)
     props.set_env(props.env)
     if (props.env.REACT_APP_AW_KEY){ 
+
+      /*
       ReactGA.initialize(props.env.REACT_APP_AW_KEY, {
         debug: true,
         titleCase: false,
@@ -24,7 +26,6 @@ class App extends Component {
           userId: 123
         }
       });
-      /*
       ReactGA.initialize([{
         trackingId: props.env.REACT_APP_GA_KEY,
           gaOptions: {
@@ -38,10 +39,11 @@ class App extends Component {
       ); 
       */
     }
-    ReactGA.pageview("client main page");
+    //ReactGA.pageview("client main page");
     this.state = {
       current_state:'' 
     }
+
   }
 
   componentDidMount(){

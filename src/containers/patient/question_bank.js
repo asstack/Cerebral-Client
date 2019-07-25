@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import ReactGA from 'react-ga'
+//import ReactGA from 'react-ga'
 import {withRouter} from 'react-router-dom'
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
@@ -222,12 +222,24 @@ class QuestionBank extends Component{
 
     if(banks.length===bank_step+1 && questions.length === question_step+1){ 
       this.props.patient_actions.complete_current_visit().then(resp=>{
+        /*
+        ReactGA.event({
+                  category: 'patients',
+                  action: 'complete assessment process',
+        }); 
+        */
         this.props.history.push("/patient/completed") 
         this.props.patient_actions.clean_up_patient_process()
       })
     }else if(questions.length > question_step+1){ 
       this.skip_questions(question_step+1, question_step+2);
     }else{
+      /*
+        ReactGA.event({
+                  category: 'patients',
+                  action: 'complete '+ banks[bank_step],
+        }); 
+        */
       this.props.patient_actions.set_current_question_bank_by_name(banks[bank_step+1], false, bank_step+1).then(resp=>{
         this.props.history.push("/patient/question_bank/"+ banks[bank_step+1]) 
         this.setState({is_ready:true}) 
@@ -244,10 +256,19 @@ class QuestionBank extends Component{
   submit_answer_and_next_step = (ans, question=null) => {
 
     const {patient_actions} = this.props
+
+    console.log("send to aw")
+    window.gtag('event', 'conversion', {
+        'send_to': 'AW-730722764/DpPGCJu1uqYBEMzjt9wC',
+    });
+
+    /*
     ReactGA.event({
             category: 'patients',
-            action: 'submit answers',
+            action: 'submit an answer for '+question.name,
     }); 
+    */
+
     this.setState({is_ready:false})
     patient_actions.answer_current_question({answer: ans}, question).then(() => {
 
@@ -341,10 +362,12 @@ class QuestionBank extends Component{
 
             this.setState({is_ready:false, is_loading:false}) 
             this.patient_state_transition_helper() 
+              /*
             ReactGA.event({
                     category: 'patients',
                     action: 'create account',
             });  
+            */
           })
       .catch((err) => {
         this.setState({is_loading:false}) 
@@ -378,11 +401,12 @@ class QuestionBank extends Component{
       if (resp.user_attr.patient) {
         patient_actions.set_patient(resp.user_attr.patient);
         patient_actions.ensure_visit(true).then((visit) => {
+          /*
           ReactGA.event({
                   category: 'patients',
                   action: 'sign_in',
           }); 
- 
+          */ 
           this.patient_state_transition_helper()
         })
       }
