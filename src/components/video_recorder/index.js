@@ -21,9 +21,12 @@ class VideoRecorderComponent extends Component {
 	submit_btn_handler = (e) => {
 
 		const type ='video/webm;codecs=vp8'
-
-		var blob = new Blob(this.refs.recorder.recordedBlobs, {type : type});
-		this.props.submit_action(blob, type, "ansycn_video", this.props.question)
+    if(this.refs.recorder.recordedBlobs){
+		  var blob = new Blob(this.refs.recorder.recordedBlobs, {type : type});
+		  this.props.submit_action(blob, type, "ansycn_video", this.props.question)
+    }else{
+      alert("Please record and sumbit the video")
+    }
 	}
   
   render() {
@@ -33,7 +36,6 @@ class VideoRecorderComponent extends Component {
           <VideoRecorder ref='recorder'/>
 				</div>
 				<div className = "d-flex justify-content-center">	
-
           <input className="col btn-confirm text-btn" type="button" onClick={this.submit_btn_handler} value="Submit Video"/>
 				</div>
 		
