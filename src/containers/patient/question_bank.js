@@ -216,36 +216,74 @@ class QuestionBank extends Component{
       }
     }
   }
+
+
+  gtag_conversions = type => {
+    let key = ""
+    const service_line = this.props.service_line?this.props.service_line.name:""
+    switch(type){
+      case "answer":
+        key='AW-730722764/DpPGCJu1uqYBEMzjt9wC';
+        break;
+      case "profile":
+        key=service_line==='ins'?"AW-730722764/5BGOCMfS7KQBEMzjt9wC":"AW-730722764/SGjWCO6HvqYBEMzjt9wC";
+        break;
+      case "insomnia_hh":
+        key="AW-730722764/4YKJCOqXn6MBEMzjt9wC";
+        break;
+      case "insomnia_a":
+        key="AW-730722764/tzBHCJPwxqYBEMzjt9wC";
+        break;
+      case "anxiety_hh":
+        key="AW-730722764/RO63CJ7sxqYBEMzjt9wC";
+        break;
+      case "anxiety_mha":
+        key="W-730722764/vV55CM7V56QBEMzjt9wC";
+        break;
+      case "treatment_info":
+        key=service_line==='ins'?"AW-730722764/KIUKCM_h9KQBEMzjt9wC":"AW-730722764/tHMsCPTMuqYBEMzjt9wC";
+        break;
+      case "payment":
+        key=service_line==='ins'?"AW-730722764/R3ypCI2hqqMBEMzjt9wC":"AW-730722764/Jbc9CN7zxqYBEMzjt9wC";
+        break;
+      case "complete":
+        key=service_line==='ins'?"AW-730722764/MktiCK_SuqYBEMzjt9wC":"AW-730722764/njycCLqPvqYBEMzjt9wC";
+        break;
+      default:
+        key="";
+        break;
+    }
+
+    if(key){
+      window.gtag('event', 'conversion', {
+        'send_to': key,
+      });
+    }
+
+  }
    
   patient_state_transition_helper = () => {
     const {questions, banks, bank_step, question_step} = this.state
 
     if(banks.length===bank_step+1 && questions.length === question_step+1){ 
+
+      this.gtag_conversions("complete")
       this.props.patient_actions.complete_current_visit().then(resp=>{
-        /*
-        ReactGA.event({
-                  category: 'patients',
-                  action: 'complete assessment process',
-        }); 
-        */
         this.props.history.push("/patient/completed") 
         this.props.patient_actions.clean_up_patient_process()
       })
     }else if(questions.length > question_step+1){ 
       this.skip_questions(question_step+1, question_step+2);
     }else{
-      /*
-        ReactGA.event({
-                  category: 'patients',
-                  action: 'complete '+ banks[bank_step],
-        }); 
-        */
-      this.props.patient_actions.set_current_question_bank_by_name(banks[bank_step+1], false, bank_step+1).then(resp=>{
+
+       this.gtag_conversions(banks[bank_step+1])
+       this.props.patient_actions.set_current_question_bank_by_name(banks[bank_step+1], false, bank_step+1).then(resp=>{
         this.props.history.push("/patient/question_bank/"+ banks[bank_step+1]) 
         this.setState({is_ready:true}) 
       })
     }
   }
+
 
   /*local event this*/
   next_step_handler=(e)=>{
@@ -257,17 +295,11 @@ class QuestionBank extends Component{
 
     const {patient_actions} = this.props
 
-    console.log("send to aw")
-    window.gtag('event', 'conversion', {
-        'send_to': 'AW-730722764/DpPGCJu1uqYBEMzjt9wC',
-    });
-
-    /*
-    ReactGA.event({
-            category: 'patients',
-            action: 'submit an answer for '+question.name,
-    }); 
-    */
+    if(question && question.name === 'payment'){
+      this.gtag_conversions("payment")
+    }else{
+      this.gtag_conversions("answer")
+    }
 
     this.setState({is_ready:false})
     patient_actions.answer_current_question({answer: ans}, question).then(() => {
@@ -563,11 +595,12 @@ class QuestionBank extends Component{
 //TODO: elaborate to save memory
 const mapStateToProps = (state) => {
   const {
-    patient_reducer: {questions, visit_object, question_banks, question_bank_objects, question_banks_step, patient_state, step, question_bank_id,
+    patient_reducer: {service_line, questions, visit_object, question_banks, question_bank_objects, question_banks_step, patient_state, step, question_bank_id,
                       branch_questions, branch_question_bank,branch_question_step, branch_question_active}
   } = state
 
   return {
+    service_line: service_line,
     patient_state: patient_state,
 		question_banks: question_banks,
     visit: visit_object,
